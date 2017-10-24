@@ -3,14 +3,11 @@ package com.tann.dice.screens.mapScreen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.island.islands.Island;
-import com.tann.dice.gameplay.village.Village;
 import com.tann.dice.gameplay.village.villager.Villager;
 import com.tann.dice.util.*;
 
 public class MapScreen extends Screen{
 
-	Map map;
 	private static MapScreen self;
 	public static MapScreen get(){
 		if(self == null){

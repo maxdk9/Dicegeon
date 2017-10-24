@@ -16,9 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.*;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.island.islands.Island;
-import com.tann.dice.gameplay.village.Village;
-import com.tann.dice.screens.gameScreen.GameScreen;
 import com.tann.dice.screens.mapScreen.MapScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
@@ -111,9 +108,9 @@ public class Main extends ApplicationAdapter {
 
         InputProcessor diceInput = new InputProcessor() {
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if(Village.getPhase().allowDieClicking() &&  GameScreen.get().allowDieClicking()) {
-                    return BulletStuff.click(screenX, Main.height-screenY, button);
-                }
+//                if(Village.getPhase().allowDieClicking() &&  GameScreen.get().allowDieClicking()) {
+//                    return BulletStuff.click(screenX, Main.height-screenY, button);
+//                }
                 return false;
             }
             public boolean keyDown(int keycode) {return false;}
@@ -268,16 +265,6 @@ public class Main extends ApplicationAdapter {
 		stage.act(delta);
 	}
 
-	public void travelTo(Island island) {
-//	    BulletStuff.reset();
-        Island.setIsland(island);
-		island.setup();
-		Village.get().setup();
-		GameScreen.reset();
-		GameScreen.get().init(island, Village.get());
-		setScreen(GameScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .5f);
-		GameScreen.get().pop();
-	}
 
 	public static float w(float factor){
 	    return Main.width/100f*factor;

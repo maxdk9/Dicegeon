@@ -5,19 +5,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
-import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.island.islands.Island;
-import com.tann.dice.gameplay.village.AddSub;
-import com.tann.dice.gameplay.village.Village;
-import com.tann.dice.gameplay.village.phase.LevelupPhase;
 import com.tann.dice.gameplay.village.villager.die.Side;
-import com.tann.dice.screens.gameScreen.GameScreen;
 import com.tann.dice.gameplay.village.villager.die.Die;
-import com.tann.dice.screens.gameScreen.panels.villagerStuff.VillagerIcon;
 import com.tann.dice.util.Colours;
 
-import java.util.Map;
 
 public class Villager {
 
@@ -50,26 +41,21 @@ public class Villager {
 		this.die.villager=this;
 		this.type=die.type;
         this.xpToLevelUp = die.type.level+3;
-        getIcon().layout();
 	}
 	
 	private void setupDie() {
 		setDie(new Die(this));
 	}
 
-	public void dieRightClicked(){
-		GameScreen.get().addVillagerPanel(this);
-	}
-	
+
 	public void gainXP(int amount){
 	    if(type.level==3) return;
 		this.xp+=amount;
 		while(xp>=xpToLevelUp){
 			xp-=xpToLevelUp;
-            Village.get().pushPhase(new LevelupPhase(this));
+//            Village.get().pushPhase(new LevelupPhase(this));
 		}
         this.potentialXp=0;
-        getIcon().layout();
 	}
 
 	public int potentialXp;
@@ -101,40 +87,8 @@ public class Villager {
 		return col;
 	}
 
-	VillagerIcon icon;
-    public VillagerIcon getIcon() {
-        if(icon==null)icon = new VillagerIcon(this);
-        return icon;
-    }
 
-    public void setDelta(Map<Object, AddSub> deltaMap) {
-        AddSub as = deltaMap.get(this);
-        potentialXp=0;
-        if(as!=null){
-            potentialXp=as.getTotal();
-        }
-        getIcon().layout();
-    }
 
-    public void giveBuff(Eff eff) {
-        switch(eff.type){
-            case XpToVillager:
-                gainXP(eff.value);
-                break;
-            case DEATH:
-                dead=true;
-                die();
-                break;
-            default:
-                System.err.println("Can't give "+eff+" to villager");
-        }
-    }
-
-    private void die(){
-        Village.get().villagers.removeValue(this, true);
-        BulletStuff.dice.removeValue(die, true);
-        GameScreen.get().vbp.layout();
-    }
 
     public enum VillagerType{
 
@@ -158,8 +112,6 @@ public class Villager {
         Teacher(1, "Share the knowledge", VillagerType.Villager,
                 Side.brainOther, Side.brainOther, Side.brainOther, Side.brain, Side.food1, Side.food1),
 
-        GemSniffer(1, "Hungry for gems", VillagerType.Villager, Island.Keyword.Gem, .01f,
-                Side.gem1, Side.food1, Side.food1, Side.wood1, Side.brain, Side.brain),
 
         // 2
 
@@ -175,8 +127,6 @@ public class Villager {
 
         Musician(2, "Remember the ancients", VillagerType.Poet,
                 Side.morale2, Side.morale1, Side.fate1, Side.food1, Side.brain, Side.brain),
-        Leader(2, "Work together, better", VillagerType.Poet,
-                Side.bonusWood, Side.bonusFood, Side.brainOther, Side.food1, Side.food1wood1, Side.brain),
 
         FeatherLight(2, "Appease the great gull", VillagerType.Acolyte,
                 Side.fate2, Side.fate1, Side.fate1, Side.food1, Side.wood1, Side.brain),
@@ -190,13 +140,7 @@ public class Villager {
 
         Mentor(2, "Advise the village", VillagerType.Teacher,
                 Side.brainOther2, Side.brainOther2, Side.brainOther, Side.food1wood1, Side.brain, Side.brain),
-        Guide(2, "Show the way", VillagerType.Teacher,
-                Side.brainOther2, Side.bonusFood, Side.morale1, Side.morale1, Side.food1wood1, Side.brain),
 
-        Digger(2, "The gems call me from underground", VillagerType.GemSniffer,
-                Side.gem1, Side.gem1, Side.gem1, Side.brain, Side.skull, Side.skull),
-        Spelunker(2, "They're in the caves!", VillagerType.GemSniffer,
-                Side.gem1, Side.gem1, Side.food2, Side.wood2, Side.brain, Side.brain),
 
         // 3
 
@@ -212,8 +156,6 @@ public class Villager {
 
         SongKeeper(3, "???", VillagerType.Musician,
                 Side.morale3, Side.fate2, Side.fate1morale1, Side.fate1morale1, Side.fate1morale1, Side.brainOther2),
-        Elder(3, "???", VillagerType.Leader,
-                Side.bonusWood2, Side.bonusFood2, Side.bonusWood, Side.bonusFood, Side.morale2, Side.brainOther2),
 
         FateWeaaver(3, "???", VillagerType.FeatherLight,
                 Side.fate3, Side.fate2, Side.fate2, Side.fate2, Side.fate1morale1, Side.food1wood1),
@@ -221,34 +163,20 @@ public class Villager {
                 Side.fate2, Side.fate2, Side.food3, Side.food2wood1, Side.food2wood1, Side.brainOther2),
 
         Pathfinder(3, "Find anything you want", VillagerType.Explorer,
-                Side.food3, Side.wood3, Side.food2wood2, Side.food2wood2, Side.morale2, Side.fate2),
-        Cook(3, "???", VillagerType.Herbalist,
-                Side.bonusFood2, Side.bonusFood2, Side.bonusFood2, Side.bonusFood, Side.food2, Side.food2),
+                Side.food3, Side.wood3, Side.food2wood2, Side.food2wood2, Side.morale2, Side.fate2);
 
-        Enlightended(3, "???", VillagerType.Mentor,
-                Side.brainOther3, Side.brainOther3, Side.brainOther3, Side.food2wood2, Side.food2wood2, Side.fate1morale1),
-        Tracker(3, "???", VillagerType.Guide,
-                Side.brainOther3, Side.bonusFood2, Side.bonusWood2, Side.food2wood2, Side.food2wood2, Side.food2wood2),
-
-        GEMGEM(3, "???", VillagerType.Spelunker,
-                Side.gem1, Side.gem1, Side.gem1, Side.gem1, Side.gem1, Side.gem1),
-        GEMGEMGEM(3, "???", VillagerType.Digger,
-                Side.gem1, Side.gem1, Side.gem1, Side.gem1, Side.gem1, Side.gem1);
 		public int level;
 		public String description;
 		public Side[] sides;
-		public Island.Keyword[] keywords;
         public TextureRegion lapel;
         public Array<VillagerType> sources;
         public float chance = 1;
 
 
-        VillagerType(int level, String description, Array<VillagerType> sources, Island.Keyword[] keywords, float chance, Side... sides){
+        VillagerType(int level, String description, Array<VillagerType> sources, float chance, Side... sides){
             if(sides.length!=6){
                 System.err.println("side error making "+this);
             }
-            if(keywords==null) keywords = new Island.Keyword[]{};
-            this.keywords = keywords;
             switch(level){
                 case 0: this.lapel = Images.lapel0; break;
                 case 1: this.lapel = Images.lapel1; break;
@@ -263,19 +191,12 @@ public class Villager {
         }
 
         VillagerType(int level, String description, Array<VillagerType> sources, Side... sides){
-            this(level, description, sources, null, 1, sides);
+            this(level, description, sources,  1, sides);
         }
 
         VillagerType(int level, String description, VillagerType source, Side... sides){
             this(level, description, new Array<VillagerType>(new VillagerType[]{source}), sides);
         }
 
-        VillagerType(int level, String description, VillagerType source, Island.Keyword[] keywords, Side... sides){
-            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), keywords, 1, sides);
-        }
-
-        VillagerType(int level, String description, VillagerType source, Island.Keyword keyword, float chance, Side... sides){
-            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), new Island.Keyword[]{keyword}, chance, sides);
-        }
 	}
 }

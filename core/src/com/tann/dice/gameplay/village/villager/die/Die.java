@@ -18,10 +18,8 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.village.Village;
 import com.tann.dice.gameplay.village.villager.Villager;
 import com.tann.dice.gameplay.village.villager.Villager.VillagerType;
-import com.tann.dice.screens.gameScreen.panels.rollStuff.LockBar;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 import com.tann.dice.util.Sounds;
@@ -85,7 +83,7 @@ public class Die {
                     setState(Stopped);
                     this.lockedSide=getSide();
                     glow = 1;
-                    Village.get().activate(sides.get(lockedSide).effects, false, false);
+//                    Village.get().activate(sides.get(lockedSide).effects, false, false);
                 }
                 else{
                     timeInAir+=delta;
@@ -159,7 +157,6 @@ public class Die {
     Quaternion originalRotation = new Quaternion();
 
     private void moveToBot() {
-        LockBar.get().removeDie(this);
         Vector3 best = getBestSpot();
         moveTo(best, originalRotation);
         undamp();
@@ -168,10 +165,9 @@ public class Die {
     public void moveToTop() {
         glow=0;
         if(getState()==Stopped) physical.transform.getRotation(originalRotation);
-        int index = LockBar.get().addDie(this);
         float width = 5;
-        float x = -(width/(Village.STARTING_VILLAGERS-1)*index - width/2);
-        moveTo(new Vector3(x, 0f, 6.55f), d6QuatsWithLean[lockedSide]);
+//        float x = -(width/(Village.STARTING_VILLAGERS-1)*index - width/2);
+//        moveTo(new Vector3(x, 0f, 6.55f), d6QuatsWithLean[lockedSide]);
         setState(Locking);
         removeFromPhysics();
     }
@@ -213,7 +209,7 @@ public class Die {
             resetForRoll();
         }
         if(reroll && lockedSide>=0){
-            Village.get().activate(sides.get(lockedSide).effects, false, true);
+//            Village.get().activate(sides.get(lockedSide).effects, false, true);
         }
         this.lockedSide=-1;
         setState(Rolling);

@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
-import com.tann.dice.gameplay.island.objective.Objective;
-import com.tann.dice.gameplay.village.Buff;
-import com.tann.dice.gameplay.village.Village;
 import com.tann.dice.gameplay.village.villager.die.Die;
 
 public class Eff {
@@ -53,18 +50,6 @@ public class Eff {
     int bonus;
 	public Die sourceDie;
     public EffAct effAct = EffAct.now;
-    private Buff buff;
-    public Objective obj;
-
-    public Eff(Buff buff){
-        this.buff=buff;
-        this.type=EffectType.Buff;
-    }
-
-    public Eff(Objective obj){
-        this.obj=obj;
-        this.type=EffectType.Objective;
-    }
 
 	public Eff(EffectType type, int value, Die sourceDie, EffAct effectActivation){
         this.type=type; this.value=value;  this.sourceDie=sourceDie; this.effAct = effectActivation;
@@ -88,11 +73,6 @@ public class Eff {
 	    return getValueString()+" "+typeString()+" "+effAct.toString();
     }
 
-    public String toWriterString(){
-        if(obj!=null) return obj.toWriterString();
-        if(buff!=null) return buff.toWriterString();
-        return getValueString()+"[h]"+getwriterString()+""+effAct.toWriterString();
-    }
 
     private String getwriterString(){
         return typeString();
@@ -104,8 +84,6 @@ public class Eff {
 	
 	public Eff copy(){
 		Eff result = new Eff(type, value, sourceDie, effAct.copy());
-		if(buff!=null) result.buff=buff.copy();
-		if(obj!=null) result.obj=obj;
 		return result;
 	}
 
@@ -121,10 +99,6 @@ public class Eff {
                 break;
             case IN_TURNS:
                 effAct.value--;
-                if(effAct.value==0){
-                    Village.get().activate(this.copy().now(), false, false);
-                    dead=true;
-                }
                 break;
             case FOR_TURNS:
                 effAct.value--;
@@ -132,7 +106,6 @@ public class Eff {
                     dead=true;
                 }
                 else {
-                    Village.get().activate(this.copy().now(), false, false);
                 }
                 break;
             case UPKEEP:
@@ -180,9 +153,6 @@ public class Eff {
         return this;
     }
 
-    public Buff getBuff(){
-        return buff;
-    }
 
     public int getAdjustedValue() {
         return value+bonus;

@@ -201,9 +201,6 @@ public class BulletStuff {
 			if (button == 0) {
 				d.click();
 			}
-			if (button == 1) {
-				d.villager.dieRightClicked();
-			}
 			return true;
 		}
 		return false;

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffectType;
-import com.tann.dice.gameplay.village.Buff;
 
 public class Side {
 
@@ -54,10 +53,6 @@ public class Side {
 	public static final Side brainOther2 = make(Images.get("givebrain2"), EffectType.XpToVillager, 2);
 	public static final Side brainOther3 = make(Images.get("givebrain3"), EffectType.XpToVillager, 3);
 
-    public static final Side bonusWood = make(Images.get("bonuswood1"), new Eff(new Buff().bonusWood(1)));
-    public static final Side bonusWood2 = make(Images.get("bonuswood2"), new Eff(new Buff().bonusWood(2)));
-	public static final Side bonusFood = make(Images.get("bonusfood1"), new Eff(new Buff().bonusFood(1)));
-    public static final Side bonusFood2 = make(Images.get("bonusfood2"), new Eff(new Buff().bonusFood(2)));
 
 	public static final Side morale1 = make(Images.get("morale1"), EffectType.Morale, 1);
 	public static final Side morale2 = make(Images.get("morale2"), EffectType.Morale, 2);
