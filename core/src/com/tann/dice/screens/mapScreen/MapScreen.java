@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.village.villager.Villager;
+import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.util.*;
 
 public class MapScreen extends Screen{
@@ -15,7 +16,9 @@ public class MapScreen extends Screen{
 		}
 		return self;
 	}
-	
+
+	Array<Die> dice = new Array<>();
+
 	public MapScreen() {
         Array<Villager> villagers = new Array<>();
         for(int i=0;i<5;i++){
@@ -24,6 +27,7 @@ public class MapScreen extends Screen{
 
         BulletStuff.refresh(villagers);
         for(Villager v:villagers){
+            dice.add(v.die);
             v.die.addToScreen();
             v.die.roll(true);
         }
@@ -31,7 +35,7 @@ public class MapScreen extends Screen{
 	
 	@Override
 	public void preDraw(Batch batch) {
-		batch.setColor(Colours.blue_dark);
+		batch.setColor(Colours.dark);
 		Draw.fillActor(batch, this);
 
 	}
@@ -50,6 +54,9 @@ public class MapScreen extends Screen{
 
 	@Override
 	public void keyPress(int keycode) {
+	    for(Die d: dice){
+	        d.roll(true);
+        }
 	}
 
     @Override

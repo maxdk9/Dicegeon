@@ -20,7 +20,7 @@ public class DicePack {
     settings.paddingX=2;
     settings.paddingY=2;
     settings.combineSubdirectories=true;
-    TexturePacker.process(settings, "../images_3d", "../android/assets/3d", "atlas_image_3d");
+    TexturePacker.process(settings, "../images_3d", "../android/assets/3d", "atlas_image");
   }
 
 }

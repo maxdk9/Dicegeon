@@ -217,7 +217,7 @@ public class Die {
 
         timeInAir=0;
         physical.body.clearForces();
-        randomise(13, 0, 7, 0, .9f, .7f);
+        randomise(0, 0, 7, 0, 5.9f, .7f);
     }
 
     private void resetForRoll() {

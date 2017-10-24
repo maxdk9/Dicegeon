@@ -11,6 +11,7 @@ public class DicetopLauncher {
 		config.vSyncEnabled=true;
 		config.width=1280;
 		config.height=720;
+		config.samples=10;
 		config.title="Dicegeons";
         new LwjglApplication(new Main(), config);
 	}

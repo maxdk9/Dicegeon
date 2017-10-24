@@ -95,7 +95,7 @@ public class Villager {
         // 0
 
         Villager(0,"no description maybe?", new Array<VillagerType>(),
-                Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),
+                Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.brain),
 
         // 1
 
