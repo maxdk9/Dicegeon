@@ -1,7 +1,11 @@
 package com.tann.dice.screens.mapScreen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.Array;
+import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.island.islands.Island;
+import com.tann.dice.gameplay.village.Village;
+import com.tann.dice.gameplay.village.villager.Villager;
 import com.tann.dice.util.*;
 
 public class MapScreen extends Screen{
@@ -16,25 +20,23 @@ public class MapScreen extends Screen{
 	}
 	
 	public MapScreen() {
-		map = new Map();
-		for(Island i:map.islands){
-			addActor(i.getActor());
-		}
-		TextButton tb = new TextButton(300, 50, "Reset Save Data");
-		tb.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                Prefs.RESETSAVEDATA();
-            }
-        });
-		addActor(tb);
-		tb.setPosition(getWidth()-tb.getWidth(),0);
+        Array<Villager> villagers = new Array<>();
+        for(int i=0;i<5;i++){
+            villagers.add(new Villager(i));
+        }
+
+        BulletStuff.refresh(villagers);
+        for(Villager v:villagers){
+            v.die.addToScreen();
+            v.die.roll(true);
+        }
 	}
 	
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.blue_dark);
 		Draw.fillActor(batch, this);
+
 	}
 
 	@Override
@@ -51,8 +53,6 @@ public class MapScreen extends Screen{
 
 	@Override
 	public void keyPress(int keycode) {
-		switch(keycode){
-		}
 	}
 
     @Override
