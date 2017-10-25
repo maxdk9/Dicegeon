@@ -68,7 +68,7 @@ public class BulletStuff {
 
 		ModelBuilder mb = new ModelBuilder();
 		mb.begin();
-		final float wallSize = 4.15f;
+		final float wallSize = 5.15f;
 		final float wallThickness = 0.5f;
 		mb.node().id = "ground";
 		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,new Material(ColorAttribute.createDiffuse(Colours.green_light))).box(wallSize*2, wallThickness, wallSize*2);
