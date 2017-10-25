@@ -61,7 +61,7 @@ public class Images {
 	
 	//3d
 	
-	public static final TextureRegion side_brain = Main.atlas_3d.findRegion("dice/face/brain");
+	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("dice/face/sword1");
 	
 	public static final TextureRegion side_food_1= Main.atlas_3d.findRegion("dice/face/food1");
 	public static final TextureRegion side_food_2= Main.atlas_3d.findRegion("dice/face/food2");
@@ -95,7 +95,7 @@ public class Images {
 	private static TextureRegion[] makeFace(String name){
 		TextureRegion base = Main.atlas_3d.findRegion("dice/face/"+name);
 		TextureRegion highlight = Main.atlas_3d.findRegion("dice/face/"+name+"_highlight");
-		return  new TextureRegion[]{base,highlight};
+		return  new TextureRegion[]{base,base};
 	}
 	
 	public static TextureRegion[] get(String name){

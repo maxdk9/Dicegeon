@@ -70,7 +70,7 @@ public class DieShader implements Shader{
 		program.begin();
 		program.setUniformMatrix(u_projTrans, camera.combined);
 		Gdx.graphics.getGL20().glActiveTexture(GL20.GL_TEXTURE0);
-		Images.side_brain.getTexture().bind(0);
+		Images.side_sword.getTexture().bind(0);
 		program.setUniformi("u_texture", 0);
 		context.setDepthTest(GL20.GL_LEQUAL);
 	}

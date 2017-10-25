@@ -25,8 +25,8 @@ public class Villager {
 
 	private static final Color[] colours = new Color[]{(Colours.blue_light), (Colours.fate_light), (Colours.green_light), (Colours.brown_light), (Colours.red)};
 	
-	public Villager(int index) {
-		this.type=VillagerType.Villager;
+	public Villager(int index, VillagerType type) {
+		this.type=type;
 //		firstName=generateName(true);
 //        lastName=generateName(false);
         this.col = Colours.classes[index%Colours.classes.length];
@@ -94,6 +94,12 @@ public class Villager {
 
         // 0
 
+        Apprentice(Side.magic1, Side.magic1, Side.magic2, Side.nothing, Side.nothing, Side.nothing),
+        Rogue(Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.nothing, Side.nothing),
+        Fighter(Side.sword1, Side.sword1, Side.shield1sword1, Side.shield1sword1, Side.nothing, Side.nothing),
+        Defender(Side.shield1, Side.shield1, Side.shield2, Side.shield2, Side.nothing, Side.nothing),
+        Herbalist(Side.magic1, Side.magic1, Side.heal2, Side.magic1heal1, Side.nothing, Side.nothing),
+
         Villager(0,"no description maybe?", new Array<VillagerType>(),
                 Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.brain),
 
@@ -135,8 +141,6 @@ public class Villager {
 
         Explorer(2, "Search the island", VillagerType.Gatherer,
                 Side.food2, Side.wood2, Side.food1wood1, Side.food1wood1, Side.food1wood1, Side.brain),
-        Herbalist(2, "Knowledge of the plants", VillagerType.Gatherer,
-                Side.food2, Side.food2, Side.wood2, Side.food1, Side.brainOther, Side.brain),
 
         Mentor(2, "Advise the village", VillagerType.Teacher,
                 Side.brainOther2, Side.brainOther2, Side.brainOther, Side.food1wood1, Side.brain, Side.brain),
@@ -196,6 +200,10 @@ public class Villager {
 
         VillagerType(int level, String description, VillagerType source, Side... sides){
             this(level, description, new Array<VillagerType>(new VillagerType[]{source}), sides);
+        }
+
+        VillagerType(Side... sides){
+            this(0, "", new Array<VillagerType>(new VillagerType[]{}), sides);
         }
 
 	}

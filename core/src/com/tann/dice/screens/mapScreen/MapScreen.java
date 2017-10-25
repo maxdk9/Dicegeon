@@ -21,9 +21,12 @@ public class MapScreen extends Screen{
 
 	public MapScreen() {
         Array<Villager> villagers = new Array<>();
-        for(int i=0;i<5;i++){
-            villagers.add(new Villager(i));
-        }
+        villagers.add(new Villager(0, Villager.VillagerType.Apprentice));
+        villagers.add(new Villager(1, Villager.VillagerType.Rogue));
+        villagers.add(new Villager(2, Villager.VillagerType.Fighter));
+        villagers.add(new Villager(3, Villager.VillagerType.Defender));
+        villagers.add(new Villager(4, Villager.VillagerType.Herbalist));
+
 
         BulletStuff.refresh(villagers);
         for(Villager v:villagers){

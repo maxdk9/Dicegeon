@@ -301,7 +301,11 @@ public class Die {
 	}
 	
 	private float getFloat(TextureRegion tr){
-		return getFloat(tr.getRegionX()/128, tr.getRegionY()/128);
+        System.out.println(tr.toString());
+        if(tr==null){
+            System.out.println("ahh");
+        }
+        return getFloat(tr.getRegionX()/128, tr.getRegionY()/128);
 	}
 	
 	private float getFloat(int x, int y){

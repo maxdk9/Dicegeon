@@ -29,8 +29,26 @@ public class Side {
 		this.tr=tr;
 		this.effects=effects;
 	}
-	
-	
+
+    public static final Side shield1 = new Side(Images.get("shield1"), new Eff().food(1));
+    public static final Side shield2 = new Side(Images.get("shield2"), new Eff().food(1));
+
+    public static final Side sword1 = new Side(Images.get("sword1"), new Eff().food(1));
+    public static final Side sword2 = new Side(Images.get("sword2"), new Eff().food(1));
+
+    public static final Side shield1sword1 = new Side(Images.get("sword1shield1"), new Eff().food(1));
+
+    public static final Side magic1 = new Side(Images.get("magic1"), new Eff().food(1));
+    public static final Side magic2 = new Side(Images.get("magic2"), new Eff().food(1));
+
+    public static final Side heal2 = new Side(Images.get("heal2"), new Eff().food(1));
+
+    public static final Side magic1heal1 = new Side(Images.get("magic1heal1"), new Eff().food(1));
+
+    public static final Side nothing = new Side(Images.get("nothing"), new Eff().food(1));
+
+
+
 
 	public static final Side food1 = new Side(Images.get("food1"), new Eff().food(1));
 	public static final Side food2 = new Side(Images.get("food2"), new Eff().food(2));
