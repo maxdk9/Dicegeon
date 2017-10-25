@@ -9,7 +9,15 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Colours {
 
-	
+	public static final Color rogue = make(133,49,49);
+	public static final Color wizard = make(49,89,133);
+	public static final Color protector = make(133,127,127);
+	public static final Color druid = make(94,133,49);
+	public static final Color fighter = make(133,76,48);
+
+	public static final Color bg = make (20,12,28);
+
+	public static final Color[] classes = new Color[]{rogue, wizard, protector, druid, fighter};
 	
 	public static final Color light;
 	public static final Color sand;

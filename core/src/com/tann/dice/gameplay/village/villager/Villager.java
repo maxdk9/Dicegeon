@@ -29,7 +29,7 @@ public class Villager {
 		this.type=VillagerType.Villager;
 //		firstName=generateName(true);
 //        lastName=generateName(false);
-        this.col = colours[index%colours.length];
+        this.col = Colours.classes[index%Colours.classes.length];
         setupDie();
     }
 

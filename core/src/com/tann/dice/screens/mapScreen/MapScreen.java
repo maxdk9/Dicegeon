@@ -35,7 +35,7 @@ public class MapScreen extends Screen{
 	
 	@Override
 	public void preDraw(Batch batch) {
-		batch.setColor(Colours.dark);
+		batch.setColor(Colours.bg);
 		Draw.fillActor(batch, this);
 
 	}
