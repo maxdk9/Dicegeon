@@ -1,10 +1,12 @@
 package com.tann.dice.bullet;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.*;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -12,14 +14,16 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.physics.bullet.dynamics.btConstraintSolver;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
+import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.village.villager.Villager;
+import com.tann.dice.gameplay.village.villager.DiceEntity;
 import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.util.Colours;
 
@@ -30,15 +34,14 @@ public class BulletStuff {
 	public final static short OBJECT_FLAG = 1 << 9;
 	public final static short ALL_FLAG = -1;
 	public static ShaderProgram shaderProgram;
-    static PerspectiveCamera cam;
-    public static PerspectiveCamera spinCam;
+    public static PerspectiveCamera cam;
 	static CameraInputController camController;
 	static ModelBatch modelBatch;
 	public static Array<ModelInstance> instances = new Array<>();
-	public static Array<ModelInstance> walls = new Array<>();
+	public static Array<CollisionObject> walls = new Array<>();
 	public static Array<Die> dice = new Array<>();
 	static Model model;
-	static CollisionObject ground;
+//	static CollisionObject ground;
 	static btBroadphaseInterface broadphase;
 	static btCollisionConfiguration collisionConfig;
 	static btDispatcher dispatcher;
@@ -47,7 +50,8 @@ public class BulletStuff {
 	static btConstraintSolver constraintSolver;
 	static Shader shader;
 	private static Vector3 dieClickPosition = new Vector3();
-    static final float camX=0, camY=9, camZ=-2;
+    static float camX=0, camY=9.5f, camZ=0;
+    static DebugDrawer debugDrawer;
 	public static void init(){
 		Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
@@ -59,58 +63,123 @@ public class BulletStuff {
 		contactListener = new MyContactListener();
 		modelBatch = new ModelBatch();
 
-		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(camX, camY, camZ);
-		cam.lookAt(0, 0, .1f);
-		cam.update();
-        camController = new CameraInputController(cam);
-		spinCam= new PerspectiveCamera(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        updateCamera();
+        ModelBuilder mb = new ModelBuilder();
 
-		ModelBuilder mb = new ModelBuilder();
-		mb.begin();
-		final float wallSize = 5.15f;
-		final float wallThickness = 0.5f;
-		mb.node().id = "ground";
-		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,new Material(ColorAttribute.createDiffuse(Colours.green_light))).box(wallSize*2, wallThickness, wallSize*2);
-		model = mb.end();
-		
-		ground = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, wallThickness, wallSize)), 0);
-		ground.userData=5;
-		ground.body.userData=5;
-		ground.transform.trn(0, wallSize, 0);
-		dynamicsWorld.addRigidBody(ground.body, GROUND_FLAG, ALL_FLAG);
-
-		for (int i = 0; i < 5; i++) {
-			CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, wallThickness, wallSize)), 0);
-			switch (i) {
-			case 0:
-				wall.transform.rotate(1, 0, 0, 90);
-				wall.transform.trn(0, wallSize, wallSize);
-				break;
-			case 1:
-				wall.transform.rotate(1, 0, 0, 90);
-				wall.transform.trn(0, wallSize, -wallSize);
-				break;
-			case 2:
-				wall.transform.rotate(0, 0, 1, 90);
-				wall.transform.trn(wallSize, wallSize, 0);
-				break;
-			case 3:
-				wall.transform.rotate(0, 0, 1, 90);
-				wall.transform.trn(-wallSize, wallSize, 0);
-				break;
-			case 4:
-				wall.transform.trn(0, wallSize*1.5f, 0);
-				break;
-			}
-			wall.initialUpdate();
-			walls.add(wall);
-			dynamicsWorld.addRigidBody(wall.body, OBJECT_FLAG, ALL_FLAG);
-		}
-		
+        walls.addAll(makeWalls(mb, -9, 0, 0, 6, 720*.019f, 2, .005f));
 		shader = new DieShader();
 	    shader.init();
+        debugDrawer = new DebugDrawer();
+        dynamicsWorld.setDebugDrawer(debugDrawer);
+        debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_DrawAabb);
 	}
+
+	public static void updateCamera(){
+	    // i reckon get the height right and the width can be height/width
+        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam.position.set(camX, camY, camZ);
+        cam.lookAt(0, 0, 0);
+        cam.update();
+        camController = new CameraInputController(cam);
+        Gdx.input.setInputProcessor(camController);
+    }
+
+	private static Array<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
+	    Array<CollisionObject> results = new Array<>();
+        mb.begin();
+        mb.node().id = "ground";
+        mb.part("ground", GL20.GL_TRIANGLES,  Usage.Position | Usage.Normal,new Material(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA), ColorAttribute.createDiffuse(new Color(.3f,.7f,.4f,.5f)))).
+                box(0,0,0);
+        model = mb.end();
+
+
+
+        for(int i=0;i<2;i++){
+            // top + bot
+            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(width/2, thickness/2, length/2)), 0);
+            if(i==0) {
+                wall.userData = 5;
+                wall.body.userData = 5;
+            }
+            wall.transform.trn(x, y+(i*2-1)*height/2, z);
+            results.add(wall);
+        }
+        for(int i=0;i<2;i++){
+            // left and right
+            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(thickness, height/2, length/2)), 0);
+            wall.transform.trn(x+(i*2-1)*width/2, y, z);
+            results.add(wall);
+        }
+
+        for(int i=0;i<2;i++){
+            // front and back
+            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(width/2, height/2, thickness/2)), 0);
+            wall.transform.trn(x, y, z+(i*2-1)*length/2);
+            results.add(wall);
+        }
+//        int mag = 5;
+//        for(int xx=-mag;xx<mag;xx++){
+//            for(int yy=-mag;yy<mag;yy++){
+//                for(int zz=-mag;zz<mag;zz++){
+//                    float size = .01f;
+//                    if(xx==0 && yy==0 && zz==0){
+//                        size = .05f;
+//                    }
+//                    CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(size,size,size)), 0);
+//                    wall.transform.trn(xx, yy, zz);
+//                    results.add(wall);
+//                }
+//            }
+//        }
+
+
+
+        for(int i=0;i<1;i++){
+            //faces
+//            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3()), 0);
+//            results.add(wall);
+        }
+
+        for(int i=0;i<2;i++){
+//            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(width, 100, thickness)), 0);
+//            results.add(wall);
+        }
+
+        for(int i=0;i<2;i++){
+
+        }
+
+//        for (int i = 0; i < 5; i++) {
+//            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, wallThickness, wallSize)), 0);
+//            switch (i) {
+//                case 0:
+//                    wall.transform.rotate(1, 0, 0, 90);
+//                    wall.transform.trn(0, wallSize, wallSize);
+//                    break;
+//                case 1:
+//                    wall.transform.rotate(1, 0, 0, 90);
+//                    wall.transform.trn(0, wallSize, -wallSize);
+//                    break;
+//                case 2:
+//                    wall.transform.rotate(0, 0, 1, 90);
+//                    wall.transform.trn(wallSize, wallSize, 0);
+//                    break;
+//                case 3:
+//                    wall.transform.rotate(0, 0, 1, 90);
+//                    wall.transform.trn(-wallSize, wallSize, 0);
+//                    break;
+//                case 4:
+//                    wall.transform.trn(0, wallSize*1.5f, 0);
+//                    break;
+//            }
+//
+//        }
+        for(CollisionObject co:results){
+            co.initialUpdate();
+            dynamicsWorld.addRigidBody(co.body, OBJECT_FLAG, ALL_FLAG);
+        }
+        return results;
+    }
 
 	public static void resize(){
 	    cam.viewportWidth=Main.width;
@@ -118,10 +187,10 @@ public class BulletStuff {
 	    cam.update();
 	}
 	
-	public static void refresh(Array<Villager> villagers) {
+	public static void refresh(Array<DiceEntity> villagers) {
 		dice.clear();
-		for(Villager v:villagers){
-			dice.add(v.die);
+		for(DiceEntity v:villagers){
+			dice.add(v.getDie());
 		}
 	}
 	
@@ -132,27 +201,13 @@ public class BulletStuff {
 	    modelBatch.begin(cam);
         modelBatch.render(instances, shader);
 	    modelBatch.end();
-//	    modelBatch.render(walls);
+        debugDrawer.begin(cam);
+        dynamicsWorld.debugDrawWorld();
+        debugDrawer.end();
+
 	}
 
 
-    public static void drawSpinnyDie3(Die die, float x, float y, float size){
-
-        spinCam.position.set(-2.5f, 5, -2.5f);
-        spinCam.lookAt(-1, 2.0f, -1);
-        spinCam.update();
-
-        float initialSize = 200;
-        float sizeFactor = size/initialSize;
-
-        Gdx.gl.glViewport((int)(x-Main.width*sizeFactor/2), (int)(y-Main.height*sizeFactor/2), (int)(Main.width*sizeFactor), (int)(Main.height*sizeFactor));
-        die.physical.transform.setToRotation(Vector3.X, 0);
-        die.physical.transform.setToRotation(1,1,1,Main.ticks*100);
-        modelBatch.begin(spinCam);
-        modelBatch.render(die.physical, shader);
-        modelBatch.end();
-        Gdx.gl.glViewport(0,0,Main.width, Main.height);
-    }
 
 	public static void update(float delta){
         float physicsDelta = Math.min(1f / 30f*Main.tickMult, delta);

@@ -3,7 +3,8 @@ package com.tann.dice.screens.mapScreen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.village.villager.Villager;
+import com.tann.dice.gameplay.village.villager.DiceEntity;
+import com.tann.dice.gameplay.village.villager.Hero;
 import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.util.*;
 
@@ -20,19 +21,19 @@ public class MapScreen extends Screen{
 	Array<Die> dice = new Array<>();
 
 	public MapScreen() {
-        Array<Villager> villagers = new Array<>();
-        villagers.add(new Villager(0, Villager.VillagerType.Apprentice));
-        villagers.add(new Villager(1, Villager.VillagerType.Rogue));
-        villagers.add(new Villager(2, Villager.VillagerType.Fighter));
-        villagers.add(new Villager(3, Villager.VillagerType.Defender));
-        villagers.add(new Villager(4, Villager.VillagerType.Herbalist));
+        Array<DiceEntity> heroes = new Array<>();
+        heroes.add(new Hero(Hero.HeroType.Apprentice));
+        heroes.add(new Hero(Hero.HeroType.Rogue));
+        heroes.add(new Hero(Hero.HeroType.Fighter));
+        heroes.add(new Hero(Hero.HeroType.Defender));
+        heroes.add(new Hero(Hero.HeroType.Herbalist));
 
 
-        BulletStuff.refresh(villagers);
-        for(Villager v:villagers){
-            dice.add(v.die);
-            v.die.addToScreen();
-            v.die.roll(true);
+        BulletStuff.refresh(heroes);
+        for(DiceEntity v:heroes){
+            dice.add(v.getDie());
+            v.getDie().addToScreen();
+            v.getDie().roll(true);
         }
 	}
 	

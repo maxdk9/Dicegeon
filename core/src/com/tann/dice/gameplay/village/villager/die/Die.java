@@ -18,8 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.village.villager.Villager;
-import com.tann.dice.gameplay.village.villager.Villager.VillagerType;
+import com.tann.dice.gameplay.village.villager.DiceEntity;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 import com.tann.dice.util.Sounds;
@@ -30,8 +29,7 @@ public class Die {
 
     public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
 
-	public Villager villager;
-    public VillagerType type;
+	public DiceEntity entity;
     public CollisionObject physical;
     public Array<Side> sides = new Array<>();
     private static final float MAX_AIRTIME = 2.4f;
@@ -217,7 +215,7 @@ public class Die {
 
         timeInAir=0;
         physical.body.clearForces();
-        randomise(18, 3, 0, 8, 1, 0);
+        randomise(12, 3, 0, 8, 1, 0);
     }
 
     private void resetForRoll() {
@@ -301,7 +299,6 @@ public class Die {
 	}
 	
 	private float getFloat(TextureRegion tr){
-        System.out.println(tr.toString());
         if(tr==null){
             System.out.println("ahh");
         }
@@ -351,8 +348,8 @@ public class Die {
 	}
 
 	public Color getColour() {
-	    if(villager==null) return Colours.dark;
-		return villager.getColour(); 
+	    if(entity==null) return Colours.dark;
+		return entity.getColour();
 	}
 
 	private float[] texLocs = null;
@@ -368,8 +365,8 @@ public class Die {
 			texLocs[4*i+2] = s.tr[1].getRegionX()/width;
 			texLocs[4*i+3] = s.tr[1].getRegionY()/height;
 		}
-		texLocs[24]=villager.type.lapel.getRegionX()/width;
-		texLocs[25]=villager.type.lapel.getRegionY()/height;
+		texLocs[24]=entity.lapel.getRegionX()/width;
+		texLocs[25]=entity.lapel.getRegionY()/height;
 		
 		return texLocs;
 	}
@@ -415,29 +412,14 @@ public class Die {
 
     // setup stuff
 
-    public Die(Villager villager) {
-        this.villager=villager;
-        setup(villager.type);
+    public Die(DiceEntity entity) {
+        this.entity=entity;
+        setup();
         construct();
     }
 
-    public Die(VillagerType type){
-        setup(type);
-        this.type=type;
-        construct();
-    }
-
-    public Die(VillagerType type, Villager villager){
-        this.villager=villager;
-        this.type=type;
-        setup(type);
-        construct();
-        glowOverride = true;
-    }
-
-    public void setup(VillagerType type){
-        this.type=type;
-        for(Side s:type.sides){
+    public void setup(){
+        for(Side s:entity.sides){
             addSide(s);
         }
     }

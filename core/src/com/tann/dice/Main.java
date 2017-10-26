@@ -3,6 +3,7 @@ package com.tann.dice;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -21,7 +22,7 @@ import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
 
 public class Main extends ApplicationAdapter {
-	public static int width = 1000, height = 700;
+	public static int width = 1000, height = 300;
 	public static String version = "0.3.1";
 	SpriteBatch batch;
 	Stage stage;
@@ -57,19 +58,6 @@ public class Main extends ApplicationAdapter {
 	public Main(int width, int height){
 	    Main.width = width;
 	    Main.height=height;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        Main.width = width;
-        Main.height=height;
-        orthoCam.setToOrtho(false, width, height);
-        stage.getViewport().update(width, height);
-        Fonts.setup();
-        BulletStuff.resize();
-        if(currentScreen!=null){
-            currentScreen.layChain();
-        }
     }
 
 	@Override
@@ -138,6 +126,19 @@ public class Main extends ApplicationAdapter {
 		logTime("screen");
 	}
 
+    @Override
+    public void resize(int width, int height) {
+        Main.width = width;
+        Main.height=height;
+        orthoCam.setToOrtho(false, width, height);
+        stage.getViewport().update(width, height);
+        Fonts.setup();
+        BulletStuff.resize();
+        if(currentScreen!=null){
+            currentScreen.layChain();
+        }
+        BulletStuff.updateCamera();
+    }
 
 
 
