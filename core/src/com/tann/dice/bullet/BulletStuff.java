@@ -50,8 +50,12 @@ public class BulletStuff {
 	static btConstraintSolver constraintSolver;
 	static Shader shader;
 	private static Vector3 dieClickPosition = new Vector3();
-    static float camX=0, camY=9.5f, camZ=0;
-    static DebugDrawer debugDrawer;
+	static float camX=0, camY=3, camZ=0;
+	static DebugDrawer debugDrawer;
+	static final float heightFactor = 6.68f;
+
+	static boolean debugDraw = false;
+
 	public static void init(){
 		Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
@@ -63,60 +67,67 @@ public class BulletStuff {
 		contactListener = new MyContactListener();
 		modelBatch = new ModelBatch();
 
-        updateCamera();
-        ModelBuilder mb = new ModelBuilder();
-
-        walls.addAll(makeWalls(mb, -9, 0, 0, 6, 720*.019f, 2, .005f));
+		updateCamera();
+		ModelBuilder mb = new ModelBuilder();
+		walls.addAll(makeWalls(mb, 10, 5, 0, heightFactor*Main.width/Main.height, heightFactor, 10, .005f));
 		shader = new DieShader();
-	    shader.init();
-        debugDrawer = new DebugDrawer();
-        dynamicsWorld.setDebugDrawer(debugDrawer);
-        debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_DrawAabb);
+		shader.init();
+		if(debugDraw) {
+			debugDrawer = new DebugDrawer();
+			dynamicsWorld.setDebugDrawer(debugDrawer);
+			debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_DrawAabb);
+		}
 	}
 
 	public static void updateCamera(){
 	    // i reckon get the height right and the width can be height/width
-        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(camX, camY, camZ);
-        cam.lookAt(0, 0, 0);
+        cam = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam.position.set(camX, camY, camZ-heightFactor/2);
+        cam.lookAt(0, 0, -heightFactor/2);
         cam.update();
         camController = new CameraInputController(cam);
         Gdx.input.setInputProcessor(camController);
     }
 
 	private static Array<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
-	    Array<CollisionObject> results = new Array<>();
-        mb.begin();
-        mb.node().id = "ground";
-        mb.part("ground", GL20.GL_TRIANGLES,  Usage.Position | Usage.Normal,new Material(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA), ColorAttribute.createDiffuse(new Color(.3f,.7f,.4f,.5f)))).
-                box(0,0,0);
-        model = mb.end();
+		Array<CollisionObject> results = new Array<>();
+		float trX = x-width/2;
+		float trY = y-height/2;
+		float trZ = z-length/2;
+		mb.begin();
+		mb.node().id = "ground";
+		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
+				new Material(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA),
+						ColorAttribute.createDiffuse(new Color(.3f, .7f, .4f, .5f)))).
+				box(0, 0, 0);
+		model = mb.end();
 
+		for (int i = 0; i < 2; i++) {
+			// top + bot
+			CollisionObject wall = new CollisionObject(model, "ground",
+					new btBoxShape(new Vector3(width / 2, thickness / 2, length / 2)), 0);
+			if (i == 0) {
+				wall.userData = 5;
+				wall.body.userData = 5;
+			}
+			wall.transform.trn(trX, trY + (i * 2 - 1) * height / 2, trZ);
+			results.add(wall);
+		}
+		for (int i = 0; i < 2; i++) {
+			// left and right
+			CollisionObject wall = new CollisionObject(model, "ground",
+					new btBoxShape(new Vector3(thickness, height / 2, length / 2)), 0);
+			wall.transform.trn(trX + (i * 2 - 1) * width / 2, trY, trZ);
+			results.add(wall);
+		}
 
-
-        for(int i=0;i<2;i++){
-            // top + bot
-            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(width/2, thickness/2, length/2)), 0);
-            if(i==0) {
-                wall.userData = 5;
-                wall.body.userData = 5;
-            }
-            wall.transform.trn(x, y+(i*2-1)*height/2, z);
-            results.add(wall);
-        }
-        for(int i=0;i<2;i++){
-            // left and right
-            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(thickness, height/2, length/2)), 0);
-            wall.transform.trn(x+(i*2-1)*width/2, y, z);
-            results.add(wall);
-        }
-
-        for(int i=0;i<2;i++){
-            // front and back
-            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(width/2, height/2, thickness/2)), 0);
-            wall.transform.trn(x, y, z+(i*2-1)*length/2);
-            results.add(wall);
-        }
+		for (int i = 0; i < 2; i++) {
+			// front and back
+			CollisionObject wall = new CollisionObject(model, "ground",
+					new btBoxShape(new Vector3(width / 2, height / 2, thickness / 2)), 0);
+			wall.transform.trn(trX, trY, trZ + (i * 2 - 1) * length / 2);
+			results.add(wall);
+		}
 //        int mag = 5;
 //        for(int xx=-mag;xx<mag;xx++){
 //            for(int yy=-mag;yy<mag;yy++){
@@ -132,22 +143,20 @@ public class BulletStuff {
 //            }
 //        }
 
-
-
-        for(int i=0;i<1;i++){
-            //faces
+		for (int i = 0; i < 1; i++) {
+			//faces
 //            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3()), 0);
 //            results.add(wall);
-        }
+		}
 
-        for(int i=0;i<2;i++){
+		for (int i = 0; i < 2; i++) {
 //            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(width, 100, thickness)), 0);
 //            results.add(wall);
-        }
+		}
 
-        for(int i=0;i<2;i++){
+		for (int i = 0; i < 2; i++) {
 
-        }
+		}
 
 //        for (int i = 0; i < 5; i++) {
 //            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, wallThickness, wallSize)), 0);
@@ -174,12 +183,12 @@ public class BulletStuff {
 //            }
 //
 //        }
-        for(CollisionObject co:results){
-            co.initialUpdate();
-            dynamicsWorld.addRigidBody(co.body, OBJECT_FLAG, ALL_FLAG);
-        }
-        return results;
-    }
+		for (CollisionObject co : results) {
+			co.initialUpdate();
+			dynamicsWorld.addRigidBody(co.body, OBJECT_FLAG, ALL_FLAG);
+		}
+		return results;
+	}
 
 	public static void resize(){
 	    cam.viewportWidth=Main.width;
@@ -197,14 +206,15 @@ public class BulletStuff {
 	public static final int mass = 1;
 
 	public static void render() {
-        camController.update();
-	    modelBatch.begin(cam);
-        modelBatch.render(instances, shader);
-	    modelBatch.end();
-        debugDrawer.begin(cam);
-        dynamicsWorld.debugDrawWorld();
-        debugDrawer.end();
-
+		camController.update();
+		modelBatch.begin(cam);
+		modelBatch.render(instances, shader);
+		modelBatch.end();
+		if(debugDraw) {
+			debugDrawer.begin(cam);
+			dynamicsWorld.debugDrawWorld();
+			debugDrawer.end();
+		}
 	}
 
 

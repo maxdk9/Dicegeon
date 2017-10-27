@@ -22,7 +22,7 @@ import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
 
 public class Main extends ApplicationAdapter {
-	public static int width = 1000, height = 300;
+	public static int width = 800, height = 400;
 	public static String version = "0.3.1";
 	SpriteBatch batch;
 	Stage stage;
