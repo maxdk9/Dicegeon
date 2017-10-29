@@ -52,12 +52,26 @@ public class BulletStuff {
 	private static Vector3 dieClickPosition = new Vector3();
 	static float camX=0, camY=3, camZ=0;
 	static DebugDrawer debugDrawer;
-	static final float heightFactor = 6.68f;
-
-	static boolean debugDraw = false;
+    static float height = 3;
+    static float extra = 300;
+	static  float heightFactor = height*.7f;
+    static float fov = 89;
+	static boolean debugDraw = true;
 
 	public static void init(){
-		Bullet.init();
+
+	    float cos = (float) Math.cos(Math.toRadians(fov/2));
+        float b = (float) (height/cos);
+        float half = (float) Math.sqrt(b*b-height*height);
+        float full = half *2;
+        System.out.println("cos: "+cos);
+        System.out.println("b:"+b+" half:"+half);
+
+        heightFactor = full;
+
+//        heightFactor = 100;
+
+        Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
@@ -69,7 +83,11 @@ public class BulletStuff {
 
 		updateCamera();
 		ModelBuilder mb = new ModelBuilder();
-		walls.addAll(makeWalls(mb, 10, 5, 0, heightFactor*Main.width/Main.height, heightFactor, 10, .005f));
+
+
+
+		float width  = heightFactor*Main.width/Main.height;
+		walls.addAll(makeWalls(mb, width/2, extra, 0, width, heightFactor, height+extra, .005f));
 		shader = new DieShader();
 		shader.init();
 		if(debugDraw) {
@@ -81,7 +99,8 @@ public class BulletStuff {
 
 	public static void updateCamera(){
 	    // i reckon get the height right and the width can be height/width
-        cam = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        cam = new PerspectiveCamera(fov, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(camX, camY, camZ-heightFactor/2);
         cam.lookAt(0, 0, -heightFactor/2);
         cam.update();

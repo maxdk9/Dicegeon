@@ -22,7 +22,7 @@ import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
 
 public class Main extends ApplicationAdapter {
-	public static int width = 800, height = 400;
+	public static int width = 1280, height = 720;
 	public static String version = "0.3.1";
 	SpriteBatch batch;
 	Stage stage;
@@ -130,7 +130,7 @@ public class Main extends ApplicationAdapter {
     public void resize(int width, int height) {
         Main.width = width;
         Main.height=height;
-        orthoCam.setToOrtho(false, width, height);
+//        orthoCam.setToOrtho(false, width, height);
         stage.getViewport().update(width, height);
         Fonts.setup();
         BulletStuff.resize();

@@ -41,6 +41,8 @@ public class MapScreen extends Screen{
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.bg);
 		Draw.fillActor(batch, this);
+		batch.setColor(Colours.blue_dark);
+		Draw.fillRectangle(batch, 50, 350, 50, 50);
 
 	}
 
