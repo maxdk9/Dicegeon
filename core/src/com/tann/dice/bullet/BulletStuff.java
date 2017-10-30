@@ -85,7 +85,7 @@ public class BulletStuff {
 		float w1 = 1-border*2-gap*mySide;
 		float w2 = 1-border*2-gap*(1-mySide);
 		float middleStuff = 1-border*2-gap;
-        walls.addAll(makeWalls(mb, 0, extra, 0, scrWidth*middleStuff*mySide, heightFactor*(1-(border*2)), height+extra, .005f));
+        walls.addAll(makeWalls(mb, 3, extra, 0, scrWidth*1-(gap*2), heightFactor*1-(gap*2), height+extra, .005f));
 
 //        walls.addAll(makeWalls(mb, w2/2, extra, heightFactor/2, width, heightFactor, height+extra, .005f));
 
@@ -112,9 +112,9 @@ public class BulletStuff {
 
 	private static Array<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
 		Array<CollisionObject> results = new Array<>();
-		float trX = x;
+		float trX = x-width/2+scrWidth/2;
 		float trY = y-height/2;
-		float trZ = z-heightFactor/2;
+		float trZ = z-length/2+heightFactor/2;
 		mb.begin();
 		mb.node().id = "ground";
 		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
