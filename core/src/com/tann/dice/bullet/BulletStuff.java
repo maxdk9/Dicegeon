@@ -41,7 +41,6 @@ public class BulletStuff {
 	public static Array<CollisionObject> walls = new Array<>();
 	public static Array<Die> dice = new Array<>();
 	static Model model;
-//	static CollisionObject ground;
 	static btBroadphaseInterface broadphase;
 	static btCollisionConfiguration collisionConfig;
 	static btDispatcher dispatcher;
@@ -52,15 +51,13 @@ public class BulletStuff {
 	private static Vector3 dieClickPosition = new Vector3();
 	static float camX=0, camY=0, camZ=0;
 	static DebugDrawer debugDrawer;
-    static float height = 53;
+    static float height = 17;
     static float extra = 3;
 	static  float heightFactor = height*.7f;
-    static float fov = 65;
+    static float fov = 35;
 	static boolean debugDraw = true;
-
+    static float scrWidth;
 	public static void init(){
-
-
 
         Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
@@ -72,27 +69,26 @@ public class BulletStuff {
 		contactListener = new MyContactListener();
 		modelBatch = new ModelBatch();
 
-
 		ModelBuilder mb = new ModelBuilder();
 
 		float cos = (float) Math.cos(Math.toRadians(fov/2));
 		float hypot = (height/cos);
 		float half = (float) Math.sqrt(hypot*hypot-height*height);
 		float full = half *2;
-		System.out.println("cos: "+cos);
-
-		System.out.println("height: "+height);
-		System.out.println("hypot: "+hypot);
-		System.out.println("half: "+half);
-
-		System.out.println("hypot:"+hypot+" half:"+half);
-
 		heightFactor = full;
+        scrWidth  = heightFactor*Main.width/Main.height;
 
-//        heightFactor = 100;
+		float border = .05f;
+		float gap = .1f;
+		float mySide = .65f;
 
-		float width  = heightFactor*Main.width/Main.height;
-		walls.addAll(makeWalls(mb, width/2, extra, heightFactor/2, width, heightFactor, height+extra, .005f));
+		float w1 = 1-border*2-gap*mySide;
+		float w2 = 1-border*2-gap*(1-mySide);
+		float middleStuff = 1-border*2-gap;
+        walls.addAll(makeWalls(mb, 0, extra, 0, scrWidth*middleStuff*mySide, heightFactor*(1-(border*2)), height+extra, .005f));
+
+//        walls.addAll(makeWalls(mb, w2/2, extra, heightFactor/2, width, heightFactor, height+extra, .005f));
+
 		shader = new DieShader();
 		shader.init();
 		if(debugDraw) {
@@ -116,9 +112,9 @@ public class BulletStuff {
 
 	private static Array<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
 		Array<CollisionObject> results = new Array<>();
-		float trX = x-width/2;
+		float trX = x;
 		float trY = y-height/2;
-		float trZ = z-length/2;
+		float trZ = z-heightFactor/2;
 		mb.begin();
 		mb.node().id = "ground";
 		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,

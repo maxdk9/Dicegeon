@@ -22,12 +22,14 @@ public class MapScreen extends Screen{
 
 	public MapScreen() {
         Array<DiceEntity> heroes = new Array<>();
-        heroes.add(new Hero(Hero.HeroType.Apprentice));
-        heroes.add(new Hero(Hero.HeroType.Rogue));
-        heroes.add(new Hero(Hero.HeroType.Fighter));
-        heroes.add(new Hero(Hero.HeroType.Defender));
-        heroes.add(new Hero(Hero.HeroType.Herbalist));
 
+        for(int i=0;i<1;i++) {
+            heroes.add(new Hero(Hero.HeroType.Apprentice));
+            heroes.add(new Hero(Hero.HeroType.Rogue));
+            heroes.add(new Hero(Hero.HeroType.Fighter));
+            heroes.add(new Hero(Hero.HeroType.Defender));
+            heroes.add(new Hero(Hero.HeroType.Herbalist));
+        }
 
         BulletStuff.refresh(heroes);
         for(DiceEntity v:heroes){
@@ -41,8 +43,8 @@ public class MapScreen extends Screen{
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.bg);
 		Draw.fillActor(batch, this);
-		batch.setColor(Colours.blue_dark);
-		Draw.fillRectangle(batch, 50, 350, 50, 50);
+//		batch.setColor(Colours.blue_dark);
+//		Draw.fillRectangle(batch, 50, 350, 50, 50);
 
 	}
 
