@@ -50,26 +50,17 @@ public class BulletStuff {
 	static btConstraintSolver constraintSolver;
 	static Shader shader;
 	private static Vector3 dieClickPosition = new Vector3();
-	static float camX=0, camY=3, camZ=0;
+	static float camX=0, camY=0, camZ=0;
 	static DebugDrawer debugDrawer;
-    static float height = 3;
-    static float extra = 300;
+    static float height = 53;
+    static float extra = 3;
 	static  float heightFactor = height*.7f;
-    static float fov = 89;
+    static float fov = 65;
 	static boolean debugDraw = true;
 
 	public static void init(){
 
-	    float cos = (float) Math.cos(Math.toRadians(fov/2));
-        float b = (float) (height/cos);
-        float half = (float) Math.sqrt(b*b-height*height);
-        float full = half *2;
-        System.out.println("cos: "+cos);
-        System.out.println("b:"+b+" half:"+half);
 
-        heightFactor = full;
-
-//        heightFactor = 100;
 
         Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
@@ -81,13 +72,27 @@ public class BulletStuff {
 		contactListener = new MyContactListener();
 		modelBatch = new ModelBatch();
 
-		updateCamera();
+
 		ModelBuilder mb = new ModelBuilder();
 
+		float cos = (float) Math.cos(Math.toRadians(fov/2));
+		float hypot = (height/cos);
+		float half = (float) Math.sqrt(hypot*hypot-height*height);
+		float full = half *2;
+		System.out.println("cos: "+cos);
 
+		System.out.println("height: "+height);
+		System.out.println("hypot: "+hypot);
+		System.out.println("half: "+half);
+
+		System.out.println("hypot:"+hypot+" half:"+half);
+
+		heightFactor = full;
+
+//        heightFactor = 100;
 
 		float width  = heightFactor*Main.width/Main.height;
-		walls.addAll(makeWalls(mb, width/2, extra, 0, width, heightFactor, height+extra, .005f));
+		walls.addAll(makeWalls(mb, width/2, extra, heightFactor/2, width, heightFactor, height+extra, .005f));
 		shader = new DieShader();
 		shader.init();
 		if(debugDraw) {
@@ -95,14 +100,15 @@ public class BulletStuff {
 			dynamicsWorld.setDebugDrawer(debugDrawer);
 			debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_DrawAabb);
 		}
+		updateCamera();
 	}
 
 	public static void updateCamera(){
 	    // i reckon get the height right and the width can be height/width
 
-        cam = new PerspectiveCamera(fov, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(camX, camY, camZ-heightFactor/2);
-        cam.lookAt(0, 0, -heightFactor/2);
+        cam = new PerspectiveCamera(fov, Main.width, Main.height);
+        cam.position.set(camX, camY, camZ);
+        cam.lookAt(0, -1, 0);
         cam.update();
         camController = new CameraInputController(cam);
         Gdx.input.setInputProcessor(camController);
