@@ -29,7 +29,7 @@ public class Die {
 
     public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
 
-	public DiceEntity entity;
+	  public DiceEntity entity;
     public CollisionObject physical;
     public Array<Side> sides = new Array<>();
     private static final float MAX_AIRTIME = 2.4f;
@@ -482,8 +482,16 @@ public class Die {
     }
 
     private void randomiseStart() {
-        float positionRand = 3.5f;
-        physical.transform.setToTranslation(MathUtils.random(-positionRand, positionRand), 1, MathUtils.random(-positionRand, positionRand)); // starting position
+
+        Rectangle bounds = entity.isPlayer() ? BulletStuff.playerArea : BulletStuff.enemyArea;
+        float positionRand = .4f;
+        float startX = (float) (bounds.x+bounds.width*(1-positionRand)/2 + Math.random()*positionRand*bounds.width);
+        float startY = (float) (bounds.y+bounds.height*(1-positionRand)/2 + Math.random()*positionRand*bounds.height);
+        startX -=BulletStuff.scrWidth/2;
+        startY -=BulletStuff.heightFactor/2;
+        float startHeight = BulletStuff.extra-BulletStuff.height+2;
+
+        physical.transform.setToTranslation(startX, startHeight, startY); // starting position
         physical.body.setWorldTransform(physical.transform);
         physical.body.setActivationState(4);
     }

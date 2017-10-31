@@ -10,6 +10,11 @@ public class Hero extends DiceEntity{
         super(type.sides);
     }
 
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
+
     public enum HeroType{
 
         Apprentice(Side.magic1, Side.magic1, Side.magic2, Side.nothing, Side.nothing, Side.nothing),

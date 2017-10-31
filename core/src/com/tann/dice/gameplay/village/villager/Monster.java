@@ -9,9 +9,14 @@ public class Monster extends DiceEntity{
         super(type.sides);
     }
 
+    @Override
+    public boolean isPlayer() {
+        return false;
+    }
+
     public enum MonsterType{
 
-        Goblin(Side.magic1, Side.magic1, Side.magic2, Side.nothing, Side.nothing, Side.nothing);
+        Goblin(Side.sword1, Side.sword1, Side.sword1, Side.sword1, Side.sword1, Side.sword1);
 
         public Side[] sides;
         public TextureRegion lapel;

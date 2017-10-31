@@ -9,12 +9,12 @@ import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.util.Colours;
 
 
-public class DiceEntity {
+public abstract class DiceEntity {
 
 
-    Color col;
+ 	Color col;
 	private Die die;
-    public TextureRegion lapel;
+	public TextureRegion lapel;
 	public Side[] sides;
 	static int i;
 	public DiceEntity(Side[] sides) {
@@ -39,4 +39,7 @@ public class DiceEntity {
 	public Color getColour() {
 		return col;
 	}
+
+	public abstract boolean isPlayer();
+
 }

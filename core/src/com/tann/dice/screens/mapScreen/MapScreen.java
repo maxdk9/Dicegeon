@@ -5,6 +5,8 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
 import com.tann.dice.gameplay.village.villager.Hero;
+import com.tann.dice.gameplay.village.villager.Monster;
+import com.tann.dice.gameplay.village.villager.Monster.MonsterType;
 import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.util.*;
 
@@ -21,18 +23,22 @@ public class MapScreen extends Screen{
 	Array<Die> dice = new Array<>();
 
 	public MapScreen() {
-        Array<DiceEntity> heroes = new Array<>();
+		Array<DiceEntity> entities = new Array<>();
 
         for(int i=0;i<1;i++) {
-            heroes.add(new Hero(Hero.HeroType.Apprentice));
-            heroes.add(new Hero(Hero.HeroType.Rogue));
-            heroes.add(new Hero(Hero.HeroType.Fighter));
-            heroes.add(new Hero(Hero.HeroType.Defender));
-            heroes.add(new Hero(Hero.HeroType.Herbalist));
+					entities.add(new Hero(Hero.HeroType.Apprentice));
+					entities.add(new Hero(Hero.HeroType.Rogue));
+					entities.add(new Hero(Hero.HeroType.Fighter));
+					entities.add(new Hero(Hero.HeroType.Defender));
+					entities.add(new Hero(Hero.HeroType.Herbalist));
+					entities.add(new Monster(MonsterType.Goblin));
+					entities.add(new Monster(MonsterType.Goblin));
+					entities.add(new Monster(MonsterType.Goblin));
+					entities.add(new Monster(MonsterType.Goblin));
         }
 
-        BulletStuff.refresh(heroes);
-        for(DiceEntity v:heroes){
+        BulletStuff.refresh(entities);
+        for(DiceEntity v:entities){
             dice.add(v.getDie());
             v.getDie().addToScreen();
             v.getDie().roll(true);

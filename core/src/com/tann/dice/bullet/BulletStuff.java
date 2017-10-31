@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.Bullet;
@@ -51,15 +52,20 @@ public class BulletStuff {
 	private static Vector3 dieClickPosition = new Vector3();
 	static float camX=0, camY=0, camZ=0;
 	static DebugDrawer debugDrawer;
-    static float height = 17;
-    static float extra = 3;
-	static  float heightFactor = height*.7f;
-    static float fov = 35;
-	static boolean debugDraw = true;
-    static float scrWidth;
+	public static float height = 17;
+	public static float extra = 3;
+	public static  float heightFactor = height*.7f;
+	static float fov = 35;
+	static boolean debugDraw = false;
+	public static float scrWidth;
+
+
+	public static Rectangle playerArea;
+	public static Rectangle enemyArea;
+
 	public static void init(){
 
-        Bullet.init();
+		Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
@@ -78,7 +84,7 @@ public class BulletStuff {
 		heightFactor = full;
 		scrWidth  = heightFactor*Main.width/Main.height;
 
-		float border = .01f;
+		float border = .03f;
 		float gap = .03f;
 		float mySideRatio = .7f;
 
@@ -86,8 +92,11 @@ public class BulletStuff {
 		float mySide = playArea*mySideRatio;
 		float theirSide = playArea*(1-mySideRatio);
 
-		walls.addAll(makeWalls(mb, border*scrWidth, extra, border*heightFactor, scrWidth*mySide, heightFactor*(1-border*2), height+extra,.005f));
-		walls.addAll(makeWalls(mb, (border+mySide+gap)*scrWidth, extra, border*heightFactor, scrWidth*theirSide, heightFactor*(1-border*2), height+extra, 005f));
+		playerArea = new Rectangle(border*scrWidth, border*heightFactor, scrWidth*mySide, heightFactor*(1-border*2));
+		enemyArea = new Rectangle((border+mySide+gap)*scrWidth, border*heightFactor, scrWidth*theirSide, heightFactor*(1-border*2));
+
+		walls.addAll(makeWalls(mb, playerArea.x, extra, playerArea.y, playerArea.width, playerArea.height, height+extra,.005f));
+		walls.addAll(makeWalls(mb, enemyArea.x, extra, enemyArea.y, enemyArea.width, enemyArea.height, height+extra, .005f));
 
 		shader = new DieShader();
 		shader.init();
@@ -107,7 +116,9 @@ public class BulletStuff {
         cam.lookAt(0, -1, 0);
         cam.update();
         camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(camController);
+        if(debugDraw && false) {
+					Gdx.input.setInputProcessor(camController);
+				}
     }
 
 	private static Array<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
