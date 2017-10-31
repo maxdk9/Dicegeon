@@ -1,7 +1,9 @@
 package com.tann.dice.screens.mapScreen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
 import com.tann.dice.gameplay.village.villager.Hero;
@@ -49,10 +51,17 @@ public class MapScreen extends Screen{
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.bg);
 		Draw.fillActor(batch, this);
-//		batch.setColor(Colours.blue_dark);
-//		Draw.fillRectangle(batch, 50, 350, 50, 50);
+		batch.setColor(Colours.blue_dark);
+        drawRectThing(batch, BulletStuff.playerArea);
+		batch.setColor(Colours.red);
+        drawRectThing(batch, BulletStuff.enemyArea);
 
 	}
+
+	public void drawRectThing(Batch batch, Rectangle rect){
+	    float factor = Main.height/BulletStuff.heightFactor;
+        Draw.fillRectangle(batch, rect.x*factor, Main.height-rect.y*factor-rect.height*factor, rect.width*factor, rect.height*factor);
+    }
 
 	@Override
 	public void postDraw(Batch batch) {

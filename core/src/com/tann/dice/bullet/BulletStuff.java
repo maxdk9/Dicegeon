@@ -84,16 +84,25 @@ public class BulletStuff {
 		heightFactor = full;
 		scrWidth  = heightFactor*Main.width/Main.height;
 
-		float border = .03f;
+		float border = .04f;
 		float gap = .03f;
-		float mySideRatio = .7f;
+		float bottomBorder = .3f;
+		float mySideRatio = .6f;
 
 		float playArea =(1-border*2-gap);
 		float mySide = playArea*mySideRatio;
 		float theirSide = playArea*(1-mySideRatio);
-
-		playerArea = new Rectangle(border*scrWidth, border*heightFactor, scrWidth*mySide, heightFactor*(1-border*2));
-		enemyArea = new Rectangle((border+mySide+gap)*scrWidth, border*heightFactor, scrWidth*theirSide, heightFactor*(1-border*2));
+        float literalBorder = border*scrWidth;
+		playerArea = new Rectangle(
+		        literalBorder,
+                literalBorder,
+                scrWidth*mySide,
+                heightFactor*(1-bottomBorder)-literalBorder*2);
+		enemyArea = new Rectangle(
+		        literalBorder+(mySide+gap)*scrWidth,
+                literalBorder,
+                scrWidth*theirSide,
+                heightFactor*(1-bottomBorder)-literalBorder*2);
 
 		walls.addAll(makeWalls(mb, playerArea.x, extra, playerArea.y, playerArea.width, playerArea.height, height+extra,.005f));
 		walls.addAll(makeWalls(mb, enemyArea.x, extra, enemyArea.y, enemyArea.width, enemyArea.height, height+extra, .005f));
