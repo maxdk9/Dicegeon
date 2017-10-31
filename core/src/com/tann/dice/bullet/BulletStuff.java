@@ -76,18 +76,18 @@ public class BulletStuff {
 		float half = (float) Math.sqrt(hypot*hypot-height*height);
 		float full = half *2;
 		heightFactor = full;
-        scrWidth  = heightFactor*Main.width/Main.height;
+		scrWidth  = heightFactor*Main.width/Main.height;
 
-		float border = .05f;
-		float gap = .1f;
-		float mySide = .65f;
+		float border = .01f;
+		float gap = .03f;
+		float mySideRatio = .7f;
 
-		float w1 = 1-border*2-gap*mySide;
-		float w2 = 1-border*2-gap*(1-mySide);
-		float middleStuff = 1-border*2-gap;
-        walls.addAll(makeWalls(mb, 3, extra, 0, scrWidth*1-(gap*2), heightFactor*1-(gap*2), height+extra, .005f));
+		float playArea =(1-border*2-gap);
+		float mySide = playArea*mySideRatio;
+		float theirSide = playArea*(1-mySideRatio);
 
-//        walls.addAll(makeWalls(mb, w2/2, extra, heightFactor/2, width, heightFactor, height+extra, .005f));
+		walls.addAll(makeWalls(mb, border*scrWidth, extra, border*heightFactor, scrWidth*mySide, heightFactor*(1-border*2), height+extra,.005f));
+		walls.addAll(makeWalls(mb, (border+mySide+gap)*scrWidth, extra, border*heightFactor, scrWidth*theirSide, heightFactor*(1-border*2), height+extra, 005f));
 
 		shader = new DieShader();
 		shader.init();
@@ -112,9 +112,9 @@ public class BulletStuff {
 
 	private static Array<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
 		Array<CollisionObject> results = new Array<>();
-		float trX = x-width/2+scrWidth/2;
+		float trX = x+width/2-scrWidth/2;
 		float trY = y-height/2;
-		float trZ = z-length/2+heightFactor/2;
+		float trZ = z+length/2-heightFactor/2;
 		mb.begin();
 		mb.node().id = "ground";
 		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
