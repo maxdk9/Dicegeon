@@ -13,6 +13,9 @@ import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.screens.dungeon.panels.BottomPanel;
 import com.tann.dice.util.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DungeonScreen extends Screen{
 
 	private static DungeonScreen self;
@@ -26,30 +29,36 @@ public class DungeonScreen extends Screen{
 	Array<Die> dice = new Array<>();
 
 	public DungeonScreen() {
-		Array<DiceEntity> entities = new Array<>();
-
-        for(int i=0;i<1;i++) {
-					entities.add(new Hero(Hero.HeroType.Apprentice));
-					entities.add(new Hero(Hero.HeroType.Rogue));
-					entities.add(new Hero(Hero.HeroType.Fighter));
-					entities.add(new Hero(Hero.HeroType.Defender));
-					entities.add(new Hero(Hero.HeroType.Herbalist));
-					entities.add(new Monster(MonsterType.Goblin));
-					entities.add(new Monster(MonsterType.Goblin));
-					entities.add(new Monster(MonsterType.Goblin));
-					entities.add(new Monster(MonsterType.Goblin));
+        Array<Hero> heroes = new Array<>();
+        Array<Monster> monsters = new Array<>();
+        Array<DiceEntity> all = new Array<>();
+        for (int i = 0; i < 1; i++) {
+            heroes.add(new Hero(Hero.HeroType.Apprentice));
+            heroes.add(new Hero(Hero.HeroType.Rogue));
+            heroes.add(new Hero(Hero.HeroType.Fighter));
+            heroes.add(new Hero(Hero.HeroType.Defender));
+            heroes.add(new Hero(Hero.HeroType.Herbalist));
+            monsters.add(new Monster(MonsterType.Goblin));
+            monsters.add(new Monster(MonsterType.Goblin));
+            monsters.add(new Monster(MonsterType.Goblin));
+            monsters.add(new Monster(MonsterType.Goblin));
         }
-
-        BulletStuff.refresh(entities);
-        for(DiceEntity v:entities){
+        all.addAll(heroes);
+        all.addAll(monsters);
+        BulletStuff.refresh(all);
+        for (DiceEntity v : all) {
             dice.add(v.getDie());
             v.getDie().addToScreen();
             v.getDie().roll(true);
         }
-		addActor(new BottomPanel(true));
-		addActor(new BottomPanel(false));
-	}
-	
+        BottomPanel friendly = new BottomPanel(true);
+        friendly.addEntities(heroes);
+        addActor(friendly);
+        BottomPanel enemy = new BottomPanel(false);
+        enemy.addEntities(monsters);
+        addActor(enemy);
+    }
+
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.bg);

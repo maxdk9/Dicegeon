@@ -5,8 +5,10 @@ import com.tann.dice.Images;
 import com.tann.dice.gameplay.village.villager.die.Side;
 
 public class Monster extends DiceEntity{
+    MonsterType type;
     public Monster(MonsterType type) {
         super(type.sides);
+        this.type=type;
     }
 
     @Override
@@ -28,5 +30,9 @@ public class Monster extends DiceEntity{
             this.lapel = Images.lapel0;
             this.sides=sides;
         }
+    }
+    @Override
+    public String getName() {
+        return type.toString();
     }
 }

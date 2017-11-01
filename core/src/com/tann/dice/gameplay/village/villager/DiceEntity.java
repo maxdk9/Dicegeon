@@ -17,6 +17,7 @@ public abstract class DiceEntity {
 	public TextureRegion lapel;
 	public Side[] sides;
 	static int i;
+	int maxHp = 3;
 	public DiceEntity(Side[] sides) {
 	    this.sides=sides;
         this.lapel = Images.lapel0;
@@ -42,4 +43,11 @@ public abstract class DiceEntity {
 
 	public abstract boolean isPlayer();
 
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
 }

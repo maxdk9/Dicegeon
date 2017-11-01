@@ -6,8 +6,10 @@ import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.gameplay.village.villager.die.Side;
 
 public class Hero extends DiceEntity{
+    HeroType type;
     public Hero(HeroType type) {
         super(type.sides);
+        this.type=type;
     }
 
     @Override
@@ -35,4 +37,8 @@ public class Hero extends DiceEntity{
         }
     }
 
+    @Override
+    public String getName() {
+        return type.toString();
+    }
 }

@@ -37,52 +37,18 @@ public class Images {
     public static final TextureRegion dotdotdot = Main.atlas.findRegion("resource/special");
     public static final TextureRegion lock = Main.atlas.findRegion("lock");
     public static final TextureRegion sunflower = Main.atlas.findRegion("resource/sunflower");
-    public static final Texture ball = new Texture(Gdx.files.internal("ball.png"));
 
     //objective
     public static final TextureRegion obj_village = Main.atlas.findRegion("objective/village");
-    public static final TextureRegion obj_wheel = Main.atlas.findRegion("objective/ship_wheel");
-    public static final TextureRegion obj_pocketwatch = Main.atlas.findRegion("objective/pocketwatch");
     public static final TextureRegion obj_hourglass = Main.atlas.findRegion("objective/hourglass");
-    public static final TextureRegion obj_gems = Main.atlas.findRegion("objective/gems");
 
-    public static final TextureRegion eagle = Main.atlas.findRegion("generalIcons/eagle");
 
-    {
-        ball.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-    }
-    public static final TextureRegion crystal = Main.atlas.findRegion("crystal-ball");
-	
-	// map stuff
-	public static final TextureRegion island0 = Main.atlas.findRegion("map/island0");
-    public static final TextureRegion island1 = Main.atlas.findRegion("map/island1");
-    public static final TextureRegion island2 = Main.atlas.findRegion("map/island2");
-	
-	
-	//3d
-	
 	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("dice/face/sword1");
 	
-	public static final TextureRegion side_food_1= Main.atlas_3d.findRegion("dice/face/food1");
-	public static final TextureRegion side_food_2= Main.atlas_3d.findRegion("dice/face/food2");
-	public static final TextureRegion side_food_3 = Main.atlas_3d.findRegion("dice/face/food3");
-	
-	public static final TextureRegion side_food_1_wood_1 = Main.atlas_3d.findRegion("dice/face/food1wood1");
-	public static final TextureRegion side_wood_1 = Main.atlas_3d.findRegion("dice/face/wood1");
-	public static final TextureRegion side_wood_2 = Main.atlas_3d.findRegion("dice/face/wood2");
-	public static final TextureRegion side_wood_3 = Main.atlas_3d.findRegion("dice/face/wood3");
-	
+
 	public static final TextureRegion side_skull = Main.atlas_3d.findRegion("dice/face/nothing");
 
-	
-	public static final TextureRegion side_morale_1 = Main.atlas_3d.findRegion("dice/face/morale1");
-	public static final TextureRegion side_morale_2_minus_2_food = Main.atlas_3d.findRegion("dice/face/morale2foodminus2");
-	public static final TextureRegion side_morale_2 = Main.atlas_3d.findRegion("dice/face/morale2");
-	
-	public static final TextureRegion side_fate_1 = Main.atlas_3d.findRegion("dice/face/fate1");
-	public static final TextureRegion side_fateForFood = Main.atlas_3d.findRegion("dice/face/fate1foodminus1");
-	public static final TextureRegion side_fateForWood = Main.atlas_3d.findRegion("dice/face/fate1woodminus1");
-	public static final TextureRegion side_2fateForWoodAndFood = Main.atlas_3d.findRegion("dice/face/fate2woodminus1foodminus1");
+    public static final TextureRegion heart = Main.atlas.findRegion("heart");
 
     public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("dice/lapel/0");
     public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
@@ -95,7 +61,7 @@ public class Images {
 	private static TextureRegion[] makeFace(String name){
 		TextureRegion base = Main.atlas_3d.findRegion("dice/face/"+name);
 		TextureRegion highlight = Main.atlas_3d.findRegion("dice/face/"+name+"_highlight");
-		return  new TextureRegion[]{base,side_sword};
+		return  new TextureRegion[]{base,base};
 	}
 	
 	public static TextureRegion[] get(String name){
