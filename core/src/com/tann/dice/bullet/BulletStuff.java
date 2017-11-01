@@ -59,7 +59,7 @@ public class BulletStuff {
 	static boolean debugDraw = false;
 	public static float scrWidth;
 
-
+	public static float bottomBorder = .3f;
 	public static Rectangle playerArea;
 	public static Rectangle enemyArea;
 
@@ -84,25 +84,26 @@ public class BulletStuff {
 		heightFactor = full;
 		scrWidth  = heightFactor*Main.width/Main.height;
 
-		float border = .04f;
+		float border = .03f;
 		float gap = .03f;
-		float bottomBorder = .3f;
-		float mySideRatio = .6f;
+
+		float mySideRatio = .5f;
 
 		float playArea =(1-border*2-gap);
 		float mySide = playArea*mySideRatio;
 		float theirSide = playArea*(1-mySideRatio);
-        float literalBorder = border*scrWidth;
+		float literalBorder = border*scrWidth;
+		float bottomBorderRatio = .5f;
 		playerArea = new Rectangle(
 		        literalBorder,
                 literalBorder,
                 scrWidth*mySide,
-                heightFactor*(1-bottomBorder)-literalBorder*2);
+                heightFactor*(1-bottomBorder)-literalBorder*(1+bottomBorderRatio));
 		enemyArea = new Rectangle(
 		        literalBorder+(mySide+gap)*scrWidth,
                 literalBorder,
                 scrWidth*theirSide,
-                heightFactor*(1-bottomBorder)-literalBorder*2);
+                heightFactor*(1-bottomBorder)-literalBorder*(1+bottomBorderRatio));
 
 		walls.addAll(makeWalls(mb, playerArea.x, extra, playerArea.y, playerArea.width, playerArea.height, height+extra,.005f));
 		walls.addAll(makeWalls(mb, enemyArea.x, extra, enemyArea.y, enemyArea.width, enemyArea.height, height+extra, .005f));
@@ -264,6 +265,9 @@ public class BulletStuff {
         float physicsDelta = Math.min(1f / 30f*Main.tickMult, delta);
         physicsDelta = 1/60f*Main.tickMult;
 		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f*Main.tickMult);
+		for(Die d:dice){
+			d.update(delta);
+		}
 		for (ModelInstance mi : instances) {
 			if(mi instanceof CollisionObject){
 				((CollisionObject)mi).update();

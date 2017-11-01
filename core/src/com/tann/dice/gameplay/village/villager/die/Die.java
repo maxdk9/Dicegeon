@@ -48,7 +48,6 @@ public class Die {
     private float glow=0;
     float dist = 0;
     public void update(float delta){
-
         switch(state){
             case Stopped:
                 glow = Math.max(0, glow-delta*1.0f);
@@ -340,11 +339,11 @@ public class Die {
 	
 	private boolean isStopped(){
 		physical.transform.getTranslation(temp);
-		return !isMoving() && temp.y<1.01f;
+      return !isMoving() && temp.y<-(BulletStuff.height-.6f);
 	}
 
 	public float getGlow(){
-		return glow;
+	    return glow;
 	}
 
 	public Color getColour() {
@@ -489,7 +488,7 @@ public class Die {
         float startY = (float) (bounds.y+bounds.height*(1-positionRand)/2 + Math.random()*positionRand*bounds.height);
         startX -=BulletStuff.scrWidth/2;
         startY -=BulletStuff.heightFactor/2;
-        float startHeight = BulletStuff.extra-BulletStuff.height+2;
+        float startHeight = -BulletStuff.height+1;
 
         physical.transform.setToTranslation(startX, startHeight, startY); // starting position
         physical.body.setWorldTransform(physical.transform);

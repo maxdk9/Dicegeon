@@ -1,4 +1,4 @@
-package com.tann.dice.screens.mapScreen;
+package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,21 +10,22 @@ import com.tann.dice.gameplay.village.villager.Hero;
 import com.tann.dice.gameplay.village.villager.Monster;
 import com.tann.dice.gameplay.village.villager.Monster.MonsterType;
 import com.tann.dice.gameplay.village.villager.die.Die;
+import com.tann.dice.screens.dungeon.panels.BottomPanel;
 import com.tann.dice.util.*;
 
-public class MapScreen extends Screen{
+public class DungeonScreen extends Screen{
 
-	private static MapScreen self;
-	public static MapScreen get(){
+	private static DungeonScreen self;
+	public static DungeonScreen get(){
 		if(self == null){
-			self = new MapScreen();
+			self = new DungeonScreen();
 		}
 		return self;
 	}
 
 	Array<Die> dice = new Array<>();
 
-	public MapScreen() {
+	public DungeonScreen() {
 		Array<DiceEntity> entities = new Array<>();
 
         for(int i=0;i<1;i++) {
@@ -45,6 +46,8 @@ public class MapScreen extends Screen{
             v.getDie().addToScreen();
             v.getDie().roll(true);
         }
+		addActor(new BottomPanel(true));
+		addActor(new BottomPanel(false));
 	}
 	
 	@Override

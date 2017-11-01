@@ -95,7 +95,7 @@ public class Images {
 	private static TextureRegion[] makeFace(String name){
 		TextureRegion base = Main.atlas_3d.findRegion("dice/face/"+name);
 		TextureRegion highlight = Main.atlas_3d.findRegion("dice/face/"+name+"_highlight");
-		return  new TextureRegion[]{base,base};
+		return  new TextureRegion[]{base,side_sword};
 	}
 	
 	public static TextureRegion[] get(String name){

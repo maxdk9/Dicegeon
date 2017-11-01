@@ -3,7 +3,6 @@ package com.tann.dice;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -17,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.*;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.screens.mapScreen.MapScreen;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
 
@@ -122,7 +121,7 @@ public class Main extends ApplicationAdapter {
 		BulletStuff.init();
 		logTime("bullet");
 //		self.travelTo(new TutorialIsland(null,0,9));
-		setScreen(MapScreen.get());
+		setScreen(DungeonScreen.get());
 		logTime("screen");
 	}
 
