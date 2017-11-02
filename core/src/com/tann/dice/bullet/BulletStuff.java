@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.Bullet;
@@ -275,6 +276,8 @@ public class BulletStuff {
 		}
 	}
 
+	public static Vector2 dicePos;
+
 	public static Die getClickedDie (int screenX, int screenY) {
 		Ray ray = cam.getPickRay(screenX, screenY);
 		Die result = null;
@@ -302,6 +305,15 @@ public class BulletStuff {
 //			Gdx.input.setInputProcessor(camController);
 		}
 		if(result==null) return null;
+		Vector3 out = new Vector3();
+
+		dicePos = new Vector2();
+		result.getPosition(out);
+		cam.project(out);
+		dicePos.x = out.x;
+		dicePos.y = out.y;
+
+
 		return result;
 	}
 

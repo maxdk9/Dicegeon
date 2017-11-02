@@ -1,5 +1,6 @@
 package com.tann.dice.screens.dungeon;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -77,6 +78,10 @@ public class DungeonScreen extends Screen{
 
 	@Override
 	public void postDraw(Batch batch) {
+	  if(BulletStuff.dicePos!=null){
+      batch.setColor(Colours.light);
+      Draw.drawLine(batch, Gdx.input.getX(), Main.height-Gdx.input.getY(), BulletStuff.dicePos.x, BulletStuff.dicePos.y, 8);
+    }
 	}
 
 	@Override
@@ -98,4 +103,8 @@ public class DungeonScreen extends Screen{
     public void layout() {
 
     }
+
+  public void touchUp() {
+	  BulletStuff.dicePos = null;
+  }
 }

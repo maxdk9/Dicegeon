@@ -95,15 +95,14 @@ public class Main extends ApplicationAdapter {
 
         InputProcessor diceInput = new InputProcessor() {
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//                if(Village.getPhase().allowDieClicking() &&  GameScreen.get().allowDieClicking()) {
-//                    return BulletStuff.click(screenX, Main.height-screenY, button);
-//                }
-                return false;
+                    return BulletStuff.click(screenX, Main.height-screenY, button);
             }
             public boolean keyDown(int keycode) {return false;}
             public boolean keyUp(int keycode) {return false;}
             public boolean keyTyped(char character) {return false;}
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {return false;}
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            	DungeonScreen.get().touchUp();
+            	return false;}
             public boolean touchDragged(int screenX, int screenY, int pointer) {return false;}
             public boolean mouseMoved(int screenX, int screenY) {return false;}
             public boolean scrolled(int amount) {return false;}

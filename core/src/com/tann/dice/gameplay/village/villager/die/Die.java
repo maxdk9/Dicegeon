@@ -68,6 +68,7 @@ public class Die {
                 dist = Math.min(1,dist);
                 float interp = Interpolation.pow2Out.apply(dist);
                 physical.transform.setToRotation(0,0,0,0);
+                System.out.println(startPos+":"+targetPos);
                 Vector3 thisFrame =startPos.cpy().lerp(targetPos, interp);
                 physical.transform.setToTranslation(thisFrame);
                 physical.transform.rotate(startQuat.cpy().slerp(targetQuat, interp));
@@ -93,27 +94,27 @@ public class Die {
     }
 
     public void click(){
-        switch(state){
-            case Rolling:
-                break;
-            case Stopped:
-                Sounds.playSound(Sounds.shake,.3f,1);
-                moveToTop();
-                break;
-            case Locked:
-                for(Die d:BulletStuff.dice){
-                    if(d.getState()==Rolling) return;
-                }
-                setState(Unlocking);
-                removeFromPhysics();
-                moveToBot();
-                Sounds.playSound(Sounds.unshake,.3f,1);
-                break;
-            case Locking:
-                break;
-            case Unlocking:
-                break;
-        }
+//        switch(state){
+//            case Rolling:
+//                break;
+//            case Stopped:
+//                Sounds.playSound(Sounds.shake,.3f,1);
+//                moveToTop();
+//                break;
+//            case Locked:
+//                for(Die d:BulletStuff.dice){
+//                    if(d.getState()==Rolling) return;
+//                }
+//                setState(Unlocking);
+//                removeFromPhysics();
+//                moveToBot();
+//                Sounds.playSound(Sounds.unshake,.3f,1);
+//                break;
+//            case Locking:
+//                break;
+//            case Unlocking:
+//                break;
+//        }
     }
 
     public DieState getState(){
@@ -324,7 +325,7 @@ public class Die {
 		physical.body.applyTorqueImpulse(new Vector3(r1, r2, r3));
 	}
 
-	private void getPosition(Vector3 out){
+	public void getPosition(Vector3 out){
 	    if(getState()==Locking || getState() == Unlocking){
 	        out.set(targetPos);
         }
