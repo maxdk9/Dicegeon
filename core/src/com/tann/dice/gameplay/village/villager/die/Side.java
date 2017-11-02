@@ -30,57 +30,23 @@ public class Side {
 		this.effects=effects;
 	}
 
-    public static final Side shield1 = new Side(Images.get("shield1"), new Eff().food(1));
-    public static final Side shield2 = new Side(Images.get("shield2"), new Eff().food(1));
+    public static final Side shield1 = new Side(Images.get("shield1"), new Eff().shield(1));
+    public static final Side shield2 = new Side(Images.get("shield2"), new Eff().shield(2));
 
-    public static final Side sword1 = new Side(Images.get("sword1"), new Eff().food(1));
-    public static final Side sword2 = new Side(Images.get("sword2"), new Eff().food(1));
+    public static final Side sword1 = new Side(Images.get("sword1"), new Eff().sword(1));
+    public static final Side sword2 = new Side(Images.get("sword2"), new Eff().sword(2));
 
-    public static final Side shield1sword1 = new Side(Images.get("sword1shield1"), new Eff().food(1));
+    public static final Side shield1sword1 = new Side(Images.get("sword1shield1"), new Eff().sword(1));
 
-    public static final Side magic1 = new Side(Images.get("magic1"), new Eff().food(1));
-    public static final Side magic2 = new Side(Images.get("magic2"), new Eff().food(1));
+    public static final Side magic1 = new Side(Images.get("magic1"), new Eff().magic(1));
+    public static final Side magic2 = new Side(Images.get("magic2"), new Eff().magic(2));
 
-    public static final Side heal2 = new Side(Images.get("heal2"), new Eff().food(1));
+    public static final Side heal2 = new Side(Images.get("heal2"), new Eff().heal(2));
 
-    public static final Side magic1heal1 = new Side(Images.get("magic1heal1"), new Eff().food(1));
+    public static final Side magic1heal1 = new Side(Images.get("magic1heal1"), new Eff().magic(1));
 
-    public static final Side nothing = new Side(Images.get("nothing"), new Eff().food(1));
+    public static final Side nothing = new Side(Images.get("nothing"), new Eff());
 
-
-
-
-	public static final Side food1 = new Side(Images.get("food1"), new Eff().food(1));
-	public static final Side food2 = new Side(Images.get("food2"), new Eff().food(2));
-    public static final Side food3 = new Side(Images.get("food3"), new Eff(EffectType.Food, 3));
-    public static final Side food4 = new Side(Images.get("food4"), new Eff(EffectType.Food, 4));
-
-	public static final Side wood1 = new Side(Images.get("wood1"), new Eff(EffectType.Wood, 1));
-	public static final Side wood2 = new Side(Images.get("wood2"), new Eff(EffectType.Wood, 2));
-    public static final Side wood3 = new Side(Images.get("wood3"), new Eff(EffectType.Wood, 3));
-    public static final Side wood4 = new Side(Images.get("wood4"), new Eff(EffectType.Wood, 4));
-
-    public static final Side food1wood1 = make(Images.get("food1wood1"), EffectType.Food, 1, EffectType.Food, 1);
-    public static final Side food2wood1 = make(Images.get("food2wood1"), EffectType.Food, 2, EffectType.Wood, 1);
-    public static final Side food1wood2 = make(Images.get("food1wood2"), EffectType.Food, 1, EffectType.Wood, 2);
-    public static final Side food2wood2 = make(Images.get("food2wood2"), EffectType.Food, 2, EffectType.Wood, 2);
-
-	public static final Side skull = make(Images.get("nothing"), EffectType.Skull, 1);
-    public static final Side brain = make(Images.get("brain"), EffectType.Brain, 1);
-    public static final Side brainOther = make(Images.get("givebrain1"), EffectType.XpToVillager, 1);
-	public static final Side brainOther2 = make(Images.get("givebrain2"), EffectType.XpToVillager, 2);
-	public static final Side brainOther3 = make(Images.get("givebrain3"), EffectType.XpToVillager, 3);
-
-
-	public static final Side morale1 = make(Images.get("morale1"), EffectType.Morale, 1);
-	public static final Side morale2 = make(Images.get("morale2"), EffectType.Morale, 2);
-	public static final Side morale3 = make(Images.get("morale3"), EffectType.Morale, 3);
-	public static final Side fate1morale1 = make(Images.get("fate1morale1"), EffectType.Morale, 1, EffectType.Fate, 1);
-
-    public static final Side fate1= make(Images.get("fate1"), EffectType.Fate, 1);
-	public static final Side fate2= make(Images.get("fate2"), EffectType.Fate, 2);
-	public static final Side fate3= make(Images.get("fate3"), EffectType.Fate, 3);
-    public static final Side gem1 = make(Images.get("emerald"), EffectType.Gem, 1);
 
     private static Side make(TextureRegion[] image, Eff eff){
         return new Side(image, eff);

@@ -28,11 +28,10 @@ public class DungeonScreen extends Screen{
 	}
 
 	Array<Die> dice = new Array<>();
-
+    Array<DiceEntity> all = new Array<>();
 	public DungeonScreen() {
         Array<Hero> heroes = new Array<>();
         Array<Monster> monsters = new Array<>();
-        Array<DiceEntity> all = new Array<>();
         for (int i = 0; i < 1; i++) {
             heroes.add(new Hero(Hero.HeroType.Apprentice));
             heroes.add(new Hero(Hero.HeroType.Rogue));
@@ -104,7 +103,16 @@ public class DungeonScreen extends Screen{
 
     }
 
-  public void touchUp() {
-	  BulletStuff.dicePos = null;
-  }
+    public void touchUp() {
+        if (BulletStuff.dicePos != null) {
+            for(DiceEntity de:all){
+                if(de.getEntityPanel().highlight){
+                    de.hit(BulletStuff.selectedDie.getActualSide());
+                    BulletStuff.selectedDie.removeFromScreen();
+                    break;
+                }
+            }
+        }
+        BulletStuff.dicePos = null;
+    }
 }

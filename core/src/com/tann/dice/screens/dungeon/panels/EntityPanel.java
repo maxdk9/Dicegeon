@@ -15,30 +15,10 @@ import com.tann.dice.util.*;
 public class EntityPanel extends Group {
 
     DiceEntity e;
-    boolean highlight;
+    public boolean highlight;
     public EntityPanel(DiceEntity e) {
-        float gapFactor = .9f;
-        setSize(BottomPanel.width / 3 * gapFactor, BottomPanel.height / 2 * gapFactor);
-        float absHeartGap = 2;
-        float heartSize = 18;
-        Layoo l = new Layoo(this);
-        TextWriter tw = new TextWriter(e.getName(), Fonts.fontSmall);
-        l.row(1);
-        l.actor(tw);
-        l.row(1);
-        l.gap(1);
-        for(int i=0;i<e.getMaxHp();i++){
-            ImageActor ia = new ImageActor(Images.heart, heartSize, heartSize);
-            l.actor(ia);
-            if(i<e.getMaxHp()-1){
-                l.abs(absHeartGap);
-            }
-        }
-        l.gap(1);
-        l.row(1);
-
-        l.gap(1);
-        l.layoo();
+        this.e=e;
+       layout();
 
 
         addListener(new InputListener(){
@@ -53,6 +33,30 @@ public class EntityPanel extends Group {
                 super.exit(event, x, y, pointer, toActor);
             }
         });
+    }
+
+    public void layout(){
+        clearChildren();
+        float gapFactor = .9f;
+        setSize(BottomPanel.width / 3 * gapFactor, BottomPanel.height / 2 * gapFactor);
+        float absHeartGap = 2;
+        float heartSize = 18;
+        Layoo l = new Layoo(this);
+        TextWriter tw = new TextWriter(e.getName(), Fonts.fontSmall);
+        l.row(1);
+        l.actor(tw);
+        l.row(1);
+        l.gap(1);
+        for(int i=0;i<e.getHp();i++){
+            ImageActor ia = new ImageActor(Images.heart, heartSize, heartSize);
+            l.actor(ia);
+            if(i<e.getMaxHp()-1){
+                l.abs(absHeartGap);
+            }
+        }
+        l.gap(1);
+        l.row(1);
+        l.layoo();
     }
 
     @Override

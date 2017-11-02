@@ -278,6 +278,7 @@ public class BulletStuff {
 
 	public static Vector2 dicePos;
 
+	public static Die selectedDie;
 	public static Die getClickedDie (int screenX, int screenY) {
 		Ray ray = cam.getPickRay(screenX, screenY);
 		Die result = null;
@@ -306,7 +307,7 @@ public class BulletStuff {
 		}
 		if(result==null) return null;
 		Vector3 out = new Vector3();
-
+        selectedDie=result;
 		dicePos = new Vector2();
 		result.getPosition(out);
 		cam.project(out);

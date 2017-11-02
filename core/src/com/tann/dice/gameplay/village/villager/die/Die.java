@@ -252,8 +252,8 @@ public class Die {
             new Quaternion().setEulerAngles(0,0,90)
     };
 
-	public int getSide(){
-	    switch(state) {
+    public int getSide(){
+        switch(state) {
             case Rolling:
                 return -1;
             case Locked:
@@ -296,7 +296,15 @@ public class Die {
                 return -1;
         }
         return -1;
-	}
+    }
+
+    public Side getActualSide(){
+       int side = getSide();
+       if(side>=0){
+           return sides.get(side);
+       }
+       return null;
+    }
 	
 	private float getFloat(TextureRegion tr){
         if(tr==null){

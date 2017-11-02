@@ -17,20 +17,10 @@ public class Eff {
     }
 
     public enum EffectType{
-        Food(Images.food),
-        Wood(Images.wood),
-		Skull(Images.side_skull),
-        Morale(Images.morale),
-        FoodStorage(Images.food_storage),
-        Fate(Images.fate),
-        Brain(Images.brain),
-        Gem(Images.gem),
-        NewVillager(Images.obj_hourglass),
-        DEATH(Images.skull_red),
-        Lose(Images.skull_red),
-        Buff,
-        Objective,
-        XpToVillager(Images.brain);
+        Sword(Images.side_sword),
+        Shield(Images.side_sword),
+		Magic(Images.heart),
+        Heal(Images.heart);
 
         //objectives
 
@@ -115,22 +105,17 @@ public class Eff {
         }
     }
 
+    public Eff sword(int amount) { return type(EffectType.Sword, amount); }
+    public Eff shield(int amount) { return type(EffectType.Shield, amount); }
+    public Eff magic(int amount) { return type(EffectType.Magic, amount); }
+    public Eff heal(int amount) { return type(EffectType.Heal, amount); }
+
+
     public Eff eachTurn(int numTurns){return setActivation(new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns));}
     public Eff inTurns(int numTurns) {return setActivation(new EffAct(EffAct.ActivationType.IN_TURNS, numTurns));}
     public Eff upkeep(){return setActivation(new EffAct(EffAct.ActivationType.UPKEEP, -1));}
     public Eff now() {return setActivation(new EffAct(EffAct.ActivationType.NOW, 0));}
 
-    public Eff newVillager() {return type(EffectType.NewVillager, 1);}
-    public Eff villagerXP(int amount) {return type(EffectType.XpToVillager, amount);}
-    public Eff food(int amount){return type(EffectType.Food, amount);}
-    public Eff wood(int amount){return type(EffectType.Wood, amount);}
-    public Eff fate(int amount) {return type(EffectType.Fate, amount);}
-    public Eff morale(int amount) {return type(EffectType.Morale, amount);}
-    public Eff gem(int amount) {return type(EffectType.Gem, amount);}
-    public Eff storage(int amount) {return type(EffectType.FoodStorage, amount);}
-    public Eff brain(int amount) {return type(EffectType.Brain, amount);}
-    public Eff death(int amount) {return type(EffectType.DEATH, amount);}
-    public Eff lose() {return type(EffectType.Lose, 1);}
 
     public void clearActivation() {
         this.effAct=new EffAct(EffAct.ActivationType.NOW,0);

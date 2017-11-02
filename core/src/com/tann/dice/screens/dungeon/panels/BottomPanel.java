@@ -31,7 +31,7 @@ public class BottomPanel extends Group {
       for(int i=0;i<entities.size;i++){
 
           DiceEntity e = entities.get(i);
-          EntityPanel ep = new EntityPanel(e);
+          EntityPanel ep = e.getEntityPanel();
           if(i==2){
               l.gap(1);
               l.row(1);
