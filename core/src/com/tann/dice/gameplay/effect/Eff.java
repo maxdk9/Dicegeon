@@ -17,9 +17,10 @@ public class Eff {
     }
 
     public enum EffectType{
+        Nothing(Images.heart_empty),
         Sword(Images.side_sword),
         Shield(Images.side_sword),
-		Magic(Images.heart),
+		    Magic(Images.heart),
         Heal(Images.heart);
 
         //objectives
@@ -53,7 +54,7 @@ public class Eff {
 	    this(type,value, null, EffAct.now);
     }
     public Eff(EffectType type){this(type, 0);}
-    public Eff(){this((EffectType)null);};
+    public Eff(){this(EffectType.Nothing);};
 
     public String getValueString(){
 	     return (value>=0?"":"-")+Math.abs(value);

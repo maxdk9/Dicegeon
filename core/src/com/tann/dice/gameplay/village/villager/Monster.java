@@ -2,7 +2,9 @@ package com.tann.dice.gameplay.village.villager;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
+import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.gameplay.village.villager.die.Side;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 
 public class Monster extends DiceEntity{
     MonsterType type;
@@ -18,7 +20,7 @@ public class Monster extends DiceEntity{
 
     public enum MonsterType{
 
-        Goblin(Side.sword1, Side.sword1, Side.sword1, Side.sword1, Side.sword1, Side.sword1);
+        Goblin(Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.nothing);
 
         public Side[] sides;
         public TextureRegion lapel;
@@ -34,5 +36,10 @@ public class Monster extends DiceEntity{
     @Override
     public String getName() {
         return type.toString();
+    }
+
+    @Override
+    public void locked() {
+        DungeonScreen.get().targetRandom(die.getActualSide().effects);
     }
 }

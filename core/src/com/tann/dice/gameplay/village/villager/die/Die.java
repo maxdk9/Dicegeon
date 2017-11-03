@@ -128,6 +128,7 @@ public class Die {
                 break;
             case Stopped:
                 damp();
+                entity.locked();
                 break;
             case Locked:
                 break;

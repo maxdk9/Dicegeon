@@ -21,7 +21,7 @@ public class Hero extends DiceEntity{
 
         Apprentice(Side.magic1, Side.magic1, Side.magic2, Side.nothing, Side.nothing, Side.nothing),
         Rogue(Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.nothing, Side.nothing),
-        Fighter(Side.sword1, Side.sword1, Side.shield1sword1, Side.shield1sword1, Side.nothing, Side.nothing),
+        Fighter(Side.sword1, Side.sword1, Side.sword2, Side.shield2, Side.nothing, Side.nothing),
         Defender(Side.shield1, Side.shield1, Side.shield2, Side.shield2, Side.nothing, Side.nothing),
         Herbalist(Side.magic1, Side.magic1, Side.heal2, Side.magic1heal1, Side.nothing, Side.nothing);
 
@@ -40,5 +40,10 @@ public class Hero extends DiceEntity{
     @Override
     public String getName() {
         return type.toString();
+    }
+
+    @Override
+    public void locked() {
+
     }
 }

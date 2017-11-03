@@ -47,8 +47,24 @@ public class EntityPanel extends Group {
         l.actor(tw);
         l.row(1);
         l.gap(1);
-        for(int i=0;i<e.getHp();i++){
-            ImageActor ia = new ImageActor(Images.heart, heartSize, heartSize);
+        for(int i=e.getMaxHp()-1;i>=0;i--){
+            ImageActor ia;
+            if(i<e.getHp()){
+                ia = new ImageActor(Images.heart, heartSize, heartSize);
+                int damageIndex = (e.getHp()-i);
+                if(e.getIncomingDamage() >= damageIndex){
+                    ia.setColor(Colours.sand);
+                }
+                else{
+                    ia.setColor(Colours.red);
+                }
+            }
+            else{
+                ia = new ImageActor(Images.heart_empty, heartSize, heartSize);
+                ia.setColor(Colours.red);
+            }
+
+
             l.actor(ia);
             if(i<e.getMaxHp()-1){
                 l.abs(absHeartGap);

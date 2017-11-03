@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
 import com.tann.dice.gameplay.village.villager.Hero;
 import com.tann.dice.gameplay.village.villager.Monster;
@@ -28,16 +29,19 @@ public class DungeonScreen extends Screen{
 	}
 
 	Array<Die> dice = new Array<>();
-    Array<DiceEntity> all = new Array<>();
+  Array<DiceEntity> all = new Array<>();
+  Array<Hero> heroes = new Array<>();
+  Array<Monster> monsters = new Array<>();
 	public DungeonScreen() {
-        Array<Hero> heroes = new Array<>();
-        Array<Monster> monsters = new Array<>();
+
         for (int i = 0; i < 1; i++) {
-            heroes.add(new Hero(Hero.HeroType.Apprentice));
-            heroes.add(new Hero(Hero.HeroType.Rogue));
-            heroes.add(new Hero(Hero.HeroType.Fighter));
-            heroes.add(new Hero(Hero.HeroType.Defender));
-            heroes.add(new Hero(Hero.HeroType.Herbalist));
+//            heroes.add(new Hero(Hero.HeroType.Apprentice));
+//          heroes.add(new Hero(Hero.HeroType.Herbalist));
+          heroes.add(new Hero(Hero.HeroType.Rogue));
+          heroes.add(new Hero(Hero.HeroType.Rogue));
+          heroes.add(new Hero(Hero.HeroType.Fighter));
+          heroes.add(new Hero(Hero.HeroType.Defender));
+          heroes.add(new Hero(Hero.HeroType.Defender));
             monsters.add(new Monster(MonsterType.Goblin));
             monsters.add(new Monster(MonsterType.Goblin));
             monsters.add(new Monster(MonsterType.Goblin));
@@ -93,9 +97,9 @@ public class DungeonScreen extends Screen{
 
 	@Override
 	public void keyPress(int keycode) {
-	    for(Die d: dice){
-	        d.roll(true);
-        }
+	  for(Hero h:heroes) {
+      h.getDie().roll(true);
+    }
 	}
 
     @Override
@@ -107,7 +111,7 @@ public class DungeonScreen extends Screen{
         if (BulletStuff.dicePos != null) {
             for(DiceEntity de:all){
                 if(de.getEntityPanel().highlight){
-                    de.hit(BulletStuff.selectedDie.getActualSide());
+                    de.hit(BulletStuff.selectedDie.getActualSide(), true);
                     BulletStuff.selectedDie.removeFromScreen();
                     break;
                 }
@@ -115,4 +119,11 @@ public class DungeonScreen extends Screen{
         }
         BulletStuff.dicePos = null;
     }
+
+  public void targetRandom(Eff[] effects) {
+	  Hero target = heroes.random();
+    for(Eff e:effects){
+	    target.hit(e, false);
+    }
+  }
 }

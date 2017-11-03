@@ -15,12 +15,13 @@ public abstract class DiceEntity {
 
 
  	Color col;
-	private Die die;
+	protected Die die;
 	public TextureRegion lapel;
 	public Side[] sides;
 	static int i;
-	int maxHp = 3;
-	int hp = maxHp + (int)(Math.random()*3);
+	int maxHp = 3+ (int)(Math.random()*3);
+	int hp = maxHp;
+	int incomingDamage = 0;
 	public DiceEntity(Side[] sides) {
 	    this.sides=sides;
         this.lapel = Images.lapel0;
@@ -63,14 +64,40 @@ public abstract class DiceEntity {
         return ep;
     }
 
-    public void hit(Side side) {
-        for(Eff e:side.effects){
-            switch(e.type){
-                case Sword:
-                    hp -= e.value;
-                    break;
-            }
+  public void hit(Eff e, boolean instant) {
+      switch(e.type){
+        case Sword:
+          if(instant){
+            hp -= e.value;
+          }
+          else{
+            addIncomingDamage(e.value);
+          }
+          break;
+        case Shield:
+            addIncomingDamage(-e.value);
+          break;
+      }
+    ep.layout();
+  }
+
+    public void hit(Side side, boolean instant) {
+        for(Eff e:side.effects) {
+          hit(e, instant);
         }
-        ep.layout();
     }
+
+    public void addIncomingDamage(int amount){
+      incomingDamage+=amount;
+    }
+
+    public void resetIncomingDamage(){
+      incomingDamage=0;
+    }
+
+    public int getIncomingDamage(){
+      return incomingDamage;
+    }
+
+  public abstract void locked();
 }

@@ -34,28 +34,28 @@ circle300
   index: -1
 corner
   rotate: false
-  xy: 1306, 1178
+  xy: 1458, 1330
   size: 4, 4
   orig: 4, 4
   offset: 0, 0
   index: -1
 edge
   rotate: false
-  xy: 1458, 1330
+  xy: 477, 241
   size: 1, 4
   orig: 1, 4
   offset: 0, 0
   index: -1
 frill-left
   rotate: false
-  xy: 1004, 865
+  xy: 366, 139
   size: 63, 15
   orig: 63, 15
   offset: 0, 0
   index: -1
 frill-right
   rotate: false
-  xy: 1156, 1017
+  xy: 1306, 1167
   size: 63, 15
   orig: 63, 15
   offset: 0, 0
@@ -90,14 +90,21 @@ hammer
   index: -1
 heart
   rotate: false
-  xy: 366, 84
-  size: 70, 70
-  orig: 70, 70
+  xy: 477, 247
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+heartEmpty
+  rotate: false
+  xy: 735, 504
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 lock
   rotate: false
-  xy: 477, 247
+  xy: 1004, 752
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -118,7 +125,7 @@ patchTest
   index: -1
 pixel
   rotate: false
-  xy: 477, 244
+  xy: 607, 374
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -132,7 +139,7 @@ roll
   index: -1
 tick
   rotate: false
-  xy: 735, 504
+  xy: 1156, 904
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

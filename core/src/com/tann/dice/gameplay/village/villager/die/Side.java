@@ -36,7 +36,7 @@ public class Side {
     public static final Side sword1 = new Side(Images.get("sword1"), new Eff().sword(1));
     public static final Side sword2 = new Side(Images.get("sword2"), new Eff().sword(2));
 
-    public static final Side shield1sword1 = new Side(Images.get("sword1shield1"), new Eff().sword(1));
+//    public static final Side shield1sword1 = new Side(Images.get("sword1shield1"), new Eff().sword(1));
 
     public static final Side magic1 = new Side(Images.get("magic1"), new Eff().magic(1));
     public static final Side magic2 = new Side(Images.get("magic2"), new Eff().magic(2));
