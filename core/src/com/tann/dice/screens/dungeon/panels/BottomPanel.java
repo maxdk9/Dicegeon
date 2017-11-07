@@ -32,7 +32,7 @@ public class BottomPanel extends Group {
 
           DiceEntity e = entities.get(i);
           EntityPanel ep = e.getEntityPanel();
-          if(i==2){
+          if(i==entities.size/2){
               l.gap(1);
               l.row(1);
               l.gap(1);

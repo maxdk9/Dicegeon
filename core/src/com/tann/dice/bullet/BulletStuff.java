@@ -24,8 +24,11 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
+import com.sun.corba.se.impl.orbutil.HexOutputStream;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
+import com.tann.dice.gameplay.village.villager.Hero;
+import com.tann.dice.gameplay.village.villager.Monster;
 import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.util.Colours;
 
@@ -171,61 +174,7 @@ public class BulletStuff {
 			wall.transform.trn(trX, trY, trZ + (i * 2 - 1) * length / 2);
 			results.add(wall);
 		}
-//        int mag = 5;
-//        for(int xx=-mag;xx<mag;xx++){
-//            for(int yy=-mag;yy<mag;yy++){
-//                for(int zz=-mag;zz<mag;zz++){
-//                    float size = .01f;
-//                    if(xx==0 && yy==0 && zz==0){
-//                        size = .05f;
-//                    }
-//                    CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(size,size,size)), 0);
-//                    wall.transform.trn(xx, yy, zz);
-//                    results.add(wall);
-//                }
-//            }
-//        }
 
-		for (int i = 0; i < 1; i++) {
-			//faces
-//            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3()), 0);
-//            results.add(wall);
-		}
-
-		for (int i = 0; i < 2; i++) {
-//            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(width, 100, thickness)), 0);
-//            results.add(wall);
-		}
-
-		for (int i = 0; i < 2; i++) {
-
-		}
-
-//        for (int i = 0; i < 5; i++) {
-//            CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, wallThickness, wallSize)), 0);
-//            switch (i) {
-//                case 0:
-//                    wall.transform.rotate(1, 0, 0, 90);
-//                    wall.transform.trn(0, wallSize, wallSize);
-//                    break;
-//                case 1:
-//                    wall.transform.rotate(1, 0, 0, 90);
-//                    wall.transform.trn(0, wallSize, -wallSize);
-//                    break;
-//                case 2:
-//                    wall.transform.rotate(0, 0, 1, 90);
-//                    wall.transform.trn(wallSize, wallSize, 0);
-//                    break;
-//                case 3:
-//                    wall.transform.rotate(0, 0, 1, 90);
-//                    wall.transform.trn(-wallSize, wallSize, 0);
-//                    break;
-//                case 4:
-//                    wall.transform.trn(0, wallSize*1.5f, 0);
-//                    break;
-//            }
-//
-//        }
 		for (CollisionObject co : results) {
 			co.initialUpdate();
 			dynamicsWorld.addRigidBody(co.body, OBJECT_FLAG, ALL_FLAG);
@@ -307,14 +256,10 @@ public class BulletStuff {
 		}
 		if(result==null) return null;
 		Vector3 out = new Vector3();
-        selectedDie=result;
-		dicePos = new Vector2();
-		result.getPosition(out);
-		cam.project(out);
-		dicePos.x = out.x;
-		dicePos.y = out.y;
-
-
+		if(result.entity instanceof Hero) {
+            selectedDie = result;
+            dicePos = selectedDie.getScreenPosition();
+        }
 		return result;
 	}
 

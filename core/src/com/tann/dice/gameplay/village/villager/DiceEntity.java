@@ -3,10 +3,12 @@ package com.tann.dice.gameplay.village.villager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.village.villager.die.Side;
 import com.tann.dice.gameplay.village.villager.die.Die;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.util.Colours;
 
@@ -21,7 +23,8 @@ public abstract class DiceEntity {
 	static int i;
 	int maxHp = 3+ (int)(Math.random()*3);
 	int hp = maxHp;
-	int incomingDamage = 0;
+	public boolean dead;
+	Array<Eff> potentialEffects = new Array<>();
 	public DiceEntity(Side[] sides) {
 	    this.sides=sides;
         this.lapel = Images.lapel0;
@@ -65,21 +68,39 @@ public abstract class DiceEntity {
     }
 
   public void hit(Eff e, boolean instant) {
-      switch(e.type){
-        case Sword:
-          if(instant){
-            hp -= e.value;
-          }
-          else{
-            addIncomingDamage(e.value);
-          }
-          break;
-        case Shield:
-            addIncomingDamage(-e.value);
-          break;
-      }
-    ep.layout();
+        if(instant) {
+            switch (e.type) {
+                case Sword:
+                    damage(e.value);
+                    break;
+                case Shield:
+                    potentialEffects.add(e);
+                    break;
+            }
+        }
+        else{
+            potentialEffects.add(e);
+        }
+        ep.layout();
   }
+
+    private void damage(int value) {
+        hp -= value;
+        if(hp<=0){
+            die();
+        }
+    }
+
+    private void die() {
+        if(die.getActualSide() != null) {
+            DungeonScreen.get().cancelEffects(die.getActualSide().effects);
+        }
+        die.removeFromScreen();
+        getEntityPanel().remove();
+        getEntityPanel().highlight=false;
+        dead=true;
+    }
+
 
     public void hit(Side side, boolean instant) {
         for(Eff e:side.effects) {
@@ -87,17 +108,36 @@ public abstract class DiceEntity {
         }
     }
 
-    public void addIncomingDamage(int amount){
-      incomingDamage+=amount;
-    }
-
-    public void resetIncomingDamage(){
-      incomingDamage=0;
-    }
-
-    public int getIncomingDamage(){
-      return incomingDamage;
+    public int getIncomingDamage() {
+        int total = 0;
+        for (Eff e : potentialEffects) {
+            switch (e.type) {
+                case Sword:
+                    total += e.value;
+                    break;
+                case Shield:
+                    total -= e.value;
+                    break;
+            }
+        }
+        return total;
     }
 
   public abstract void locked();
+
+    public void removeEffects(Eff[] effects) {
+        boolean recalculate = potentialEffects.removeAll(new Array<>(effects), true);
+        if(recalculate){
+            getEntityPanel().layout();
+        }
+    }
+
+    public void activatePotentials() {
+        int incoming = getIncomingDamage();
+        if(incoming > 0){
+            damage(incoming);
+        }
+        potentialEffects.clear();
+        getEntityPanel().layout();
+    }
 }

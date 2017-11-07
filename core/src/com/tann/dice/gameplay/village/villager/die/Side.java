@@ -45,7 +45,7 @@ public class Side {
 
     public static final Side magic1heal1 = new Side(Images.get("magic1heal1"), new Eff().magic(1));
 
-    public static final Side nothing = new Side(Images.get("nothing"), new Eff());
+    public static final Side nothing = new Side(Images.get("nothing"), new Eff().nothing());
 
 
     private static Side make(TextureRegion[] image, Eff eff){

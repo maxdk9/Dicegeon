@@ -19,6 +19,7 @@ import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
+import com.tann.dice.gameplay.village.villager.Hero;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 import com.tann.dice.util.Sounds;
@@ -26,6 +27,12 @@ import com.tann.dice.util.Sounds;
 import static com.tann.dice.gameplay.village.villager.die.Die.DieState.*;
 
 public class Die {
+
+    public boolean used;
+    public void use() {
+        removeFromScreen();
+        used= true;
+    }
 
     public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
 
@@ -68,7 +75,6 @@ public class Die {
                 dist = Math.min(1,dist);
                 float interp = Interpolation.pow2Out.apply(dist);
                 physical.transform.setToRotation(0,0,0,0);
-                System.out.println(startPos+":"+targetPos);
                 Vector3 thisFrame =startPos.cpy().lerp(targetPos, interp);
                 physical.transform.setToTranslation(thisFrame);
                 physical.transform.rotate(startQuat.cpy().slerp(targetQuat, interp));
@@ -388,14 +394,13 @@ public class Die {
     }
 
     public void removeFromScreen() {
-        setState(Stopped);
+//        setState(Stopped);
         lockedSide=-1;
         BulletStuff.instances.removeValue(physical, true);
-        BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
-        BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
+        removeFromPhysics();
     }
 
-    public void removeFromPhysics(){
+    private void removeFromPhysics(){
 		BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
 		BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
 	}
@@ -503,6 +508,16 @@ public class Die {
         physical.transform.setToTranslation(startX, startHeight, startY); // starting position
         physical.body.setWorldTransform(physical.transform);
         physical.body.setActivationState(4);
+    }
+
+    public Vector2 getScreenPosition(){
+        Vector3 out = new Vector3();
+        Vector2 dicePos = new Vector2();
+        getPosition(out);
+        BulletStuff.cam.project(out);
+        dicePos.x = out.x;
+        dicePos.y = out.y;
+        return dicePos;
     }
 
 }

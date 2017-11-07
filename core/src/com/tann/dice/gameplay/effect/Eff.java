@@ -54,7 +54,7 @@ public class Eff {
 	    this(type,value, null, EffAct.now);
     }
     public Eff(EffectType type){this(type, 0);}
-    public Eff(){this(EffectType.Nothing);};
+    public Eff(){this( null);};
 
     public String getValueString(){
 	     return (value>=0?"":"-")+Math.abs(value);
@@ -106,6 +106,7 @@ public class Eff {
         }
     }
 
+    public Eff nothing() { return type(EffectType.Nothing, -1); }
     public Eff sword(int amount) { return type(EffectType.Sword, amount); }
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }

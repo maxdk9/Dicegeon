@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
+import com.tann.dice.gameplay.village.villager.Monster;
 import com.tann.dice.util.*;
 
 public class EntityPanel extends Group {
@@ -38,7 +39,9 @@ public class EntityPanel extends Group {
     public void layout(){
         clearChildren();
         float gapFactor = .9f;
-        setSize(BottomPanel.width / 3 * gapFactor, BottomPanel.height / 2 * gapFactor);
+        float factor = 1;
+        if (e instanceof Monster) factor = .7f;
+        setSize(BottomPanel.width / 3 * gapFactor * factor, BottomPanel.height / 2 * gapFactor);
         float absHeartGap = 2;
         float heartSize = 18;
         Layoo l = new Layoo(this);
@@ -86,7 +89,7 @@ public class EntityPanel extends Group {
                 highlight=true;
             }
         }
-        Draw.fillActor(batch, this, highlight ? Colours.brown_dark: Colours.dark, Colours.light,  2);
+        Draw.fillActor(batch, this, highlight ? Colours.fate_darkest: Colours.dark, e.getColour(),  4);
         super.draw(batch, parentAlpha);
     }
 }
