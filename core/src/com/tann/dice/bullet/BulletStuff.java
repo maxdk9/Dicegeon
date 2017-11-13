@@ -24,13 +24,10 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
-import com.sun.corba.se.impl.orbutil.HexOutputStream;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
 import com.tann.dice.gameplay.village.villager.Hero;
-import com.tann.dice.gameplay.village.villager.Monster;
 import com.tann.dice.gameplay.village.villager.die.Die;
-import com.tann.dice.util.Colours;
 
 public class BulletStuff {
 	
@@ -56,16 +53,16 @@ public class BulletStuff {
 	private static Vector3 dieClickPosition = new Vector3();
 	static float camX=0, camY=0, camZ=0;
 	static DebugDrawer debugDrawer;
-	public static float height = 17;
+	public static float height = 14;
 	public static float extra = 3;
 	public static  float heightFactor = height*.7f;
 	static float fov = 35;
 	static boolean debugDraw = false;
-	public static float scrWidth;
+	public static float srcWidth;
 
-	public static float bottomBorder = .3f;
 	public static Rectangle playerArea;
-	public static Rectangle enemyArea;
+
+	public static float sides = .25f;
 
 	public static void init(){
 
@@ -86,31 +83,20 @@ public class BulletStuff {
 		float half = (float) Math.sqrt(hypot*hypot-height*height);
 		float full = half *2;
 		heightFactor = full;
-		scrWidth  = heightFactor*Main.width/Main.height;
+		srcWidth = heightFactor*Main.width/Main.height;
 
-		float border = .03f;
-		float gap = .03f;
+		float border = .02f;
+        float sides = .25f;
 
-		float mySideRatio = .5f;
-
-		float playArea =(1-border*2-gap);
-		float mySide = playArea*mySideRatio;
-		float theirSide = playArea*(1-mySideRatio);
-		float literalBorder = border*scrWidth;
-		float bottomBorderRatio = .5f;
+		float playArea =(1-border*2-sides*2);
+		float literalBorder = border* srcWidth;
 		playerArea = new Rectangle(
-		        literalBorder,
+		        literalBorder + sides*srcWidth,
                 literalBorder,
-                scrWidth*mySide,
-                heightFactor*(1-bottomBorder)-literalBorder*(1+bottomBorderRatio));
-		enemyArea = new Rectangle(
-		        literalBorder+(mySide+gap)*scrWidth,
-                literalBorder,
-                scrWidth*theirSide,
-                heightFactor*(1-bottomBorder)-literalBorder*(1+bottomBorderRatio));
+                playArea* srcWidth,
+                heightFactor*(1)-literalBorder*(2));
 
 		walls.addAll(makeWalls(mb, playerArea.x, extra, playerArea.y, playerArea.width, playerArea.height, height+extra,.005f));
-		walls.addAll(makeWalls(mb, enemyArea.x, extra, enemyArea.y, enemyArea.width, enemyArea.height, height+extra, .005f));
 
 		shader = new DieShader();
 		shader.init();
@@ -137,7 +123,7 @@ public class BulletStuff {
 
 	private static Array<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
 		Array<CollisionObject> results = new Array<>();
-		float trX = x+width/2-scrWidth/2;
+		float trX = x+width/2- srcWidth /2;
 		float trY = y-height/2;
 		float trZ = z+length/2-heightFactor/2;
 		mb.begin();

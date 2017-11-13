@@ -44,7 +44,7 @@ public class DungeonScreen extends Screen {
             heroes.add(new Hero(Hero.HeroType.Fighter));
             heroes.add(new Hero(Hero.HeroType.Fighter));
             heroes.add(new Hero(Hero.HeroType.Fighter));
-            for(int j=0;j<7;j++){
+            for(int j=0;j<5;j++){
                 monsters.add(new Monster(MonsterType.Goblin));
             }
         }
@@ -72,7 +72,7 @@ public class DungeonScreen extends Screen {
         batch.setColor(Colours.brown_dark);
         drawRectThing(batch, BulletStuff.playerArea);
         batch.setColor(Colours.brown_dark);
-        drawRectThing(batch, BulletStuff.enemyArea);
+//        drawRectThing(batch, BulletStuff.enemyArea);
 
     }
 
@@ -87,7 +87,7 @@ public class DungeonScreen extends Screen {
             batch.setColor(Colours.light);
             Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), BulletStuff.dicePos.x, BulletStuff.dicePos.y, 8);
         }
-        Fonts.draw(batch, "Rerolls left: "+rerolls, Fonts.fontSmall, Colours.light, 50, Main.height*.62f, 500, 500, Align.center);
+//        Fonts.draw(batch, "Rerolls left: "+rerolls, Fonts.fontSmall, Colours.light, 50, Main.height*.62f, 500, 500, Align.center);
     }
 
     @Override

@@ -81,7 +81,7 @@ public abstract class DiceEntity {
         else{
             potentialEffects.add(e);
         }
-        ep.layout();
+        getEntityPanel().layout();
   }
 
     private void damage(int value) {

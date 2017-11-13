@@ -19,10 +19,8 @@ import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
-import com.tann.dice.gameplay.village.villager.Hero;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
-import com.tann.dice.util.Sounds;
 
 import static com.tann.dice.gameplay.village.villager.die.Die.DieState.*;
 
@@ -497,11 +495,11 @@ public class Die {
 
     private void randomiseStart() {
 
-        Rectangle bounds = entity.isPlayer() ? BulletStuff.playerArea : BulletStuff.enemyArea;
+        Rectangle bounds = BulletStuff.playerArea;
         float positionRand = .4f;
         float startX = (float) (bounds.x+bounds.width*(1-positionRand)/2 + Math.random()*positionRand*bounds.width);
         float startY = (float) (bounds.y+bounds.height*(1-positionRand)/2 + Math.random()*positionRand*bounds.height);
-        startX -=BulletStuff.scrWidth/2;
+        startX -=BulletStuff.srcWidth /2;
         startY -=BulletStuff.heightFactor/2;
         float startHeight = -BulletStuff.height+1;
 

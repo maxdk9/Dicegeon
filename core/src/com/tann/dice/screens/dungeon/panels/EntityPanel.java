@@ -41,7 +41,7 @@ public class EntityPanel extends Group {
         float gapFactor = .9f;
         float factor = 1;
         if (e instanceof Monster) factor = .7f;
-        setSize(BottomPanel.width / 3 * gapFactor * factor, BottomPanel.height / 2 * gapFactor);
+        setSize(BottomPanel.width * gapFactor * factor, BottomPanel.height / 6 * gapFactor * factor);
         float absHeartGap = 2;
         float heartSize = 18;
         Layoo l = new Layoo(this);

@@ -12,40 +12,29 @@ import com.tann.dice.util.Layoo;
 
 public class BottomPanel extends Group {
   static final float gap = .03f * Main.height;
-  static final float width = (Main.width-gap*3)/2;
-  static final float height = Main.height * (BulletStuff.bottomBorder )- gap;
+  static final float width = Main.width*BulletStuff.sides;
+  static final float height = Main.height-gap*2;
   private Array<DiceEntity> entities = new Array<>();
   public BottomPanel(boolean friendly) {
-    float gap = .03f * Main.height;
+
 
     setSize(width, height);
-    setPosition(friendly?gap:gap*2+width, gap);
+    setPosition(friendly?gap:Main.width-width-gap, gap);
   }
 
   public void layout(){
       clearChildren();
       Layoo l = new Layoo(this);
-      l.row(1);
-      l.gap(1);
-      int rowNum = 0;
       for(int i=0;i<entities.size;i++){
 
           DiceEntity e = entities.get(i);
           EntityPanel ep = e.getEntityPanel();
-          if(i==entities.size/2){
-              l.gap(1);
-              l.row(1);
-              l.gap(1);
-              rowNum=0;
-          }
-          if(rowNum != 0){
-              l.abs(10);
-          }
-          rowNum++;
+          l.row(1);
+          l.gap(1);
           l.actor(ep);
+          l.gap(1);
 
       }
-      l.gap(1);
       l.row(1);
       l.layoo();
   }
