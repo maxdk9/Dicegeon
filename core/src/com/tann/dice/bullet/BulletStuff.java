@@ -62,7 +62,7 @@ public class BulletStuff {
 
 	public static Rectangle playerArea;
 
-	public static float sides = .25f;
+	public static float sides = .23f;
 
 	public static void init(){
 
@@ -86,7 +86,6 @@ public class BulletStuff {
 		srcWidth = heightFactor*Main.width/Main.height;
 
 		float border = .02f;
-        float sides = .25f;
 
 		float playArea =(1-border*2-sides*2);
 		float literalBorder = border* srcWidth;
@@ -306,5 +305,17 @@ public class BulletStuff {
             d.removeFromScreen();
         }
     }
+
+	public static float convertToScreen(float length){
+		return length*Main.width/srcWidth;
+	}
+
+	public static Vector2 convertToScreen(float x, float y){
+		return null;
+	}
+
+	public static Vector2 convertToScreen(Vector2 pos){
+		return convertToScreen(pos.x, pos.y);
+	}
 
 }

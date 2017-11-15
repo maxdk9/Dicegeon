@@ -181,7 +181,11 @@ public class Die {
         System.out.println(screenX+":"+screenY);
         setState(Locking);
         float factor = BulletStuff.srcWidth/Main.width;
-        moveTo(new Vector3(screenX*factor-BulletStuff.srcWidth/2, -BulletStuff.height+physical.dimensions.y/2, (Main.height-screenY)*factor-BulletStuff.heightFactor/2), d6Quats[lockedSide]);
+        moveTo(new Vector3(
+            screenX*factor-BulletStuff.srcWidth/2+physical.dimensions.y/2,
+            -BulletStuff.height+physical.dimensions.y/2,
+            (Main.height-screenY)*factor-BulletStuff.heightFactor/2-physical.dimensions.y/2),
+            d6Quats[lockedSide]);
     }
 
     public void moveTo(Vector2 position){
@@ -529,6 +533,14 @@ public class Die {
         dicePos.x = out.x;
         dicePos.y = out.y;
         return dicePos;
+    }
+
+    public float get2DSize(){
+        float dimen = 1;
+        if(physical.dimensions.x!=0){
+            dimen = physical.dimensions.x;
+        }
+        return BulletStuff.convertToScreen(dimen);
     }
 
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.tann.dice.Images;
+import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
 import com.tann.dice.gameplay.village.villager.Monster;
 import com.tann.dice.util.*;
@@ -35,20 +36,25 @@ public class EntityPanel extends Group {
             }
         });
     }
-
+    public static final float gap = 13;
+    public static final float extraGap = 3;
+    float diceHoleSize;
     public void layout(){
         clearChildren();
         float gapFactor = .9f;
-        float factor = 1;
-        if (e instanceof Monster) factor = .7f;
-        setSize(BottomPanel.width * gapFactor * factor, BottomPanel.height / 6 * gapFactor * factor);
+        float factor = 1f;
+        diceHoleSize = e.getDie().get2DSize();
+//        if (e instanceof Monster) factor = .7f;
+        setSize(BottomPanel.width * gapFactor * factor, gap*2+diceHoleSize);
         float absHeartGap = 2;
         float heartSize = 18;
         Layoo l = new Layoo(this);
         TextWriter tw = new TextWriter(e.getName(), Fonts.fontSmall);
         l.row(1);
+        l.abs(diceHoleSize+gap*2);
         l.actor(tw);
         l.row(1);
+        l.abs(diceHoleSize+gap*2);
         l.gap(1);
         for(int i=e.getMaxHp()-1;i>=0;i--){
             ImageActor ia;
@@ -90,6 +96,10 @@ public class EntityPanel extends Group {
             }
         }
         Draw.fillActor(batch, this, highlight ? Colours.fate_darkest: Colours.dark, e.getColour(),  4);
+        batch.setColor(Colours.light);
+        Draw.fillRectangle(batch, getX()+gap-extraGap, getY()+gap-extraGap, diceHoleSize+extraGap*2, diceHoleSize+extraGap*2);
+        batch.setColor(Colours.grey);
+        Draw.fillRectangle(batch, getX()+gap, getY()+gap, diceHoleSize, diceHoleSize);
         super.draw(batch, parentAlpha);
     }
 }

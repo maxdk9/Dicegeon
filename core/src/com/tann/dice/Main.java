@@ -22,7 +22,7 @@ import com.tann.dice.util.Screen;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1280, height = 720;
-	public static String version = "0.3.1";
+	public static String version = "0.0";
 	SpriteBatch batch;
 	Stage stage;
 	OrthographicCamera orthoCam;

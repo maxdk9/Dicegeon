@@ -178,7 +178,7 @@ public class DungeonScreen extends Screen {
     public void click(Die d) {
         d.removeFromPhysics();
         EntityPanel ep = d.entity.getEntityPanel();
-        d.moveTo(Tann.getLocalCoordinates(ep).add(ep.getWidth()/8, ep.getHeight()/2));
+        d.moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
 
     }
 }
