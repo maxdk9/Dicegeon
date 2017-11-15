@@ -20,7 +20,7 @@ public class Monster extends DiceEntity{
 
     public enum MonsterType{
 
-        Goblin(Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.nothing);
+        Goblin(Side.sword1, Side.sword1, Side.sword1, Side.sword1, Side.sword1, Side.sword1);
 
         public Side[] sides;
         public TextureRegion lapel;

@@ -28,6 +28,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.village.villager.DiceEntity;
 import com.tann.dice.gameplay.village.villager.Hero;
 import com.tann.dice.gameplay.village.villager.die.Die;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 
 public class BulletStuff {
 	
@@ -53,8 +54,7 @@ public class BulletStuff {
 	private static Vector3 dieClickPosition = new Vector3();
 	static float camX=0, camY=0, camZ=0;
 	static DebugDrawer debugDrawer;
-	public static float height = 14;
-	public static float extra = 3;
+	public static float height = 18;
 	public static  float heightFactor = height*.7f;
 	static float fov = 35;
 	static boolean debugDraw = false;
@@ -96,7 +96,7 @@ public class BulletStuff {
                 playArea* srcWidth,
                 heightFactor*(1)-literalBorder*(2));
 
-		walls.addAll(makeWalls(mb, playerArea.x, extra, playerArea.y, playerArea.width, playerArea.height, height+extra,.005f));
+		walls.addAll(makeWalls(mb, playerArea.x, 0, playerArea.y, playerArea.width, playerArea.height, height,.005f));
 
 		shader = new DieShader();
 		shader.init();
@@ -255,7 +255,8 @@ public class BulletStuff {
 			if (button == 0) {
 				d.click();
 			}
-			return true;
+            DungeonScreen.get().click(d);
+            return true;
 		}
 		return false;
 	}

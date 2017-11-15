@@ -19,7 +19,7 @@ public class BottomPanel extends Group {
 
 
     setSize(width, height);
-    setPosition(friendly?gap:Main.width-width-gap, gap);
+    setPosition(friendly?0:Main.width-width, gap);
   }
 
   public void layout(){

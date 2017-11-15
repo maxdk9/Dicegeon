@@ -14,6 +14,7 @@ import com.tann.dice.gameplay.village.villager.Monster;
 import com.tann.dice.gameplay.village.villager.Monster.MonsterType;
 import com.tann.dice.gameplay.village.villager.die.Die;
 import com.tann.dice.screens.dungeon.panels.BottomPanel;
+import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.util.*;
 
 import java.util.ArrayList;
@@ -67,12 +68,14 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void preDraw(Batch batch) {
+        Draw.fillRectangle(batch, 0,0,Main.width, Main.height);
         batch.setColor(Colours.bg);
         Draw.fillActor(batch, this);
         batch.setColor(Colours.brown_dark);
         drawRectThing(batch, BulletStuff.playerArea);
         batch.setColor(Colours.brown_dark);
 //        drawRectThing(batch, BulletStuff.enemyArea);
+
 
     }
 
@@ -83,10 +86,14 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
+
+        BulletStuff.render();
         if (BulletStuff.dicePos != null) {
             batch.setColor(Colours.light);
             Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), BulletStuff.dicePos.x, BulletStuff.dicePos.y, 8);
         }
+
+
 //        Fonts.draw(batch, "Rerolls left: "+rerolls, Fonts.fontSmall, Colours.light, 50, Main.height*.62f, 500, 500, Align.center);
     }
 
@@ -165,6 +172,13 @@ public class DungeonScreen extends Screen {
         for (DiceEntity de : all) {
             de.removeEffects(effects);
         }
+
+    }
+    static float c = 0f;
+    public void click(Die d) {
+        d.removeFromPhysics();
+        EntityPanel ep = d.entity.getEntityPanel();
+        d.moveTo(Tann.getLocalCoordinates(ep).add(ep.getWidth()/8, ep.getHeight()/2));
 
     }
 }

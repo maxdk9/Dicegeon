@@ -25,7 +25,6 @@ public abstract class Screen extends Lay{
 	public void draw(Batch batch, float parentAlpha) {
 		preDraw(batch);
 		batch.end();
-		BulletStuff.render();
 		batch.begin();
 		super.draw(batch, parentAlpha);
 		drawParticles(batch);

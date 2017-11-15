@@ -10,11 +10,13 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 
+import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
 import com.tann.dice.gameplay.effect.Eff;
@@ -173,6 +175,17 @@ public class Die {
 //        moveTo(new Vector3(x, 0f, 6.55f), d6QuatsWithLean[lockedSide]);
         setState(Locking);
         removeFromPhysics();
+    }
+
+    public void moveTo(float screenX, float screenY){
+        System.out.println(screenX+":"+screenY);
+        setState(Locking);
+        float factor = BulletStuff.srcWidth/Main.width;
+        moveTo(new Vector3(screenX*factor-BulletStuff.srcWidth/2, -BulletStuff.height+physical.dimensions.y/2, (Main.height-screenY)*factor-BulletStuff.heightFactor/2), d6Quats[lockedSide]);
+    }
+
+    public void moveTo(Vector2 position){
+        moveTo(position.x, position.y);
     }
 
     private void moveTo(Vector3 position, Quaternion rotation){
@@ -398,7 +411,7 @@ public class Die {
         removeFromPhysics();
     }
 
-    private void removeFromPhysics(){
+    public void removeFromPhysics(){
 		BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
 		BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
 	}
