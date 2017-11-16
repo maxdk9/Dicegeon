@@ -25,9 +25,9 @@ import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSol
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.village.villager.DiceEntity;
-import com.tann.dice.gameplay.village.villager.Hero;
-import com.tann.dice.gameplay.village.villager.die.Die;
+import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 public class BulletStuff {

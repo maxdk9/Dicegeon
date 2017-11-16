@@ -16,7 +16,7 @@ public abstract class Lay extends Group {
                 ((Lay)a).layChain();
             }
             else{
-                System.err.println(a.getClass()+" is not a lay");
+//                System.err.println(a.getClass()+" is not a lay");
             }
         }
         layout();

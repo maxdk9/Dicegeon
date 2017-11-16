@@ -3,22 +3,21 @@ package com.tann.dice.screens.dungeon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.village.villager.DiceEntity;
-import com.tann.dice.gameplay.village.villager.Hero;
-import com.tann.dice.gameplay.village.villager.Monster;
-import com.tann.dice.gameplay.village.villager.Monster.MonsterType;
-import com.tann.dice.gameplay.village.villager.die.Die;
+import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.Monster;
+import com.tann.dice.gameplay.entity.Monster.MonsterType;
+import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.phase.EnemyRollingPhase;
+import com.tann.dice.gameplay.phase.NothingPhase;
 import com.tann.dice.screens.dungeon.panels.BottomPanel;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.util.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DungeonScreen extends Screen {
 
@@ -27,6 +26,7 @@ public class DungeonScreen extends Screen {
     public static DungeonScreen get() {
         if (self == null) {
             self = new DungeonScreen();
+            self.init();
         }
         return self;
     }
@@ -37,8 +37,11 @@ public class DungeonScreen extends Screen {
     Array<Monster> monsters = new Array<>();
     int rerolls = 2;
 
-    public DungeonScreen() {
+    private DungeonScreen() {
+    }
 
+    private void init(){
+        System.out.println("init");
         for (int i = 0; i < 1; i++) {
             heroes.add(new Hero(Hero.HeroType.Rogue));
             heroes.add(new Hero(Hero.HeroType.Rogue));
@@ -52,18 +55,37 @@ public class DungeonScreen extends Screen {
         all.addAll(heroes);
         all.addAll(monsters);
         BulletStuff.refresh(all);
-        for (DiceEntity v : all) {
-            if(v.dead) continue;
-            dice.add(v.getDie());
-            v.getDie().addToScreen();
-            v.getDie().roll(true);
-        }
         BottomPanel friendly = new BottomPanel(true);
         friendly.addEntities(heroes);
         addActor(friendly);
         BottomPanel enemy = new BottomPanel(false);
         enemy.addEntities(monsters);
         addActor(enemy);
+//        enemyCombat();
+
+        Main.pushPhase(new NothingPhase());
+        Main.pushPhase(new EnemyRollingPhase());
+        Main.popPhase();
+        System.out.println(this.hashCode());
+    }
+
+    public void enemyCombat(){
+        float timer = 0;
+        float timerAdd = 0f;
+        System.out.println("oof");
+        for (DiceEntity v : monsters) {
+            if(v.dead) continue;
+
+            System.out.println("eahhooo");
+            addAction(Actions.delay(timer, Actions.run(()-> addDie(v))));
+        }
+    }
+
+    private void addDie(DiceEntity v){
+        System.out.println("eweff");
+        dice.add(v.getDie());
+        v.getDie().addToScreen();
+        v.getDie().roll(true);
     }
 
     @Override
@@ -75,8 +97,6 @@ public class DungeonScreen extends Screen {
         drawRectThing(batch, BulletStuff.playerArea);
         batch.setColor(Colours.brown_dark);
 //        drawRectThing(batch, BulletStuff.enemyArea);
-
-
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
@@ -92,7 +112,8 @@ public class DungeonScreen extends Screen {
             batch.setColor(Colours.light);
             Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), BulletStuff.dicePos.x, BulletStuff.dicePos.y, 8);
         }
-
+        batch.end();
+        batch.begin();
 
 //        Fonts.draw(batch, "Rerolls left: "+rerolls, Fonts.fontSmall, Colours.light, 50, Main.height*.62f, 500, 500, Align.center);
     }
@@ -161,13 +182,6 @@ public class DungeonScreen extends Screen {
         rerolls = 2;
     }
 
-    public void targetRandom(Eff[] effects) {
-        Hero target = heroes.random();
-        for (Eff e : effects) {
-            target.hit(e, false);
-        }
-    }
-
     public void cancelEffects(Eff[] effects) {
         for (DiceEntity de : all) {
             de.removeEffects(effects);
@@ -180,5 +194,9 @@ public class DungeonScreen extends Screen {
         EntityPanel ep = d.entity.getEntityPanel();
         d.moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
 
+    }
+
+    public DiceEntity getRandomTarget() {
+        return heroes.random();
     }
 }

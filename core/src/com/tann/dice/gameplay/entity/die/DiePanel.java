@@ -1,4 +1,4 @@
-package com.tann.dice.gameplay.village.villager.die;
+package com.tann.dice.gameplay.entity.die;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;

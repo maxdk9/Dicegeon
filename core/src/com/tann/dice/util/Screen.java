@@ -28,6 +28,7 @@ public abstract class Screen extends Lay{
 		batch.begin();
 		super.draw(batch, parentAlpha);
 		drawParticles(batch);
+		batch.flush();
 		postDraw(batch);
 	}
 	public abstract void preDraw(Batch batch);
@@ -35,7 +36,7 @@ public abstract class Screen extends Lay{
 
 	@Override
 	public void act(float delta) {
-		if(Main.self.getState()==MainState.Paused)return;
+        if(Main.self.getState()==MainState.Paused)return;
 		if(active){
 			if(shakeMagnitude>.1){
 			setPosition((float)(Math.sin(Main.ticks*shakeFrequency)*shakeMagnitude), 

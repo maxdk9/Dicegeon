@@ -14,11 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.gameplay.phase.Phase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1280, height = 720;
@@ -35,7 +40,34 @@ public class Main extends ApplicationAdapter {
 	Screen currentScreen;
 	Screen previousScreen;
 	public static float ticks;
-	public static int coloursUnlocked = 2;
+
+
+	private static List<Phase> phaseStack = new ArrayList<>();
+
+	public static Phase getPhase(){
+	    return phaseStack.get(0);
+    }
+
+    public static void pushPhase(Phase phase){
+	    phaseStack.add(phaseStack.size(), phase);
+    }
+
+    public static void popPhase(){
+        Phase popped = phaseStack.remove(0);
+        popped.deactivate();
+        if(phaseStack.size()==0){
+            System.err.println("popping error, previous phase was "+ popped.toString());
+        }
+        getPhase().activate();
+    }
+
+    public static void popPhase(Class clazz){
+        if(!clazz.isInstance(getPhase())){
+            System.err.println("Trying to pop a class of type "+clazz.getSimpleName()+" when the phase is "+getPhase().toString());
+            return;
+        }
+        popPhase();
+    }
 
 	public enum MainState {
 		Normal, Paused

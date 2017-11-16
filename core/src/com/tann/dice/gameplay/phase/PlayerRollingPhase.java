@@ -1,13 +1,13 @@
-package com.tann.dice.gameplay.village.phase;
+package com.tann.dice.gameplay.phase;
 
-public class NothingPhase extends Phase {
+public class PlayerRollingPhase extends Phase {
     @Override
     public void activate() {
+
     }
 
     @Override
     public void deactivate() {
 
     }
-
 }

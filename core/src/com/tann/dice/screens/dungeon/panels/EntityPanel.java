@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
-import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.village.villager.DiceEntity;
-import com.tann.dice.gameplay.village.villager.Monster;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.*;
 
 public class EntityPanel extends Group {
@@ -21,7 +19,7 @@ public class EntityPanel extends Group {
     public EntityPanel(DiceEntity e) {
         this.e=e;
        layout();
-
+        setColor(Colours.dark);
 
         addListener(new InputListener(){
 
@@ -95,11 +93,16 @@ public class EntityPanel extends Group {
                 highlight=true;
             }
         }
-        Draw.fillActor(batch, this, highlight ? Colours.fate_darkest: Colours.dark, e.getColour(),  4);
+        Draw.fillActor(batch, this, highlight ? Colours.fate_darkest: getColor(), e.getColour(),  4);
         batch.setColor(Colours.light);
         Draw.fillRectangle(batch, getX()+gap-extraGap, getY()+gap-extraGap, diceHoleSize+extraGap*2, diceHoleSize+extraGap*2);
         batch.setColor(Colours.grey);
         Draw.fillRectangle(batch, getX()+gap, getY()+gap, diceHoleSize, diceHoleSize);
         super.draw(batch, parentAlpha);
+    }
+
+    public void flash() {
+        setColor(Colours.z_black);
+        addAction(Actions.color(Colours.dark, .4f));
     }
 }

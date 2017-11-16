@@ -1,4 +1,4 @@
-package com.tann.dice.gameplay.village.villager.die;
+package com.tann.dice.gameplay.entity.die;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
@@ -20,11 +19,11 @@ import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.village.villager.DiceEntity;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 
-import static com.tann.dice.gameplay.village.villager.die.Die.DieState.*;
+import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 
 public class Die {
 
@@ -40,7 +39,7 @@ public class Die {
     public CollisionObject physical;
     public Array<Side> sides = new Array<>();
     private static final float MAX_AIRTIME = 2.4f;
-    private static final float INTERP_SPEED = .4f;
+    private static final float INTERP_SPEED = .6f;
 
     // gameplay stuff
 
@@ -85,8 +84,6 @@ public class Die {
             case Rolling:
                 if(isStopped()){
                     setState(Stopped);
-                    this.lockedSide=getSide();
-                    glow = 1;
 //                    Village.get().activate(sides.get(lockedSide).effects, false, false);
                 }
                 else{
@@ -133,6 +130,8 @@ public class Die {
             case Rolling:
                 break;
             case Stopped:
+                this.lockedSide=getSide();
+                glow = 1;
                 damp();
                 entity.locked();
                 break;

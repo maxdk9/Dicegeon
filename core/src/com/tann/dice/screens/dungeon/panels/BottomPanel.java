@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.village.villager.DiceEntity;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 import com.tann.dice.util.Layoo;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
-import com.tann.dice.gameplay.village.villager.die.Die;
+import com.tann.dice.gameplay.entity.die.Die;
 
 public class Eff {
 

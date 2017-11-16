@@ -1,9 +1,8 @@
-package com.tann.dice.gameplay.village.villager;
+package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
-import com.tann.dice.gameplay.village.villager.die.Die;
-import com.tann.dice.gameplay.village.villager.die.Side;
+import com.tann.dice.gameplay.entity.die.Side;
 
 public class Hero extends DiceEntity{
     HeroType type;

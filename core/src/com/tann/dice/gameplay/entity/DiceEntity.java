@@ -1,4 +1,4 @@
-package com.tann.dice.gameplay.village.villager;
+package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.village.villager.die.Side;
-import com.tann.dice.gameplay.village.villager.die.Die;
+import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.util.Colours;
@@ -65,6 +65,18 @@ public abstract class DiceEntity {
     public EntityPanel getEntityPanel() {
         if(ep==null) ep = new EntityPanel(this);
         return ep;
+    }
+
+    public void hit(Array<Eff> effects, boolean instant) {
+        for(Eff e:effects){
+            hit(e, instant);
+        }
+    }
+
+    public void hit(Eff[] effects, boolean instant) {
+        for(Eff e:effects){
+            hit(e, instant);
+        }
     }
 
   public void hit(Eff e, boolean instant) {
