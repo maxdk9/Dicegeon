@@ -97,6 +97,7 @@ public class Die {
     }
 
     public void click(){
+        setState(getState()==Locked ? DieState.Stopped : DieState.Locked);
 //        switch(state){
 //            case Rolling:
 //                break;
@@ -177,7 +178,6 @@ public class Die {
     }
 
     public void moveTo(float screenX, float screenY){
-        System.out.println(screenX+":"+screenY);
         setState(Locking);
         float factor = BulletStuff.srcWidth/Main.width;
         moveTo(new Vector3(
@@ -223,13 +223,13 @@ public class Die {
 
 
     float timeInAir;
-    public void roll(boolean reroll) {
-        if(!reroll){
+    public void roll(boolean firstRoll) {
+        if(firstRoll){
             resetForRoll();
         }
-        if(reroll && lockedSide>=0){
-//            Village.get().activate(sides.get(lockedSide).effects, false, true);
-        }
+//        if(reroll && lockedSide>=0){
+////            Village.get().activate(sides.get(lockedSide).effects, false, true);
+//        }
         this.lockedSide=-1;
         setState(Rolling);
         undamp();
@@ -239,7 +239,7 @@ public class Die {
         randomise(12, 3, 0, 8, 1, 0);
     }
 
-    private void resetForRoll() {
+    public void resetForRoll() {
         randomiseStart();
         removeFromPhysics();
         addToPhysics();
@@ -410,7 +410,7 @@ public class Die {
     public void removeFromScreen() {
 //        setState(Stopped);
         lockedSide=-1;
-        BulletStuff.instances.removeValue(physical, true);
+        BulletStuff.instances.remove(physical);
         removeFromPhysics();
     }
 

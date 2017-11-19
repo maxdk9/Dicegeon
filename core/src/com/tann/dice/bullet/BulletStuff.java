@@ -24,10 +24,12 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 public class BulletStuff {
@@ -40,7 +42,7 @@ public class BulletStuff {
     public static PerspectiveCamera cam;
 	static CameraInputController camController;
 	static ModelBatch modelBatch;
-	public static Array<ModelInstance> instances = new Array<>();
+	public static ObjectSet<ModelInstance> instances = new ObjectSet<ModelInstance>();
 	public static Array<CollisionObject> walls = new Array<>();
 	public static Array<Die> dice = new Array<>();
 	static Model model;
@@ -183,7 +185,7 @@ public class BulletStuff {
 	public static final int mass = 1;
 
 	public static void render() {
-		camController.update();
+        camController.update();
 		modelBatch.begin(cam);
 		modelBatch.render(instances, shader);
 		modelBatch.end();
@@ -249,6 +251,7 @@ public class BulletStuff {
 	}
 
 	public static boolean click(float x, float y, int button) {
+	    if (!(Main.getPhase() instanceof PlayerRollingPhase)) return false;
 		Die d = getClickedDie((int) x, Gdx.graphics.getHeight() - (int) y);
 		if (d != null) {
 			if (button == 0) {

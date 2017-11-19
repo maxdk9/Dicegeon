@@ -1,7 +1,9 @@
 package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -15,7 +17,6 @@ import com.tann.dice.util.*;
 public class EntityPanel extends Group {
 
     DiceEntity e;
-    public boolean highlight;
     public EntityPanel(DiceEntity e) {
         this.e=e;
        layout();
@@ -34,6 +35,9 @@ public class EntityPanel extends Group {
             }
         });
     }
+
+    public boolean slidOut;
+
     public static final float gap = 13;
     public static final float extraGap = 3;
     float diceHoleSize;
@@ -43,7 +47,7 @@ public class EntityPanel extends Group {
         float factor = 1f;
         diceHoleSize = e.getDie().get2DSize();
 //        if (e instanceof Monster) factor = .7f;
-        setSize(BottomPanel.width * gapFactor * factor, gap*2+diceHoleSize);
+        setSize(SidePanel.width * gapFactor * factor, gap*2+diceHoleSize);
         float absHeartGap = 2;
         float heartSize = 18;
         Layoo l = new Layoo(this);
@@ -76,24 +80,52 @@ public class EntityPanel extends Group {
             if(i<e.getMaxHp()-1){
                 l.abs(absHeartGap);
             }
+            if (i == 5){
+                l.gap(1);
+                l.row(1);
+                l.abs(diceHoleSize+gap*2);
+                l.gap(1);
+            }
         }
         l.gap(1);
         l.row(1);
         l.layoo();
     }
 
+    public void slideOut(){
+        addAction(Actions.moveBy(-30, 0, .3f, Interpolation.pow2Out));
+        slidOut = true;
+    }
+
+    public boolean mouseOver;
+
+    private void mouseOver(boolean moused){
+        mouseOver = moused;
+        if (e.getTarget() !=  null){
+            e.getTarget().targeted = moused;
+        }
+    }
+
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void act(float delta) {
         Vector2 mouseScreenPosition = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         Vector2 mouseStagePosition = getStage().screenToStageCoordinates(mouseScreenPosition); //you can also use the Stage instance if you have a reference
-        highlight=false;
         Actor hit = getStage().hit(mouseStagePosition.x, mouseStagePosition.y, false);
-        if(hit!=null){
-            if(hit==this || hit.getParent() == this || hit.getParent().getParent() == this){
-                highlight=true;
-            }
+        boolean nowMoused = hit!=null &&  (hit==this || hit.getParent() == this || hit.getParent().getParent() == this);
+        if(nowMoused != mouseOver){
+            mouseOver(nowMoused);
         }
-        Draw.fillActor(batch, this, highlight ? Colours.fate_darkest: getColor(), e.getColour(),  4);
+        super.act(delta);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+
+        Color inner = getColor();
+        if(mouseOver) inner = Colours.fate_darkest;
+        if(e.targeted) inner = Colours.red_dark;
+        Color border = e.getColour();
+        Draw.fillActor(batch, this, inner, border,  4);
         batch.setColor(Colours.light);
         Draw.fillRectangle(batch, getX()+gap-extraGap, getY()+gap-extraGap, diceHoleSize+extraGap*2, diceHoleSize+extraGap*2);
         batch.setColor(Colours.grey);

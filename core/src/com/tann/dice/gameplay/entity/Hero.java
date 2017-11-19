@@ -4,11 +4,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.entity.die.Side;
 
-public class Hero extends DiceEntity{
+public class Hero extends DiceEntity {
     HeroType type;
     public Hero(HeroType type) {
         super(type.sides);
         this.type=type;
+        setMaxHp(type.hp);
     }
 
     @Override
@@ -18,19 +19,20 @@ public class Hero extends DiceEntity{
 
     public enum HeroType{
 
-        Apprentice(Side.magic1, Side.magic1, Side.magic2, Side.nothing, Side.nothing, Side.nothing),
-        Rogue(Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.nothing, Side.nothing),
-        Fighter(Side.sword1, Side.sword1, Side.sword2, Side.shield2, Side.nothing, Side.nothing),
-        Defender(Side.shield1, Side.shield1, Side.shield2, Side.shield2, Side.nothing, Side.nothing),
-        Herbalist(Side.magic1, Side.magic1, Side.heal2, Side.magic1heal1, Side.nothing, Side.nothing);
+        Apprentice(3, Side.magic1, Side.magic1, Side.magic2, Side.nothing, Side.nothing, Side.nothing),
+        Rogue(4, Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.nothing, Side.nothing),
+        Fighter(4, Side.sword1, Side.sword1, Side.sword2, Side.shield2, Side.nothing, Side.nothing),
+        Defender(5, Side.shield1, Side.shield1, Side.shield2, Side.shield2, Side.nothing, Side.nothing),
+        Herbalist(3, Side.magic1, Side.magic1, Side.heal2, Side.magic1heal1, Side.nothing, Side.nothing);
 
         public Side[] sides;
         public TextureRegion lapel;
-
-        HeroType(Side... sides){
+        int hp;
+        HeroType(int hp, Side... sides){
             if(sides.length!=6){
                 System.err.println("side error making "+this);
             }
+            this.hp=hp;
             this.lapel = Images.lapel0;
             this.sides=sides;
         }

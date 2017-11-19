@@ -1,5 +1,7 @@
 package com.tann.dice.gameplay.phase;
 
+import com.tann.dice.Main;
+
 public abstract class Phase {
 
     public abstract void activate();
@@ -8,5 +10,15 @@ public abstract class Phase {
 
     public String toString(){
         return getClass().getSimpleName();
+    }
+
+    public final void checkIfDone() {
+        if(doneCheck()){
+            Main.popPhase();
+        }
+    }
+
+    protected boolean doneCheck(){
+        return false;
     }
 }

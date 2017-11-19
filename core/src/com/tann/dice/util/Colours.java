@@ -32,7 +32,8 @@ public class Colours {
 	public static final Color grey;
 	public static final Color brown_light;	
 	public static final Color brown_dark;
-	public static final Color red;
+    public static final Color red;
+    public static final Color red_dark = new Color(.4f, .1f, .1f, 1);
     public static final Color double_dark;
     public static final Color sun;
 

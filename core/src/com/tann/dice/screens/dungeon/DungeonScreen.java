@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
@@ -15,8 +16,8 @@ import com.tann.dice.gameplay.entity.Monster.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
-import com.tann.dice.screens.dungeon.panels.BottomPanel;
-import com.tann.dice.screens.dungeon.panels.EntityPanel;
+import com.tann.dice.gameplay.phase.PlayerRollingPhase;
+import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.util.*;
 
 public class DungeonScreen extends Screen {
@@ -33,32 +34,34 @@ public class DungeonScreen extends Screen {
 
     Array<Die> dice = new Array<>();
     Array<DiceEntity> all = new Array<>();
-    Array<Hero> heroes = new Array<>();
-    Array<Monster> monsters = new Array<>();
+    public Array<Hero> heroes = new Array<>();
+    public Array<Monster> monsters = new Array<>();
+    SidePanel friendly;
+    SidePanel enemy;
     int rerolls = 2;
 
     private DungeonScreen() {
     }
 
     private void init(){
-        System.out.println("init");
         for (int i = 0; i < 1; i++) {
             heroes.add(new Hero(Hero.HeroType.Rogue));
             heroes.add(new Hero(Hero.HeroType.Rogue));
             heroes.add(new Hero(Hero.HeroType.Fighter));
             heroes.add(new Hero(Hero.HeroType.Fighter));
             heroes.add(new Hero(Hero.HeroType.Fighter));
-            for(int j=0;j<5;j++){
+            for(int j=0;j<4;j++){
                 monsters.add(new Monster(MonsterType.Goblin));
             }
+            monsters.add(new Monster(MonsterType.Ogre));
         }
         all.addAll(heroes);
         all.addAll(monsters);
         BulletStuff.refresh(all);
-        BottomPanel friendly = new BottomPanel(true);
+        friendly = new SidePanel(true);
         friendly.addEntities(heroes);
         addActor(friendly);
-        BottomPanel enemy = new BottomPanel(false);
+        enemy = new SidePanel(false);
         enemy.addEntities(monsters);
         addActor(enemy);
 //        enemyCombat();
@@ -66,23 +69,27 @@ public class DungeonScreen extends Screen {
         Main.pushPhase(new NothingPhase());
         Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
-        System.out.println(this.hashCode());
     }
 
     public void enemyCombat(){
+        enemy.layout(false);
+        for(Monster m:monsters){
+            m.getEntityPanel().slidOut = false;
+        }
+        for(Monster m: Tann.pickNRandomElements(monsters, Math.min(monsters.size, 2))){
+            m.getEntityPanel().slideOut();
+        }
         float timer = 0;
-        float timerAdd = 0f;
-        System.out.println("oof");
-        for (DiceEntity v : monsters) {
-            if(v.dead) continue;
-
-            System.out.println("eahhooo");
-            addAction(Actions.delay(timer, Actions.run(()-> addDie(v))));
+        float timerAdd = .1f;
+        for (Monster m : monsters) {
+            if(m.dead) continue;
+            m.locked=false;
+            m.getDie().resetForRoll();
+            addAction(Actions.delay(timer, Actions.run(()-> addDie(m))));
         }
     }
 
     private void addDie(DiceEntity v){
-        System.out.println("eweff");
         dice.add(v.getDie());
         v.getDie().addToScreen();
         v.getDie().roll(true);
@@ -96,7 +103,6 @@ public class DungeonScreen extends Screen {
         batch.setColor(Colours.brown_dark);
         drawRectThing(batch, BulletStuff.playerArea);
         batch.setColor(Colours.brown_dark);
-//        drawRectThing(batch, BulletStuff.enemyArea);
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
@@ -108,13 +114,15 @@ public class DungeonScreen extends Screen {
     public void postDraw(Batch batch) {
 
         BulletStuff.render();
+        batch.flush();
+        batch.end();
+        batch.begin();
         if (BulletStuff.dicePos != null) {
             batch.setColor(Colours.light);
             Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), BulletStuff.dicePos.x, BulletStuff.dicePos.y, 8);
         }
-        batch.end();
-        batch.begin();
 
+        Fonts.draw(batch, Main.getPhase().toString(), Fonts.fontSmall, Colours.light, 50, Main.height*.62f, 500, 500, Align.center);
 //        Fonts.draw(batch, "Rerolls left: "+rerolls, Fonts.fontSmall, Colours.light, 50, Main.height*.62f, 500, 500, Align.center);
     }
 
@@ -124,16 +132,16 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postTick(float delta) {
+
     }
+
 
     @Override
     public void keyPress(int keycode) {
-        if(rerolls > 0) {
-            rerolls--;
-            for (Hero h : heroes) {
-                h.getDie().roll(true);
-            }
+        if(Main.getPhase() instanceof PlayerRollingPhase){
+            playerRoll(false);
         }
+
     }
 
     @Override
@@ -144,7 +152,7 @@ public class DungeonScreen extends Screen {
     public void touchUp() {
         if (BulletStuff.dicePos != null) {
             for (DiceEntity de : all) {
-                if (de.getEntityPanel().highlight) {
+                if (de.getEntityPanel().mouseOver && (de.isTargetable())) {
                     de.hit(BulletStuff.selectedDie.getActualSide(), true);
                     BulletStuff.selectedDie.use();
                     break;
@@ -160,7 +168,7 @@ public class DungeonScreen extends Screen {
             }
         }
         if (allUsed) {
-            endOfTurn();
+            Main.popPhase();
         }
     }
 
@@ -188,15 +196,34 @@ public class DungeonScreen extends Screen {
         }
 
     }
-    static float c = 0f;
     public void click(Die d) {
-        d.removeFromPhysics();
-        EntityPanel ep = d.entity.getEntityPanel();
-        d.moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
+//        d.removeFromPhysics();
+//        EntityPanel ep = d.entity.getEntityPanel();
+//        d.moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
 
     }
 
     public DiceEntity getRandomTarget() {
         return heroes.random();
+    }
+
+
+    public void playerRoll(boolean firstRoll) {
+        if(firstRoll){
+            for(Hero h:heroes){
+                h.getDie().used=false;
+            }
+        }
+        for(Hero hero:heroes){
+            if(firstRoll) hero.getDie().addToScreen();
+            hero.getDie().roll(firstRoll);
+        }
+    }
+
+    public void activateDamage() {
+        for(int i=0;i<all.size;i++){
+            DiceEntity de = all.get(i);
+            de.activatePotentials();
+        }
     }
 }

@@ -11,11 +11,13 @@ import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextureFlasher;
 
-public class Monster extends DiceEntity{
+public class Monster extends DiceEntity {
     MonsterType type;
+
     public Monster(MonsterType type) {
         super(type.sides);
         this.type=type;
+        setMaxHp(type.minHp + (int)(Math.random()*(type.maxHp-type.minHp+1)));
     }
 
     @Override
@@ -25,15 +27,18 @@ public class Monster extends DiceEntity{
 
     public enum MonsterType{
 
-        Goblin(Side.sword1, Side.sword1, Side.sword1, Side.sword1, Side.sword1, Side.sword1);
+        Goblin(4, 5, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
+        Ogre(8, 9, Side.sword2, Side.sword3, Side.sword3, Side.sword4, Side.sword4, Side.sword5);
 
         public Side[] sides;
         public TextureRegion lapel;
-
-        MonsterType(Side... sides){
+        public int minHp, maxHp;
+        MonsterType(int minHp, int maxHp, Side... sides){
             if(sides.length!=6){
                 System.err.println("side error making "+this);
             }
+            this.minHp = minHp;
+            this.maxHp = maxHp;
             this.lapel = Images.lapel0;
             this.sides=sides;
         }
@@ -43,9 +48,12 @@ public class Monster extends DiceEntity{
         return type.toString();
     }
 
+
+    public boolean locked;
     @Override
     public void locked() {
-        DiceEntity target =DungeonScreen.get().getRandomTarget();
+        target =DungeonScreen.get().getRandomTarget();
+
         target.hit(die.getActualSide().effects, false);
         EntityPanel panel = target.getEntityPanel();
         Vector2 panelCoords = Tann.getLocalCoordinates(panel);
@@ -54,11 +62,12 @@ public class Monster extends DiceEntity{
         DungeonScreen.get().addActor(tf);
         tf.setPosition(panel.getX()+140, panel.getY()+20);
         panel.flash();
-//        ArrowFader af = new ArrowFader().point(die.getScreenPosition().x, die.getScreenPosition().y, panelCoords.x+panel.getWidth(), panelCoords.y+panel.getHeight()/2);
-//        DungeonScreen.get().addActor(af);
         getDie().removeFromPhysics();
         EntityPanel ep = getDie().entity.getEntityPanel();
         getDie().moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
+        locked = true;
+
+
     }
 
     public Color getColour() {
