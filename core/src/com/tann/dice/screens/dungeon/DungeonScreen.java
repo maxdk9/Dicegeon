@@ -18,6 +18,7 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
+import com.tann.dice.screens.dungeon.panels.BottomBar;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.util.*;
 
@@ -42,6 +43,8 @@ public class DungeonScreen extends Screen {
     SidePanel friendly;
     SidePanel enemy;
     int rerolls = 2;
+
+    public BottomBar bottomBar;
 
     private DungeonScreen() {
     }
@@ -72,13 +75,27 @@ public class DungeonScreen extends Screen {
         addActor(rollButton);
         rollButton.setPosition(0, 0);
 
-        Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.tick, Colours.dark, ()-> System.out.println("ho"));
+        Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.tick, Colours.dark, ()-> confirmDice());
         confirmButton.setColor(Colours.green_light);
         addActor(confirmButton);
         confirmButton.setPosition(Main.width-confirmButton.getWidth(), 0);
 
+        bottomBar = new BottomBar();
+        addActor(bottomBar);
+        bottomBar.setPosition(SidePanel.width, 0);
+
         Main.pushPhase(new NothingPhase());
         Main.pushPhase(new EnemyRollingPhase());
+        Main.popPhase();
+    }
+
+    private void confirmDice() {
+        for(Hero h:heroes){
+            Die d = h.getDie();
+            if(d.getState()!= Die.DieState.Locked){
+                d.slideDown();
+            }
+        }
         Main.popPhase();
     }
 
@@ -133,8 +150,7 @@ public class DungeonScreen extends Screen {
             Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), BulletStuff.dicePos.x, BulletStuff.dicePos.y, 8);
         }
 
-        Fonts.draw(batch, Main.getPhase().toString(), Fonts.fontSmall, Colours.light, 50, Main.height*.62f, 500, 500, Align.center);
-//        Fonts.draw(batch, "Rerolls left: "+rerolls, Fonts.fontSmall, Colours.light, 50, Main.height*.62f, 500, 500, Align.center);
+        Fonts.draw(batch, Main.getPhase().toString(), Fonts.fontSmall, Colours.light, 0, Main.height*.57f, Main.width, 500, Align.center);
     }
 
     @Override
@@ -149,10 +165,6 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void keyPress(int keycode) {
-        if(Main.getPhase() instanceof PlayerRollingPhase){
-            playerRoll(false);
-        }
-
     }
 
     @Override
@@ -181,24 +193,6 @@ public class DungeonScreen extends Screen {
         if (allUsed) {
             Main.popPhase();
         }
-    }
-
-    private void endOfTurn() {
-        for(int i=0;i<all.size;i++){
-            DiceEntity de = all.get(i);
-            de.activatePotentials();
-        }
-        for (DiceEntity de : heroes) {
-            de.getDie().used = false;
-        }
-        BulletStuff.clearDice();
-        for (DiceEntity de : all) {
-            if (!de.dead) {
-                de.getDie().addToScreen();
-                de.getDie().roll(false);
-            }
-        }
-        rerolls = 2;
     }
 
     public void cancelEffects(Eff[] effects) {

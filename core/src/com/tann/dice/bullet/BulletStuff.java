@@ -87,6 +87,9 @@ public class BulletStuff {
 		heightFactor = full;
 		srcWidth = heightFactor*Main.width/Main.height;
 
+		float buttonHeight = DungeonScreen.BOTTOM_BUTTON_HEIGHT*(heightFactor/Main.height);
+
+
 		float border = .02f;
 
 		float playArea =(1-border*2-sides*2);
@@ -95,7 +98,7 @@ public class BulletStuff {
 		        literalBorder + sides*srcWidth,
                 literalBorder,
                 playArea* srcWidth,
-                heightFactor*(1)-literalBorder*(2));
+                heightFactor*(1)-literalBorder*(2)- buttonHeight);
 
 		walls.addAll(makeWalls(mb, playerArea.x, 0, playerArea.y, playerArea.width, playerArea.height, height,.005f));
 

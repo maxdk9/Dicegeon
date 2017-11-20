@@ -19,7 +19,7 @@ public class PlayerRollingPhase extends Phase {
 
     @Override
     public void deactivate() {
-        Main.pushPhase(new DamagePhase());
+        Main.pushPhase(new TargetingPhase());
     }
 
     @Override

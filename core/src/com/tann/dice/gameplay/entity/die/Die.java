@@ -20,6 +20,7 @@ import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 
@@ -38,8 +39,8 @@ public class Die {
 	  public DiceEntity entity;
     public CollisionObject physical;
     public Array<Side> sides = new Array<>();
-    private static final float MAX_AIRTIME = 2.4f;
-    private static final float INTERP_SPEED = .6f;
+    private static final float MAX_AIRTIME = 2.7f;
+    private static final float INTERP_SPEED = .4f;
 
     // gameplay stuff
 
@@ -65,6 +66,7 @@ public class Die {
                     dist = 1;
                     if(state==Unlocking){
                         addToPhysics();
+                        undamp();
                         setState(Stopped);
                     }
                     else if(state== Locking){
@@ -96,8 +98,35 @@ public class Die {
         }
     }
 
+    public void slideDown(){
+        removeFromPhysics();
+        physical.transform.getRotation(originalRotation);
+        DungeonScreen.get().bottomBar.slideDown(this);
+    }
+
     public void click(){
-        setState(getState()==Locked ? DieState.Stopped : DieState.Locked);
+        switch(getState()){
+
+            case Rolling:
+                break;
+            case Stopped:
+                slideDown();
+                break;
+            case Locked:
+                if(Main.getPhase().canRoll()) {
+                    DungeonScreen.get().bottomBar.returnToGame(this);
+                    moveToBot();
+                }
+                break;
+            case Locking:
+                System.out.println("ho");
+                break;
+            case Unlocking:
+                break;
+        }
+
+
+//        setState(getState()==Locked ? DieState.Stopped : DieState.Locked);
 //        switch(state){
 //            case Rolling:
 //                break;
@@ -133,7 +162,6 @@ public class Die {
             case Stopped:
                 this.lockedSide=getSide();
                 glow = 1;
-                damp();
                 entity.locked();
                 break;
             case Locked:
@@ -162,6 +190,7 @@ public class Die {
     Quaternion originalRotation = new Quaternion();
 
     private void moveToBot() {
+        setState(Unlocking);
         Vector3 best = getBestSpot();
         moveTo(best, originalRotation);
         undamp();
@@ -170,6 +199,8 @@ public class Die {
     public void moveToTop() {
         glow=0;
         if(getState()==Stopped) physical.transform.getRotation(originalRotation);
+        physical.transform.getRotation(originalRotation);
+        System.out.println("magpie");
         float width = 5;
 //        float x = -(width/(Village.STARTING_VILLAGERS-1)*index - width/2);
 //        moveTo(new Vector3(x, 0f, 6.55f), d6QuatsWithLean[lockedSide]);
@@ -203,7 +234,10 @@ public class Die {
         float dist =0;
         float angle = 0;
         while(true){
-            temp2.set((float)Math.sin(angle)*dist,1,(float)Math.cos(angle)*dist);
+            Rectangle bounds = BulletStuff.playerArea;
+
+
+            temp2.set((float)Math.sin(angle)*dist,-BulletStuff.height+.5f,(float)Math.cos(angle)*dist -BulletStuff.heightFactor/2+bounds.y+bounds.height/2);
             boolean good = true;
             for(Die d:BulletStuff.dice){
                 d.getPosition(temp);
@@ -224,6 +258,7 @@ public class Die {
 
     float timeInAir;
     public void roll(boolean firstRoll) {
+        if(getState()!=DieState.Stopped) return;
         if(firstRoll){
             resetForRoll();
         }
