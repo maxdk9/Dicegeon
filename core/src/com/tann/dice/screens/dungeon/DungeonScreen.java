@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
@@ -31,6 +32,8 @@ public class DungeonScreen extends Screen {
         }
         return self;
     }
+
+    public static final float BOTTOM_BUTTON_HEIGHT = Main.height*.2f;
 
     Array<Die> dice = new Array<>();
     Array<DiceEntity> all = new Array<>();
@@ -64,7 +67,15 @@ public class DungeonScreen extends Screen {
         enemy = new SidePanel(false);
         enemy.addEntities(monsters);
         addActor(enemy);
-//        enemyCombat();
+
+        Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.roll, Colours.dark, ()-> playerRoll(false));
+        addActor(rollButton);
+        rollButton.setPosition(0, 0);
+
+        Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.tick, Colours.dark, ()-> System.out.println("ho"));
+        confirmButton.setColor(Colours.green_light);
+        addActor(confirmButton);
+        confirmButton.setPosition(Main.width-confirmButton.getWidth(), 0);
 
         Main.pushPhase(new NothingPhase());
         Main.pushPhase(new EnemyRollingPhase());
@@ -209,6 +220,7 @@ public class DungeonScreen extends Screen {
 
 
     public void playerRoll(boolean firstRoll) {
+        if(!Main.getPhase().canRoll()) return;
         if(firstRoll){
             for(Hero h:heroes){
                 h.getDie().used=false;

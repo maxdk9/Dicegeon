@@ -21,4 +21,6 @@ public abstract class Phase {
     protected boolean doneCheck(){
         return false;
     }
+
+    public boolean canRoll() { return false; }
 }

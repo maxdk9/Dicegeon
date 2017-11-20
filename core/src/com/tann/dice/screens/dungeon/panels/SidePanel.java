@@ -6,18 +6,18 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 import com.tann.dice.util.Layoo;
 
 public class SidePanel extends Group {
-  static final float gap = .03f * Main.height;
-  static final float width = Main.width*BulletStuff.sides-gap*2;
-  static final float height = Main.height-gap*2;
+  public static final float width = Main.width*BulletStuff.sides;
+  static final float height = Main.height - DungeonScreen.BOTTOM_BUTTON_HEIGHT;
   private Array<DiceEntity> entities = new Array<>();
   public SidePanel(boolean friendly) {
     setSize(width, height);
-    setPosition(friendly?gap:Main.width-width-gap, gap);
+    setPosition(friendly?0:Main.width-width, DungeonScreen.BOTTOM_BUTTON_HEIGHT);
   }
 
   public void layout(boolean slide){

@@ -21,4 +21,9 @@ public class PlayerRollingPhase extends Phase {
     public void deactivate() {
         Main.pushPhase(new DamagePhase());
     }
+
+    @Override
+    public boolean canRoll() {
+        return true;
+    }
 }
