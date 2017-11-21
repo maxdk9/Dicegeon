@@ -31,6 +31,7 @@ public class Die {
     public boolean used;
     public void use() {
         removeFromScreen();
+        DungeonScreen.get().bottomBar.vacateSlot(this);
         used= true;
     }
 
@@ -114,7 +115,7 @@ public class Die {
                 break;
             case Locked:
                 if(Main.getPhase().canRoll()) {
-                    DungeonScreen.get().bottomBar.returnToGame(this);
+                    DungeonScreen.get().bottomBar.vacateSlot(this);
                     moveToBot();
                 }
                 break;
@@ -258,10 +259,11 @@ public class Die {
 
     float timeInAir;
     public void roll(boolean firstRoll) {
-        if(getState()!=DieState.Stopped) return;
+
         if(firstRoll){
             resetForRoll();
         }
+        else if(getState()!=DieState.Stopped) return;
 //        if(reroll && lockedSide>=0){
 ////            Village.get().activate(sides.get(lockedSide).effects, false, true);
 //        }

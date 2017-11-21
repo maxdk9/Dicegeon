@@ -54,7 +54,7 @@ public class BottomBar extends Group {
         die.moveTo(Tann.getLocalCoordinates(slot));
     }
 
-    public void returnToGame(Die d){
+    public void vacateSlot(Die d){
         for(DieSlot ds:slots){
             if(ds.getContents()==d){
                 ds.setDie(null);

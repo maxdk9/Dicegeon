@@ -254,7 +254,7 @@ public class BulletStuff {
 	}
 
 	public static boolean click(float x, float y, int button) {
-	    if (!(Main.getPhase() instanceof PlayerRollingPhase)) return false;
+	    if (!Main.getPhase().canTarget() && !Main.getPhase().canRoll()) return false;
 		Die d = getClickedDie((int) x, Gdx.graphics.getHeight() - (int) y);
 		if (d != null) {
 			if (button == 0) {

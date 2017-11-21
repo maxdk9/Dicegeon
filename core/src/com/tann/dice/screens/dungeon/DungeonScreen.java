@@ -15,6 +15,7 @@ import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.Monster.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
@@ -92,7 +93,7 @@ public class DungeonScreen extends Screen {
     private void confirmDice() {
         for(Hero h:heroes){
             Die d = h.getDie();
-            if(d.getState()!= Die.DieState.Locked){
+            if(d.getState()!= DieState.Locked && d.getState() != DieState.Locking){
                 d.slideDown();
             }
         }
@@ -145,7 +146,7 @@ public class DungeonScreen extends Screen {
         batch.flush();
         batch.end();
         batch.begin();
-        if (BulletStuff.dicePos != null) {
+        if (BulletStuff.dicePos != null && Main.getPhase().canTarget()) {
             batch.setColor(Colours.light);
             Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), BulletStuff.dicePos.x, BulletStuff.dicePos.y, 8);
         }
@@ -173,6 +174,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void touchUp() {
+        if(!Main.getPhase().canTarget()) return;
         if (BulletStuff.dicePos != null) {
             for (DiceEntity de : all) {
                 if (de.getEntityPanel().mouseOver && (de.isTargetable())) {

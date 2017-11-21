@@ -23,4 +23,6 @@ public abstract class Phase {
     }
 
     public boolean canRoll() { return false; }
+
+    public boolean canTarget() { return false; }
 }

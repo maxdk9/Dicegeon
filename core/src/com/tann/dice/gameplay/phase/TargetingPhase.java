@@ -12,4 +12,7 @@ public class TargetingPhase extends Phase {
     public void deactivate() {
         Main.pushPhase(new DamagePhase());
     }
+
+    @Override
+    public boolean canTarget() { return true; }
 }
