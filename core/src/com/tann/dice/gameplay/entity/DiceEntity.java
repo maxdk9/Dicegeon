@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
+import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.die.Die;
@@ -116,6 +117,7 @@ public abstract class DiceEntity {
         die.removeFromScreen();
         getEntityPanel().remove();
         getEntityPanel().mouseOver=false;
+        BulletStuff.dice.removeValue(getDie(), true);
         dead=true;
         if(this instanceof Monster){
             DungeonScreen.get().monsters.removeValue((Monster) this, true);
@@ -124,7 +126,6 @@ public abstract class DiceEntity {
             DungeonScreen.get().heroes.removeValue((Hero) this, true);
         }
     }
-
 
     public void hit(Side side, boolean instant) {
         for(Eff e:side.effects) {

@@ -47,4 +47,11 @@ public class Fonts {
         font.draw(batch, string, x, y+height/2+font.getCapHeight()/2, width, align, true);
     }
 
+    public static void dispose() {
+        fontTiny.dispose();
+        fontSmall.dispose();
+        fontSmallish.dispose();
+        font.dispose();
+        fontBig.dispose();
+    }
 }

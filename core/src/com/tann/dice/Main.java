@@ -91,9 +91,18 @@ public class Main extends ApplicationAdapter {
 	    Main.height=height;
     }
 
-	@Override
+
+
+    @Override
+    public void pause() {
+        super.pause();
+        System.out.println("pause");
+    }
+
+    @Override
 	public void create() {
-	    Main.width = Gdx.graphics.getWidth() ;
+        System.out.println("create");
+        Main.width = Gdx.graphics.getWidth() ;
 	    Main.height = Gdx.graphics.getHeight();
         logTime(null);
 		logTime("start");
@@ -152,6 +161,7 @@ public class Main extends ApplicationAdapter {
 		BulletStuff.init();
 		logTime("bullet");
 //		self.travelTo(new TutorialIsland(null,0,9));
+        DungeonScreen.self=null;
 		setScreen(DungeonScreen.get());
 		logTime("screen");
 	}
@@ -168,6 +178,7 @@ public class Main extends ApplicationAdapter {
             currentScreen.layChain();
         }
         BulletStuff.updateCamera();
+        System.out.println("resize");
     }
 
 
@@ -299,8 +310,20 @@ public class Main extends ApplicationAdapter {
 		stage.act(delta);
 	}
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        Fonts.dispose();
+        System.out.println("dispose");
+    }
 
-	public static float w(float factor){
+    @Override
+    public void resume() {
+        Fonts.setup();
+        System.out.println("resume");
+    }
+
+    public static float w(float factor){
 	    return Main.width/100f*factor;
     }
 

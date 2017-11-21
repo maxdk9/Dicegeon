@@ -25,7 +25,7 @@ import com.tann.dice.util.*;
 
 public class DungeonScreen extends Screen {
 
-    private static DungeonScreen self;
+    public static DungeonScreen self;
 
     public static DungeonScreen get() {
         if (self == null) {
@@ -72,11 +72,23 @@ public class DungeonScreen extends Screen {
         enemy.addEntities(monsters);
         addActor(enemy);
 
-        Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.roll, Colours.dark, ()-> playerRoll(false));
+        Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.roll, Colours.dark,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        playerRoll(false);
+                       }
+                });
         addActor(rollButton);
         rollButton.setPosition(0, 0);
 
-        Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.tick, Colours.dark, ()-> confirmDice());
+        Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.tick, Colours.dark,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        confirmDice();
+                    }
+                });
         confirmButton.setColor(Colours.green_light);
         addActor(confirmButton);
         confirmButton.setPosition(Main.width-confirmButton.getWidth(), 0);
@@ -91,13 +103,20 @@ public class DungeonScreen extends Screen {
     }
 
     private void confirmDice() {
+        if(!(Main.getPhase() instanceof PlayerRollingPhase)) return;
+        boolean allGood = true;
         for(Hero h:heroes){
             Die d = h.getDie();
-            if(d.getState()!= DieState.Locked && d.getState() != DieState.Locking){
+            if(d.getSide()==-1){
+                allGood=false;
+            }
+            else if(d.getState()!= DieState.Locked && d.getState() != DieState.Locking){
                 d.slideDown();
             }
         }
-        Main.popPhase();
+        if(allGood){
+            Main.popPhase();
+        }
     }
 
     public void enemyCombat(){
@@ -110,11 +129,17 @@ public class DungeonScreen extends Screen {
         }
         float timer = 0;
         float timerAdd = .1f;
-        for (Monster m : monsters) {
+        for (final Monster m : monsters) {
             if(m.dead) continue;
             m.locked=false;
             m.getDie().resetForRoll();
-            addAction(Actions.delay(timer, Actions.run(()-> addDie(m))));
+            addAction(Actions.delay(timer, Actions.run(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            addDie(m);
+                        }
+                    })));
         }
     }
 
@@ -211,7 +236,12 @@ public class DungeonScreen extends Screen {
     }
 
     public DiceEntity getRandomTarget() {
-        return heroes.random();
+        for(int i=0;i<100;i++){
+            //super lazy
+            Hero h = heroes.random();
+            if(!h.dead)return h;
+        }
+        return null;
     }
 
 
