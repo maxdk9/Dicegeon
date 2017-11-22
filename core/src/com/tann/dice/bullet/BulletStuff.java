@@ -215,9 +215,6 @@ public class BulletStuff {
 		}
 	}
 
-	public static Vector2 dicePos;
-
-	public static Die selectedDie;
 	public static Die getClickedDie (int screenX, int screenY) {
 		Ray ray = cam.getPickRay(screenX, screenY);
 		Die result = null;
@@ -242,26 +239,16 @@ public class BulletStuff {
 				result = d;
 				distance = dist2;
 			}
-//			Gdx.input.setInputProcessor(camController);
 		}
 		if(result==null) return null;
-		Vector3 out = new Vector3();
-		if(result.entity instanceof Hero) {
-            selectedDie = result;
-            dicePos = selectedDie.getScreenPosition();
-        }
 		return result;
 	}
 
 	public static boolean click(float x, float y, int button) {
-	    if (!Main.getPhase().canTarget() && !Main.getPhase().canRoll()) return false;
 		Die d = getClickedDie((int) x, Gdx.graphics.getHeight() - (int) y);
 		if (d != null) {
-			if (button == 0) {
-				d.click();
-			}
-            DungeonScreen.get().click(d);
-            return true;
+			DungeonScreen.get().click(d);
+			return true;
 		}
 		return false;
 	}

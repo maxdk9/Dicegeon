@@ -3,6 +3,7 @@ package com.tann.dice.screens.dungeon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -111,7 +112,7 @@ public class DungeonScreen extends Screen {
                 allGood=false;
             }
             else if(d.getState()!= DieState.Locked && d.getState() != DieState.Locking){
-                d.slideDown();
+                d.slideToBottomBar();
             }
         }
         if(allGood){
@@ -171,9 +172,9 @@ public class DungeonScreen extends Screen {
         batch.flush();
         batch.end();
         batch.begin();
-        if (BulletStuff.dicePos != null && Main.getPhase().canTarget()) {
+        if (selectedDie != null && Main.getPhase().canTarget()) {
             batch.setColor(Colours.light);
-            Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), BulletStuff.dicePos.x, BulletStuff.dicePos.y, 8);
+            Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), selectedDiePosition.x, selectedDiePosition.y, 8);
         }
 
         Fonts.draw(batch, Main.getPhase().toString(), Fonts.fontSmall, Colours.light, 0, Main.height*.57f, Main.width, 500, Align.center);
@@ -200,22 +201,21 @@ public class DungeonScreen extends Screen {
 
     public void touchUp() {
         if(!Main.getPhase().canTarget()) return;
-        if (BulletStuff.dicePos != null) {
-            if(BulletStuff.selectedDie.getActualSide()==null){
-                System.err.println("Failed to drag a die "+BulletStuff.selectedDie+":"+BulletStuff.selectedDie.getSide()+":"+BulletStuff.selectedDie.getState()+":"+BulletStuff.selectedDie.entity);
+        if (selectedDie != null) {
+            if(selectedDie.getActualSide()==null){
+                System.err.println("Failed to drag a die "+selectedDie+":"+selectedDie.getSide()+":"+selectedDie.getState()+":"+selectedDie.entity);
             }
             for (DiceEntity de : all) {
                 if (de.getEntityPanel().mouseOver && (de.isTargetable())) {
-                    de.hit(BulletStuff.selectedDie.getActualSide(), true);
-                    BulletStuff.selectedDie.use();
+                    de.hit(selectedDie.getActualSide(), true);
+                    selectedDie.use();
                     break;
                 }
             }
         }
-        BulletStuff.dicePos = null;
         boolean allUsed = true;
         for (DiceEntity de : heroes) {
-            if (!de.getDie().used && !de.dead) {
+            if (!de.getDie().getUsed() && !de.dead) {
                 allUsed = false;
                 break;
             }
@@ -223,6 +223,7 @@ public class DungeonScreen extends Screen {
         if (allUsed) {
             Main.popPhase();
         }
+        selectedDie = null;
     }
 
     public void cancelEffects(Eff[] effects) {
@@ -231,11 +232,18 @@ public class DungeonScreen extends Screen {
         }
 
     }
-    public void click(Die d) {
-//        d.removeFromPhysics();
-//        EntityPanel ep = d.entity.getEntityPanel();
-//        d.moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
 
+    Die selectedDie;
+    Vector2 selectedDiePosition;
+    public void click(Die d) {
+        if(d.entity instanceof Monster) return;
+        if(Main.getPhase().canRoll()){
+            d.toggleLock();
+        }
+        if(Main.getPhase().canTarget()){
+            selectedDie = d;
+            selectedDiePosition = d.getScreenPosition();
+        }
     }
 
     public DiceEntity getRandomTarget() {
@@ -250,11 +258,6 @@ public class DungeonScreen extends Screen {
 
     public void playerRoll(boolean firstRoll) {
         if(!Main.getPhase().canRoll()) return;
-        if(firstRoll){
-            for(Hero h:heroes){
-                h.getDie().used=false;
-            }
-        }
         for(Hero hero:heroes){
             if(firstRoll) hero.getDie().addToScreen();
             hero.getDie().roll(firstRoll);

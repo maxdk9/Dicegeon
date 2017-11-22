@@ -29,11 +29,15 @@ import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 
 public class Die {
 
-    public boolean used;
+    private boolean used;
     public void use() {
         removeFromScreen();
         DungeonScreen.get().bottomBar.vacateSlot(this);
         used= true;
+    }
+
+    public boolean getUsed(){
+        return used;
     }
 
     public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
@@ -88,7 +92,6 @@ public class Die {
             case Rolling:
                 if(isStopped()){
                     setState(Stopped);
-//                    Village.get().activate(sides.get(lockedSide).effects, false, false);
                 }
                 else{
                     timeInAir+=delta;
@@ -100,57 +103,22 @@ public class Die {
         }
     }
 
-    public void slideDown(){
+    public void slideToBottomBar(){
         removeFromPhysics();
         physical.transform.getRotation(originalRotation);
         DungeonScreen.get().bottomBar.slideDown(this);
     }
 
-    public void click(){
-        if(entity instanceof Monster) return;
+    public void toggleLock() {
         switch(getState()){
-
-            case Rolling:
-                break;
             case Stopped:
-                slideDown();
+                slideToBottomBar();
                 break;
             case Locked:
-                if(Main.getPhase().canRoll()) {
-                    DungeonScreen.get().bottomBar.vacateSlot(this);
-                    moveToBot();
-                }
-                break;
-            case Locking:
-                System.out.println("ho");
-                break;
-            case Unlocking:
+                DungeonScreen.get().bottomBar.vacateSlot(this);
+                returnToPlay();
                 break;
         }
-
-
-//        setState(getState()==Locked ? DieState.Stopped : DieState.Locked);
-//        switch(state){
-//            case Rolling:
-//                break;
-//            case Stopped:
-//                Sounds.playSound(Sounds.shake,.3f,1);
-//                moveToTop();
-//                break;
-//            case Locked:
-//                for(Die d:BulletStuff.dice){
-//                    if(d.getState()==Rolling) return;
-//                }
-//                setState(Unlocking);
-//                removeFromPhysics();
-//                moveToBot();
-//                Sounds.playSound(Sounds.unshake,.3f,1);
-//                break;
-//            case Locking:
-//                break;
-//            case Unlocking:
-//                break;
-//        }
     }
 
     public DieState getState(){
@@ -163,6 +131,7 @@ public class Die {
             case Rolling:
                 break;
             case Stopped:
+                damp();
                 this.lockedSide=getSide();
                 glow = 1;
                 entity.locked();
@@ -192,7 +161,7 @@ public class Die {
     Vector3 temp2 = new Vector3();
     Quaternion originalRotation = new Quaternion();
 
-    private void moveToBot() {
+    private void returnToPlay() {
         setState(Unlocking);
         Vector3 best = getBestSpot();
         moveTo(best, originalRotation);
@@ -266,9 +235,6 @@ public class Die {
             resetForRoll();
         }
         else if(getState()!=DieState.Stopped) return;
-//        if(reroll && lockedSide>=0){
-////            Village.get().activate(sides.get(lockedSide).effects, false, true);
-//        }
         this.lockedSide=-1;
         setState(Rolling);
         undamp();
@@ -283,6 +249,7 @@ public class Die {
         removeFromPhysics();
         addToPhysics();
         undamp();
+        used = false;
     }
 
     public void jiggle(){
@@ -294,15 +261,6 @@ public class Die {
 
     // boring calculations
 
-    static final float pitchAdd = -40;
-    static final Quaternion[] d6QuatsWithLean = new Quaternion[]{
-            new Quaternion().setEulerAngles(0,90+pitchAdd,90), // maybe wrong!
-            new Quaternion().setEulerAngles(0,270+pitchAdd,270),
-            new Quaternion().setEulerAngles(90,0,180+pitchAdd),
-            new Quaternion().setEulerAngles(270,0,0-pitchAdd),
-            new Quaternion().setEulerAngles(180,0-pitchAdd,270),  // maybe wrong!
-            new Quaternion().setEulerAngles(0,0+pitchAdd,90)
-    }; ;
     static final Quaternion[] d6Quats = new Quaternion[]{
             new Quaternion().setEulerAngles(0,90,90), // maybe wrong!
             new Quaternion().setEulerAngles(0,270,270),
@@ -379,12 +337,12 @@ public class Die {
 	}
 
 	private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand){
-		float x = (float)(side + Maths.factor(sideRand))*Maths.mult();
-		float y = (float)(up + Maths.factor(upRand));
-		float z = (float)(side + Maths.factor(sideRand))*Maths.mult();
-		float r1 = (float)(rot + Maths.factor(rotRand))*Maths.mult();
-		float r2 = (float)(rot + Maths.factor(rotRand))*Maths.mult();
-		float r3 = (float)(rot + Maths.factor(rotRand))*Maths.mult();
+		float x = (side + Maths.factor(sideRand))*Maths.mult();
+		float y = (up + Maths.factor(upRand));
+		float z = (side + Maths.factor(sideRand))*Maths.mult();
+		float r1 = (rot + Maths.factor(rotRand))*Maths.mult();
+		float r2 = (rot + Maths.factor(rotRand))*Maths.mult();
+		float r3 = (rot + Maths.factor(rotRand))*Maths.mult();
 		applyForces(x, y, z, r1, r2, r3);
 	}
 	
@@ -402,10 +360,6 @@ public class Die {
         }
     }
 
-	public void destroy() {
-		removeFromScreen();
-	}
-	
 	private boolean isStopped(){
 		physical.transform.getTranslation(temp);
       return !isMoving() && temp.y<-(BulletStuff.height-.6f);
@@ -441,13 +395,13 @@ public class Die {
 
 	boolean disposed;
     public void dispose() {
+        // I don't think this method works
         if(disposed) System.err.println("WARNING: TRYING TO DISPOSE DIE AGAIN");
         removeFromScreen();
         disposed=true;
     }
 
     public void removeFromScreen() {
-//        setState(Stopped);
         lockedSide=-1;
         BulletStuff.instances.remove(physical);
         removeFromPhysics();
