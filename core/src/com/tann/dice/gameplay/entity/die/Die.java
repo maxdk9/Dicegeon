@@ -20,6 +20,7 @@ import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
@@ -106,6 +107,7 @@ public class Die {
     }
 
     public void click(){
+        if(entity instanceof Monster) return;
         switch(getState()){
 
             case Rolling:

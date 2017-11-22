@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.*;
@@ -89,6 +90,7 @@ public class EntityPanel extends Group {
         }
         l.gap(1);
         l.row(1);
+        l.row(1);
         l.layoo();
     }
 
@@ -131,6 +133,10 @@ public class EntityPanel extends Group {
         batch.setColor(Colours.grey);
         Draw.fillRectangle(batch, getX()+gap, getY()+gap, diceHoleSize, diceHoleSize);
         super.draw(batch, parentAlpha);
+        int overkill = e.getIncomingDamage() - e.getHp();
+        if(overkill>0){
+            Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/5f, getY()+getHeight()*1/5f, getWidth()*1/5f, getHeight()*4/5f, Align.center);
+        }
     }
 
     public void flash() {

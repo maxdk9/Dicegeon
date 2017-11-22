@@ -1,6 +1,7 @@
 package com.tann.dice.desktop;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 
@@ -10,8 +11,8 @@ public class DicePack {
     settings.combineSubdirectories = false;
     settings.maxWidth=2048;
     settings.maxHeight=2048;
-    settings.filterMag= Texture.TextureFilter.Linear;
-    settings.filterMin= Texture.TextureFilter.Linear;
+    settings.filterMag= TextureFilter.Nearest;
+    settings.filterMin= TextureFilter.Nearest;
     TexturePacker.process(settings, "../images", "../android/assets", "atlas_image");
 
 

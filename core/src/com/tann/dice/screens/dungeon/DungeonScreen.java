@@ -201,6 +201,9 @@ public class DungeonScreen extends Screen {
     public void touchUp() {
         if(!Main.getPhase().canTarget()) return;
         if (BulletStuff.dicePos != null) {
+            if(BulletStuff.selectedDie.getActualSide()==null){
+                System.err.println("Failed to drag a die "+BulletStuff.selectedDie+":"+BulletStuff.selectedDie.getSide()+":"+BulletStuff.selectedDie.getState()+":"+BulletStuff.selectedDie.entity);
+            }
             for (DiceEntity de : all) {
                 if (de.getEntityPanel().mouseOver && (de.isTargetable())) {
                     de.hit(BulletStuff.selectedDie.getActualSide(), true);
