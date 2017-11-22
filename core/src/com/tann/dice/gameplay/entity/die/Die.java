@@ -29,7 +29,21 @@ import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 
 public class Die {
 
+    private static final float MAX_AIRTIME = 2.7f;
+    private static final float INTERP_SPEED = .4f;
+
+    public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
+
+
+    // gameplay stuff
+
+	  public DiceEntity entity;
+    public Array<Side> sides = new Array<>();
+    private DieState state = DieState.Stopped;
+    private int lockedSide=-1;
+    private float dist = 0;
     private boolean used;
+
     public void use() {
         removeFromScreen();
         DungeonScreen.get().bottomBar.vacateSlot(this);
@@ -40,26 +54,35 @@ public class Die {
         return used;
     }
 
-    public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
+    public void slideToBottomBar(){
+        removeFromPhysics();
+        physical.transform.getRotation(originalRotation);
+        DungeonScreen.get().bottomBar.slideDown(this);
+    }
 
-	  public DiceEntity entity;
+    public void toggleLock() {
+        switch(getState()){
+            case Stopped:
+                slideToBottomBar();
+                break;
+            case Locked:
+                DungeonScreen.get().bottomBar.vacateSlot(this);
+                returnToPlay();
+                break;
+        }
+    }
+
+    // physics/rendering/position stuff //
+
     public CollisionObject physical;
-    public Array<Side> sides = new Array<>();
-    private static final float MAX_AIRTIME = 2.7f;
-    private static final float INTERP_SPEED = .4f;
+    private float glow = 0;
+    private boolean glowOverride;
+    private static int dieIndex = 0;
+    private static final float DIE_SIZE = 0.5f;
+    private static final int ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
+    private static Material MATERIAL;
+    private float timeInAir;
 
-    // gameplay stuff
-
-    private Vector3 startPos = new Vector3();
-    private Vector3 targetPos;
-    private Quaternion startQuat = new Quaternion();
-    private Quaternion targetQuat = new Quaternion();
-
-    private DieState state = DieState.Stopped;
-    int lockedSide=-1;
-
-    private float glow=0;
-    float dist = 0;
     public void update(float delta){
         switch(state){
             case Stopped:
@@ -103,24 +126,6 @@ public class Die {
         }
     }
 
-    public void slideToBottomBar(){
-        removeFromPhysics();
-        physical.transform.getRotation(originalRotation);
-        DungeonScreen.get().bottomBar.slideDown(this);
-    }
-
-    public void toggleLock() {
-        switch(getState()){
-            case Stopped:
-                slideToBottomBar();
-                break;
-            case Locked:
-                DungeonScreen.get().bottomBar.vacateSlot(this);
-                returnToPlay();
-                break;
-        }
-    }
-
     public DieState getState(){
         return state;
     }
@@ -145,92 +150,7 @@ public class Die {
         }
     }
 
-    private void damp() {
-        physical.body.setDamping(2, 50);
-    }
-
-    private void undamp(){
-        physical.body.setDamping(0, 0);
-    }
-
-    public boolean isMoving(){
-        return physical.isMoving();
-    }
-
-    Vector3 temp = new Vector3();
-    Vector3 temp2 = new Vector3();
-    Quaternion originalRotation = new Quaternion();
-
-    private void returnToPlay() {
-        setState(Unlocking);
-        Vector3 best = getBestSpot();
-        moveTo(best, originalRotation);
-        undamp();
-    }
-
-    public void moveToTop() {
-        glow=0;
-        if(getState()==Stopped) physical.transform.getRotation(originalRotation);
-        physical.transform.getRotation(originalRotation);
-        System.out.println("magpie");
-        float width = 5;
-//        float x = -(width/(Village.STARTING_VILLAGERS-1)*index - width/2);
-//        moveTo(new Vector3(x, 0f, 6.55f), d6QuatsWithLean[lockedSide]);
-        setState(Locking);
-        removeFromPhysics();
-    }
-
-    public void moveTo(float screenX, float screenY){
-        setState(Locking);
-        float factor = BulletStuff.srcWidth/Main.width;
-        moveTo(new Vector3(
-            screenX*factor-BulletStuff.srcWidth/2+physical.dimensions.y/2,
-            -BulletStuff.height+physical.dimensions.y/2,
-            (Main.height-screenY)*factor-BulletStuff.heightFactor/2-physical.dimensions.y/2),
-            d6Quats[lockedSide]);
-    }
-
-    public void moveTo(Vector2 position){
-        moveTo(position.x, position.y);
-    }
-
-    private void moveTo(Vector3 position, Quaternion rotation){
-        dist=0;
-        startPos = physical.transform.getTranslation(startPos);
-        targetPos = position;
-        physical.transform.getRotation(startQuat);
-        targetQuat = rotation;
-    }
-
-    private Vector3 getBestSpot() {
-        float dist =0;
-        float angle = 0;
-        while(true){
-            Rectangle bounds = BulletStuff.playerArea;
-
-
-            temp2.set((float)Math.sin(angle)*dist,-BulletStuff.height+.5f,(float)Math.cos(angle)*dist -BulletStuff.heightFactor/2+bounds.y+bounds.height/2);
-            boolean good = true;
-            for(Die d:BulletStuff.dice){
-                d.getPosition(temp);
-                float xDiff = temp.x-temp2.x;
-                float zDiff = temp.z-temp2.z;
-                float dieDist = (float) Math.sqrt(xDiff*xDiff+zDiff*zDiff);
-                if(dieDist < DIE_SIZE*2.8f){
-                    good=false;
-                    break;
-                }
-            }
-            if(good) return temp2;
-            dist+=.05f;
-            angle += 5;
-        }
-    }
-
-
-    float timeInAir;
     public void roll(boolean firstRoll) {
-
         if(firstRoll){
             resetForRoll();
         }
@@ -238,7 +158,6 @@ public class Die {
         this.lockedSide=-1;
         setState(Rolling);
         undamp();
-
         timeInAir=0;
         physical.body.clearForces();
         randomise(12, 3, 0, 8, 1, 0);
@@ -256,19 +175,6 @@ public class Die {
         timeInAir=0;
         randomise(4, 0, 3.5f, 0, 1, 0);
     }
-
-    boolean glowOverride;
-
-    // boring calculations
-
-    static final Quaternion[] d6Quats = new Quaternion[]{
-            new Quaternion().setEulerAngles(0,90,90), // maybe wrong!
-            new Quaternion().setEulerAngles(0,270,270),
-            new Quaternion().setEulerAngles(90,0,180),
-            new Quaternion().setEulerAngles(270,0,0),
-            new Quaternion().setEulerAngles(180,0,270),  // maybe wrong!
-            new Quaternion().setEulerAngles(0,0,90)
-    };
 
     public int getSide(){
         switch(state) {
@@ -317,88 +223,160 @@ public class Die {
     }
 
     public Side getActualSide(){
-       int side = getSide();
-       if(side>=0){
-           return sides.get(side);
-       }
-       return null;
+        int side = getSide();
+        if(side>=0){
+            return sides.get(side);
+        }
+        return null;
     }
-	
-	private float getFloat(TextureRegion tr){
+
+    private float getFloat(TextureRegion tr){
         if(tr==null){
             System.out.println("ahh");
         }
         return getFloat(tr.getRegionX()/128, tr.getRegionY()/128);
-	}
-	
-	private float getFloat(int x, int y){
-		int num = x+16*(y);
-		return num/255f+0.002f;
-	}
+    }
 
-	private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand){
-		float x = (side + Maths.factor(sideRand))*Maths.mult();
-		float y = (up + Maths.factor(upRand));
-		float z = (side + Maths.factor(sideRand))*Maths.mult();
-		float r1 = (rot + Maths.factor(rotRand))*Maths.mult();
-		float r2 = (rot + Maths.factor(rotRand))*Maths.mult();
-		float r3 = (rot + Maths.factor(rotRand))*Maths.mult();
-		applyForces(x, y, z, r1, r2, r3);
-	}
-	
-	private void applyForces(float x, float y, float z, float r1, float r2, float r3){
-		physical.body.applyCentralImpulse(new Vector3(x, y, z));
-		physical.body.applyTorqueImpulse(new Vector3(r1, r2, r3));
-	}
+    private float getFloat(int x, int y){
+        int num = x+16*(y);
+        return num/255f+0.002f;
+    }
 
-	public void getPosition(Vector3 out){
-	    if(getState()==Locking || getState() == Unlocking){
-	        out.set(targetPos);
+    private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand){
+        float x = (side + Maths.factor(sideRand))*Maths.mult();
+        float y = (up + Maths.factor(upRand));
+        float z = (side + Maths.factor(sideRand))*Maths.mult();
+        float r1 = (rot + Maths.factor(rotRand))*Maths.mult();
+        float r2 = (rot + Maths.factor(rotRand))*Maths.mult();
+        float r3 = (rot + Maths.factor(rotRand))*Maths.mult();
+        applyForces(x, y, z, r1, r2, r3);
+    }
+
+    private void applyForces(float x, float y, float z, float r1, float r2, float r3){
+        physical.body.applyCentralImpulse(new Vector3(x, y, z));
+        physical.body.applyTorqueImpulse(new Vector3(r1, r2, r3));
+    }
+
+    public void getPosition(Vector3 out){
+        if(getState()==Locking || getState() == Unlocking){
+            out.set(targetPos);
         }
         else{
-	        physical.transform.getTranslation(out);
+            physical.transform.getTranslation(out);
         }
     }
 
-	private boolean isStopped(){
-		physical.transform.getTranslation(temp);
-      return !isMoving() && temp.y<-(BulletStuff.height-.6f);
-	}
+    private boolean isStopped(){
+        physical.transform.getTranslation(temp);
+        return !isMoving() && temp.y<-(BulletStuff.height-.6f);
+    }
 
-	public float getGlow(){
-	    return glow;
-	}
+    public float getGlow(){
+        return glow;
+    }
 
-	public Color getColour() {
-	    if(entity==null) return Colours.dark;
-		return entity.getColour();
-	}
+    public Color getColour() {
+        if(entity==null) return Colours.dark;
+        return entity.getColour();
+    }
 
-	private float[] texLocs = null;
-	public float[] getTexLocs() {
-		if(texLocs != null) return texLocs;
-		texLocs = new float[26];
-		float width = sides.get(0).tr[0].getTexture().getWidth();
-		float height = sides.get(0).tr[0].getTexture().getHeight();
-		for(int i=0;i<sides.size;i++){
-			Side s = sides.get(i);
-			texLocs[4*i] = s.tr[0].getRegionX()/width;
-			texLocs[4*i+1] = s.tr[0].getRegionY()/height;
-			texLocs[4*i+2] = s.tr[1].getRegionX()/width;
-			texLocs[4*i+3] = s.tr[1].getRegionY()/height;
-		}
-		texLocs[24]=entity.lapel.getRegionX()/width;
-		texLocs[25]=entity.lapel.getRegionY()/height;
-		
-		return texLocs;
-	}
+    private float[] texLocs = null;
+    public float[] getTexLocs() {
+        if(texLocs != null) return texLocs;
+        texLocs = new float[26];
+        float width = sides.get(0).tr[0].getTexture().getWidth();
+        float height = sides.get(0).tr[0].getTexture().getHeight();
+        for(int i=0;i<sides.size;i++){
+            Side s = sides.get(i);
+            texLocs[4*i] = s.tr[0].getRegionX()/width;
+            texLocs[4*i+1] = s.tr[0].getRegionY()/height;
+            texLocs[4*i+2] = s.tr[1].getRegionX()/width;
+            texLocs[4*i+3] = s.tr[1].getRegionY()/height;
+        }
+        texLocs[24]=entity.lapel.getRegionX()/width;
+        texLocs[25]=entity.lapel.getRegionY()/height;
 
-	boolean disposed;
-    public void dispose() {
-        // I don't think this method works
-        if(disposed) System.err.println("WARNING: TRYING TO DISPOSE DIE AGAIN");
-        removeFromScreen();
-        disposed=true;
+        return texLocs;
+    }
+
+    private void damp() {
+        physical.body.setDamping(2, 50);
+    }
+
+    private void undamp(){
+        physical.body.setDamping(0, 0);
+    }
+
+    public boolean isMoving(){
+        return physical.isMoving();
+    }
+
+    // interpolation stuff
+
+    private Vector3 startPos = new Vector3();
+    private Vector3 targetPos;
+    private Quaternion startQuat = new Quaternion();
+    private Quaternion targetQuat = new Quaternion();
+    private Quaternion originalRotation = new Quaternion();
+    static final Quaternion[] d6Quats = new Quaternion[]{
+        new Quaternion().setEulerAngles(0,90,90), // maybe wrong!
+        new Quaternion().setEulerAngles(0,270,270),
+        new Quaternion().setEulerAngles(90,0,180),
+        new Quaternion().setEulerAngles(270,0,0),
+        new Quaternion().setEulerAngles(180,0,270),  // maybe wrong!
+        new Quaternion().setEulerAngles(0,0,90)
+    };
+
+    private void returnToPlay() {
+        setState(Unlocking);
+        Vector3 best = getBestSpot();
+        moveTo(best, originalRotation);
+        undamp();
+    }
+
+    private void moveTo(float screenX, float screenY){
+        setState(Locking);
+        float factor = BulletStuff.srcWidth/Main.width;
+        moveTo(new Vector3(
+                screenX*factor-BulletStuff.srcWidth/2+physical.dimensions.y/2,
+                -BulletStuff.height+physical.dimensions.y/2,
+                (Main.height-screenY)*factor-BulletStuff.heightFactor/2-physical.dimensions.y/2),
+            d6Quats[lockedSide]);
+    }
+
+    public void moveTo(Vector2 position){
+        moveTo(position.x, position.y);
+    }
+
+    private void moveTo(Vector3 position, Quaternion rotation){
+        dist=0;
+        startPos = physical.transform.getTranslation(startPos);
+        targetPos = position;
+        physical.transform.getRotation(startQuat);
+        targetQuat = rotation;
+    }
+
+    private Vector3 getBestSpot() {
+        float dist =0;
+        float angle = 0;
+        while(true){
+            Rectangle bounds = BulletStuff.playerArea;
+            temp2.set((float)Math.sin(angle)*dist,-BulletStuff.height+.5f,(float)Math.cos(angle)*dist -BulletStuff.heightFactor/2+bounds.y+bounds.height/2);
+            boolean good = true;
+            for(Die d:BulletStuff.dice){
+                d.getPosition(temp);
+                float xDiff = temp.x-temp2.x;
+                float zDiff = temp.z-temp2.z;
+                float dieDist = (float) Math.sqrt(xDiff*xDiff+zDiff*zDiff);
+                if(dieDist < DIE_SIZE*2.8f){
+                    good=false;
+                    break;
+                }
+            }
+            if(good) return temp2;
+            dist+=.05f;
+            angle += 5;
+        }
     }
 
     public void removeFromScreen() {
@@ -408,14 +386,14 @@ public class Die {
     }
 
     public void removeFromPhysics(){
-		BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
-		BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
-	}
+        BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
+        BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
+    }
 
-	private void addToPhysics() {
+    private void addToPhysics() {
         removeFromPhysics();
-		BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
-	}
+        BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
+    }
 
     public void addToScreen() {
         lockedSide=-1;
@@ -430,6 +408,44 @@ public class Die {
         physical.body.setLinearVelocity(new Vector3());
         physical.body.setAngularVelocity(new Vector3());
     }
+
+    private void randomiseStart() {
+
+        Rectangle bounds = BulletStuff.playerArea;
+        float positionRand = .4f;
+        float startX = (float) (bounds.x+bounds.width*(1-positionRand)/2 + Math.random()*positionRand*bounds.width);
+        float startY = (float) (bounds.y+bounds.height*(1-positionRand)/2 + Math.random()*positionRand*bounds.height);
+        startX -=BulletStuff.srcWidth /2;
+        startY -=BulletStuff.heightFactor/2;
+        float startHeight = -BulletStuff.height+1;
+
+        physical.transform.setToTranslation(startX, startHeight, startY); // starting position
+        physical.body.setWorldTransform(physical.transform);
+        physical.body.setActivationState(4);
+    }
+
+    public Vector2 getScreenPosition(){
+        Vector3 out = new Vector3();
+        Vector2 dicePos = new Vector2();
+        getPosition(out);
+        BulletStuff.cam.project(out);
+        dicePos.x = out.x;
+        dicePos.y = out.y;
+        return dicePos;
+    }
+
+    public float get2DSize(){
+        float dimen = 1;
+        if(physical.dimensions.x!=0){
+            dimen = physical.dimensions.x;
+        }
+        return BulletStuff.convertToScreen(dimen);
+    }
+
+    // junk
+
+    private Vector3 temp = new Vector3();
+    private Vector3 temp2 = new Vector3();
 
     // setup stuff
 
@@ -451,10 +467,6 @@ public class Die {
         for(Eff e:copy.effects) e.sourceDie=this;
     }
 
-    static int dieIndex = 0;
-    private static final float DIE_SIZE = 0.5f;
-    private static final int ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
-    private static Material MATERIAL;
     public void construct(){
         ModelBuilder mb = new ModelBuilder();
         mb.begin();
@@ -502,37 +514,8 @@ public class Die {
         physical.userData = this;
     }
 
-    private void randomiseStart() {
-
-        Rectangle bounds = BulletStuff.playerArea;
-        float positionRand = .4f;
-        float startX = (float) (bounds.x+bounds.width*(1-positionRand)/2 + Math.random()*positionRand*bounds.width);
-        float startY = (float) (bounds.y+bounds.height*(1-positionRand)/2 + Math.random()*positionRand*bounds.height);
-        startX -=BulletStuff.srcWidth /2;
-        startY -=BulletStuff.heightFactor/2;
-        float startHeight = -BulletStuff.height+1;
-
-        physical.transform.setToTranslation(startX, startHeight, startY); // starting position
-        physical.body.setWorldTransform(physical.transform);
-        physical.body.setActivationState(4);
+    public void dispose() {
+        // I don't think this method works
+        removeFromScreen();
     }
-
-    public Vector2 getScreenPosition(){
-        Vector3 out = new Vector3();
-        Vector2 dicePos = new Vector2();
-        getPosition(out);
-        BulletStuff.cam.project(out);
-        dicePos.x = out.x;
-        dicePos.y = out.y;
-        return dicePos;
-    }
-
-    public float get2DSize(){
-        float dimen = 1;
-        if(physical.dimensions.x!=0){
-            dimen = physical.dimensions.x;
-        }
-        return BulletStuff.convertToScreen(dimen);
-    }
-
 }

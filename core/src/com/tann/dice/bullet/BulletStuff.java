@@ -268,22 +268,6 @@ public class BulletStuff {
 		return true;
 	}
 
-    public static void moveAllToTop(){
-        for(Die d:BulletStuff.dice){
-            if(d.getState()== Die.DieState.Stopped || d.getState()== Die.DieState.Unlocking){
-                d.moveToTop();
-            }
-        }
-    }
-
-	public static boolean noDiceMoving() {
-		for (Die d : BulletStuff.dice) {
-			if (d.getState()==Die.DieState.Rolling || d.getState()==Die.DieState.Unlocking){
-				return false;
-			}
-		}
-		return true;
-	}
 
     public static void reset() {
         for(Die d:dice){
