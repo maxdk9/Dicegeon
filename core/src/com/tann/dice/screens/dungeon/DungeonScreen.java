@@ -131,7 +131,7 @@ public class DungeonScreen extends Screen {
         float timer = 0;
         float timerAdd = .1f;
         for (final Monster m : monsters) {
-            if(m.dead) continue;
+            if(m.isDead()) continue;
             m.locked=false;
             m.getDie().resetForRoll();
             addAction(Actions.delay(timer, Actions.run(
@@ -215,7 +215,7 @@ public class DungeonScreen extends Screen {
         }
         boolean allUsed = true;
         for (DiceEntity de : heroes) {
-            if (!de.getDie().getUsed() && !de.dead) {
+            if (!de.getDie().getUsed() && !de.isDead()) {
                 allUsed = false;
                 break;
             }
@@ -250,7 +250,7 @@ public class DungeonScreen extends Screen {
         for(int i=0;i<100;i++){
             //super lazy
             Hero h = heroes.random();
-            if(!h.dead)return h;
+            if(!h.isDead())return h;
         }
         return null;
     }

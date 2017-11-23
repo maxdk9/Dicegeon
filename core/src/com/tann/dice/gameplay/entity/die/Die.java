@@ -293,8 +293,8 @@ public class Die {
             texLocs[4*i+2] = s.tr[1].getRegionX()/width;
             texLocs[4*i+3] = s.tr[1].getRegionY()/height;
         }
-        texLocs[24]=entity.lapel.getRegionX()/width;
-        texLocs[25]=entity.lapel.getRegionY()/height;
+        texLocs[24]=entity.getLapel().getRegionX()/width;
+        texLocs[25]=entity.getLapel().getRegionY()/height;
 
         return texLocs;
     }
@@ -456,7 +456,7 @@ public class Die {
     }
 
     public void setup(){
-        for(Side s:entity.sides){
+        for(Side s:entity.getSides()){
             addSide(s);
         }
     }
