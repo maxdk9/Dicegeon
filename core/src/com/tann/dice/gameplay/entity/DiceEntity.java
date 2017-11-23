@@ -37,7 +37,7 @@ public abstract class DiceEntity {
     this.lapel = Images.lapel0;
     this.col = Colours.classes[(i++) % Colours.classes.length];
   }
-  
+
   // gameplay junk
   public void setMaxHp(int maxHp) {
     this.maxHp = maxHp;
