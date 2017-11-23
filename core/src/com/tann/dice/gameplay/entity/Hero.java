@@ -19,11 +19,10 @@ public class Hero extends DiceEntity {
 
     public enum HeroType{
 
-        Apprentice(3, Side.magic1, Side.magic1, Side.magic2, Side.nothing, Side.nothing, Side.nothing),
-        Rogue(4, Side.sword1, Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.nothing),
-        Fighter(4, Side.sword1, Side.sword1, Side.sword2, Side.shield1, Side.shield2, Side.nothing),
-        Defender(5, Side.shield1, Side.shield1, Side.shield2, Side.shield2, Side.nothing, Side.nothing),
-        Herbalist(3, Side.magic1, Side.magic1, Side.heal2, Side.magic1heal1, Side.nothing, Side.nothing);
+        Apprentice(3, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing, Side.nothing),
+        Fighter(4, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.shield1, Side.nothing),
+        Defender(5, Side.shield2, Side.shield2, Side.shield1, Side.shield1, Side.sword1, Side.nothing),
+        Herbalist(3, Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing);
 
         public Side[] sides;
         public TextureRegion lapel;

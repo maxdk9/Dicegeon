@@ -319,12 +319,12 @@ public class Die {
     private Quaternion targetQuat = new Quaternion();
     private Quaternion originalRotation = new Quaternion();
     static final Quaternion[] d6Quats = new Quaternion[]{
-        new Quaternion().setEulerAngles(0,90,90), // maybe wrong!
-        new Quaternion().setEulerAngles(0,270,270),
-        new Quaternion().setEulerAngles(90,0,180),
-        new Quaternion().setEulerAngles(270,0,0),
-        new Quaternion().setEulerAngles(180,0,270),  // maybe wrong!
-        new Quaternion().setEulerAngles(0,0,90)
+        new Quaternion().setEulerAngles(180,90,90),
+        new Quaternion().setEulerAngles(180,270,270),
+        new Quaternion().setEulerAngles(270,0,180),
+        new Quaternion().setEulerAngles(90,0,0),
+        new Quaternion().setEulerAngles(0,0,270),
+        new Quaternion().setEulerAngles(180,0,90)
     };
 
     private void returnToPlay() {

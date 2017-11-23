@@ -45,6 +45,7 @@ public class Side {
     public static final Side magic2 = new Side(Images.get("magic2"), new Eff().magic(2));
 
     public static final Side heal2 = new Side(Images.get("heal2"), new Eff().heal(2));
+    public static final Side heal3 = new Side(Images.get("heal3"), new Eff().heal(3));
 
     public static final Side magic1heal1 = new Side(Images.get("magic1heal1"), new Eff().magic(1));
 

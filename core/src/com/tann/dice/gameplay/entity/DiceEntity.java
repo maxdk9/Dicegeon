@@ -52,6 +52,10 @@ public abstract class DiceEntity {
     return hp;
   }
 
+  private void addHp(int amount){
+      this.hp = Math.min(maxHp, getHp()+amount);
+  }
+
   public abstract void locked();
 
   public void hit(Array<Eff> effects, boolean instant) {
@@ -75,6 +79,9 @@ public abstract class DiceEntity {
         case Shield:
           potentialEffects.add(e);
           break;
+        case Heal:
+          addHp(e.value);
+            break;
       }
     } else {
       potentialEffects.add(e);

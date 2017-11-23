@@ -52,11 +52,12 @@ public class DungeonScreen extends Screen {
 
     private void init(){
         for (int i = 0; i < 1; i++) {
-            heroes.add(new Hero(Hero.HeroType.Rogue));
-            heroes.add(new Hero(Hero.HeroType.Rogue));
+            heroes.add(new Hero(Hero.HeroType.Fighter));
+            heroes.add(new Hero(Hero.HeroType.Fighter));
+            heroes.add(new Hero(Hero.HeroType.Defender));
             heroes.add(new Hero(Hero.HeroType.Herbalist));
-            heroes.add(new Hero(Hero.HeroType.Herbalist));
-            heroes.add(new Hero(Hero.HeroType.Herbalist));
+            heroes.add(new Hero(Hero.HeroType.Apprentice));
+
             for(int j=0;j<4;j++){
                 monsters.add(new Monster(MonsterType.Goblin));
             }
@@ -175,7 +176,7 @@ public class DungeonScreen extends Screen {
             Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), selectedDiePosition.x, selectedDiePosition.y, 8);
         }
 
-        Fonts.draw(batch, Main.getPhase().toString(), Fonts.fontSmall, Colours.light, 0, Main.height*.57f, Main.width, 500, Align.center);
+        Fonts.draw(batch, Main.getPhase().toString(), Fonts.fontSmall, Colours.light, 0, Main.height-Fonts.fontSmall.getLineHeight(), Main.width, Fonts.fontSmall.getLineHeight(), Align.center);
     }
 
     @Override
