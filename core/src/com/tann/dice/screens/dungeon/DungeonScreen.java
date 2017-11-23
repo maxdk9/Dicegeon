@@ -38,12 +38,11 @@ public class DungeonScreen extends Screen {
 
     public static final float BOTTOM_BUTTON_HEIGHT = Main.height*.2f;
 
-    Array<Die> dice = new Array<>();
     Array<DiceEntity> all = new Array<>();
     public Array<Hero> heroes = new Array<>();
     public Array<Monster> monsters = new Array<>();
-    SidePanel friendly;
-    SidePanel enemy;
+    private SidePanel friendly;
+    private SidePanel enemy;
     int rerolls = 2;
 
     public BottomBar bottomBar;
@@ -55,9 +54,9 @@ public class DungeonScreen extends Screen {
         for (int i = 0; i < 1; i++) {
             heroes.add(new Hero(Hero.HeroType.Rogue));
             heroes.add(new Hero(Hero.HeroType.Rogue));
-            heroes.add(new Hero(Hero.HeroType.Fighter));
-            heroes.add(new Hero(Hero.HeroType.Fighter));
-            heroes.add(new Hero(Hero.HeroType.Fighter));
+            heroes.add(new Hero(Hero.HeroType.Herbalist));
+            heroes.add(new Hero(Hero.HeroType.Herbalist));
+            heroes.add(new Hero(Hero.HeroType.Herbalist));
             for(int j=0;j<4;j++){
                 monsters.add(new Monster(MonsterType.Goblin));
             }
@@ -145,7 +144,6 @@ public class DungeonScreen extends Screen {
     }
 
     private void addDie(DiceEntity v){
-        dice.add(v.getDie());
         v.getDie().addToScreen();
         v.getDie().roll(true);
     }

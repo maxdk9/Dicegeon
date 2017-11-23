@@ -52,23 +52,18 @@ public class Monster extends DiceEntity {
     public boolean locked;
     @Override
     public void locked() {
+        getDie().removeFromPhysics();
         target =DungeonScreen.get().getRandomTarget();
-
         target.hit(die.getActualSide().effects, false);
         EntityPanel panel = target.getEntityPanel();
-        Vector2 panelCoords = Tann.getLocalCoordinates(panel);
-
         TextureFlasher tf = new TextureFlasher(getDie().sides.get(0).effects[0].type.region);
         DungeonScreen.get().addActor(tf);
         panel.addActor(tf);
         tf.setPosition(panel.getWidth()*.7f-tf.getWidth()/2, panel.getHeight()/2-tf.getHeight()/2);
         panel.flash();
-        getDie().removeFromPhysics();
         EntityPanel ep = getDie().entity.getEntityPanel();
         getDie().moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
         locked = true;
-
-
     }
 
     public Color getColour() {
