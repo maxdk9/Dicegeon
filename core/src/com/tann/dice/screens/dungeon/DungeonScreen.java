@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -71,6 +72,23 @@ public class DungeonScreen extends Screen {
         all.addAll(monsters);
         BulletStuff.refresh(all);
 
+        bottomBar = new BottomBar();
+        addActor(bottomBar);
+        bottomBar.setPosition(SidePanel.width, 0);
+
+        enemy = new SidePanel(false);
+        enemy.addEntities(monsters);
+        addActor(enemy);
+
+        addActor(new Actor(){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                super.draw(batch, parentAlpha);
+                batch.end();
+                BulletStuff.render();
+                batch.begin();
+            }
+        });
 
         spellHolder = new SpellHolder();
         spellHolder.addSpell(Spell.dart);
@@ -78,14 +96,11 @@ public class DungeonScreen extends Screen {
         spellHolder.addSpell(Spell.resist2);
         spellHolder.addSpell(Spell.resist3);
         addActor(spellHolder);
-        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(true));
+        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
 
         friendly = new SidePanel(true);
         friendly.addEntities(heroes);
         addActor(friendly);
-        enemy = new SidePanel(false);
-        enemy.addEntities(monsters);
-        addActor(enemy);
 
         Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.roll, Colours.dark,
                 new Runnable() {
@@ -109,13 +124,6 @@ public class DungeonScreen extends Screen {
         addActor(confirmButton);
         confirmButton.setSquare();
         confirmButton.setPosition(Main.width-confirmButton.getWidth(), 0);
-
-
-        bottomBar = new BottomBar();
-
-//        addActor(bottomBar);
-        bottomBar.setPosition(SidePanel.width, 0);
-
 
 
 
@@ -178,14 +186,6 @@ public class DungeonScreen extends Screen {
         batch.setColor(Colours.brown_dark);
         drawRectThing(batch, BulletStuff.playerArea);
         batch.setColor(Colours.brown_dark);
-        bottomBar.draw(batch, 1);
-        batch.flush();
-        batch.end();
-        batch.begin();
-        BulletStuff.render();
-        batch.flush();
-        batch.end();
-        batch.begin();
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
@@ -209,7 +209,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postTick(float delta) {
-
+        if(enemy!=null) enemy.act(delta);
     }
 
 

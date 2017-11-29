@@ -5,13 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.*;
 
@@ -112,8 +110,9 @@ public class EntityPanel extends Group {
     @Override
     public void act(float delta) {
         Vector2 mouseScreenPosition = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-        Vector2 mouseStagePosition = getStage().screenToStageCoordinates(mouseScreenPosition); //you can also use the Stage instance if you have a reference
-        Actor hit = getStage().hit(mouseStagePosition.x, mouseStagePosition.y, false);
+        Stage stage = Main.self.stage;
+        Vector2 mouseStagePosition = stage.screenToStageCoordinates(mouseScreenPosition); //you can also use the Stage instance if you have a reference
+        Actor hit = stage.hit(mouseStagePosition.x, mouseStagePosition.y, false);
         boolean nowMoused = hit!=null &&  (hit==this || hit.getParent() == this || hit.getParent().getParent() == this);
         if(nowMoused != mouseOver){
             mouseOver(nowMoused);

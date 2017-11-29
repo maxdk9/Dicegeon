@@ -167,4 +167,14 @@ public class Eff {
         return this;
     }
 
+    public static String describe(Eff[] effects) {
+        String result = "";
+        for(int i=0;i<effects.length;i++){
+            Eff e = effects[i];
+            result += e.getValueString();
+            if(i<effects.length-1) result += ", ";
+        }
+        return  result;
+    }
+
 }
