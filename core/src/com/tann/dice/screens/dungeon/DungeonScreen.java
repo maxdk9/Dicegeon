@@ -11,6 +11,7 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
+import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
@@ -21,7 +22,9 @@ import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.panels.BottomBar;
+import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
+import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.*;
 
 public class DungeonScreen extends Screen {
@@ -46,6 +49,7 @@ public class DungeonScreen extends Screen {
     int rerolls = 2;
 
     public BottomBar bottomBar;
+    public SpellHolder spellHolder;
 
     private DungeonScreen() {
     }
@@ -66,6 +70,16 @@ public class DungeonScreen extends Screen {
         all.addAll(heroes);
         all.addAll(monsters);
         BulletStuff.refresh(all);
+
+
+        spellHolder = new SpellHolder();
+        spellHolder.addSpell(Spell.dart);
+        spellHolder.addSpell(Spell.resist);
+        spellHolder.addSpell(Spell.resist2);
+        spellHolder.addSpell(Spell.resist3);
+        addActor(spellHolder);
+        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(true));
+
         friendly = new SidePanel(true);
         friendly.addEntities(heroes);
         addActor(friendly);
@@ -81,6 +95,7 @@ public class DungeonScreen extends Screen {
                        }
                 });
         addActor(rollButton);
+        rollButton.setSquare();
         rollButton.setPosition(0, 0);
 
         Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.tick, Colours.dark,
@@ -92,11 +107,17 @@ public class DungeonScreen extends Screen {
                 });
         confirmButton.setColor(Colours.green_light);
         addActor(confirmButton);
+        confirmButton.setSquare();
         confirmButton.setPosition(Main.width-confirmButton.getWidth(), 0);
 
+
         bottomBar = new BottomBar();
-        addActor(bottomBar);
+
+//        addActor(bottomBar);
         bottomBar.setPosition(SidePanel.width, 0);
+
+
+
 
         Main.pushPhase(new NothingPhase());
         Main.pushPhase(new EnemyRollingPhase());
@@ -157,6 +178,14 @@ public class DungeonScreen extends Screen {
         batch.setColor(Colours.brown_dark);
         drawRectThing(batch, BulletStuff.playerArea);
         batch.setColor(Colours.brown_dark);
+        bottomBar.draw(batch, 1);
+        batch.flush();
+        batch.end();
+        batch.begin();
+        BulletStuff.render();
+        batch.flush();
+        batch.end();
+        batch.begin();
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
@@ -166,11 +195,6 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
-
-        BulletStuff.render();
-        batch.flush();
-        batch.end();
-        batch.begin();
         if (selectedDie != null && Main.getPhase().canTarget()) {
             batch.setColor(Colours.light);
             Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), selectedDiePosition.x, selectedDiePosition.y, 8);
@@ -236,6 +260,7 @@ public class DungeonScreen extends Screen {
     Vector2 selectedDiePosition;
     public void click(Die d) {
         if(d.entity instanceof Monster) return;
+        if(d.getSide()==-1) return;
         if(Main.getPhase().canRoll()){
             d.toggleLock();
         }

@@ -118,4 +118,8 @@ public class Colours {
 	public static Vector3 v3(Color col){
 		return new Vector3(col.r, col.g, col.b);
 	}
+
+    public static Color random() {
+	    return new Color((float)Math.random(),(float)Math.random(),(float)Math.random(),1);
+    }
 }

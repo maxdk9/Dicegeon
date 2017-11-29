@@ -16,12 +16,12 @@ public class Images {
 	public static final TextureRegion wood = Main.atlas.findRegion("resource/wood");
     public static final TextureRegion morale = Main.atlas.findRegion("resource/morale");
 
-    // morale compass
-    public static final TextureRegion morale_outer = Main.atlas.findRegion("generalIcons/moraleouter");
-    public static final TextureRegion morale_inner = Main.atlas.findRegion("generalIcons/moralecenter");
-    public static final TextureRegion morale_pointer = Main.atlas.findRegion("generalIcons/pointer");
 
-    public static final TextureRegion starvation = Main.atlas.findRegion("generalIcons/starvation");
+    public static final TextureRegion spellTab = Main.atlas.findRegion("spellTab");
+
+    public static final TextureRegion magic = Main.atlas_3d.findRegion("dice/face/magic1");
+    public static final TextureRegion spell_shield = Main.atlas_3d.findRegion("dice/face/shield1");
+    public static final TextureRegion spell_bow = Main.atlas_3d.findRegion("dice/face/arrow1");
 
 	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");
 	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");

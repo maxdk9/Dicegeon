@@ -42,7 +42,7 @@ public class BottomBar extends Group {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.fate_darkest);
+        batch.setColor(Colours.brown_dark);
         Draw.fillActor(batch,this);
         super.draw(batch, parentAlpha);
     }

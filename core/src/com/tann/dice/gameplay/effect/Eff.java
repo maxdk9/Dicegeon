@@ -19,8 +19,9 @@ public class Eff {
     public enum EffectType{
         Nothing(Images.heart_empty),
         Sword(Images.side_sword),
+        Arrow(Images.spell_bow),
         Shield(Images.side_sword),
-		    Magic(Images.heart),
+        Magic(Images.heart),
         Heal(Images.heart);
 
         //objectives
@@ -111,7 +112,7 @@ public class Eff {
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }
     public Eff heal(int amount) { return type(EffectType.Heal, amount); }
-
+    public Eff arrow(int amount) { return type(EffectType.Heal, amount); }
 
     public Eff eachTurn(int numTurns){return setActivation(new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns));}
     public Eff inTurns(int numTurns) {return setActivation(new EffAct(EffAct.ActivationType.IN_TURNS, numTurns));}

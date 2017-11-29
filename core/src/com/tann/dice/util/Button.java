@@ -47,19 +47,28 @@ public class Button extends Lay{
 	public void setBorder(Color bg, Color border, float size){
 	    this.bg=bg; this.border=border; this.borderSize=size;
     }
-	
+
+    boolean square;
+    public void setSquare(){
+	    this.square = true;
+    }
+
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(bg);
 		if(border==null) border=bg;
 		Draw.fillActor(batch, this, bg, border, borderSize);
 		batch.setColor(getColor());
-		float imageScaleBase = Math.min(getWidth(), getHeight());
-		float imageSize = imageScaleBase * (imageScale);
+        float imageWidth = getWidth()*imageScale;
+        float imageHeight = getHeight()*imageScale;
+        if(square){
+            imageHeight = Math.min(imageHeight, imageHeight);
+            imageWidth = imageHeight;
+        }
 		Draw.drawSize(batch, region,
-				getX()+getWidth()/2-imageSize/2,
-				getY()+getHeight()/2-imageSize/2,
-				imageSize, imageSize);
+				getX()+getWidth()/2-imageWidth/2,
+				getY()+getHeight()/2-imageHeight/2,
+				imageWidth, imageHeight);
 		super.draw(batch, parentAlpha);
 	}
 

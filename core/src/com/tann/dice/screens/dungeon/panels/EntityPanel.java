@@ -38,17 +38,18 @@ public class EntityPanel extends Group {
     }
 
     public boolean slidOut;
-
+    static float gapFactor = .9f;
+    static float factor = 1f;
     public static final float gap = 13;
     public static final float extraGap = 3;
+    public static final float WIDTH = SidePanel.width * gapFactor * factor;
     float diceHoleSize;
     public void layout(){
         clearChildren();
-        float gapFactor = .9f;
-        float factor = 1f;
+
         diceHoleSize = e.getDie().get2DSize();
 //        if (e instanceof Monster) factor = .7f;
-        setSize(SidePanel.width * gapFactor * factor, gap*2+diceHoleSize);
+        setSize(WIDTH, gap*2+diceHoleSize);
         float absHeartGap = 2;
         float heartSize = 18;
         Layoo l = new Layoo(this);

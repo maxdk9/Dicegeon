@@ -29,7 +29,7 @@ public class Main extends ApplicationAdapter {
 	public static String version = "0.1";
 	SpriteBatch batch;
 	Stage stage;
-	OrthographicCamera orthoCam;
+	public OrthographicCamera orthoCam;
 	public static TextureAtlas atlas;
 	public static TextureAtlas atlas_3d;
 	public static Main self;
