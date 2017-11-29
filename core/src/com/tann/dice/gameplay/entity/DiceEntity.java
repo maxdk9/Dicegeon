@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.bullet.BulletStuff;
@@ -12,6 +13,7 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.util.Colours;
+import org.w3c.dom.Entity;
 
 
 public abstract class DiceEntity {
@@ -24,7 +26,7 @@ public abstract class DiceEntity {
   protected boolean dead;
   protected Array<Eff> potentialEffects = new Array<>();
   protected DiceEntity target;
-  public boolean targeted;
+  public DiceEntity targeted;
   // rendering vars
   protected Color col;
   protected TextureRegion lapel;
@@ -102,7 +104,7 @@ public abstract class DiceEntity {
     }
     die.removeFromScreen();
     getEntityPanel().remove();
-    getEntityPanel().mouseOver = false;
+    getTarget().untarget(this);
     BulletStuff.dice.removeValue(getDie(), true);
     dead = true;
     if (this instanceof Monster) {
@@ -112,7 +114,11 @@ public abstract class DiceEntity {
     }
   }
 
-  public void hit(Side side, boolean instant) {
+    public void untarget(DiceEntity diceEntity) {
+      if(targeted == diceEntity) targeted = null;
+    }
+
+    public void hit(Side side, boolean instant) {
     for (Eff e : side.effects) {
       hit(e, instant);
     }
@@ -191,7 +197,12 @@ public abstract class DiceEntity {
     return ep;
   }
 
-  public TextureRegion getLapel() {
+      public TextureRegion getLapel() {
     return lapel;
   }
+
+
+    public void targetedBy(DiceEntity e) {
+      targeted = e;
+    }
 }

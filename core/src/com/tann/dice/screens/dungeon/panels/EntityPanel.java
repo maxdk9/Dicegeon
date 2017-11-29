@@ -17,7 +17,7 @@ import com.tann.dice.util.*;
 public class EntityPanel extends Group {
 
     public DiceEntity e;
-    public EntityPanel(DiceEntity e) {
+    public EntityPanel(final DiceEntity e) {
         this.e=e;
        layout();
         setColor(Colours.dark);
@@ -26,8 +26,19 @@ public class EntityPanel extends Group {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(e.getTarget()!=null) {
+                    e.getTarget().targetedBy(e);
+                }
                 DungeonScreen.get().target(EntityPanel.this);
-                return super.touchDown(event, x, y, pointer, button);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                if(e.getTarget()!=null) {
+                    e.getTarget().untarget(e);
+                }
+                super.touchUp(event, x, y, pointer, button);
             }
 
             @Override
@@ -105,25 +116,9 @@ public class EntityPanel extends Group {
         slidOut = true;
     }
 
-    public boolean mouseOver;
-
-    private void mouseOver(boolean moused){
-        mouseOver = moused;
-        if (e.getTarget() !=  null){
-            e.getTarget().targeted = moused;
-        }
-    }
 
     @Override
     public void act(float delta) {
-        Vector2 mouseScreenPosition = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-        Stage stage = Main.self.stage;
-        Vector2 mouseStagePosition = stage.screenToStageCoordinates(mouseScreenPosition); //you can also use the Stage instance if you have a reference
-        Actor hit = stage.hit(mouseStagePosition.x, mouseStagePosition.y, false);
-        boolean nowMoused = hit!=null &&  (hit==this || hit.getParent() == this || hit.getParent().getParent() == this);
-        if(nowMoused != mouseOver){
-            mouseOver(nowMoused);
-        }
         super.act(delta);
     }
 
@@ -131,8 +126,7 @@ public class EntityPanel extends Group {
     public void draw(Batch batch, float parentAlpha) {
 
         Color inner = getColor();
-        if(mouseOver) inner = Colours.fate_darkest;
-        if(e.targeted) inner = Colours.red_dark;
+        if(e.targeted!=null) inner = Colours.red_dark;
         Color border = e.getColour();
         Draw.fillActor(batch, this, inner, border,  4);
         batch.setColor(Colours.light);
