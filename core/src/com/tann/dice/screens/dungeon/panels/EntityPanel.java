@@ -11,17 +11,24 @@ import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 
 public class EntityPanel extends Group {
 
-    DiceEntity e;
+    public DiceEntity e;
     public EntityPanel(DiceEntity e) {
         this.e=e;
        layout();
         setColor(Colours.dark);
 
         addListener(new InputListener(){
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                DungeonScreen.get().target(EntityPanel.this);
+                return super.touchDown(event, x, y, pointer, button);
+            }
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

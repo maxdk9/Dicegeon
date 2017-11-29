@@ -62,6 +62,21 @@ public class Eff {
     }
 
     public String toString(){
+        switch(type){
+
+            case Nothing:
+                return "Nothing!";
+            case Sword:
+                return value +" damage to a forward enemy";
+            case Arrow:
+                return value +" damage to any enemy";
+            case Shield:
+                return "Block "+value+" incoming damage";
+            case Magic:
+                return "Gain "+value+" magic to spend on spells this turn.";
+            case Heal:
+                return "Restore "+value+" health to a damaged character";
+        }
 	    return getValueString()+" "+typeString()+" "+effAct.toString();
     }
 
@@ -171,7 +186,7 @@ public class Eff {
         String result = "";
         for(int i=0;i<effects.length;i++){
             Eff e = effects[i];
-            result += e.getValueString();
+            result += e.toString();
             if(i<effects.length-1) result += ", ";
         }
         return  result;

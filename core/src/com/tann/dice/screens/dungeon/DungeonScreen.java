@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -19,11 +20,13 @@ import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.Monster.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
+import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.panels.BottomBar;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
+import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.*;
@@ -93,8 +96,8 @@ public class DungeonScreen extends Screen {
         spellHolder = new SpellHolder();
         spellHolder.addSpell(Spell.dart);
         spellHolder.addSpell(Spell.resist);
-        spellHolder.addSpell(Spell.resist2);
-        spellHolder.addSpell(Spell.resist3);
+        spellHolder.addSpell(Spell.healAll);
+        spellHolder.addSpell(Spell.fireWave);
         addActor(spellHolder);
         spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
 
@@ -184,7 +187,6 @@ public class DungeonScreen extends Screen {
         batch.setColor(Colours.bg);
         Draw.fillActor(batch, this);
         batch.setColor(Colours.brown_dark);
-        drawRectThing(batch, BulletStuff.playerArea);
         batch.setColor(Colours.brown_dark);
     }
 
@@ -195,11 +197,6 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
-        if (selectedDie != null && Main.getPhase().canTarget()) {
-            batch.setColor(Colours.light);
-            Draw.drawLine(batch, Gdx.input.getX(), Main.height - Gdx.input.getY(), selectedDiePosition.x, selectedDiePosition.y, 8);
-        }
-
         Fonts.draw(batch, Main.getPhase().toString(), Fonts.fontSmall, Colours.light, 0, Main.height-Fonts.fontSmall.getLineHeight(), Main.width, Fonts.fontSmall.getLineHeight(), Align.center);
     }
 
@@ -222,19 +219,41 @@ public class DungeonScreen extends Screen {
 
     }
 
-    public void touchUp() {
+    public void cancelEffects(Eff[] effects) {
+        for (DiceEntity de : all) {
+            de.removeEffects(effects);
+        }
+
+    }
+
+    Die selectedDie;
+    public void click(Die d) {
+        if(d.entity instanceof Monster) return;
+        if(d.getSide()==-1) return;
+        if(Main.getPhase().canRoll()){
+            d.toggleLock();
+            return;
+        }
+        if(selectedDie == d){
+            selectedDie = null;
+            defocus();
+            return;
+        }
+        if(Main.getPhase().canTarget()){
+            selectedDie = d;
+            focus(d.getActualSide());
+        }
+    }
+
+    public void target(EntityPanel panel) {
         if(!Main.getPhase().canTarget()) return;
-        if (selectedDie != null) {
-            if(selectedDie.getActualSide()==null){
-                System.err.println("Failed to drag a die "+selectedDie+":"+selectedDie.getSide()+":"+selectedDie.getState()+":"+selectedDie.entity);
-            }
-            for (DiceEntity de : all) {
-                if (de.getEntityPanel().mouseOver && (de.isTargetable())) {
-                    de.hit(selectedDie.getActualSide(), true);
-                    selectedDie.use();
-                    break;
-                }
-            }
+        if(selectedDie == null) return;
+        if(selectedDie.getActualSide()==null){
+            System.err.println("Failed to drag a die "+selectedDie+":"+selectedDie.getSide()+":"+selectedDie.getState()+":"+selectedDie.entity);
+        }
+        if(panel != null){
+            panel.e.hit(selectedDie.getActualSide(), true);
+            selectedDie.use();
         }
         boolean allUsed = true;
         for (DiceEntity de : heroes) {
@@ -247,27 +266,7 @@ public class DungeonScreen extends Screen {
             Main.popPhase();
         }
         selectedDie = null;
-    }
-
-    public void cancelEffects(Eff[] effects) {
-        for (DiceEntity de : all) {
-            de.removeEffects(effects);
-        }
-
-    }
-
-    Die selectedDie;
-    Vector2 selectedDiePosition;
-    public void click(Die d) {
-        if(d.entity instanceof Monster) return;
-        if(d.getSide()==-1) return;
-        if(Main.getPhase().canRoll()){
-            d.toggleLock();
-        }
-        if(Main.getPhase().canTarget()){
-            selectedDie = d;
-            selectedDiePosition = d.getScreenPosition();
-        }
+        defocus();
     }
 
     public DiceEntity getRandomTarget() {
@@ -294,4 +293,25 @@ public class DungeonScreen extends Screen {
             de.activatePotentials();
         }
     }
+
+    public void defocus(){
+        Explanel.get().remove();
+    }
+
+    public void focus(Spell spell){
+        Explanel.get().setup(spell);
+        positionExplanel();
+    }
+
+    public void focus(Side side){
+        defocus();
+        Explanel.get().setup(side);
+        positionExplanel();
+    }
+
+    private void positionExplanel() {
+        Explanel.get().setPosition(Explanel.get().getNiceX(), BOTTOM_BUTTON_HEIGHT + (Main.height-BOTTOM_BUTTON_HEIGHT)/2-Explanel.get().getHeight()/2);
+        addActor(Explanel.get());
+    }
+
 }

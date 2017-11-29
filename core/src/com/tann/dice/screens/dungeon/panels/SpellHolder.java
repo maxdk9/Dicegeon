@@ -13,6 +13,7 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -56,9 +57,12 @@ public class SpellHolder extends Group {
         return result;
     }
 
+    public static float WIDTH;
+
     public void layout(){
         clearChildren();
-        setSize(SpellPanel.SIZE*getMaxSpells() + GAP*(getMaxSpells()+2) + SpellCostPanel.WIDTH, BAR_HEIGHT*getSpellLevels());
+        WIDTH = SpellPanel.SIZE*getMaxSpells() + GAP*(getMaxSpells()+2) + SpellCostPanel.WIDTH;
+        setSize(WIDTH, BAR_HEIGHT*getSpellLevels());
         Layoo l = new Layoo(this);
         l.row(1);
         for(int i=0;i<10;i++){
@@ -84,10 +88,11 @@ public class SpellHolder extends Group {
         b.setPosition(getWidth(), getHeight()/2-b.getHeight()/2);
     }
 
-    boolean active;
+    public boolean active;
     private void togglePosition() {
         active = !active;
-            addAction(Actions.moveTo(getX(active), getY(active), .3f, Interpolation.pow2Out));
+        addAction(Actions.moveTo(getX(active), getY(active), .3f, Interpolation.pow2Out));
+        Explanel.get().slide();
     }
 
     public float getX(boolean out){

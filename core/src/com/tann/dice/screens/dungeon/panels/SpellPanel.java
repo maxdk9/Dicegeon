@@ -2,7 +2,11 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
@@ -11,9 +15,16 @@ public class SpellPanel extends Actor{
     public static float IMAGE_MULT = .8f;
     public static float BORDER = 2f;
     final Spell spell;
-    public SpellPanel(Spell spell){
+    public SpellPanel(final Spell spell){
         setSize(SIZE, SIZE);
         this.spell = spell;
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                DungeonScreen.get().focus(spell);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
     }
 
     @Override
