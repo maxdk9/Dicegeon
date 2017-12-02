@@ -92,7 +92,7 @@ public class Main extends ApplicationAdapter {
 			public boolean scrolled(int amount) {return false;}
 		};
 
-		Gdx.input.setInputProcessor(new InputMultiplexer(diceInput, stage));
+		Gdx.input.setInputProcessor(new InputMultiplexer(stage, diceInput));
 
 		stage.addListener(new InputListener() {
 			public boolean keyDown(InputEvent event, int keycode) {

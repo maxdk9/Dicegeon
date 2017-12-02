@@ -101,6 +101,7 @@ public abstract class DiceEntity {
   }
 
   private void die() {
+      System.out.println("die");
     if (die.getActualSide() != null) {
       DungeonScreen.get().cancelEffects(die.getActualSide().effects);
     }
@@ -170,6 +171,7 @@ public abstract class DiceEntity {
 
   public boolean isDead() {
       return dead;
+
   }
 
   public abstract boolean isPlayer();

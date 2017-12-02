@@ -36,6 +36,7 @@ public class SidePanel extends Group {
       for(int i=0;i<entities.size;i++){
 
           DiceEntity e = entities.get(i);
+          if(e.isDead()) continue;
           EntityPanel ep = e.getEntityPanel();
           l.row(1);
           l.gap(1);

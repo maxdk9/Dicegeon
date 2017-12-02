@@ -34,7 +34,7 @@ import org.w3c.dom.Entity;
 public class DungeonScreen extends Screen {
 
     public static DungeonScreen self;
-    Targetable selectedTargetable;
+    private Targetable selectedTargetable;
 
     public static DungeonScreen get() {
         if (self == null) {
@@ -51,7 +51,9 @@ public class DungeonScreen extends Screen {
     public Array<Monster> monsters = new Array<>();
     private SidePanel friendly;
     private SidePanel enemy;
-    int rerolls = 2;
+    int rolls = BASE_ROLLS;
+
+    public static final int BASE_ROLLS = 3;
 
     public BottomBar bottomBar;
     public SpellHolder spellHolder;
@@ -106,13 +108,21 @@ public class DungeonScreen extends Screen {
         friendly.addEntities(heroes);
         addActor(friendly);
 
-        Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.roll, Colours.dark,
+        Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
                 new Runnable() {
                     @Override
                     public void run() {
-                        playerRoll(false);
+                        if(rolls>0){
+                            playerRoll(false);
+                        }
                        }
-                });
+                }){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                super.draw(batch, parentAlpha);
+                Fonts.draw(batch, rolls+"/"+BASE_ROLLS, Fonts.fontSmall, Colours.light, this.getX(), this.getY(), this.getWidth(), this.getHeight()/5, Align.center);
+            }
+        };
         addActor(rollButton);
         rollButton.setSquare();
         rollButton.setPosition(0, 0);
@@ -335,6 +345,10 @@ public class DungeonScreen extends Screen {
 
     public void playerRoll(boolean firstRoll) {
         if(!Main.getPhase().canRoll()) return;
+        if(firstRoll){
+            rolls = BASE_ROLLS;
+        }
+        rolls --;
         for(Hero hero:heroes){
             if(firstRoll) hero.getDie().addToScreen();
             hero.getDie().roll(firstRoll);

@@ -27,7 +27,7 @@ public class Monster extends DiceEntity {
 
     public enum MonsterType{
 
-        Goblin(4, 5, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
+        Goblin(1, 2, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
         Ogre(8, 9, Side.sword2, Side.sword3, Side.sword3, Side.sword4, Side.sword4, Side.sword5);
 
         public Side[] sides;
