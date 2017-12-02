@@ -38,7 +38,9 @@ public class Main extends ApplicationAdapter {
 	Screen previousScreen;
 	public static float ticks;
 
-	public enum MainState {
+
+
+    public enum MainState {
 		Normal, Paused
 	}
 
@@ -105,6 +107,7 @@ public class Main extends ApplicationAdapter {
 		logTime("bullet");
 		DungeonScreen.self = null;
 		setScreen(DungeonScreen.get());
+		DungeonScreen.get().nextLevel();
 		logTime("screen");
 	}
 
@@ -219,6 +222,10 @@ public class Main extends ApplicationAdapter {
 		}
 		popPhase();
 	}
+
+    public static void clearPhases() {
+	    phaseStack.clear();
+    }
 
 	// screen stuff
 

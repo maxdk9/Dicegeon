@@ -10,7 +10,7 @@ import com.tann.dice.screens.dungeon.panels.SpellPanel;
 
 public class Spell implements Targetable{
 
-    public static final Spell fireWave = new Spell("Fire Wave", "1 damage to all enemies", Main.atlas.findRegion("spell/firewave"), 3, new Eff[]{new Eff().shield(1).enemyGroup()});
+    public static final Spell fireWave = new Spell("Fire Wave", "1 damage to all enemies", Main.atlas.findRegion("spell/firewave"), 3, new Eff[]{new Eff().sword(1).enemyGroup()});
 
     public static final Spell healAll = new Spell("Mass Heal", "Heal 1 to all your characters", Main.atlas.findRegion("spell/healall"), 2, new Eff[]{new Eff().shield(1).friendlyGroup()});
 

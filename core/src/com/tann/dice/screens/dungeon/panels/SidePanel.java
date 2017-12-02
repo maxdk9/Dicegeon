@@ -60,12 +60,9 @@ public class SidePanel extends Group {
     }
   }
 
-  public void addEntity(DiceEntity e){
-    entities.add(e);
-    layout(false);
-  }
 
-  public void addEntities(Array<? extends DiceEntity> entities){
+  public void setEntities(Array<? extends DiceEntity> entities){
+    this.entities.clear();
     this.entities.addAll(entities);
     layout(false);
   }

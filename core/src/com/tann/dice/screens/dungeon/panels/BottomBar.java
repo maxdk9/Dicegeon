@@ -63,4 +63,9 @@ public class BottomBar extends Group {
         }
     }
 
+    public void reset() {
+        for(DieSlot slot:slots){
+            slot.setDie(null);
+        }
+    }
 }

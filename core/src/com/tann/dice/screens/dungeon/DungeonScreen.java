@@ -16,20 +16,16 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
-import com.tann.dice.gameplay.entity.Monster.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
-import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.panels.BottomBar;
-import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.*;
-import org.w3c.dom.Entity;
 
 public class DungeonScreen extends Screen {
 
@@ -46,7 +42,14 @@ public class DungeonScreen extends Screen {
 
     public static final float BOTTOM_BUTTON_HEIGHT = Main.height*.2f;
 
-    Array<DiceEntity> all = new Array<>();
+    private static Array<DiceEntity> tmpALl = new Array<>();
+    public Array<DiceEntity> getAll(){
+        tmpALl.clear();
+        tmpALl.addAll(heroes);
+        tmpALl.addAll(monsters);
+        return tmpALl;
+    }
+
     public Array<Hero> heroes = new Array<>();
     public Array<Monster> monsters = new Array<>();
     private SidePanel friendly;
@@ -62,28 +65,11 @@ public class DungeonScreen extends Screen {
     }
 
     private void init(){
-        for (int i = 0; i < 1; i++) {
-            heroes.add(new Hero(Hero.HeroType.Fighter));
-            heroes.add(new Hero(Hero.HeroType.Fighter));
-            heroes.add(new Hero(Hero.HeroType.Defender));
-            heroes.add(new Hero(Hero.HeroType.Herbalist));
-            heroes.add(new Hero(Hero.HeroType.Apprentice));
-
-            for(int j=0;j<4;j++){
-                monsters.add(new Monster(MonsterType.Goblin));
-            }
-            monsters.add(new Monster(MonsterType.Ogre));
-        }
-        all.addAll(heroes);
-        all.addAll(monsters);
-        BulletStuff.refresh(all);
-
         bottomBar = new BottomBar();
         addActor(bottomBar);
         bottomBar.setPosition(SidePanel.width, 0);
 
         enemy = new SidePanel(false);
-        enemy.addEntities(monsters);
         addActor(enemy);
 
         addActor(new Actor(){
@@ -105,7 +91,6 @@ public class DungeonScreen extends Screen {
         spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
 
         friendly = new SidePanel(true);
-        friendly.addEntities(heroes);
         addActor(friendly);
 
         Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
@@ -115,7 +100,7 @@ public class DungeonScreen extends Screen {
                         if(rolls>0){
                             playerRoll(false);
                         }
-                       }
+                    }
                 }){
             @Override
             public void draw(Batch batch, float parentAlpha) {
@@ -138,12 +123,46 @@ public class DungeonScreen extends Screen {
         addActor(confirmButton);
         confirmButton.setSquare();
         confirmButton.setPosition(Main.width-confirmButton.getWidth(), 0);
+    }
 
+    int level;
 
+    public void nextLevel() {
+        level ++;
+        Array<Monster> monsters =  new Array<>();
+        for(int i=0;i<level+2;i++){
+            monsters.add(new Monster(Monster.MonsterType.Goblin));
+        }
+        monsters.add(new Monster(Monster.MonsterType.Ogre));
+        setup(monsters);
+    }
+
+    public void setup(Array<Monster> pMonsters){
+        heroes.clear();
+        monsters.clear();
+        spellHolder.hide();
+        resetMagic();
+        for (int i = 0; i < 1; i++) {
+            heroes.add(new Hero(Hero.HeroType.Fighter));
+            heroes.add(new Hero(Hero.HeroType.Fighter));
+            heroes.add(new Hero(Hero.HeroType.Defender));
+            heroes.add(new Hero(Hero.HeroType.Herbalist));
+            heroes.add(new Hero(Hero.HeroType.Apprentice));
+        }
+        monsters.addAll(pMonsters);
+        BulletStuff.reset();
+        BulletStuff.refresh(getAll());
+
+        friendly.setEntities(heroes);
+        enemy.setEntities(monsters);
+
+        Main.clearPhases();
 
         Main.pushPhase(new NothingPhase());
         Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
+
+        bottomBar.reset();
     }
 
     private void confirmDice() {
@@ -231,7 +250,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void cancelEffects(Eff[] effects) {
-        for (DiceEntity de : all) {
+        for (DiceEntity de : getAll()) {
             de.removeEffects(effects);
         }
 
@@ -325,6 +344,17 @@ public class DungeonScreen extends Screen {
             Main.popPhase();
         }
         deselectTargetable();
+
+        if(checkEnd()){
+            nextLevel();
+        }
+    }
+
+    private boolean checkEnd() {
+        for(Monster m:monsters){
+            if(!m.isDead()) return false;
+        }
+        return true;
     }
 
     public void target(DiceEntity entity) {
@@ -356,6 +386,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void activateDamage() {
+        Array<DiceEntity> all = getAll();
         for(int i=0;i<all.size;i++){
             DiceEntity de = all.get(i);
             de.activatePotentials();
@@ -404,7 +435,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void clearTargetingHighlights(){
-        for(DiceEntity de:all){
+        for(DiceEntity de:getAll()){
             de.getEntityPanel().setTargetingHighlight(false);
         }
         enemy.setTargetingHighlight(false);

@@ -57,11 +57,11 @@ void main() {
 	
 
 	// base colour 
-	gl_FragColor.rgba =  vec4(.078,.047,.110,1)+v_state*.0f;
+	gl_FragColor.rgba =  vec4(.078,.047,.110,1);
 	vec2 lapel = vec2(l_x,l_y);
 	// add lapels
 	vec4 colour = texture2D(u_texture, lapel+UV);
-	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) +(v_villagerColour.rgb*(1+v_state*.6))*(colour.a);
+	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) + (v_villagerColour.rgb*(float(1+v_state)*.6)*(colour.a));
 
 	
 
