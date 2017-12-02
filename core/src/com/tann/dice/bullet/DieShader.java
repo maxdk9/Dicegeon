@@ -22,7 +22,17 @@ public class DieShader implements Shader{
 	int glow;
 	int v_villagerColour;
 	int v_values;
+	int v_state;
 	int[] v_faces = new int[26];
+
+    public enum DieShaderState{
+        Nothing(0), Selected(1);
+        int num;
+        DieShaderState(int num){
+            this.num=num;
+        }
+    }
+
 	@Override
 	public void init() {
         if(program==null) {
@@ -46,6 +56,7 @@ public class DieShader implements Shader{
         
         v_villagerColour = program.getUniformLocation("v_villagerColour");
         v_values= program.getUniformLocation("v_values[0]");
+        v_state = program.getUniformLocation("v_state");
 	}
 	
 	@Override
@@ -82,6 +93,7 @@ public class DieShader implements Shader{
 		program.setUniformf(glow, d.getGlow());
 		program.setUniformi(side, d.getSide());
 		setTexLocs(d.getTexLocs());
+		program.setUniformi(v_state, d.entity.shaderState.num);
 		program.setUniformf(v_villagerColour, d.getColour());
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 

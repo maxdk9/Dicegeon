@@ -2,10 +2,13 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Array;
@@ -14,10 +17,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
-import com.tann.dice.util.Button;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.Layoo;
+import com.tann.dice.util.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,19 +78,28 @@ public class SpellHolder extends Group {
             l.row(1);
         }
         l.layoo();
-        Button b = new Button(Images.spellTab.getRegionWidth(), Images.spellTab.getRegionHeight(), Images.spellTab, Colours.transparent, new Runnable() {
+        SpellPulltab sp = new SpellPulltab();
+        addActor(sp);
+        sp.setPosition(getWidth(), getHeight()/2-sp.getHeight()/2);
+        sp.addListener(new InputListener(){
             @Override
-            public void run() {
-               togglePosition();
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                togglePosition();
+                return super.touchDown(event, x, y, pointer, button);
             }
         });
-        addActor(b);
-        b.setPosition(getWidth(), getHeight()/2-b.getHeight()/2);
+    }
+
+    public void hide(){
+        if(active) togglePosition();
     }
 
     public boolean active;
     private void togglePosition() {
         active = !active;
+        if(!active){
+            DungeonScreen.get().closeSpellHolder();
+        }
         addAction(Actions.moveTo(getX(active), getY(active), .3f, Interpolation.pow2Out));
         Explanel.get().slide();
     }
@@ -105,9 +114,9 @@ public class SpellHolder extends Group {
 
     public static Color getColor(int spellLevel){
         switch (spellLevel){
-            case 1: return Colours.fate_darkest;
+            case 3: return Colours.fate_darkest;
             case 2: return Colours.fate_light;
-            case 3: return Colours.fate_lightest;
+            case 1: return Colours.fate_lightest;
         }
         return null;
     }
@@ -116,6 +125,8 @@ public class SpellHolder extends Group {
     public void draw(Batch batch, float parentAlpha) {
         for(int i=1;i<=getSpellLevels();i++){
             batch.setColor(getColor(i));
+            Draw.fillRectangle(batch, getX(), getY()+(getHeight()/getSpellLevels())*(i-1), getWidth(), getHeight()/getSpellLevels());
+            batch.setColor(Colours.withAlpha(Colours.dark, .6f));
             Draw.fillRectangle(batch, getX(), getY()+(getHeight()/getSpellLevels())*(i-1), getWidth(), getHeight()/getSpellLevels());
         }
         super.draw(batch, parentAlpha);
@@ -132,13 +143,37 @@ public class SpellHolder extends Group {
         @Override
         public void draw(Batch batch, float parentAlpha) {
             super.draw(batch, parentAlpha);
-            batch.setColor(Colours.withAlpha(Colours.dark, .5f));
+            batch.setColor(Colours.withAlpha(Colours.dark, .8f));
             Draw.fillActor(batch, this);
             batch.setColor(Colours.z_white);
             for(int i=0;i<cost;i++){
-                Draw.drawSizeCentered(batch, Images.magic, getX()+getWidth()/2, getY()+getHeight()/(cost+1)*(i+1), getWidth(), getWidth());
+                float scale = .7f;
+                Draw.drawSizeCentered(batch, Images.magic, getX()+getWidth()/2, getY()+getHeight()/(cost+1)*(i+1), getWidth()*scale, getWidth()*scale);
             }
         }
     }
+
+    static class SpellPulltab extends Actor{
+        static TextureRegion tab = Images.spellTab;
+        public SpellPulltab() {
+            setSize(tab.getRegionWidth(), tab.getRegionHeight());
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            Draw.draw(batch, tab, getX(), getY());
+            if(Main.getPhase().canTarget()){
+                int magic = DungeonScreen.get().getAvaliableMagic();
+                Fonts.draw(batch, ""+magic, Fonts.fontSmall, Colours.blue_dark, getX(), getY(), getWidth(), getHeight());
+            }
+            else{
+                float size = getWidth()*.7f;
+                Draw.drawSizeCentered(batch, Images.magic, getX() + getWidth()/2, getY() + getHeight()/2, size, size);
+            }
+            super.draw(batch, parentAlpha);
+        }
+    }
+
+
 
 }

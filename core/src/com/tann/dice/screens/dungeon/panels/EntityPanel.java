@@ -29,7 +29,7 @@ public class EntityPanel extends Group {
                 if(e.getTarget()!=null) {
                     e.getTarget().targetedBy(e);
                 }
-                DungeonScreen.get().target(EntityPanel.this);
+                DungeonScreen.get().target(e);
                 return true;
             }
 
@@ -53,7 +53,6 @@ public class EntityPanel extends Group {
         });
     }
 
-    public boolean slidOut;
     static float gapFactor = .9f;
     static float factor = 1f;
     public static final float gap = 13;
@@ -113,7 +112,7 @@ public class EntityPanel extends Group {
 
     public void slideOut(){
         addAction(Actions.moveBy(-30, 0, .3f, Interpolation.pow2Out));
-        slidOut = true;
+        e.slideOut();
     }
 
 
@@ -138,10 +137,20 @@ public class EntityPanel extends Group {
         if(overkill>0){
             Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/5f, getY()+getHeight()*1/5f, getWidth()*1/5f, getHeight()*4/5f, Align.center);
         }
+        if(targetingHighlight) {
+            batch.setColor(Colours.withAlpha(Colours.green_light, (float) (Math.sin(Main.ticks * 6) * .05f + .1f)));
+            Draw.fillActor(batch, this);
+        }
     }
 
     public void flash() {
         setColor(Colours.z_black);
         addAction(Actions.color(Colours.dark, .4f));
+    }
+
+    private boolean targetingHighlight;
+
+    public void setTargetingHighlight(boolean lit) {
+        this.targetingHighlight = lit;
     }
 }

@@ -2,6 +2,8 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
@@ -18,6 +20,14 @@ public class SidePanel extends Group {
   public SidePanel(boolean friendly) {
     setSize(width, height);
     setPosition(friendly?0:Main.width-width, DungeonScreen.BOTTOM_BUTTON_HEIGHT);
+    addListener(new InputListener(){
+        @Override
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            super.touchDown(event, x, y, pointer, button);
+            DungeonScreen.get().target(entities);
+            return true;
+        }
+    });
   }
 
   public void layout(boolean slide){
@@ -43,6 +53,10 @@ public class SidePanel extends Group {
     batch.setColor(Colours.double_dark);
     Draw.fillActor(batch,this);
     super.draw(batch, parentAlpha);
+    if(targetingHighlight) {
+        batch.setColor(Colours.withAlpha(Colours.green_light, (float) (Math.sin(Main.ticks * 6) * .05f + .1f)));
+        Draw.fillActor(batch, this);
+    }
   }
 
   public void addEntity(DiceEntity e){
@@ -55,5 +69,10 @@ public class SidePanel extends Group {
     layout(false);
   }
 
+
+  private boolean targetingHighlight;
+    public void setTargetingHighlight(boolean lit) {
+        this.targetingHighlight = lit;
+    }
 
 }

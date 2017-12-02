@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.die.Die;
@@ -76,6 +77,7 @@ public abstract class DiceEntity {
     if (instant) {
       switch (e.type) {
         case Sword:
+        case Arrow:
           damage(e.value);
           break;
         case Shield:
@@ -104,7 +106,9 @@ public abstract class DiceEntity {
     }
     die.removeFromScreen();
     getEntityPanel().remove();
-    getTarget().untarget(this);
+    if(getTarget()!=null){
+        getTarget().untarget(this);
+    }
     BulletStuff.dice.removeValue(getDie(), true);
     dead = true;
     if (this instanceof Monster) {
@@ -129,6 +133,7 @@ public abstract class DiceEntity {
     for (Eff e : potentialEffects) {
       switch (e.type) {
         case Sword:
+        case Arrow:
           total += e.value;
           break;
         case Shield:
@@ -155,10 +160,6 @@ public abstract class DiceEntity {
     getEntityPanel().layout();
   }
 
-  public boolean isTargetable() {
-    return this instanceof Hero || getEntityPanel().slidOut;
-  }
-
   public DiceEntity getTarget() {
     return target;
   }
@@ -167,8 +168,8 @@ public abstract class DiceEntity {
     return sides;
   }
 
-  public boolean isDead(){
-    return dead;
+  public boolean isDead() {
+      return dead;
   }
 
   public abstract boolean isPlayer();
@@ -204,5 +205,21 @@ public abstract class DiceEntity {
 
     public void targetedBy(DiceEntity e) {
       targeted = e;
+    }
+
+    public DieShader.DieShaderState shaderState = DieShader.DieShaderState.Nothing;
+
+    public void clicked() {
+        shaderState = DieShader.DieShaderState.Selected;
+    }
+
+    public void setShaderState(DieShader.DieShaderState shaderState) {
+        this.shaderState = shaderState;
+    }
+
+    public boolean slidOut;
+
+    public void slideOut() {
+        slidOut = true;
     }
 }

@@ -11,13 +11,15 @@ precision highp float;
 
 uniform vec4 v_villagerColour;
 
+uniform int v_state;
+
 varying vec2 v_diffuseUV; // default diffuse
 uniform sampler2D u_texture; // main big texture
 varying vec4 v_color; // r
 varying vec3 v_normal;
 uniform int side;
 uniform float v_glow;
-
+uniform int state;
 
 uniform float h_0x;
 uniform float h_0y;
@@ -55,11 +57,12 @@ void main() {
 	
 
 	// base colour 
-	gl_FragColor.rgba =  vec4(.078,.047,.110,1);
+	gl_FragColor.rgba =  vec4(.078,.047,.110,1)+v_state*.0f;
 	vec2 lapel = vec2(l_x,l_y);
 	// add lapels
 	vec4 colour = texture2D(u_texture, lapel+UV);
-	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) +v_villagerColour.rgb*(colour.a);
+	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) +(v_villagerColour.rgb*(1+v_state*.6))*(colour.a);
+
 	
 
 	
@@ -95,6 +98,5 @@ void main() {
 	colour.a = colour.a*wrongSide;
 	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) +colour.rgb*(colour.a);
 
-	float i = s_0x+s_0y+s_1x+s_1y+s_2x+s_2y+s_3x+s_3y+s_4x+s_4y+s_5x+s_5y +h_0x+h_0y+h_1x+h_1y+h_2x+h_2y+h_3x+h_3y+h_4x+h_4y+h_5x+h_5y;
-	gl_FragColor.rgb += i/5000.0;
-	}	
+	
+}	

@@ -15,13 +15,14 @@ public class SpellPanel extends Actor{
     public static float IMAGE_MULT = .8f;
     public static float BORDER = 2f;
     final Spell spell;
+
     public SpellPanel(final Spell spell){
         setSize(SIZE, SIZE);
         this.spell = spell;
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                DungeonScreen.get().focus(spell);
+                DungeonScreen.get().click(spell);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -29,7 +30,7 @@ public class SpellPanel extends Actor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, Colours.light, BORDER);
+        Draw.fillActor(batch, this, Colours.dark, (spell.selected) ? Colours.light : Colours.magic_dark, BORDER);
         batch.setColor(Colours.z_white);
         Draw.drawSizeCentered(batch, spell.image, getX()+getWidth()/2, getY()+getHeight()/2, getWidth()*IMAGE_MULT, getHeight()*IMAGE_MULT);
         super.draw(batch, parentAlpha);

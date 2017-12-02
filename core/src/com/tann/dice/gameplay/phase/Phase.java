@@ -12,11 +12,19 @@ public abstract class Phase {
         return getClass().getSimpleName();
     }
 
+    long switchStart=-1;
     public final void checkIfDone() {
         if(doneCheck()){
-            Main.popPhase();
+            if(switchStart == -1){
+                switchStart = System.currentTimeMillis();
+            }
+            if(System.currentTimeMillis() - switchStart >= getSwitchingDelay()) {
+                Main.popPhase();
+            }
         }
     }
+
+    public long getSwitchingDelay(){return 0;}
 
     protected boolean doneCheck(){
         return false;

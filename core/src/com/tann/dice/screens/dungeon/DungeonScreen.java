@@ -1,19 +1,18 @@
 package com.tann.dice.screens.dungeon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
@@ -30,10 +29,12 @@ import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.*;
+import org.w3c.dom.Entity;
 
 public class DungeonScreen extends Screen {
 
     public static DungeonScreen self;
+    Targetable selectedTargetable;
 
     public static DungeonScreen get() {
         if (self == null) {
@@ -155,7 +156,7 @@ public class DungeonScreen extends Screen {
     public void enemyCombat(){
         enemy.layout(false);
         for(Monster m:monsters){
-            m.getEntityPanel().slidOut = false;
+            m.slidOut = false;
         }
         for(Monster m: Tann.pickNRandomElements(monsters, Math.min(monsters.size, 2))){
             m.getEntityPanel().slideOut();
@@ -226,7 +227,6 @@ public class DungeonScreen extends Screen {
 
     }
 
-    Die selectedDie;
     public void click(Die d) {
         if(d.entity instanceof Monster) return;
         if(d.getSide()==-1) return;
@@ -234,39 +234,93 @@ public class DungeonScreen extends Screen {
             d.toggleLock();
             return;
         }
-        if(selectedDie == d){
-            selectedDie = null;
-            defocus();
+
+        targetableClick(d);
+    }
+
+    public void click(Spell spell){
+        targetableClick(spell);
+    }
+
+    private void targetableClick(Targetable t){
+        for(DiceEntity de:heroes){
+            de.setShaderState(DieShader.DieShaderState.Nothing);
+        }
+        if(selectedTargetable == t){
+            deselectTargetable();
             return;
         }
-        if(Main.getPhase().canTarget()){
-            selectedDie = d;
-            focus(d.getActualSide());
+        deselectTargetable();
+        selectedTargetable = t;
+        t.select();
+        Explanel.get().setup(t);
+        positionExplanel();
+        showTargetingHighlights();
+    }
+
+    private void deselectTargetable(){
+        clearTargetingHighlights();
+        if(selectedTargetable != null) {
+            selectedTargetable.deselect();
+            Explanel.get().remove();
+            selectedTargetable = null;
         }
     }
 
-    public void target(EntityPanel panel) {
+    static Array<DiceEntity> tmp = new Array<>();
+
+    public void target(Array<DiceEntity> entities) {
         if(!Main.getPhase().canTarget()) return;
-        if(selectedDie == null) return;
-        if(selectedDie.getActualSide()==null){
-            System.err.println("Failed to drag a die "+selectedDie+":"+selectedDie.getSide()+":"+selectedDie.getState()+":"+selectedDie.entity);
+        if(selectedTargetable == null) return;
+        if(selectedTargetable.getEffects() == null) return;
+        if(selectedTargetable.getEffects().length==0) return;
+
+        // validate the targeting
+        switch (selectedTargetable.getEffects()[0].targetingType){
+            case EnemySingle:
+                if(entities.size!=1 || entities.get(0).isPlayer() || !entities.get(0).slidOut) return;
+                break;
+            case EnemySingleRanged:
+                if(entities.size!=1 || entities.get(0).isPlayer()) return;
+                break;
+            case EnemyGroup:
+                if(entities.size<=1 || entities.get(0).isPlayer()) return;
+                break;
+            case FriendlySingle:
+                if(entities.size!=1 || !entities.get(0).isPlayer()) return;
+                break;
+            case FriendlyGroup:
+                if(entities.size<=1 || !entities.get(0).isPlayer()) return;
+                break;
+            case Untargeted:
+                return;
         }
-        if(panel != null){
-            panel.e.hit(selectedDie.getActualSide(), true);
-            selectedDie.use();
+
+        if(selectedTargetable.use()){
+            for(DiceEntity de:entities){
+                de.hit(selectedTargetable.getEffects(), true);
+            }
         }
         boolean allUsed = true;
         for (DiceEntity de : heroes) {
-            if (!de.getDie().getUsed() && !de.isDead()) {
+            if (!de.getDie().getUsed() && !de.isDead() && de.getDie().getActualSide().effects[0].targetingType != Eff.TargetingType.Untargeted) {
                 allUsed = false;
                 break;
             }
         }
+        if (getAvaliableMagic()>0){
+            allUsed = false;
+        }
         if (allUsed) {
             Main.popPhase();
         }
-        selectedDie = null;
-        defocus();
+        deselectTargetable();
+    }
+
+    public void target(DiceEntity entity) {
+      tmp.clear();
+      tmp.add(entity);
+      target(tmp);
     }
 
     public DiceEntity getRandomTarget() {
@@ -294,24 +348,93 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    public void defocus(){
-        Explanel.get().remove();
-    }
-
-    public void focus(Spell spell){
-        Explanel.get().setup(spell);
-        positionExplanel();
-    }
-
-    public void focus(Side side){
-        defocus();
-        Explanel.get().setup(side);
-        positionExplanel();
-    }
-
     private void positionExplanel() {
         Explanel.get().setPosition(Explanel.get().getNiceX(), BOTTOM_BUTTON_HEIGHT + (Main.height-BOTTOM_BUTTON_HEIGHT)/2-Explanel.get().getHeight()/2);
         addActor(Explanel.get());
+    }
+
+    private int magic = 0;
+
+    public void addMagic(int add){
+        this.magic += add;
+    }
+
+    public void resetMagic(){
+        this.magic = 0;
+    }
+
+    public int getAvaliableMagic() {
+        return magic;
+    }
+
+    public void spendMagic(int cost) {
+        magic -= cost;
+    }
+
+    public void closeSpellHolder() {
+        if(selectedTargetable instanceof Spell){
+            deselectTargetable();
+        }
+    }
+
+    public void activateAutoEffects() {
+        for(Hero h:heroes){
+            for(Eff e:h.getDie().getActualSide().effects){
+                switch(e.type){
+                    case Magic:
+                        addMagic(e.value);
+                        break;
+                }
+            }
+        }
+    }
+
+    public void clearTargetingHighlights(){
+        for(DiceEntity de:all){
+            de.getEntityPanel().setTargetingHighlight(false);
+        }
+        enemy.setTargetingHighlight(false);
+        friendly.setTargetingHighlight(false);
+    }
+
+    public void showTargetingHighlights(){
+        if(selectedTargetable == null || selectedTargetable.getEffects().length == 0) return;
+        Eff.TargetingType tType = selectedTargetable.getEffects()[0].targetingType;
+        switch (tType){
+            case EnemySingle:
+                for(Monster m : monsters){
+                    if(m.slidOut){
+                        m.getEntityPanel().setTargetingHighlight(true);
+                    }
+                }
+                break;
+            case EnemySingleRanged:
+                for(Monster m : monsters){
+                        m.getEntityPanel().setTargetingHighlight(true);
+                }
+                break;
+            case EnemyGroup:
+                enemy.setTargetingHighlight(true);
+                break;
+            case FriendlySingle:
+                for(Hero h:heroes){
+                    h.getEntityPanel().setTargetingHighlight(true);
+                }
+                break;
+            case FriendlyGroup:
+                friendly.setTargetingHighlight(true);
+                break;
+            case Untargeted:
+                break;
+        }
+    }
+
+    public void removeLeftoverDice() {
+        for(Hero h:heroes){
+            if(!h.getDie().getUsed()){
+                h.getDie().use();
+            }
+        }
     }
 
 }

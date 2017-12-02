@@ -36,7 +36,7 @@ public class Colours {
     public static final Color red_dark = new Color(.4f, .1f, .1f, 1);
     public static final Color double_dark;
     public static final Color sun;
-
+    public static final Color magic_dark = make(55,47,60);
 
     public static final Color z_white = new Color(1,1,1,1);
     public static final Color z_black = new Color(0,0,0,1);
@@ -68,9 +68,11 @@ public class Colours {
 	public static Color palette(int x, int y){
 		return new Color(p.getPixel(x, y));
 	}
-	
+
+	private static Color alphaCol = new Color();
 	public static Color withAlpha(Color c, float alpha) {
-		return new Color(c.r, c.g, c.b, alpha);
+	    alphaCol.set(c.r, c.g, c.b, alpha);
+	    return alphaCol;
 	}
 
 	public static Color shiftedTowards(Color source, Color target, float amount) {

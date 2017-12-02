@@ -16,6 +16,11 @@ public class EnemyRollingPhase extends Phase {
     }
 
     @Override
+    public long getSwitchingDelay() {
+        return 400;
+    }
+
+    @Override
     protected boolean doneCheck() {
         for(Monster m: DungeonScreen.get().monsters){
             if(!m.locked) return false;

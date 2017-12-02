@@ -62,4 +62,5 @@ public class BottomBar extends Group {
             }
         }
     }
+
 }

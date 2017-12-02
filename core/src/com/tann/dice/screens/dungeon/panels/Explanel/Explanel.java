@@ -11,6 +11,8 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.Targetable;
+import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
@@ -39,6 +41,11 @@ public class Explanel extends Group {
         this.image = image;
         this.cost = cost;
         layout();
+    }
+
+    public void setup(Targetable targetable){
+        if(targetable instanceof Spell) setup((Spell) targetable);
+        else if(targetable instanceof Die) setup(((Die) targetable).getActualSide());
     }
 
     public void setup(Spell spell){

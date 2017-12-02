@@ -18,7 +18,9 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.CollisionObject;
+import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
+import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -27,7 +29,7 @@ import com.tann.dice.util.Maths;
 
 import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 
-public class Die {
+public class Die implements Targetable{
 
     private static final float MAX_AIRTIME = 2.7f;
     private static final float INTERP_SPEED = .4f;
@@ -43,12 +45,6 @@ public class Die {
     private int lockedSide=-1;
     private float dist = 0;
     private boolean used;
-
-    public void use() {
-        removeFromScreen();
-        DungeonScreen.get().bottomBar.vacateSlot(this);
-        used= true;
-    }
 
     public boolean getUsed(){
         return used;
@@ -380,7 +376,6 @@ public class Die {
     }
 
     public void removeFromScreen() {
-        lockedSide=-1;
         BulletStuff.instances.remove(physical);
         removeFromPhysics();
     }
@@ -517,5 +512,29 @@ public class Die {
     public void dispose() {
         // I don't think this method works
         removeFromScreen();
+    }
+
+    @Override
+    public Eff[] getEffects() {
+        if(getActualSide() == null) return null;
+        return getActualSide().effects;
+    }
+
+    @Override
+    public boolean use() {
+        removeFromScreen();
+        DungeonScreen.get().bottomBar.vacateSlot(this);
+        used= true;
+        return true;
+    }
+
+    @Override
+    public void deselect() {
+        entity.setShaderState(DieShader.DieShaderState.Nothing);
+    }
+
+    @Override
+    public void select() {
+        entity.setShaderState(DieShader.DieShaderState.Selected);
     }
 }
