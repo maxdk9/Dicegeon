@@ -1,5 +1,6 @@
 package com.tann.dice.screens.dungeon;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -18,13 +19,12 @@ import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
+import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
-import com.tann.dice.screens.dungeon.panels.BottomBar;
-import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
-import com.tann.dice.screens.dungeon.panels.SidePanel;
-import com.tann.dice.screens.dungeon.panels.SpellHolder;
+import com.tann.dice.screens.dungeon.panels.*;
+import com.tann.dice.screens.dungeon.panels.Explanel.*;
 import com.tann.dice.util.*;
 
 public class DungeonScreen extends Screen {
@@ -363,13 +363,34 @@ public class DungeonScreen extends Screen {
       target(tmp);
     }
 
-    public DiceEntity getRandomTarget() {
-        for(int i=0;i<100;i++){
-            //super lazy
-            Hero h = heroes.random();
-            if(!h.isDead())return h;
+
+    public Array<DiceEntity> getRandomTargetForEnemy(Side side) {
+        Eff e = side.effects[0];
+        Array<DiceEntity> targets = new Array<>();
+        switch (e.targetingType){
+            case EnemySingle:
+                targets.add(heroes.random());
+                break;
+            case EnemySingleRanged:
+                targets.add(heroes.random());
+                break;
+            case EnemyGroup:
+                targets.addAll(heroes);
+                break;
+            case FriendlySingle:
+                targets.add(monsters.random());
+                break;
+            case FriendlyGroup:
+                targets.addAll(monsters);
+                break;
+            case Untargeted:
+                break;
         }
-        return null;
+        while(targets.contains(null, true)){
+            System.out.println("ah feck");
+            targets.removeValue(null, true);
+        }
+        return targets;
     }
 
 
@@ -394,9 +415,10 @@ public class DungeonScreen extends Screen {
     }
 
     private void positionExplanel() {
-        Explanel.get().setPosition(Explanel.get().getNiceX(), BOTTOM_BUTTON_HEIGHT + (Main.height-BOTTOM_BUTTON_HEIGHT)/2-Explanel.get().getHeight()/2);
+        Explanel.get().setPosition(Explanel.get().getNiceX(true), Explanel.get().getNiceY());
         addActor(Explanel.get());
     }
+
 
     private int magic = 0;
 
@@ -481,5 +503,34 @@ public class DungeonScreen extends Screen {
             }
         }
     }
+
+    public void clicked(DiceEntity entity) {
+        if(selectedTargetable!=null) {
+            DungeonScreen.get().target(entity);
+            return;
+        }
+        DiePanel pan = entity.getDiePanel();
+        push(pan);
+        pan.setPosition(pan.getNiceX(false), pan.getNiceY());
+    }
+
+    public void push(Actor a){
+        addActor(InputBlocker.get());
+        InputBlocker.get().toFront();
+        modalStack.add(a);
+        addActor(a);
+    }
+
+    public void pop(){
+        if(modalStack.size==0) return;
+        modalStack.removeIndex(modalStack.size-1).remove();
+        InputBlocker.get().remove();
+        if(modalStack.size>0){
+            addActor(InputBlocker.get());
+            modalStack.get(modalStack.size-1).toFront();
+        }
+    }
+
+    Array<Actor> modalStack = new Array<>();
 
 }

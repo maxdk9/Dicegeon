@@ -7,7 +7,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 public class Hero extends DiceEntity {
     HeroType type;
     public Hero(HeroType type) {
-        super(type.sides);
+        super(type.sides, type.toString());
         this.type=type;
         setMaxHp(type.hp);
     }

@@ -3,7 +3,6 @@ package com.tann.dice.gameplay.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.bullet.BulletStuff;
@@ -12,9 +11,9 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.util.Colours;
-import org.w3c.dom.Entity;
 
 
 public abstract class DiceEntity {
@@ -26,7 +25,7 @@ public abstract class DiceEntity {
   protected int hp;
   protected boolean dead;
   protected Array<Eff> potentialEffects = new Array<>();
-  protected DiceEntity target;
+  protected Array<DiceEntity> targets;
   public DiceEntity targeted;
   // rendering vars
   protected Color col;
@@ -34,9 +33,11 @@ public abstract class DiceEntity {
   private EntityPanel ep;
   // temp junky variables
   private static int i;
+  public String name;
 
-  public DiceEntity(Side[] sides) {
+  public DiceEntity(Side[] sides, String name) {
     this.sides = sides;
+    this.name = name;
     this.lapel = Images.lapel0;
     this.col = Colours.classes[(i++) % Colours.classes.length];
   }
@@ -77,7 +78,6 @@ public abstract class DiceEntity {
     if (instant) {
       switch (e.type) {
         case Sword:
-        case Arrow:
           damage(e.value);
           break;
         case Shield:
@@ -101,14 +101,15 @@ public abstract class DiceEntity {
   }
 
   private void die() {
-      System.out.println("die");
     if (die.getActualSide() != null) {
       DungeonScreen.get().cancelEffects(die.getActualSide().effects);
     }
     die.removeFromScreen();
     getEntityPanel().remove();
-    if(getTarget()!=null){
-        getTarget().untarget(this);
+    if(targets!=null) {
+        for (DiceEntity de : targets) {
+            de.untarget(this);
+        }
     }
     BulletStuff.dice.removeValue(getDie(), true);
     dead = true;
@@ -134,7 +135,6 @@ public abstract class DiceEntity {
     for (Eff e : potentialEffects) {
       switch (e.type) {
         case Sword:
-        case Arrow:
           total += e.value;
           break;
         case Shield:
@@ -161,8 +161,8 @@ public abstract class DiceEntity {
     getEntityPanel().layout();
   }
 
-  public DiceEntity getTarget() {
-    return target;
+  public Array<DiceEntity> getTarget() {
+    return targets;
   }
 
   public Side[] getSides(){
@@ -223,5 +223,11 @@ public abstract class DiceEntity {
 
     public void slideOut() {
         slidOut = true;
+    }
+
+    private DiePanel panel;
+    public DiePanel getDiePanel(){
+        if(panel == null) panel = new DiePanel(this);
+        return panel;
     }
 }

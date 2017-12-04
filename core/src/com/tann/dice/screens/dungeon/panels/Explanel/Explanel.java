@@ -19,7 +19,7 @@ import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.*;
 
-public class Explanel extends Group {
+public class Explanel extends InfoPanel {
     String name;
     String description;
     Eff[] effects;
@@ -105,11 +105,12 @@ public class Explanel extends Group {
     }
 
     public void slide(){
-        Explanel.get().addAction(Actions.moveTo(Explanel.get().getNiceX(), Explanel.get().getY(), .3f, Interpolation.pow2Out));
+        Explanel.get().addAction(Actions.moveTo(Explanel.get().getNiceX(true), Explanel.get().getY(), .3f, Interpolation.pow2Out));
     }
 
-    public float getNiceX() {
-        if(DungeonScreen.get().spellHolder.active){
+    @Override
+    public float getNiceX(boolean care) {
+        if(care && DungeonScreen.get().spellHolder.active){
             return SidePanel.width + SpellHolder.WIDTH + Images.spellTab.getRegionWidth()*0 + (Main.width- SidePanel.width*2 - SpellHolder.WIDTH - Images.spellTab.getRegionWidth()*0)/2 - getWidth()/2;
         }
         else{

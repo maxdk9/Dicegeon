@@ -17,7 +17,6 @@ public class Eff {
     public enum EffectType{
         Nothing(Images.heart_empty),
         Sword(Images.side_sword),
-        Arrow(Images.spell_bow),
         Shield(Images.side_sword),
         Magic(Images.heart),
         Heal(Images.heart);
@@ -47,32 +46,34 @@ public class Eff {
 
     public String toString(){
         switch(type){
-
             case Nothing:
                 return "Nothing!";
             case Sword:
-                return value +" damage to a forward enemy";
-            case Arrow:
-                return value +" damage to any enemy";
+                switch(targetingType){
+                    case EnemySingle:
+                        return value +" damage to a forward enemy";
+                    case EnemySingleRanged:
+                        return value +" damage to any enemy";
+                    case EnemyGroup:
+                        return value +" damage to all enemies";
+                }
+                return "ahh help sword";
             case Shield:
-                return "Block "+value+" incoming damage";
+                switch(targetingType){
+                    case FriendlySingle:
+                        return "Block "+value+" incoming damage from anyone";
+                    case FriendlyGroup:
+                        return "Block "+value+" incoming damage from everyone";
+                }
+                return "ahh help shield";
             case Magic:
                 return "Gain "+value+" magic to spend on spells this turn.";
             case Heal:
                 return "Restore "+value+" health to a damaged character";
         }
-	    return getValueString()+" "+typeString();
+        return "yeowch?? "+type;
     }
 
-
-    private String getwriterString(){
-        return typeString();
-    }
-
-	public String typeString(){
-        return "["+type.toString().toLowerCase()+"]";
-	}
-	
     public Eff nothing() { return type(EffectType.Nothing, -1); }
     public Eff sword(int amount) { return type(EffectType.Sword, amount); }
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }

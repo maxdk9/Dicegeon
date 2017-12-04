@@ -2,7 +2,6 @@ package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -15,7 +14,7 @@ public class Monster extends DiceEntity {
     MonsterType type;
 
     public Monster(MonsterType type) {
-        super(type.sides);
+        super(type.sides, type.toString());
         this.type=type;
         setMaxHp(type.minHp + (int)(Math.random()*(type.maxHp-type.minHp+1)));
     }
@@ -28,7 +27,7 @@ public class Monster extends DiceEntity {
     public enum MonsterType{
 
         Goblin(4, 5, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
-        Ogre(8, 9, Side.sword2, Side.sword3, Side.sword3, Side.sword4, Side.sword4, Side.sword5);
+        Ogre(8, 9, Side.cleave1, Side.cleave1, Side.sword3, Side.sword4, Side.sword4, Side.sword5);
 
         public Side[] sides;
         public TextureRegion lapel;
@@ -53,14 +52,18 @@ public class Monster extends DiceEntity {
     @Override
     public void locked() {
         getDie().removeFromPhysics();
-        target =DungeonScreen.get().getRandomTarget();
-        target.hit(die.getActualSide().effects, false);
-        EntityPanel panel = target.getEntityPanel();
-        TextureFlasher tf = new TextureFlasher(getDie().sides.get(0).effects[0].type.region);
-        DungeonScreen.get().addActor(tf);
-        panel.addActor(tf);
-        tf.setPosition(panel.getWidth()*.7f-tf.getWidth()/2, panel.getHeight()/2-tf.getHeight()/2);
-        panel.flash();
+
+        targets = DungeonScreen.get().getRandomTargetForEnemy(die.getActualSide());
+        for(DiceEntity de:targets){
+            de.hit(die.getActualSide().effects, false);
+            EntityPanel panel = de.getEntityPanel();
+            TextureFlasher tf = new TextureFlasher(getDie().sides.get(0).effects[0].type.region);
+            DungeonScreen.get().addActor(tf);
+            panel.addActor(tf);
+            tf.setPosition(panel.getWidth()*.7f-tf.getWidth()/2, panel.getHeight()/2-tf.getHeight()/2);
+            panel.flash();
+        }
+
         EntityPanel ep = getDie().entity.getEntityPanel();
         getDie().moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
         locked = true;

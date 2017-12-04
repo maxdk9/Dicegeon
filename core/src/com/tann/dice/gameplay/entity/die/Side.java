@@ -45,6 +45,9 @@ public class Side {
     public static final Side heal2 = new Side(Images.get("heal2"), new Eff().heal(2).friendlySingle());
     public static final Side heal3 = new Side(Images.get("heal3"), new Eff().heal(3).friendlySingle());
 
+    public static final Side cleave1 = new Side(Images.get("cleave1"), new Eff().sword(1).enemyGroup());
+    public static final Side cleave2 = new Side(Images.get("cleave2"), new Eff().sword(2).enemyGroup());
+
     public static final Side nothing = new Side(Images.get("nothing"), new Eff().nothing().untargeted());
 
 
