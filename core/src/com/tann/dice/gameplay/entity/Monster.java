@@ -14,7 +14,7 @@ public class Monster extends DiceEntity {
     MonsterType type;
 
     public Monster(MonsterType type) {
-        super(type.sides, type.toString());
+        super(type.sides, type.toString(), type.size);
         this.type=type;
         setMaxHp(type.minHp + (int)(Math.random()*(type.maxHp-type.minHp+1)));
     }
@@ -26,13 +26,14 @@ public class Monster extends DiceEntity {
 
     public enum MonsterType{
 
-        Goblin(4, 5, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
-        Ogre(8, 9, Side.cleave1, Side.cleave1, Side.sword3, Side.sword4, Side.sword4, Side.sword5);
+        Goblin(4, 5, EntitySize.Regular, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
+        Ogre(8, 9, EntitySize.Big, Side.cleave1, Side.cleave1, Side.sword3, Side.sword4, Side.sword4, Side.sword5);
 
         public Side[] sides;
         public TextureRegion lapel;
         public int minHp, maxHp;
-        MonsterType(int minHp, int maxHp, Side... sides){
+        public EntitySize size;
+        MonsterType(int minHp, int maxHp, EntitySize size, Side... sides){
             if(sides.length!=6){
                 System.err.println("side error making "+this);
             }
@@ -40,13 +41,13 @@ public class Monster extends DiceEntity {
             this.maxHp = maxHp;
             this.lapel = Images.lapel0;
             this.sides=sides;
+            this.size = size;
         }
     }
     @Override
     public String getName() {
         return type.toString();
     }
-
 
     public boolean locked;
     @Override

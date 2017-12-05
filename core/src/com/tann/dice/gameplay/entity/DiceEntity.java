@@ -34,12 +34,15 @@ public abstract class DiceEntity {
   // temp junky variables
   private static int i;
   public String name;
+  EntitySize size;
 
-  public DiceEntity(Side[] sides, String name) {
+
+  public DiceEntity(Side[] sides, String name, EntitySize size) {
     this.sides = sides;
     this.name = name;
     this.lapel = Images.lapel0;
     this.col = Colours.classes[(i++) % Colours.classes.length];
+    this.size = size;
   }
 
   // gameplay junk
@@ -229,5 +232,17 @@ public abstract class DiceEntity {
     public DiePanel getDiePanel(){
         if(panel == null) panel = new DiePanel(this);
         return panel;
+    }
+
+    public enum EntitySize{
+      Regular(.5f), Big(.7f);
+      public final float dieSize;
+      EntitySize(float dieSize){
+        this.dieSize = dieSize;
+      }
+    }
+
+    public EntitySize getSize(){
+      return size;
     }
 }

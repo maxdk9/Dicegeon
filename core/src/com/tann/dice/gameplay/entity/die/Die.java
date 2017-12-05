@@ -40,7 +40,7 @@ public class Die implements Targetable{
     // gameplay stuff
 
 	  public DiceEntity entity;
-    public Array<Side> sides = new Array<>();
+    public Array<Side> sides = new Array<>(); // to dynamically change sides, just null texLocs
     private DieState state = DieState.Stopped;
     private int lockedSide=-1;
     private float dist = 0;
@@ -74,7 +74,7 @@ public class Die implements Targetable{
     private float glow = 0;
     private boolean glowOverride;
     private static int dieIndex = 0;
-    private static final float DIE_SIZE = 0.5f;
+    private final float DIE_SIZE;
     private static final int ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
     private static Material MATERIAL;
     private float timeInAir;
@@ -264,7 +264,7 @@ public class Die implements Targetable{
 
     private boolean isStopped(){
         physical.transform.getTranslation(temp);
-        return !isMoving() && temp.y<-(BulletStuff.height-.6f);
+        return !isMoving() && temp.y<-(BulletStuff.height-DIE_SIZE-.05f);
     }
 
     public float getGlow(){
@@ -446,6 +446,8 @@ public class Die implements Targetable{
 
     public Die(DiceEntity entity) {
         this.entity=entity;
+        DIE_SIZE = entity.getSize().dieSize;
+        System.out.println(entity.getSize());
         setup();
         construct();
     }
@@ -493,7 +495,7 @@ public class Die implements Targetable{
         }
         Model model = mb.end();
 
-        CollisionObject co = new CollisionObject(model, "dieIndex", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)),
+        CollisionObject co = new CollisionObject(model, "dieIndex", new btBoxShape(new Vector3(DIE_SIZE, DIE_SIZE, DIE_SIZE)),
                 BulletStuff.mass);
         physical = co;
         randomiseStart();
