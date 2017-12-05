@@ -235,7 +235,7 @@ public abstract class DiceEntity {
     }
 
     public enum EntitySize{
-      Regular(.5f), Big(.7f);
+      Regular(.5f), Big(.63f);
       public final float dieSize;
       EntitySize(float dieSize){
         this.dieSize = dieSize;

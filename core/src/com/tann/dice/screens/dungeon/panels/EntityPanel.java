@@ -65,6 +65,13 @@ public class EntityPanel extends Group {
     float diceHoleSize;
     public void layout(){
         clearChildren();
+        // probably need to do this eventually
+        switch(e.getSize()){
+            case Regular:
+                break;
+            case Big:
+                break;
+        }
 
         diceHoleSize = e.getDie().get2DSize();
 //        if (e instanceof Monster) factor = .7f;
@@ -150,6 +157,11 @@ public class EntityPanel extends Group {
     public void flash() {
         setColor(Colours.z_black);
         addAction(Actions.color(Colours.dark, .4f));
+    }
+
+    public Vector2 getDieHolderLocation(){
+        //TODO need to do this eventually
+        return null;
     }
 
     private boolean targetingHighlight;

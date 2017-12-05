@@ -430,10 +430,10 @@ public class Die implements Targetable{
     }
 
     public float get2DSize(){
-        float dimen = 1;
-        if(physical.dimensions.x!=0){
-            dimen = physical.dimensions.x;
-        }
+        float dimen = DIE_SIZE*2;
+//        if(physical.dimensions.x!=0){
+//            dimen = physical.dimensions.x;
+//        }
         return BulletStuff.convertToScreen(dimen);
     }
 
@@ -447,7 +447,6 @@ public class Die implements Targetable{
     public Die(DiceEntity entity) {
         this.entity=entity;
         DIE_SIZE = entity.getSize().dieSize;
-        System.out.println(entity.getSize());
         setup();
         construct();
     }
