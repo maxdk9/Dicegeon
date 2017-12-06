@@ -60,9 +60,10 @@ public class EntityPanel extends Group {
     static float gapFactor = .9f;
     static float factor = 1f;
     public static final float gap = 13;
-    public static final float extraGap = 3;
     public static final float WIDTH = SidePanel.width * gapFactor * factor;
-    float diceHoleSize;
+
+    DieHolder holder;
+
     public void layout(){
         clearChildren();
         // probably need to do this eventually
@@ -73,19 +74,37 @@ public class EntityPanel extends Group {
                 break;
         }
 
-        diceHoleSize = e.getDie().get2DSize();
-//        if (e instanceof Monster) factor = .7f;
-        setSize(WIDTH, gap*2+diceHoleSize);
+        float diceHoleSize = e.getDie().get2DSize() + DieHolder.extraGap*2;
+        float gap = 10;
+        float height = gap*2+diceHoleSize;
+        setSize(WIDTH, height);
+
+        Group dieGroup = new Group(){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                super.draw(batch, parentAlpha);
+            }
+        };
+        dieGroup.setSize(diceHoleSize, diceHoleSize);
+        addActor(dieGroup);
+        Group heartGroup = new Group();
+        heartGroup.setSize(getWidth()-dieGroup.getWidth()-gap*3, getHeight());
+        addActor(heartGroup);
+
+
+
+        Layoo left = new Layoo(dieGroup);
+        left.actor(holder = new DieHolder(diceHoleSize));
+        left.layoo();
+
+        Layoo r = new Layoo(heartGroup);
+        TextWriter tw = new TextWriter(e.getName(), Fonts.fontSmall);
+        r.row(1);
+        r.actor(tw);
+        r.row(1);
+
         float absHeartGap = 2;
         float heartSize = 18;
-        Layoo l = new Layoo(this);
-        TextWriter tw = new TextWriter(e.getName(), Fonts.fontSmall);
-        l.row(1);
-        l.abs(diceHoleSize+gap*2);
-        l.actor(tw);
-        l.row(1);
-        l.abs(diceHoleSize+gap*2);
-        l.gap(1);
         for(int i=e.getMaxHp()-1;i>=0;i--){
             ImageActor ia;
             if(i<e.getHp()){
@@ -104,21 +123,32 @@ public class EntityPanel extends Group {
             }
 
 
-            l.actor(ia);
+            r.actor(ia);
             if(i<e.getMaxHp()-1){
-                l.abs(absHeartGap);
+                r.abs(absHeartGap);
             }
             if (i == 5){
-                l.gap(1);
-                l.row(1);
-                l.abs(diceHoleSize+gap*2);
-                l.gap(1);
+                r.gap(1);
+                r.row(1);
+                r.gap(1);
             }
         }
-        l.gap(1);
-        l.row(1);
-        l.row(1);
-        l.layoo();
+        r.row(1);
+        r.layoo();
+        Layoo main = new Layoo(this);
+        main.gap(1);
+        if(e.isPlayer()){
+            main.actor(heartGroup);
+            main.gap(1);
+            main.actor(dieGroup);
+        }
+        else{
+            main.actor(dieGroup);
+            main.gap(1);
+            main.actor(heartGroup);
+        }
+        main.gap(1);
+        main.layoo();
     }
 
     public void slideOut(){
@@ -139,10 +169,6 @@ public class EntityPanel extends Group {
         if(e.targeted!=null) inner = Colours.red_dark;
         Color border = e.getColour();
         Draw.fillActor(batch, this, inner, border,  4);
-        batch.setColor(Colours.light);
-        Draw.fillRectangle(batch, getX()+gap-extraGap, getY()+gap-extraGap, diceHoleSize+extraGap*2, diceHoleSize+extraGap*2);
-        batch.setColor(Colours.grey);
-        Draw.fillRectangle(batch, getX()+gap, getY()+gap, diceHoleSize, diceHoleSize);
         super.draw(batch, parentAlpha);
         int overkill = e.getIncomingDamage() - e.getHp();
         if(overkill>0){
@@ -159,9 +185,9 @@ public class EntityPanel extends Group {
         addAction(Actions.color(Colours.dark, .4f));
     }
 
+
     public Vector2 getDieHolderLocation(){
-        //TODO need to do this eventually
-        return null;
+        return Tann.getLocalCoordinates(holder);
     }
 
     private boolean targetingHighlight;
@@ -169,4 +195,21 @@ public class EntityPanel extends Group {
     public void setTargetingHighlight(boolean lit) {
         this.targetingHighlight = lit;
     }
+
+    static class DieHolder extends Actor{
+        public static final float extraGap = 3;
+        public DieHolder(float size){
+            setSize(size, size);
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            batch.setColor(Colours.light);
+            Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
+            batch.setColor(Colours.grey);
+            Draw.fillRectangle(batch, getX()+extraGap, getY()+extraGap, getWidth()-extraGap*2, getHeight()-extraGap*2);
+            super.draw(batch, parentAlpha);
+        }
+    }
+
 }
