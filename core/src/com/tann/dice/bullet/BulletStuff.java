@@ -57,7 +57,7 @@ public class BulletStuff {
 	static float camX=0, camY=0, camZ=0;
 	static DebugDrawer debugDrawer;
 	public static float height = 18;
-	public static  float heightFactor = height*.7f;
+	public static float heightFactor;
 	static float fov = 35;
 	static boolean debugDraw = false;
 	public static float srcWidth;
@@ -98,7 +98,7 @@ public class BulletStuff {
 		        literalBorder + sides*srcWidth,
                 literalBorder,
                 playArea* srcWidth,
-                heightFactor*(1)-literalBorder*(2)- buttonHeight);
+                heightFactor*(1)-literalBorder*(2)); // - buttonHeight (if I put something back at the bottom I'll need this)
 
 		walls.addAll(makeWalls(mb, playerArea.x, 0, playerArea.y, playerArea.width, playerArea.height, height,.005f));
 

@@ -1,9 +1,10 @@
 package com.tann.dice.screens.dungeon;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -58,29 +59,12 @@ public class DungeonScreen extends Screen {
 
     public static final int BASE_ROLLS = 3;
 
-    public BottomBar bottomBar;
     public SpellHolder spellHolder;
 
     private DungeonScreen() {
     }
 
     private void init(){
-        bottomBar = new BottomBar();
-        addActor(bottomBar);
-        bottomBar.setPosition(SidePanel.width, 0);
-
-        enemy = new SidePanel(false);
-        addActor(enemy);
-
-        addActor(new Actor(){
-            @Override
-            public void draw(Batch batch, float parentAlpha) {
-                super.draw(batch, parentAlpha);
-                batch.end();
-                BulletStuff.render();
-                batch.begin();
-            }
-        });
 
         spellHolder = new SpellHolder();
         spellHolder.addSpell(Spell.dart);
@@ -90,8 +74,31 @@ public class DungeonScreen extends Screen {
         addActor(spellHolder);
         spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
 
+        enemy = new SidePanel(false);
+        addActor(enemy);
+
         friendly = new SidePanel(true);
         addActor(friendly);
+
+        Actor bulletActor = new Actor(){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                super.draw(batch, parentAlpha);
+                batch.end();
+                BulletStuff.render();
+                batch.begin();
+            }
+        };
+        bulletActor.setSize(Main.width, Main.height);
+        bulletActor.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                BulletStuff.click(x, y, button);
+                return false;
+            }
+        });
+        addActor(bulletActor);
+
 
         Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
                 new Runnable() {
@@ -162,7 +169,6 @@ public class DungeonScreen extends Screen {
         Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
 
-        bottomBar.reset();
     }
 
     private void confirmDice() {
@@ -174,7 +180,7 @@ public class DungeonScreen extends Screen {
                 allGood=false;
             }
             else if(d.getState()!= DieState.Locked && d.getState() != DieState.Locking){
-                d.slideToBottomBar();
+                d.slideToPanel();
             }
         }
         if(allGood){

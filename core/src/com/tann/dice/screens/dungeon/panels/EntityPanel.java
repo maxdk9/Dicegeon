@@ -11,12 +11,14 @@ import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 
 public class EntityPanel extends Group {
 
     public DiceEntity e;
+    boolean holdsDie;
     public EntityPanel(final DiceEntity e) {
         this.e=e;
        layout();
@@ -128,9 +130,7 @@ public class EntityPanel extends Group {
                 r.abs(absHeartGap);
             }
             if (i == 5){
-                r.gap(1);
                 r.row(1);
-                r.gap(1);
             }
         }
         r.row(1);
@@ -187,13 +187,27 @@ public class EntityPanel extends Group {
 
 
     public Vector2 getDieHolderLocation(){
-        return Tann.getLocalCoordinates(holder);
+        return Tann.getLocalCoordinates(holder).add(DieHolder.extraGap, DieHolder.extraGap);
     }
 
     private boolean targetingHighlight;
 
     public void setTargetingHighlight(boolean lit) {
         this.targetingHighlight = lit;
+    }
+
+
+    public void slideAcross(){
+        holdsDie = true;
+        e.getDie().moveTo(getDieHolderLocation());
+    }
+
+    public void slideAway(){
+        holdsDie = false;
+    }
+
+    public void useDie() {
+        holdsDie = false;
     }
 
     static class DieHolder extends Actor{

@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
+import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
@@ -73,4 +74,5 @@ public class Monster extends DiceEntity {
     public Color getColour() {
         return Colours.brown_dark;
     }
+
 }

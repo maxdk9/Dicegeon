@@ -22,8 +22,6 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Monster;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 
@@ -50,19 +48,19 @@ public class Die implements Targetable{
         return used;
     }
 
-    public void slideToBottomBar(){
+    public void slideToPanel(){
         removeFromPhysics();
         physical.transform.getRotation(originalRotation);
-        DungeonScreen.get().bottomBar.slideDown(this);
+        entity.getEntityPanel().slideAcross();
     }
 
     public void toggleLock() {
         switch(getState()){
             case Stopped:
-                slideToBottomBar();
+                slideToPanel();
                 break;
             case Locked:
-                DungeonScreen.get().bottomBar.vacateSlot(this);
+                entity.getEntityPanel().slideAway();
                 returnToPlay();
                 break;
         }
@@ -524,7 +522,7 @@ public class Die implements Targetable{
     @Override
     public boolean use() {
         removeFromScreen();
-        DungeonScreen.get().bottomBar.vacateSlot(this);
+        entity.getEntityPanel().useDie();
         used= true;
         return true;
     }
