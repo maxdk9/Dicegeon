@@ -24,7 +24,10 @@ public class Hero extends DiceEntity {
         Defender(5, Side.shield2, Side.shield2, Side.shield1, Side.sword1, Side.sword1, Side.nothing),
         Herbalist(3, Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing),
 
+        Wizard(4, Side.magic2, Side.magic2, Side.magic2, Side.magic2, Side.magic2, Side.magic2),
         Rogue(5, Side.sword2, Side.sword2, Side.sword2, Side.sword2, Side.sword2, Side.sword2),
+        Healer(5, Side.heal3, Side.heal3, Side.heal3, Side.heal3, Side.heal3, Side.heal3),
+        Protector(6, Side.shield2, Side.shield2, Side.shield2, Side.shield2, Side.shield2, Side.shield2),
 
         ;
 

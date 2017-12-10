@@ -29,7 +29,7 @@ import com.tann.dice.util.*;
 public class DungeonScreen extends Screen {
 
     public static DungeonScreen self;
-    private Targetable selectedTargetable;
+    public Targetable selectedTargetable;
 
     public static DungeonScreen get() {
         if (self == null) {
@@ -293,31 +293,31 @@ public class DungeonScreen extends Screen {
 
     static Array<DiceEntity> tmp = new Array<>();
 
-    public void target(Array<DiceEntity> entities) {
-        if(!Main.getPhase().canTarget()) return;
-        if(selectedTargetable == null) return;
-        if(selectedTargetable.getEffects() == null) return;
-        if(selectedTargetable.getEffects().length==0) return;
+    public boolean target(Array<DiceEntity> entities) {
+        if(!Main.getPhase().canTarget()) return false;
+        if(selectedTargetable == null) return false;
+        if(selectedTargetable.getEffects() == null) return false;
+        if(selectedTargetable.getEffects().length==0) return false;
 
         // validate the targeting
         switch (selectedTargetable.getEffects()[0].targetingType){
             case EnemySingle:
-                if(entities.size!=1 || entities.get(0).isPlayer() || !entities.get(0).slidOut) return;
+                if(entities.size!=1 || entities.get(0).isPlayer() || !entities.get(0).slidOut) return false;
                 break;
             case EnemySingleRanged:
-                if(entities.size!=1 || entities.get(0).isPlayer()) return;
+                if(entities.size!=1 || entities.get(0).isPlayer()) return false;
                 break;
             case EnemyGroup:
-                if(entities.size<=1 || entities.get(0).isPlayer()) return;
+                if(entities.size<=1 || entities.get(0).isPlayer()) return false;
                 break;
             case FriendlySingle:
-                if(entities.size!=1 || !entities.get(0).isPlayer()) return;
+                if(entities.size!=1 || !entities.get(0).isPlayer()) return false;
                 break;
             case FriendlyGroup:
-                if(entities.size<=1 || !entities.get(0).isPlayer()) return;
+                if(entities.size<=1 || !entities.get(0).isPlayer()) return false;
                 break;
             case Untargeted:
-                return;
+                return false;
         }
 
         if(selectedTargetable.use()){
@@ -343,6 +343,7 @@ public class DungeonScreen extends Screen {
         if(checkEnd()){
             nextLevel();
         }
+        return true;
     }
 
     private boolean checkEnd() {
@@ -352,10 +353,10 @@ public class DungeonScreen extends Screen {
         return true;
     }
 
-    public void target(DiceEntity entity) {
+    public boolean target(DiceEntity entity) {
       tmp.clear();
       tmp.add(entity);
-      target(tmp);
+      return target(tmp);
     }
 
 
@@ -499,22 +500,36 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    public void clicked(DiceEntity entity) {
-        if(selectedTargetable!=null) {
-            DungeonScreen.get().target(entity);
-            return;
+    public void clicked(DiceEntity entity, boolean dieSide) {
+        if(selectedTargetable != null){
+            if(target(entity)) return;
         }
+
+        if(entity.isPlayer()){
+            if(dieSide){
+                DungeonScreen.get().click(entity.getDie());
+            }
+           else{
+                showEntityPanel(entity);
+            }
+        }
+        else{
+            showEntityPanel(entity);
+        }
+    }
+
+    private void showEntityPanel(DiceEntity entity){
         DiePanel pan = entity.getDiePanel();
         push(pan);
         pan.setPosition(pan.getNiceX(false), pan.getNiceY());
     }
+
 
     public void push(Actor a){
         addActor(InputBlocker.get());
         InputBlocker.get().toFront();
         modalStack.add(a);
         addActor(a);
-        System.out.println("pushing" +modalStack.size);
     }
 
     public void pop(){
@@ -525,7 +540,6 @@ public class DungeonScreen extends Screen {
             addActor(InputBlocker.get());
             modalStack.get(modalStack.size-1).toFront();
         }
-        System.out.println("popping" +modalStack.size);
     }
 
     Array<Actor> modalStack = new Array<>();

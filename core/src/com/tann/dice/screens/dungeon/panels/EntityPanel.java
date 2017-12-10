@@ -1,6 +1,5 @@
 package com.tann.dice.screens.dungeon.panels;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
@@ -10,10 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.die.Die;
-import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 
@@ -30,19 +26,8 @@ public class EntityPanel extends Group {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-                boolean dieSide = x > getWidth()*.55f;
-
-                if(holdsDie && dieSide){
-                    DungeonScreen.get().click(e.getDie());
-                    return false;
-                }
-                if(e.getTarget()!=null) {
-                    for(DiceEntity de:e.getTarget()){
-                        de.targetedBy(e);
-                    }
-                }
-                DungeonScreen.get().clicked(EntityPanel.this.e);
+                boolean dieSide = isClickOnDie(x);
+                DungeonScreen.get().clicked(EntityPanel.this.e, dieSide && holdsDie);
                 return true;
             }
 
@@ -66,6 +51,11 @@ public class EntityPanel extends Group {
                 super.exit(event, x, y, pointer, toActor);
             }
         });
+    }
+
+    public boolean isClickOnDie(float x){
+        float threshold = .5f;
+        return x/getWidth()>threshold == e.isPlayer();
     }
 
     static float gapFactor = .9f;
@@ -181,7 +171,7 @@ public class EntityPanel extends Group {
         super.draw(batch, parentAlpha);
         int overkill = e.getIncomingDamage() - e.getHp();
         if(overkill>0){
-            Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/5f, getY()+getHeight()*1/5f, getWidth()*1/5f, getHeight()*4/5f, Align.center);
+            Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, 0, 0);
         }
         if(targetingHighlight) {
             batch.setColor(Colours.withAlpha(Colours.green_light, (float) (Math.sin(Main.ticks * 6) * .05f + .1f)));

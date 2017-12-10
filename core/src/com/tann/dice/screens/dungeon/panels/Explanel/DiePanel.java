@@ -11,7 +11,7 @@ import com.tann.dice.util.*;
 
 public class DiePanel extends InfoPanel {
     DiceEntity entity;
-    public static float WIDTH = 400, HEIGHT = 320;
+    public static float WIDTH = 370, HEIGHT = 270;
     public DiePanel(DiceEntity entity) {
         this.entity = entity;
         addListener(new InputListener(){
@@ -29,7 +29,7 @@ public class DiePanel extends InfoPanel {
         setSize(WIDTH, HEIGHT);
         Layoo l = new Layoo(this);
         l.row(1);
-        TextWriter name = new TextWriter(entity.name, Fonts.font);
+        TextWriter name = new TextWriter(entity.name+"  ("+entity.getMaxHp()+" [heart])", Fonts.fontSmall);
         l.actor(name);
         Side[] sides = entity.getSides();
         l.row(1);
@@ -82,7 +82,7 @@ public class DiePanel extends InfoPanel {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, Colours.light, 4);
+        Draw.fillActor(batch, this, Colours.dark, Colours.light, 2);
         super.draw(batch, parentAlpha);
     }
 }
