@@ -2,9 +2,7 @@ package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -89,16 +87,7 @@ public class DungeonScreen extends Screen {
                 batch.begin();
             }
         };
-        bulletActor.setSize(Main.width, Main.height);
-        bulletActor.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                BulletStuff.click(x, y, button);
-                return false;
-            }
-        });
         addActor(bulletActor);
-
 
         Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
                 new Runnable() {
@@ -525,6 +514,7 @@ public class DungeonScreen extends Screen {
         InputBlocker.get().toFront();
         modalStack.add(a);
         addActor(a);
+        System.out.println("pushing" +modalStack.size);
     }
 
     public void pop(){
@@ -535,6 +525,7 @@ public class DungeonScreen extends Screen {
             addActor(InputBlocker.get());
             modalStack.get(modalStack.size-1).toFront();
         }
+        System.out.println("popping" +modalStack.size);
     }
 
     Array<Actor> modalStack = new Array<>();

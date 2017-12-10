@@ -36,6 +36,7 @@ public class InputBlocker extends Actor{
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("click caught by blocker");
                 if(r!=null) r.run();
+                event.handle();
                 event.stop();
                 return super.touchDown(event, x, y, pointer, button);
             }

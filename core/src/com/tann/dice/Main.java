@@ -79,7 +79,35 @@ public class Main extends ApplicationAdapter {
 		orthoCam = (OrthographicCamera) stage.getCamera();
 		batch = (SpriteBatch) stage.getBatch();
 
-		Gdx.input.setInputProcessor(new InputMultiplexer(stage));
+        InputProcessor diceInput = new InputProcessor() {
+
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+                return BulletStuff.click(screenX, Main.height - screenY, button);
+
+            }
+
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
+                return false;
+
+            }
+
+            public boolean keyDown(int keycode) {return false;}
+
+            public boolean keyUp(int keycode) {return false;}
+
+            public boolean keyTyped(char character) {return false;}
+
+            public boolean touchDragged(int screenX, int screenY, int pointer) {return false;}
+
+            public boolean mouseMoved(int screenX, int screenY) {return false;}
+
+            public boolean scrolled(int amount) {return false;}
+
+        };
+
+		Gdx.input.setInputProcessor(new InputMultiplexer(stage, diceInput));
 
 		stage.addListener(new InputListener() {
 			public boolean keyDown(InputEvent event, int keycode) {

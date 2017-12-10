@@ -14,6 +14,14 @@ public class DiePanel extends InfoPanel {
     public static float WIDTH = 400, HEIGHT = 320;
     public DiePanel(DiceEntity entity) {
         this.entity = entity;
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                DungeonScreen.get().pop();
+                event.cancel();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
         layout();
     }
     private static final float SIDE_SIZE = 70;
@@ -65,6 +73,7 @@ public class DiePanel extends InfoPanel {
                 exp.setup(s);
                 DungeonScreen.get().push(exp);
                 exp.setPosition(exp.getNiceX(false), exp.getNiceY());
+                event.stop();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

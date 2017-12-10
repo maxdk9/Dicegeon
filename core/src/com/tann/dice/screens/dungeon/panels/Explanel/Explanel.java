@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
@@ -32,7 +34,16 @@ public class Explanel extends InfoPanel {
         return self;
     }
 
-    private Explanel(){}
+    private Explanel(){
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                DungeonScreen.get().pop();
+                event.cancel();
+                return true;
+            }
+        });
+    }
 
     private void setup(String name, String description, Eff[] effects, TextureRegion image, Integer cost) {
         this.name = name;
