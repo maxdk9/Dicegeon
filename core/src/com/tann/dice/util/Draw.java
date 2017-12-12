@@ -192,6 +192,11 @@ public class Draw {
 	    Draw.drawCenteredScaled(batch, textureRegion, x, y, width/textureRegion.getRegionWidth(), height/textureRegion.getRegionHeight());
 	}
 
+    public static void fillActor(Batch batch, Actor a, Color col) {
+	    batch.setColor(col);
+	    fillActor(batch, a);
+    }
+
 	public static void fillActor(Batch batch, Actor a) {
 		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
 	}
