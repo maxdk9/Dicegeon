@@ -24,7 +24,7 @@ public class Fonts {
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.minFilter= Texture.TextureFilter.Linear;
         parameter.magFilter= Texture.TextureFilter.Linear;
-        parameter.size = (int)Main.h(15/700f*100);
+        parameter.size = (int)Main.h(18/700f*100);
         fontTiny= generator.generateFont(parameter);
         parameter.size = (int)Main.h(24/700f*100);
         fontSmall = generator.generateFont(parameter);

@@ -15,6 +15,7 @@ import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.Hero.HeroType;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
@@ -157,6 +158,10 @@ public class DungeonScreen extends Screen {
         Main.pushPhase(new NothingPhase());
         Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
+
+        LevelUpPanel lup = new LevelUpPanel(heroes.get(0), new HeroType[]{HeroType.Protector, HeroType.Rogue, HeroType.Wizard});
+        lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
+        push(lup);
 
     }
 

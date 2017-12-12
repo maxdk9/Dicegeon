@@ -11,7 +11,7 @@ import com.tann.dice.util.*;
 
 public class DiePanel extends InfoPanel {
     DiceEntity entity;
-    public static float WIDTH = 370, HEIGHT = 270;
+    public static float WIDTH = 370, HEIGHT = 230;
     public DiePanel(DiceEntity entity) {
         this.entity = entity;
         addListener(new InputListener(){
@@ -24,7 +24,7 @@ public class DiePanel extends InfoPanel {
         });
         layout();
     }
-    private static final float SIDE_SIZE = 70;
+    private static final float SIDE_SIZE = 60;
     public void layout(){
         setSize(WIDTH, HEIGHT);
         Layoo l = new Layoo(this);
@@ -82,7 +82,8 @@ public class DiePanel extends InfoPanel {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, Colours.light, 2);
+        // todo scissorstack stuff
+//        Draw.fillActor(batch, this, Colours.green_dark, Colours.light, 0);
         super.draw(batch, parentAlpha);
     }
 }

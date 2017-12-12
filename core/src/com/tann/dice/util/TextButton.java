@@ -46,10 +46,7 @@ public class TextButton extends Group{
     public void draw(Batch batch, float parentAlpha) {
         int BORDER = (int)(Main.h(.4f));
         super.draw(batch, parentAlpha);
-        batch.setColor(Colours.brown_dark);
-        Draw.fillRectangle(batch, getX()-BORDER, getY()-BORDER, getWidth()+BORDER*2, getHeight()+BORDER*2);
-        batch.setColor(background);
-        Draw.fillActor(batch, this);
-        Fonts.draw(batch, text, Fonts.fontSmall, Colours.light, getX(), getY(), getWidth(), getHeight());
+        Draw.fillActor(batch, this, background, Colours.brown_dark, BORDER);
+        Fonts.draw(batch, text, Fonts.fontTiny, Colours.light, getX(), getY(), getWidth(), getHeight());
     }
 }
