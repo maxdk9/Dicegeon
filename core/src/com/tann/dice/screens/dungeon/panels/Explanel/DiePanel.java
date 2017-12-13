@@ -1,5 +1,6 @@
 package com.tann.dice.screens.dungeon.panels.Explanel;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,7 +12,7 @@ import com.tann.dice.util.*;
 
 public class DiePanel extends InfoPanel {
     DiceEntity entity;
-    public static float WIDTH = 370, HEIGHT = 230;
+    public static float WIDTH = 320, HEIGHT = 230;
     public DiePanel(DiceEntity entity) {
         this.entity = entity;
         addListener(new InputListener(){
@@ -83,7 +84,8 @@ public class DiePanel extends InfoPanel {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         // todo scissorstack stuff
-//        Draw.fillActor(batch, this, Colours.green_dark, Colours.light, 0);
+        Draw.fillActor(batch, this, Colours.dark);
+//        Draw.fillActor(batch, this, new Color(0,1,0,.1f));
         super.draw(batch, parentAlpha);
     }
 }

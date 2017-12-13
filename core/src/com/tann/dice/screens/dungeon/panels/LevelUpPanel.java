@@ -7,10 +7,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
+import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Hero.HeroType;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
@@ -20,23 +22,28 @@ import com.tann.dice.util.Layoo;
 import com.tann.dice.util.TextButton;
 import com.tann.dice.util.TextWriter;
 
+import java.util.logging.Level;
 import javax.xml.ws.Dispatch;
 
 public class LevelUpPanel extends Group{
   ChoicesPanel choicesPanel;
+  static DiceEntity entity;
   public LevelUpPanel(DiceEntity entity, HeroType[] options) {
-    float gap = 0;
-    float extraWidth = 0;
-    TextWriter tw = new TextWriter("Level up!", Fonts.font);
-    Layoo l = new Layoo(this);
+    this.entity = entity;
+    float gap = 50;
 
+    TextWriter tw = new TextWriter("Level up!", Fonts.font);
+
+    Layoo l = new Layoo(this);
+    l.actor(tw);
+    l.row(1);
     l.gap(1);
     l.actor(entity.getDiePanel());
     l.gap(1);
     l.actor(choicesPanel = new ChoicesPanel(options));
     l.gap(1);
 
-    setSize(DiePanel.WIDTH*2+gap*0 + extraWidth, DiePanel.HEIGHT + gap*2);
+    setSize(DiePanel.WIDTH + choicesPanel.getWidth(), DiePanel.HEIGHT + gap + tw.getHeight());
 
     l.layoo();
 
@@ -45,8 +52,13 @@ public class LevelUpPanel extends Group{
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    Draw.fillActor(batch, this, Colours.dark, Colours.green_light, 2);
+//    Draw.fillActor(batch, this, Colours.dark, Colours.green_light, 2);
     super.draw(batch, parentAlpha);
+    float arrowLength = 50;
+    batch.setColor(Colours.light);
+    float cX = getX()+DiePanel.WIDTH;
+    float cY = getY()+choicesPanel.getHeight()/2;
+    Draw.drawArrow(batch, cX-arrowLength/2, cY, cX+arrowLength/2, cY, 5);
   }
 
   static class ChoicesPanel extends Group{
@@ -83,14 +95,15 @@ public class LevelUpPanel extends Group{
         Group right = new Group(){
             @Override
             public void draw(Batch batch, float parentAlpha) {
-                Draw.fillActor(batch, this, Colours.green_dark);
+                Draw.fillActor(batch, this, Colours.dark);
                 super.draw(batch, parentAlpha);
             }
         };
         right.setSize(rightPanelSize, DiePanel.HEIGHT);
         Layoo rightLayoo = new Layoo(right);
+        float rightButtonSize = rightPanelSize * .8f;
         for(int i =0;i<options.length;i++){
-            TextButton butt = new TextButton(100, 30, options[i].name());
+            TextButton butt = new TextButton(rightButtonSize, 30, options[i].name());
             final int finalI = i;
             butt.setRunnable(new Runnable() {
                 @Override
@@ -100,8 +113,17 @@ public class LevelUpPanel extends Group{
             });
             rightLayoo.row(1);
             rightLayoo.actor(butt);
-
         }
+        rightLayoo.row(2);
+        Button butt = new Button(rightButtonSize, rightButtonSize, Images.tick, Colours.double_dark,
+            new Runnable() {
+              @Override
+              public void run() {
+                DungeonScreen.get().pop();
+              }
+            });
+        butt.setColor(Colours.green_light);
+        rightLayoo.actor(butt);
         rightLayoo.row(1);
         rightLayoo.layoo();
 
