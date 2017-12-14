@@ -45,10 +45,20 @@ public abstract class DiceEntity {
     this.size = size;
   }
 
+    protected void setSides(Side[] sides) {
+      this.sides = sides;
+      getDie().setup();
+    }
+
   // gameplay junk
   public void setMaxHp(int maxHp) {
     this.maxHp = maxHp;
     this.hp = maxHp;
+  }
+
+  protected void resetPanels(){
+      panel = null;
+      ep = null;
   }
 
   public int getMaxHp(){
@@ -245,4 +255,5 @@ public abstract class DiceEntity {
     public EntitySize getSize(){
       return size;
     }
+
 }

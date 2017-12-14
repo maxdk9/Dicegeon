@@ -44,6 +44,12 @@ public class Hero extends DiceEntity {
         }
     }
 
+    public void levelUpTo(HeroType type) {
+        this.type = type;
+        setSides(type.sides);
+        resetPanels();
+    }
+
     @Override
     public String getName() {
         return type.toString();

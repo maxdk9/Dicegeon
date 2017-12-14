@@ -11,7 +11,7 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 
 public class DiePanel extends InfoPanel {
-    DiceEntity entity;
+    public DiceEntity entity;
     public static float WIDTH = 320, HEIGHT = 230;
     public DiePanel(DiceEntity entity) {
         this.entity = entity;

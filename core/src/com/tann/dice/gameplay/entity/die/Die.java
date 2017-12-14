@@ -450,6 +450,8 @@ public class Die implements Targetable{
     }
 
     public void setup(){
+        sides.clear();
+        texLocs = null;
         for(Side s:entity.getSides()){
             addSide(s);
         }

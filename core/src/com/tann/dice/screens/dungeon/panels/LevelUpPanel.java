@@ -9,10 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Hero.HeroType;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
@@ -22,14 +20,11 @@ import com.tann.dice.util.Layoo;
 import com.tann.dice.util.TextButton;
 import com.tann.dice.util.TextWriter;
 
-import java.util.logging.Level;
-import javax.xml.ws.Dispatch;
-
 public class LevelUpPanel extends Group{
   ChoicesPanel choicesPanel;
-  static DiceEntity entity;
-  public LevelUpPanel(DiceEntity entity, HeroType[] options) {
-    this.entity = entity;
+  public static Hero hero;
+  public LevelUpPanel(Hero hero, HeroType[] options) {
+    this.hero = hero;
     float gap = 50;
 
     TextWriter tw = new TextWriter("Level up!", Fonts.font);
@@ -38,7 +33,7 @@ public class LevelUpPanel extends Group{
     l.actor(tw);
     l.row(1);
     l.gap(1);
-    l.actor(entity.getDiePanel());
+    l.actor(hero.getDiePanel());
     l.gap(1);
     l.actor(choicesPanel = new ChoicesPanel(options));
     l.gap(1);
@@ -63,9 +58,12 @@ public class LevelUpPanel extends Group{
 
   static class ChoicesPanel extends Group{
     DiePanel[] panels;
-    public ChoicesPanel(HeroType[] options) {
+    HeroType[] options;
+    HeroType currentChoice;
+      public ChoicesPanel(HeroType[] options) {
         panels = new DiePanel[options.length];
-
+        currentChoice = options[1];
+        this.options = options;
         float rightPanelSize = 100;
 
         setSize(DiePanel.WIDTH + rightPanelSize, DiePanel.HEIGHT);
@@ -119,7 +117,9 @@ public class LevelUpPanel extends Group{
             new Runnable() {
               @Override
               public void run() {
-                DungeonScreen.get().pop();
+                  LevelUpPanel.hero.levelUpTo(currentChoice);
+                  getParent().remove();
+                  Main.popPhase();
               }
             });
         butt.setColor(Colours.green_light);
@@ -132,11 +132,11 @@ public class LevelUpPanel extends Group{
         addActor(right);
         right.setPosition(left.getWidth(), 0);
     }
-
     public void slideTo(int index){
         for(int i=0;i<panels.length;i++){
             DiePanel dp = panels[i];
             dp.clearActions();
+            currentChoice = options[index];
             // DiePanel.HEIGHT  - (i-1)*DiePanel.HEIGHT
             dp.addAction(Actions.moveTo( dp.getX(), (index-i)*DiePanel.HEIGHT, .3f, Interpolation.pow2Out));
         }

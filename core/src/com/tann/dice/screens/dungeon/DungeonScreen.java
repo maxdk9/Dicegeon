@@ -21,6 +21,7 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
+import com.tann.dice.gameplay.phase.LevelUpPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.panels.*;
@@ -156,13 +157,9 @@ public class DungeonScreen extends Screen {
         Main.clearPhases();
 
         Main.pushPhase(new NothingPhase());
+        Main.pushPhase(new LevelUpPhase());
         Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
-
-        LevelUpPanel lup = new LevelUpPanel(heroes.get(0), new HeroType[]{HeroType.Protector, HeroType.Rogue, HeroType.Wizard});
-        lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
-        push(lup);
-
     }
 
     private void confirmDice() {
@@ -549,4 +546,13 @@ public class DungeonScreen extends Screen {
 
     Array<Actor> modalStack = new Array<>();
 
+    public Hero getRandomHero() {
+        return heroes.random();
+    }
+
+    public void showLevelupPanel(Hero hero) {
+        LevelUpPanel lup = new LevelUpPanel(hero, new HeroType[]{HeroType.Protector, HeroType.Rogue, HeroType.Wizard});
+        lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
+        addActor(lup);
+    }
 }
