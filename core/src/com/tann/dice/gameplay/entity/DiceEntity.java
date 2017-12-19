@@ -32,16 +32,17 @@ public abstract class DiceEntity {
   protected TextureRegion lapel;
   private EntityPanel ep;
   // temp junky variables
-  private static int i;
+  private static int ixix;
   public String name;
   EntitySize size;
+    public boolean locked; // only used for monster
 
 
-  public DiceEntity(Side[] sides, String name, EntitySize size) {
+    public DiceEntity(Side[] sides, String name, EntitySize size) {
     this.sides = sides;
     this.name = name;
     this.lapel = Images.lapel0;
-    this.col = Colours.classes[(i++) % Colours.classes.length];
+    this.col = Colours.classes[(ixix++) % Colours.classes.length];
     this.size = size;
   }
 
@@ -242,6 +243,18 @@ public abstract class DiceEntity {
     public DiePanel getDiePanel(){
         if(panel == null) panel = new DiePanel(this);
         return panel;
+    }
+
+    Array<DiceEntity> tmp = new Array<>();
+    public Array<DiceEntity> getAdjacents(boolean includeSelf) {
+        tmp.clear();
+        Array<DiceEntity> mine = isPlayer()? DungeonScreen.get().heroes : DungeonScreen.get().monsters;
+        int index = mine.indexOf(this, true);
+        for(int i=Math.max(index-1, 0); i<=index+1 && i<mine.size; i++){
+            if(i==index && !includeSelf) continue;
+            tmp.add(mine.get(i));
+        }
+        return tmp;
     }
 
     public enum EntitySize{

@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.phase;
 
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
@@ -22,7 +23,7 @@ public class EnemyRollingPhase extends Phase {
 
     @Override
     protected boolean doneCheck() {
-        for(Monster m: DungeonScreen.get().monsters){
+        for(DiceEntity m: DungeonScreen.get().monsters){
             if(!m.locked) return false;
         }
         return true;

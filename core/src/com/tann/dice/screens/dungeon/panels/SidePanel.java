@@ -24,7 +24,6 @@ public class SidePanel extends Group {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             super.touchDown(event, x, y, pointer, button);
-            DungeonScreen.get().target(entities);
             return true;
         }
     });

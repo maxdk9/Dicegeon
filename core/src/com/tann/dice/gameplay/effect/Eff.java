@@ -9,7 +9,9 @@ import com.tann.dice.gameplay.entity.die.Die;
 public class Eff {
 
     public enum TargetingType{
-        EnemySingle, EnemySingleRanged, EnemyGroup, FriendlySingle, FriendlyGroup, Untargeted;
+        EnemySingle, EnemySingleRanged, EnemyGroup, FriendlySingle, FriendlyGroup, EnemyAndAdjacents, EnemyOnlyAdjacents,
+
+        Untargeted;
     }
 
     public TargetingType targetingType = TargetingType.EnemySingle;
@@ -19,6 +21,7 @@ public class Eff {
         Sword(Images.side_sword),
         Shield(Images.side_sword),
         Magic(Images.heart),
+
         Heal(Images.heart);
 
         //objectives

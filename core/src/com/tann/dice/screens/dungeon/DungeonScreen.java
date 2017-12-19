@@ -51,8 +51,8 @@ public class DungeonScreen extends Screen {
         return tmpALl;
     }
 
-    public Array<Hero> heroes = new Array<>();
-    public Array<Monster> monsters = new Array<>();
+    public Array<DiceEntity> heroes = new Array<>();
+    public Array<DiceEntity> monsters = new Array<>();
     private SidePanel friendly;
     private SidePanel enemy;
     int rolls = BASE_ROLLS;
@@ -165,7 +165,7 @@ public class DungeonScreen extends Screen {
     private void confirmDice() {
         if(!(Main.getPhase() instanceof PlayerRollingPhase)) return;
         boolean allGood = true;
-        for(Hero h:heroes){
+        for(DiceEntity h:heroes){
             Die d = h.getDie();
             if(d.getSide()==-1){
                 allGood=false;
@@ -181,15 +181,16 @@ public class DungeonScreen extends Screen {
 
     public void enemyCombat(){
         enemy.layout(false);
-        for(Monster m:monsters){
+        for(DiceEntity m:monsters){
             m.slidOut = false;
         }
-        for(Monster m: Tann.pickNRandomElements(monsters, Math.min(monsters.size, 2))){
+        for(DiceEntity m: Tann.pickNRandomElements(monsters, Math.min(monsters.size, 2))){
             m.getEntityPanel().slideOut();
         }
         float timer = 0;
         float timerAdd = .1f;
-        for (final Monster m : monsters) {
+        for (final DiceEntity de : monsters) {
+            final Monster m = (Monster) de;
             if(m.isDead()) continue;
             m.locked=false;
             m.getDie().resetForRoll();
@@ -295,7 +296,7 @@ public class DungeonScreen extends Screen {
 
     static Array<DiceEntity> tmp = new Array<>();
 
-    public boolean target(Array<DiceEntity> entities) {
+    public boolean target(DiceEntity entity) {
         if(!Main.getPhase().canTarget()) return false;
         if(selectedTargetable == null) return false;
         if(selectedTargetable.getEffects() == null) return false;
@@ -304,27 +305,48 @@ public class DungeonScreen extends Screen {
         // validate the targeting
         switch (selectedTargetable.getEffects()[0].targetingType){
             case EnemySingle:
-                if(entities.size!=1 || entities.get(0).isPlayer() || !entities.get(0).slidOut) return false;
+                if(!entity.slidOut || entity.isPlayer()) return false;
                 break;
             case EnemySingleRanged:
-                if(entities.size!=1 || entities.get(0).isPlayer()) return false;
+                if(entity.isPlayer()) return false;
                 break;
             case EnemyGroup:
-                if(entities.size<=1 || entities.get(0).isPlayer()) return false;
-                break;
-            case FriendlySingle:
-                if(entities.size!=1 || !entities.get(0).isPlayer()) return false;
-                break;
             case FriendlyGroup:
-                if(entities.size<=1 || !entities.get(0).isPlayer()) return false;
+                if(entity!=null) return false;
+            case FriendlySingle:
+                if(!entity.isPlayer()) return false;
                 break;
             case Untargeted:
                 return false;
         }
 
+
         if(selectedTargetable.use()){
-            for(DiceEntity de:entities){
-                de.hit(selectedTargetable.getEffects(), true);
+            for(Eff e:selectedTargetable.getEffects()){
+                tmp.clear();
+                switch(e.targetingType){
+                    case EnemySingle:
+                    case EnemySingleRanged:
+                    case FriendlySingle:
+                        entity.hit(e, true);
+                        break;
+                    case EnemyGroup:
+                        tmp.addAll(monsters);
+                        hitEntities(tmp, e);
+                        break;
+                    case FriendlyGroup:
+                        tmp.addAll(heroes);
+                        hitEntities(tmp, e);
+                        break;
+                    case EnemyAndAdjacents:
+                        hitEntities(entity.getAdjacents(true), e);
+                        break;
+                    case EnemyOnlyAdjacents:
+                        hitEntities(entity.getAdjacents(false), e);
+                        break;
+                    case Untargeted:
+                        break;
+                }
             }
         }
         boolean allUsed = true;
@@ -348,25 +370,26 @@ public class DungeonScreen extends Screen {
         return true;
     }
 
+    private void hitEntities(Array<DiceEntity> entities, Eff e){
+        for(DiceEntity de:entities){
+            de.hit(e, true);
+        }
+    }
+
     private boolean checkEnd() {
-        for(Monster m:monsters){
+        for(DiceEntity m:monsters){
             if(!m.isDead()) return false;
         }
         return true;
     }
-
-    public boolean target(DiceEntity entity) {
-      tmp.clear();
-      tmp.add(entity);
-      return target(tmp);
-    }
-
 
     public Array<DiceEntity> getRandomTargetForEnemy(Side side) {
         Eff e = side.effects[0];
         Array<DiceEntity> targets = new Array<>();
         switch (e.targetingType){
             case EnemySingle:
+            case EnemyAndAdjacents:
+            case EnemyOnlyAdjacents:
                 targets.add(heroes.random());
                 break;
             case EnemySingleRanged:
@@ -398,7 +421,7 @@ public class DungeonScreen extends Screen {
             rolls = BASE_ROLLS;
         }
         rolls --;
-        for(Hero hero:heroes){
+        for(DiceEntity hero:heroes){
             if(firstRoll) hero.getDie().addToScreen();
             hero.getDie().roll(firstRoll);
         }
@@ -443,7 +466,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void activateAutoEffects() {
-        for(Hero h:heroes){
+        for(DiceEntity h:heroes){
             for(Eff e:h.getDie().getActualSide().effects){
                 switch(e.type){
                     case Magic:
@@ -467,14 +490,16 @@ public class DungeonScreen extends Screen {
         Eff.TargetingType tType = selectedTargetable.getEffects()[0].targetingType;
         switch (tType){
             case EnemySingle:
-                for(Monster m : monsters){
+            case EnemyAndAdjacents:
+            case EnemyOnlyAdjacents:
+                for(DiceEntity m : monsters){
                     if(m.slidOut){
                         m.getEntityPanel().setTargetingHighlight(true);
                     }
                 }
                 break;
             case EnemySingleRanged:
-                for(Monster m : monsters){
+                for(DiceEntity m : monsters){
                         m.getEntityPanel().setTargetingHighlight(true);
                 }
                 break;
@@ -482,7 +507,7 @@ public class DungeonScreen extends Screen {
                 enemy.setTargetingHighlight(true);
                 break;
             case FriendlySingle:
-                for(Hero h:heroes){
+                for(DiceEntity h:heroes){
                     h.getEntityPanel().setTargetingHighlight(true);
                 }
                 break;
@@ -495,7 +520,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void removeLeftoverDice() {
-        for(Hero h:heroes){
+        for(DiceEntity h:heroes){
             if(!h.getDie().getUsed()){
                 h.getDie().use();
             }
@@ -546,7 +571,7 @@ public class DungeonScreen extends Screen {
 
     Array<Actor> modalStack = new Array<>();
 
-    public Hero getRandomHero() {
+    public DiceEntity getRandomHero() {
         return heroes.random();
     }
 

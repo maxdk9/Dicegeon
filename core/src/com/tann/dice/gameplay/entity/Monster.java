@@ -50,7 +50,6 @@ public class Monster extends DiceEntity {
         return type.toString();
     }
 
-    public boolean locked;
     @Override
     public void locked() {
         getDie().removeFromPhysics();
