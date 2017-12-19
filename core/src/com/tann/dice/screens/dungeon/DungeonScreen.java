@@ -302,8 +302,12 @@ public class DungeonScreen extends Screen {
         if(selectedTargetable.getEffects() == null) return false;
         if(selectedTargetable.getEffects().length==0) return false;
 
+        Eff.TargetingType type = selectedTargetable.getEffects()[0].targetingType;
+
+        if(entity == null && type != Eff.TargetingType.EnemyGroup && type != Eff.TargetingType.FriendlyGroup) return false;
+
         // validate the targeting
-        switch (selectedTargetable.getEffects()[0].targetingType){
+        switch (type){
             case EnemySingle:
                 if(!entity.slidOut || entity.isPlayer()) return false;
                 break;
@@ -313,6 +317,7 @@ public class DungeonScreen extends Screen {
             case EnemyGroup:
             case FriendlyGroup:
                 if(entity!=null) return false;
+                break;
             case FriendlySingle:
                 if(!entity.isPlayer()) return false;
                 break;

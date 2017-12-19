@@ -87,7 +87,7 @@ public class LevelUpPanel extends Group{
             DiePanel dp = new Hero(options[i]).getDiePanel();
             panels[i] = dp;
             left.addActor(dp);
-            dp.setPosition(0, DiePanel.HEIGHT  - (i-1)*DiePanel.HEIGHT);
+            dp.setPosition(0, DiePanel.HEIGHT*-1  - (i-1)*DiePanel.HEIGHT);
         }
 
         Group right = new Group(){

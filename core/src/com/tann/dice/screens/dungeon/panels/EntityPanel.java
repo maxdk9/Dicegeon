@@ -26,9 +26,12 @@ public class EntityPanel extends Group {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(DungeonScreen.get().selectedTargetable != null){
+                    return false;
+                }
                 boolean dieSide = isClickOnDie(x);
                 DungeonScreen.get().clicked(EntityPanel.this.e, dieSide && holdsDie);
-                return true;
+                return false;
             }
 
             @Override
