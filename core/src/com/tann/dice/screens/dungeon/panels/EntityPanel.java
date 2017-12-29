@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 
@@ -26,9 +27,6 @@ public class EntityPanel extends Group {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if(DungeonScreen.get().selectedTargetable != null){
-                    return false;
-                }
                 boolean dieSide = isClickOnDie(x);
                 DungeonScreen.get().clicked(EntityPanel.this.e, dieSide && holdsDie);
                 return false;

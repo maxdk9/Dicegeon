@@ -17,21 +17,19 @@ public class Eff {
     public TargetingType targetingType = TargetingType.EnemySingle;
 
     public enum EffectType{
-        Nothing(Images.heart_empty),
-        Sword(Images.side_sword),
-        Shield(Images.side_sword),
-        Magic(Images.heart),
+        Nothing,
+        Sword,
+        Shield,
+        Magic,
+        Heal,
+        Poison,
 
-        Heal(Images.heart);
+
+        ;
 
         //objectives
 
-        public TextureRegion region;
         EffectType(){
-            this.region=Images.dotdotdot;
-        }
-        EffectType(TextureRegion region){
-            this.region=region;
         }
 
 	}
@@ -82,6 +80,7 @@ public class Eff {
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }
     public Eff heal(int amount) { return type(EffectType.Heal, amount); }
+    public Eff poison(int amount) {return type(EffectType.Poison, amount); }
 
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}

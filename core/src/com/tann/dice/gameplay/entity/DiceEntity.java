@@ -10,6 +10,8 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
@@ -26,6 +28,7 @@ public abstract class DiceEntity {
   protected boolean dead;
   protected Array<Eff> potentialEffects = new Array<>();
   protected Array<DiceEntity> targets;
+
   public DiceEntity targeted;
   // rendering vars
   protected Color col;
@@ -128,9 +131,9 @@ public abstract class DiceEntity {
     BulletStuff.dice.removeValue(getDie(), true);
     dead = true;
     if (this instanceof Monster) {
-      DungeonScreen.get().monsters.removeValue((Monster) this, true);
+        Room.get().getActiveEntities().removeValue(this, true);
     } else {
-      DungeonScreen.get().heroes.removeValue((Hero) this, true);
+        Party.get().getActiveEntities().removeValue(this, true);
     }
   }
 
@@ -248,7 +251,7 @@ public abstract class DiceEntity {
     Array<DiceEntity> tmp = new Array<>();
     public Array<DiceEntity> getAdjacents(boolean includeSelf) {
         tmp.clear();
-        Array<DiceEntity> mine = isPlayer()? DungeonScreen.get().heroes : DungeonScreen.get().monsters;
+        Array<DiceEntity> mine = isPlayer()? Party.get().getActiveEntities() : Room.get().getActiveEntities();
         int index = mine.indexOf(this, true);
         for(int i=Math.max(index-1, 0); i<=index+1 && i<mine.size; i++){
             if(i==index && !includeSelf) continue;

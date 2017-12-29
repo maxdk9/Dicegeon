@@ -20,6 +20,8 @@ import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.LevelUpPhase;
 import com.tann.dice.gameplay.phase.NothingPhase;
@@ -31,7 +33,7 @@ import com.tann.dice.util.*;
 public class DungeonScreen extends Screen {
 
     public static DungeonScreen self;
-    public Targetable selectedTargetable;
+
 
     public static DungeonScreen get() {
         if (self == null) {
@@ -44,21 +46,15 @@ public class DungeonScreen extends Screen {
     public static final float BOTTOM_BUTTON_HEIGHT = Main.height*.2f;
 
     private static Array<DiceEntity> tmpALl = new Array<>();
-    public Array<DiceEntity> getAll(){
+    public Array<DiceEntity> getAllActive(){
         tmpALl.clear();
-        tmpALl.addAll(heroes);
-        tmpALl.addAll(monsters);
+        tmpALl.addAll(Party.get().getActiveEntities());
+        tmpALl.addAll(Room.get().getActiveEntities());
         return tmpALl;
     }
 
-    public Array<DiceEntity> heroes = new Array<>();
-    public Array<DiceEntity> monsters = new Array<>();
     private SidePanel friendly;
     private SidePanel enemy;
-    int rolls = BASE_ROLLS;
-
-    public static final int BASE_ROLLS = 3;
-
     public SpellHolder spellHolder;
 
     private DungeonScreen() {
@@ -95,15 +91,16 @@ public class DungeonScreen extends Screen {
                 new Runnable() {
                     @Override
                     public void run() {
-                        if(rolls>0){
-                            playerRoll(false);
+                        if(Party.get().getRolls()>0){
+                            Party.get().roll();
                         }
                     }
                 }){
             @Override
             public void draw(Batch batch, float parentAlpha) {
                 super.draw(batch, parentAlpha);
-                Fonts.draw(batch, rolls+"/"+BASE_ROLLS, Fonts.fontSmall, Colours.light, this.getX(), this.getY(), this.getWidth(), this.getHeight()/5, Align.center);
+                Fonts.draw(batch, Party.get().getRolls()+"/"+Party.get().getMaxRolls(),
+                        Fonts.fontSmall, Colours.light, this.getX(), this.getY(), this.getWidth(), this.getHeight()/5, Align.center);
             }
         };
         addActor(rollButton);
@@ -123,6 +120,8 @@ public class DungeonScreen extends Screen {
         confirmButton.setPosition(Main.width-confirmButton.getWidth(), 0);
     }
 
+
+
     int level;
 
     public void nextLevel() {
@@ -135,11 +134,11 @@ public class DungeonScreen extends Screen {
         setup(monsters);
     }
 
-    public void setup(Array<Monster> pMonsters){
-        heroes.clear();
-        monsters.clear();
+    public void setup(Array<Monster> monsters){
+        Room.get().setEntities(monsters);
         spellHolder.hide();
         resetMagic();
+        Array<Hero> heroes = new Array<>();
         for (int i = 0; i < 1; i++) {
             heroes.add(new Hero(Hero.HeroType.Fighter));
             heroes.add(new Hero(Hero.HeroType.Fighter));
@@ -147,10 +146,9 @@ public class DungeonScreen extends Screen {
             heroes.add(new Hero(Hero.HeroType.Herbalist));
             heroes.add(new Hero(Hero.HeroType.Apprentice));
         }
-        monsters.addAll(pMonsters);
+        Party.get().setEntities(heroes);
         BulletStuff.reset();
-        BulletStuff.refresh(getAll());
-
+        BulletStuff.refresh(getAllActive());
         friendly.setEntities(heroes);
         enemy.setEntities(monsters);
 
@@ -165,7 +163,7 @@ public class DungeonScreen extends Screen {
     private void confirmDice() {
         if(!(Main.getPhase() instanceof PlayerRollingPhase)) return;
         boolean allGood = true;
-        for(DiceEntity h:heroes){
+        for(DiceEntity h:Party.get().getActiveEntities()){
             Die d = h.getDie();
             if(d.getSide()==-1){
                 allGood=false;
@@ -181,9 +179,10 @@ public class DungeonScreen extends Screen {
 
     public void enemyCombat(){
         enemy.layout(false);
-        for(DiceEntity m:monsters){
+        for(DiceEntity m:Room.get().getActiveEntities()){
             m.slidOut = false;
         }
+        Array<DiceEntity> monsters = Room.get().getActiveEntities();
         for(DiceEntity m: Tann.pickNRandomElements(monsters, Math.min(monsters.size, 2))){
             m.getEntityPanel().slideOut();
         }
@@ -206,7 +205,8 @@ public class DungeonScreen extends Screen {
 
     private void addDie(DiceEntity v){
         v.getDie().addToScreen();
-        v.getDie().roll(true);
+        v.getDie().resetForRoll();
+        v.getDie().roll();
     }
 
     @Override
@@ -248,7 +248,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void cancelEffects(Eff[] effects) {
-        for (DiceEntity de : getAll()) {
+        for (DiceEntity de : getAllActive()) {
             de.removeEffects(effects);
         }
 
@@ -270,15 +270,15 @@ public class DungeonScreen extends Screen {
     }
 
     private void targetableClick(Targetable t){
-        for(DiceEntity de:heroes){
+        for(DiceEntity de:Party.get().getActiveEntities()){
             de.setShaderState(DieShader.DieShaderState.Nothing);
         }
-        if(selectedTargetable == t){
+        if(Party.get().getSelectedTargetable() == t){
             deselectTargetable();
             return;
         }
         deselectTargetable();
-        selectedTargetable = t;
+        Party.get().setSelectedTargetable(t);
         t.select();
         Explanel.get().setup(t);
         positionExplanel();
@@ -287,22 +287,23 @@ public class DungeonScreen extends Screen {
 
     private void deselectTargetable(){
         clearTargetingHighlights();
-        if(selectedTargetable != null) {
-            selectedTargetable.deselect();
+        if(Party.get().getSelectedTargetable() != null) {
+            Party.get().getSelectedTargetable().deselect();
             Explanel.get().remove();
-            selectedTargetable = null;
+            Party.get().setSelectedTargetable(null);
         }
     }
 
     static Array<DiceEntity> tmp = new Array<>();
 
     public boolean target(DiceEntity entity) {
+        Targetable t = Party.get().getSelectedTargetable();
         if(!Main.getPhase().canTarget()) return false;
-        if(selectedTargetable == null) return false;
-        if(selectedTargetable.getEffects() == null) return false;
-        if(selectedTargetable.getEffects().length==0) return false;
+        if(t == null) return false;
+        if(t.getEffects() == null) return false;
+        if(t.getEffects().length==0) return false;
 
-        Eff.TargetingType type = selectedTargetable.getEffects()[0].targetingType;
+        Eff.TargetingType type = t.getEffects()[0].targetingType;
 
         if(entity == null && type != Eff.TargetingType.EnemyGroup && type != Eff.TargetingType.FriendlyGroup) return false;
 
@@ -326,8 +327,8 @@ public class DungeonScreen extends Screen {
         }
 
 
-        if(selectedTargetable.use()){
-            for(Eff e:selectedTargetable.getEffects()){
+        if(t.use()){
+            for(Eff e:t.getEffects()){
                 tmp.clear();
                 switch(e.targetingType){
                     case EnemySingle:
@@ -336,11 +337,11 @@ public class DungeonScreen extends Screen {
                         entity.hit(e, true);
                         break;
                     case EnemyGroup:
-                        tmp.addAll(monsters);
+                        tmp.addAll(Room.get().getActiveEntities());
                         hitEntities(tmp, e);
                         break;
                     case FriendlyGroup:
-                        tmp.addAll(heroes);
+                        tmp.addAll(Party.get().getActiveEntities());
                         hitEntities(tmp, e);
                         break;
                     case EnemyAndAdjacents:
@@ -355,8 +356,8 @@ public class DungeonScreen extends Screen {
             }
         }
         boolean allUsed = true;
-        for (DiceEntity de : heroes) {
-            if (!de.getDie().getUsed() && !de.isDead() && de.getDie().getActualSide().effects[0].targetingType != Eff.TargetingType.Untargeted) {
+        for (DiceEntity de : Party.get().getActiveEntities()) {
+            if (!de.getDie().getUsed() && de.getDie().getActualSide().effects[0].targetingType != Eff.TargetingType.Untargeted) {
                 allUsed = false;
                 break;
             }
@@ -382,10 +383,7 @@ public class DungeonScreen extends Screen {
     }
 
     private boolean checkEnd() {
-        for(DiceEntity m:monsters){
-            if(!m.isDead()) return false;
-        }
-        return true;
+        return Room.get().getActiveEntities().size == 0;
     }
 
     public Array<DiceEntity> getRandomTargetForEnemy(Side side) {
@@ -395,45 +393,30 @@ public class DungeonScreen extends Screen {
             case EnemySingle:
             case EnemyAndAdjacents:
             case EnemyOnlyAdjacents:
-                targets.add(heroes.random());
-                break;
             case EnemySingleRanged:
-                targets.add(heroes.random());
+                targets.add(Party.get().getRandomActive());
                 break;
             case EnemyGroup:
-                targets.addAll(heroes);
+                targets.addAll(Party.get().getActiveEntities());
                 break;
             case FriendlySingle:
-                targets.add(monsters.random());
+                targets.add(Room.get().getRandomActive());
                 break;
             case FriendlyGroup:
-                targets.addAll(monsters);
+                targets.addAll(Room.get().getActiveEntities());
                 break;
             case Untargeted:
                 break;
         }
         while(targets.contains(null, true)){
-            System.out.println("ah feck");
+            System.err.println("ah feck");
             targets.removeValue(null, true);
         }
         return targets;
     }
 
-
-    public void playerRoll(boolean firstRoll) {
-        if(!Main.getPhase().canRoll()) return;
-        if(firstRoll){
-            rolls = BASE_ROLLS;
-        }
-        rolls --;
-        for(DiceEntity hero:heroes){
-            if(firstRoll) hero.getDie().addToScreen();
-            hero.getDie().roll(firstRoll);
-        }
-    }
-
     public void activateDamage() {
-        Array<DiceEntity> all = getAll();
+        Array<DiceEntity> all = getAllActive();
         for(int i=0;i<all.size;i++){
             DiceEntity de = all.get(i);
             de.activatePotentials();
@@ -465,13 +448,13 @@ public class DungeonScreen extends Screen {
     }
 
     public void closeSpellHolder() {
-        if(selectedTargetable instanceof Spell){
+        if(Party.get().getSelectedTargetable() instanceof Spell){
             deselectTargetable();
         }
     }
 
     public void activateAutoEffects() {
-        for(DiceEntity h:heroes){
+        for(DiceEntity h:Party.get().getActiveEntities()){
             for(Eff e:h.getDie().getActualSide().effects){
                 switch(e.type){
                     case Magic:
@@ -483,7 +466,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void clearTargetingHighlights(){
-        for(DiceEntity de:getAll()){
+        for(DiceEntity de: getAllActive()){
             de.getEntityPanel().setTargetingHighlight(false);
         }
         enemy.setTargetingHighlight(false);
@@ -491,20 +474,21 @@ public class DungeonScreen extends Screen {
     }
 
     public void showTargetingHighlights(){
-        if(selectedTargetable == null || selectedTargetable.getEffects().length == 0) return;
-        Eff.TargetingType tType = selectedTargetable.getEffects()[0].targetingType;
+        Targetable t = Party.get().getSelectedTargetable();
+        if(t == null || t.getEffects().length == 0) return;
+        Eff.TargetingType tType = t.getEffects()[0].targetingType;
         switch (tType){
             case EnemySingle:
             case EnemyAndAdjacents:
             case EnemyOnlyAdjacents:
-                for(DiceEntity m : monsters){
+                for(DiceEntity m : Room.get().getActiveEntities()){
                     if(m.slidOut){
                         m.getEntityPanel().setTargetingHighlight(true);
                     }
                 }
                 break;
             case EnemySingleRanged:
-                for(DiceEntity m : monsters){
+                for(DiceEntity m : Room.get().getActiveEntities()){
                         m.getEntityPanel().setTargetingHighlight(true);
                 }
                 break;
@@ -512,7 +496,7 @@ public class DungeonScreen extends Screen {
                 enemy.setTargetingHighlight(true);
                 break;
             case FriendlySingle:
-                for(DiceEntity h:heroes){
+                for(DiceEntity h:Party.get().getActiveEntities()){
                     h.getEntityPanel().setTargetingHighlight(true);
                 }
                 break;
@@ -525,7 +509,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void removeLeftoverDice() {
-        for(DiceEntity h:heroes){
+        for(DiceEntity h:Party.get().getActiveEntities()){
             if(!h.getDie().getUsed()){
                 h.getDie().use();
             }
@@ -533,7 +517,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void clicked(DiceEntity entity, boolean dieSide) {
-        if(selectedTargetable != null){
+        if(Party.get().getActiveEntities() != null){
             if(target(entity)) return;
         }
 
@@ -575,10 +559,6 @@ public class DungeonScreen extends Screen {
     }
 
     Array<Actor> modalStack = new Array<>();
-
-    public DiceEntity getRandomHero() {
-        return heroes.random();
-    }
 
     public void showLevelupPanel(Hero hero) {
         LevelUpPanel lup = new LevelUpPanel(hero, new HeroType[]{HeroType.Protector, HeroType.Rogue, HeroType.Wizard});

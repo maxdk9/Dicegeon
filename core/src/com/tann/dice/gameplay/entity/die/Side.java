@@ -40,6 +40,8 @@ public class Side {
     public static final Side sword4 = new Side(Images.get("sword4"), new Eff().sword(4));
     public static final Side sword5 = new Side(Images.get("sword5"), new Eff().sword(5));
 
+    public static final Side poison1 = new Side(Images.get("poison"), new Eff().poison(1));
+
     public static final Side magic1 = new Side(Images.get("magic1"), new Eff().magic(1).untargeted());
     public static final Side magic2 = new Side(Images.get("magic2"), new Eff().magic(2).untargeted());
 

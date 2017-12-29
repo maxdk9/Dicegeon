@@ -144,11 +144,8 @@ public class Die implements Targetable{
         }
     }
 
-    public void roll(boolean firstRoll) {
-        if(firstRoll){
-            resetForRoll();
-        }
-        else if(getState()!=DieState.Stopped) return;
+    public void roll() {
+        if (getState()!=DieState.Stopped) return;
         this.lockedSide=-1;
         setState(Rolling);
         undamp();
