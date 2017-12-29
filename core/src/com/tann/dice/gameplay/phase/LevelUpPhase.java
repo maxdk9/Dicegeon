@@ -13,5 +13,6 @@ public class LevelUpPhase extends Phase {
 
     @Override
     public void deactivate() {
+        DungeonScreen.get().friendly.setEntities(Party.get().getEntities());
     }
 }

@@ -51,4 +51,12 @@ public class EntityGroup {
             entity.getDie().roll();
         }
     }
+
+    private static Array<DiceEntity> tmpALl = new Array<>();
+    public static Array<DiceEntity> getAllActive(){
+        tmpALl.clear();
+        tmpALl.addAll(Party.get().getActiveEntities());
+        tmpALl.addAll(Room.get().getActiveEntities());
+        return tmpALl;
+    }
 }

@@ -20,6 +20,7 @@ import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
@@ -45,15 +46,7 @@ public class DungeonScreen extends Screen {
 
     public static final float BOTTOM_BUTTON_HEIGHT = Main.height*.2f;
 
-    private static Array<DiceEntity> tmpALl = new Array<>();
-    public Array<DiceEntity> getAllActive(){
-        tmpALl.clear();
-        tmpALl.addAll(Party.get().getActiveEntities());
-        tmpALl.addAll(Room.get().getActiveEntities());
-        return tmpALl;
-    }
-
-    private SidePanel friendly;
+    public SidePanel friendly;
     private SidePanel enemy;
     public SpellHolder spellHolder;
 
@@ -148,7 +141,7 @@ public class DungeonScreen extends Screen {
         }
         Party.get().setEntities(heroes);
         BulletStuff.reset();
-        BulletStuff.refresh(getAllActive());
+        BulletStuff.refresh(EntityGroup.getAllActive());
         friendly.setEntities(heroes);
         enemy.setEntities(monsters);
 
@@ -248,7 +241,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void cancelEffects(Eff[] effects) {
-        for (DiceEntity de : getAllActive()) {
+        for (DiceEntity de : EntityGroup.getAllActive()) {
             de.removeEffects(effects);
         }
 
@@ -416,7 +409,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void activateDamage() {
-        Array<DiceEntity> all = getAllActive();
+        Array<DiceEntity> all = EntityGroup.getAllActive();
         for(int i=0;i<all.size;i++){
             DiceEntity de = all.get(i);
             de.activatePotentials();
@@ -466,7 +459,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void clearTargetingHighlights(){
-        for(DiceEntity de: getAllActive()){
+        for(DiceEntity de: EntityGroup.getAllActive()){
             de.getEntityPanel().setTargetingHighlight(false);
         }
         enemy.setTargetingHighlight(false);
