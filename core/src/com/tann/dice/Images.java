@@ -8,14 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Images {
-	public static final TextureRegion food = Main.atlas.findRegion("resource/food");
-	public static final TextureRegion food_storage = Main.atlas.findRegion("resource/crate");
-    public static final TextureRegion brain = Main.atlas.findRegion("resource/brain");
-    public static final TextureRegion brainempty = Main.atlas.findRegion("resource/brainempty");
-    public static final TextureRegion brainFilling = Main.atlas.findRegion("resource/brainfilling");
-	public static final TextureRegion wood = Main.atlas.findRegion("resource/wood");
-    public static final TextureRegion morale = Main.atlas.findRegion("resource/morale");
-
 
     public static final TextureRegion spellTab = Main.atlas.findRegion("spellTab");
 
@@ -23,33 +15,14 @@ public class Images {
     public static final TextureRegion spell_shield = Main.atlas_3d.findRegion("dice/face/shield1");
     public static final TextureRegion spell_bow = Main.atlas_3d.findRegion("dice/face/arrow1");
 
-	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");
-	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");
-    public static final TextureRegion skull = Main.atlas.findRegion("resource/skull");
-    public static final TextureRegion skull_red = Main.atlas.findRegion("resource/skullRed");
-    public static final TextureRegion baby = Main.atlas.findRegion("resource/baby");
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
-	public static final TextureRegion refresh = Main.atlas.findRegion("generalIcons/refresh");
-    public static final TextureRegion turn = Main.atlas.findRegion("generalIcons/hourglass");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");
-    public static final TextureRegion hammer = Main.atlas.findRegion("hammer");
-    public static final TextureRegion gem = Main.atlas.findRegion("resource/emerald");
-    public static final TextureRegion dotdotdot = Main.atlas.findRegion("resource/special");
-    public static final TextureRegion lock = Main.atlas.findRegion("lock");
-    public static final TextureRegion sunflower = Main.atlas.findRegion("resource/sunflower");
-
-    //objective
-    public static final TextureRegion obj_village = Main.atlas.findRegion("objective/village");
-    public static final TextureRegion obj_hourglass = Main.atlas.findRegion("objective/hourglass");
-
+    public static final TextureRegion skull = Main.atlas.findRegion("skull");
 
 	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("dice/face/sword1");
-	
 
-	public static final TextureRegion side_skull = Main.atlas_3d.findRegion("dice/face/nothing");
-
-  public static final TextureRegion heart = Main.atlas.findRegion("heart");
-  public static final TextureRegion heart_empty = Main.atlas.findRegion("heartEmpty");
+    public static final TextureRegion heart = Main.atlas.findRegion("heart");
+    public static final TextureRegion heart_empty = Main.atlas.findRegion("heartEmpty");
 
     public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("dice/lapel/0");
     public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");

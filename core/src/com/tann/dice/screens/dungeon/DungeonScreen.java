@@ -327,7 +327,7 @@ public class DungeonScreen extends Screen {
                     case EnemySingle:
                     case EnemySingleRanged:
                     case FriendlySingle:
-                        entity.hit(e, true);
+                        entity.hit(e, false);
                         break;
                     case EnemyGroup:
                         tmp.addAll(Room.get().getActiveEntities());
@@ -371,7 +371,7 @@ public class DungeonScreen extends Screen {
 
     private void hitEntities(Array<DiceEntity> entities, Eff e){
         for(DiceEntity de:entities){
-            de.hit(e, true);
+            de.hit(e, false);
         }
     }
 
@@ -412,7 +412,7 @@ public class DungeonScreen extends Screen {
         Array<DiceEntity> all = EntityGroup.getAllActive();
         for(int i=0;i<all.size;i++){
             DiceEntity de = all.get(i);
-            de.activatePotentials();
+            de.getProfile().action();
         }
     }
 

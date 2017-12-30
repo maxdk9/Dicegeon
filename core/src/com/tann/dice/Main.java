@@ -14,8 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.*;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.gameplay.effect.Eff;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.phase.Phase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
@@ -78,7 +81,6 @@ public class Main extends ApplicationAdapter {
 		stage = new Stage(new ScreenViewport());
 		orthoCam = (OrthographicCamera) stage.getCamera();
 		batch = (SpriteBatch) stage.getBatch();
-
         InputProcessor diceInput = new InputProcessor() {
 
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {

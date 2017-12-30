@@ -32,24 +32,6 @@ public class TextWriter extends Lay {
     private static Map<String, Color> colorMap = new HashMap<>();
 
     public static void setup(){
-        textureMap.put("food", Images.food);
-        textureMap.put("foodstorage", Images.food_storage);
-        textureMap.put("brain", Images.brain);
-        textureMap.put("xptovillager", Images.brain);
-        textureMap.put("wood", Images.wood);
-        textureMap.put("morale", Images.morale);
-        textureMap.put("fate", Images.fate);
-        textureMap.put("dice", Images.roll);
-        textureMap.put("refresh", Images.refresh);
-        textureMap.put("gem", Images.gem);
-        textureMap.put("newvillager", Images.baby);
-        textureMap.put("death", Images.skull);
-        textureMap.put("lose", Images.skull_red);
-
-        textureMap.put("hut", Images.obj_village);
-        textureMap.put("turn", Images.turn);
-        textureMap.put("reroll", Images.roll);
-        textureMap.put("buildtown", Images.obj_village);
         textureMap.put("frill-left", Main.atlas.findRegion("frill-left"));
         textureMap.put("frill-right", Main.atlas.findRegion("frill-right"));
 

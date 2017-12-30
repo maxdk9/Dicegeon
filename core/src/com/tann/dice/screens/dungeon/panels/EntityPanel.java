@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -18,8 +19,10 @@ public class EntityPanel extends Group {
 
     public DiceEntity e;
     boolean holdsDie;
+    DamageProfile profile;
     public EntityPanel(final DiceEntity e) {
         this.e=e;
+        profile = e.getProfile();
        layout();
         setColor(Colours.dark);
 
@@ -109,10 +112,10 @@ public class EntityPanel extends Group {
         float heartSize = 18;
         for(int i=e.getMaxHp()-1;i>=0;i--){
             ImageActor ia;
-            if(i<e.getHp()){
+            if(i<e.getHp()- (e.isPlayer()? 0 : profile.incomingDamage)){
                 ia = new ImageActor(Images.heart, heartSize, heartSize);
                 int damageIndex = (e.getHp()-i);
-                if(e.getIncomingDamage() >= damageIndex){
+                if(profile.incomingDamage >= damageIndex && e.isPlayer()){
                     ia.setColor(Colours.sand);
                 }
                 else{
@@ -170,13 +173,26 @@ public class EntityPanel extends Group {
         Color border = e.getColour();
         Draw.fillActor(batch, this, inner, border,  4);
         super.draw(batch, parentAlpha);
-        int overkill = e.getIncomingDamage() - e.getHp();
+        int overkill = profile.incomingDamage - e.getHp();
         if(overkill>0){
             Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, 0, 0);
         }
         if(targetingHighlight) {
             batch.setColor(Colours.withAlpha(Colours.green_light, (float) (Math.sin(Main.ticks * 6) * .05f + .1f)));
             Draw.fillActor(batch, this);
+        }
+
+        //dang sorry future me, being lazy. My excuse is that this will probably change soon anyway
+        float holderX = holder.getX() + holder.getParent().getX() + holder.getParent().getParent().getX();
+        float holderY = holder.getY() + holder.getParent().getY() + holder.getParent().getParent().getY();
+
+        if(e.getProfile().isGoingToDie() && e.isPlayer()){
+                batch.setColor(Colours.sand);
+                Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
+        }
+        else if(e.isDead() || e.getProfile().isGoingToDie()){
+            batch.setColor(Colours.red);
+            Draw.drawSize(batch, Images.skull,  holderX, holderY, holder.getWidth(), holder.getHeight());
         }
     }
 
