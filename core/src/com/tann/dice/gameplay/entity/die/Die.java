@@ -160,6 +160,7 @@ public class Die implements Targetable{
         addToPhysics();
         undamp();
         used = false;
+        this.state = Stopped;
     }
 
     public void jiggle(){

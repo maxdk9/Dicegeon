@@ -130,7 +130,7 @@ public class DungeonScreen extends Screen {
     public void setup(Array<Monster> monsters){
         Room.get().setEntities(monsters);
         spellHolder.hide();
-        resetMagic();
+        Party.get().resetMagic();
         Array<Hero> heroes = new Array<>();
         for (int i = 0; i < 1; i++) {
             heroes.add(new Hero(Hero.HeroType.Fighter));
@@ -185,7 +185,6 @@ public class DungeonScreen extends Screen {
             final Monster m = (Monster) de;
             if(m.isDead()) continue;
             m.locked=false;
-            m.getDie().resetForRoll();
             addAction(Actions.delay(timer, Actions.run(
                     new Runnable() {
                         @Override
@@ -355,7 +354,7 @@ public class DungeonScreen extends Screen {
                 break;
             }
         }
-        if (getAvaliableMagic()>0){
+        if (Party.get().getAvaliableMagic()>0){
             allUsed = false;
         }
         if (allUsed) {
@@ -413,31 +412,13 @@ public class DungeonScreen extends Screen {
         for(int i=0;i<all.size;i++){
             DiceEntity de = all.get(i);
             de.getProfile().action();
+            de.getEntityPanel().layout();
         }
     }
 
     private void positionExplanel() {
         Explanel.get().setPosition(Explanel.get().getNiceX(true), Explanel.get().getNiceY());
         addActor(Explanel.get());
-    }
-
-
-    private int magic = 0;
-
-    public void addMagic(int add){
-        this.magic += add;
-    }
-
-    public void resetMagic(){
-        this.magic = 0;
-    }
-
-    public int getAvaliableMagic() {
-        return magic;
-    }
-
-    public void spendMagic(int cost) {
-        magic -= cost;
     }
 
     public void closeSpellHolder() {
@@ -451,7 +432,7 @@ public class DungeonScreen extends Screen {
             for(Eff e:h.getDie().getActualSide().effects){
                 switch(e.type){
                     case Magic:
-                        addMagic(e.value);
+                        Party.get().addMagic(e.value);
                         break;
                 }
             }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
 
@@ -56,12 +57,12 @@ public class Spell implements Targetable{
     }
 
     private void activate() {
-        DungeonScreen.get().spendMagic(cost);
+        Party.get().spendMagic(cost);
 
     }
 
     private boolean canUse() {
-        return Main.getPhase().canTarget() && cost <= DungeonScreen.get().getAvaliableMagic();
+        return Main.getPhase().canTarget() && cost <= Party.get().getAvaliableMagic();
     }
 
     @Override

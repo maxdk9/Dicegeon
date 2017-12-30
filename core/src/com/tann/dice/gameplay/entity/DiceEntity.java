@@ -95,7 +95,7 @@ public abstract class DiceEntity {
 
     public void hit(Eff e, boolean instant) {
         getProfile().addEffect(e);
-        if (instant) getProfile().action();
+        if (instant || !isPlayer()) getProfile().action();
         getEntityPanel().layout();
         if(!isPlayer() && profile.isGoingToDie()){
             getDie().removeFromScreen();
@@ -115,10 +115,15 @@ public abstract class DiceEntity {
         }
     }
 
-    private void die() {
-        if (die.getActualSide() != null) {
-            DungeonScreen.get().cancelEffects(die.getActualSide().effects);
+    public void potentialDeath() {
+        if(!isPlayer()){
+            if (die.getActualSide() != null) {
+                DungeonScreen.get().cancelEffects(die.getActualSide().effects);
+            }
         }
+    }
+
+    private void die() {
         die.removeFromScreen();
         getEntityPanel().remove();
         if (targets != null) {
@@ -243,6 +248,10 @@ public abstract class DiceEntity {
         for(Eff e:effects) {
             getProfile().removeEff(e);
         }
+    }
+
+    public int getEffectiveHp() {
+        return getProfile().getEffectiveHp();
     }
 
     public enum EntitySize {

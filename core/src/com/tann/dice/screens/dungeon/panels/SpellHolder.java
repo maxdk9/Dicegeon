@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.*;
@@ -163,7 +164,7 @@ public class SpellHolder extends Group {
         public void draw(Batch batch, float parentAlpha) {
             Draw.draw(batch, tab, getX(), getY());
             if(Main.getPhase().canTarget()){
-                int magic = DungeonScreen.get().getAvaliableMagic();
+                int magic = Party.get().getAvaliableMagic();
                 Fonts.draw(batch, ""+magic, Fonts.fontSmall, Colours.blue_dark, getX(), getY(), getWidth(), getHeight());
             }
             else{

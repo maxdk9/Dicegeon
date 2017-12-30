@@ -5,6 +5,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.die.Die;
 
 public class Party extends EntityGroup{
 
@@ -19,9 +20,28 @@ public class Party extends EntityGroup{
 
     private static Party self;
 
-    public static Party get(){
-        if(self==null) self = new Party();
+
+    public static Party get() {
+        if (self == null) self = new Party();
         return self;
+    }
+
+    private int magic = 0;
+
+    public void addMagic(int add){
+        this.magic += add;
+    }
+
+    public void resetMagic(){
+        this.magic = 0;
+    }
+
+    public int getAvaliableMagic() {
+        return magic;
+    }
+
+    public void spendMagic(int cost) {
+        magic -= cost;
     }
 
     public int getRolls() {
@@ -53,7 +73,18 @@ public class Party extends EntityGroup{
     @Override
     public void roll() {
         if(!Main.getPhase().canRoll()) return;
+        for(DiceEntity de:getActiveEntities()){
+            if(de.getDie().getState() == Die.DieState.Rolling || de.getDie().getState() == Die.DieState.Unlocking){
+                return;
+            }
+        }
         rolls --;
         super.roll();
+    }
+
+    public void actionEffects(){
+        for(DiceEntity de:getActiveEntities()){
+            de.getProfile().action();
+        }
     }
 }

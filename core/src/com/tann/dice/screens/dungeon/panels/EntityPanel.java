@@ -110,12 +110,13 @@ public class EntityPanel extends Group {
 
         float absHeartGap = 2;
         float heartSize = 18;
+        DamageProfile profile = e.getProfile();
         for(int i=e.getMaxHp()-1;i>=0;i--){
             ImageActor ia;
-            if(i<e.getHp()- (e.isPlayer()? 0 : profile.incomingDamage)){
+            if(i < profile.getTopHealth()){
                 ia = new ImageActor(Images.heart, heartSize, heartSize);
                 int damageIndex = (e.getHp()-i);
-                if(profile.incomingDamage >= damageIndex && e.isPlayer()){
+                if(profile.totalIncoming() >= damageIndex){
                     ia.setColor(Colours.sand);
                 }
                 else{
@@ -173,7 +174,7 @@ public class EntityPanel extends Group {
         Color border = e.getColour();
         Draw.fillActor(batch, this, inner, border,  4);
         super.draw(batch, parentAlpha);
-        int overkill = profile.incomingDamage - e.getHp();
+        int overkill = profile.incomingDamage  - Math.min(e.getMaxHp(), e.getHp() + profile.heals) - profile.blockedDamage;
         if(overkill>0){
             Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, 0, 0);
         }
@@ -186,13 +187,12 @@ public class EntityPanel extends Group {
         float holderX = holder.getX() + holder.getParent().getX() + holder.getParent().getParent().getX();
         float holderY = holder.getY() + holder.getParent().getY() + holder.getParent().getParent().getY();
 
-        if(e.getProfile().isGoingToDie() && e.isPlayer()){
-                batch.setColor(Colours.sand);
-                Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
-        }
-        else if(e.isDead() || e.getProfile().isGoingToDie()){
+        if (e.getProfile().isGoingToDie() && e.isPlayer()) {
+            batch.setColor(Colours.sand);
+            Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
+        } else if (e.isDead() || e.getProfile().isGoingToDie()) {
             batch.setColor(Colours.red);
-            Draw.drawSize(batch, Images.skull,  holderX, holderY, holder.getWidth(), holder.getHeight());
+            Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
         }
     }
 
