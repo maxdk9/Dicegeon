@@ -7,37 +7,40 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EntityGroup {
-    private Array<DiceEntity> entities;
-    private Array<DiceEntity> activeEntities;
-    private Array<Buff> buffs;
+    private List<DiceEntity> entities;
+    private List<DiceEntity> activeEntities;
+    private List<Buff> buffs;
 
     public void die(DiceEntity de){
-        activeEntities.removeValue(de, true);
+        activeEntities.remove(de);
     }
 
     public DiceEntity getRandomActive(boolean targetRestriction){
-        if(!targetRestriction) return activeEntities.random();
-        int mod = (int) (Math.random()*activeEntities.size);
-        for(int i=mod;i<mod+activeEntities.size;i++){
-            DiceEntity de = activeEntities.get(i%activeEntities.size);
+        if(!targetRestriction) return activeEntities.get((int)(Math.random()*activeEntities.size()));
+        int mod = (int) (Math.random()*activeEntities.size());
+        for(int i=mod;i<mod+activeEntities.size();i++){
+            DiceEntity de = activeEntities.get(i%activeEntities.size());
             if(de.canBeTargeted()) return de;
         }
         return null;
     }
 
-    public Array<DiceEntity> getEntities() {
+    public List<DiceEntity> getEntities() {
         return entities;
     }
 
-    public Array<DiceEntity> getActiveEntities() {
+    public List<DiceEntity> getActiveEntities() {
         return activeEntities;
     }
 
-    public void setEntities(Array<? extends DiceEntity> intialEntities) {
+    public void setEntities(List<? extends DiceEntity> intialEntities) {
         if(entities == null){
-            entities = new Array<>();
-            activeEntities = new Array<>();
+            entities = new ArrayList<>();
+            activeEntities = new ArrayList<>();
         }
         entities.clear();
         activeEntities.clear();
@@ -59,8 +62,8 @@ public class EntityGroup {
         }
     }
 
-    private static Array<DiceEntity> tmpALl = new Array<>();
-    public static Array<DiceEntity> getAllActive(){
+    private static List<DiceEntity> tmpALl = new ArrayList<>();
+    public static List<DiceEntity> getAllActive(){
         tmpALl.clear();
         tmpALl.addAll(Party.get().getActiveEntities());
         tmpALl.addAll(Room.get().getActiveEntities());
@@ -68,8 +71,8 @@ public class EntityGroup {
     }
 
     public static void activateDamage() {
-        Array<DiceEntity> all = EntityGroup.getAllActive();
-        for(int i=0;i<all.size;i++){
+        List<DiceEntity> all = EntityGroup.getAllActive();
+        for(int i=0;i<all.size();i++){
             DiceEntity de = all.get(i);
             de.getProfile().action();
             de.upkeep();
@@ -77,11 +80,11 @@ public class EntityGroup {
         }
     }
 
-    private static Array<DiceEntity> targetsTmp = new Array<>();
-    public static Array<DiceEntity> getValidTargets(Eff.TargetingType type, boolean player){
+    private static List<DiceEntity> targetsTmp = new ArrayList<>();
+    public static List<DiceEntity> getValidTargets(Eff.TargetingType type, boolean player){
         targetsTmp.clear();
-        Array<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
-        Array<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        List<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
         switch(type){
             case EnemySingle:
             case EnemyOnlyAdjacents:
@@ -109,10 +112,10 @@ public class EntityGroup {
         return targetsTmp;
     }
 
-    public static Array<DiceEntity> getActualTargets(Eff.TargetingType type, boolean player, DiceEntity target){
+    public static List<DiceEntity> getActualTargets(Eff.TargetingType type, boolean player, DiceEntity target){
         targetsTmp.clear();
-        Array<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
-        Array<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        List<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
         switch(type){
             case EnemySingle:
             case EnemySingleRanged:

@@ -20,22 +20,24 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SpellHolder extends Group {
 
     public static final float BAR_HEIGHT = (int)(SpellPanel.SIZE*1.2f);
-    Map<Integer, Array<Spell>> spellMap = new HashMap<>();
+    Map<Integer, List<Spell>> spellMap = new HashMap<>();
     public static int GAP = 10;
 
     public SpellHolder() {
     }
 
     public void addSpell (Spell spell){
-        Array<Spell> spells = spellMap.get(spell.cost);
+        List<Spell> spells = spellMap.get(spell.cost);
         if(spells == null){
-            spells = new Array<>();
+            spells = new ArrayList<>();
             spellMap.put(spell.cost, spells);
         }
         spells.add(spell);
@@ -44,8 +46,8 @@ public class SpellHolder extends Group {
 
     private int getMaxSpells() {
         int result = 0;
-        for (Array a : spellMap.values()) {
-            result = Math.max(result, a.size);
+        for (List a : spellMap.values()) {
+            result = Math.max(result, a.size());
         }
         return result;
     }
@@ -67,7 +69,7 @@ public class SpellHolder extends Group {
         Layoo l = new Layoo(this);
         l.row(1);
         for(int i=0;i<10;i++){
-            Array<Spell> spells = spellMap.get(i);
+            List<Spell> spells = spellMap.get(i);
             if(spells==null) continue;
             SpellCostPanel scp = new SpellCostPanel(i);
             l.actor(scp);

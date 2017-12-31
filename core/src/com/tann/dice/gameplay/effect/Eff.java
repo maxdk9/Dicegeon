@@ -117,16 +117,16 @@ public class Eff {
         return e;
     }
 
-//    public static Array<Eff> copyArray(Array<Eff> effects) {
-//        Array<Eff> results = new Array<>();
+//    public static List<Eff> copyArray(List<Eff> effects) {
+//        List<Eff> results = new ArrayList<>();
 //        for(Eff e:effects){
 //            results.add(e.copy());
 //        }
 //        return results;
 //    }
 //
-//    public static Array<Eff> copyArray(Eff[] effects) {
-//        Array<Eff> results = new Array<>();
+//    public static List<Eff> copyArray(Eff[] effects) {
+//        List<Eff> results = new ArrayList<>();
 //        for(Eff e:effects){
 //            results.add(e.copy());
 //        }

@@ -223,7 +223,7 @@ public class EntityPanel extends Group {
         else{
             buffX = getX() + getWidth() - buffSize - borderSize;
         }
-        for(int i=0;i<e.getBuffs().size;i++){
+        for(int i=0;i<e.getBuffs().size();i++){
             Buff b = e.getBuffs().get(i);
             Draw.drawSize(batch, b.type.image, buffX, getY() + getHeight() - buffSize *(i+1) - borderSize, buffSize, buffSize);
         }

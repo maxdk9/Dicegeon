@@ -19,6 +19,9 @@ import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.util.Colours;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class DiceEntity {
 
@@ -28,9 +31,9 @@ public abstract class DiceEntity {
     protected int maxHp;
     protected int hp;
     protected boolean dead;
-    protected Array<Eff> potentialEffects = new Array<>();
-    protected Array<DiceEntity> targets;
-    Array<Buff> buffs = new Array<>();
+    protected List<Eff> potentialEffects = new ArrayList<>();
+    protected List<DiceEntity> targets;
+    List<Buff> buffs = new ArrayList<>();
     public DiceEntity targeted;
     // rendering vars
     protected Color col;
@@ -81,7 +84,7 @@ public abstract class DiceEntity {
 
     public abstract void locked();
 
-    public void hit(Array<Eff> effects, boolean instant) {
+    public void hit(List<Eff> effects, boolean instant) {
         for (Eff e : effects) {
             hit(e, instant);
         }
@@ -125,12 +128,12 @@ public abstract class DiceEntity {
                 de.untarget(this);
             }
         }
-        BulletStuff.dice.removeValue(getDie(), true);
+        BulletStuff.dice.remove(getDie());
         dead = true;
         if (this instanceof Monster) {
-            Room.get().getActiveEntities().removeValue(this, true);
+            Room.get().getActiveEntities().remove(this);
         } else {
-            Party.get().getActiveEntities().removeValue(this, true);
+            Party.get().getActiveEntities().remove(this);
         }
         if(!isPlayer()){
             if (die.getActualSide() != null) {
@@ -155,18 +158,18 @@ public abstract class DiceEntity {
     }
 
     public void removeBuff(Buff buff) {
-        buffs.removeValue(buff, true);
+        buffs.remove(buff);
     }
 
-    Array<Buff> tempBuffs = new Array<>();
-    public Array<Buff> getBuffs(){
+    List<Buff> tempBuffs = new ArrayList<>();
+    public List<Buff> getBuffs(){
         tempBuffs.clear();
         tempBuffs.addAll(buffs);
         tempBuffs.addAll(getProfile().incomingBuffs);
         return tempBuffs;
     }
 
-    public Array<DiceEntity> getTarget() {
+    public List<DiceEntity> getTarget() {
         return targets;
     }
 
@@ -238,13 +241,13 @@ public abstract class DiceEntity {
         return panel;
     }
 
-    Array<DiceEntity> tmp = new Array<>();
+    List<DiceEntity> tmp = new ArrayList<>();
 
-    public Array<DiceEntity> getAdjacents(boolean includeSelf) {
+    public List<DiceEntity> getAdjacents(boolean includeSelf) {
         tmp.clear();
-        Array<DiceEntity> mine = isPlayer() ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
-        int index = mine.indexOf(this, true);
-        for (int i = Math.max(index - 1, 0); i <= index + 1 && i < mine.size; i++) {
+        List<DiceEntity> mine = isPlayer() ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        int index = mine.indexOf(this);
+        for (int i = Math.max(index - 1, 0); i <= index + 1 && i < mine.size(); i++) {
             if (i == index && !includeSelf) continue;
             tmp.add(mine.get(i));
         }

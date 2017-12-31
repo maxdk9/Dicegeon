@@ -4,6 +4,8 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Tann;
 
+import java.util.List;
+
 public class Room extends EntityGroup {
 
     private static Room self;
@@ -13,11 +15,11 @@ public class Room extends EntityGroup {
     }
 
     public void updateSlids(boolean keepSlids) {
-        Array<DiceEntity> active = getActiveEntities();
-        if(active.size == 0){
+        List<DiceEntity> active = getActiveEntities();
+        if(active.size() == 0){
             return;
         }
-        int amountShouldSlide = (active.size -1)/3+1;
+        int amountShouldSlide = (active.size() -1)/3+1;
         if(!keepSlids){
             for(DiceEntity m: Tann.pickNRandomElements(active, Math.max(amountShouldSlide, 0))){
                 m.slide(true);

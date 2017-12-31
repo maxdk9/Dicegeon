@@ -32,6 +32,9 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BulletStuff {
 	
 	// holy shit tons of boilerplate haha
@@ -43,8 +46,8 @@ public class BulletStuff {
 	static CameraInputController camController;
 	static ModelBatch modelBatch;
 	public static ObjectSet<ModelInstance> instances = new ObjectSet<ModelInstance>();
-	public static Array<CollisionObject> walls = new Array<>();
-	public static Array<Die> dice = new Array<>();
+	public static List<CollisionObject> walls = new ArrayList<>();
+	public static List<Die> dice = new ArrayList<>();
 	static Model model;
 	static btBroadphaseInterface broadphase;
 	static btCollisionConfiguration collisionConfig;
@@ -125,8 +128,8 @@ public class BulletStuff {
 				}
     }
 
-	private static Array<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
-		Array<CollisionObject> results = new Array<>();
+	private static List<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness){
+		List<CollisionObject> results = new ArrayList<>();
 		float trX = x+width/2- srcWidth /2;
 		float trY = y-height/2;
 		float trZ = z+length/2-heightFactor/2;
@@ -178,7 +181,7 @@ public class BulletStuff {
 	    cam.update();
 	}
 	
-	public static void refresh(Array<DiceEntity> villagers) {
+	public static void refresh(List<DiceEntity> villagers) {
 		dice.clear();
 		for(DiceEntity v:villagers){
 			dice.add(v.getDie());

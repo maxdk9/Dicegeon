@@ -2,6 +2,7 @@ package com.tann.dice.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -78,10 +79,10 @@ public class Sounds {
 
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
-		Array<Sound> sounds = new Array<Sound>();
+		Array<Sound> sounds = new Array<>();
 		am.getAll(Sound.class, sounds);
 		for(Sound s:sounds)s.play(0);
-		Array<Music> musics = new Array<Music>();
+		Array<Music> musics = new Array<>();
 		am.getAll(Music.class, musics);
 		for(Music m:musics){
 			m.play();

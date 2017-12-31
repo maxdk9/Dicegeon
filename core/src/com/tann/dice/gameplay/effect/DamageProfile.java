@@ -3,13 +3,16 @@ package com.tann.dice.gameplay.effect;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DamageProfile {
     private int incomingDamage;
     private int blockedDamage;
     private int heals;
-    public Array<Buff> incomingBuffs = new Array<>();
+    public List<Buff> incomingBuffs = new ArrayList<>();
     DiceEntity target;
-    public Array<Eff> effs = new Array<>();
+    public List<Eff> effs = new ArrayList<>();
 
     public DamageProfile(DiceEntity entity){
         this.target = entity;
@@ -53,10 +56,10 @@ public class DamageProfile {
     }
 
     public void removeEff(Eff remove){
-        if(!effs.contains(remove, true)){
+        if(!effs.contains(remove)){
             return;
         }
-        effs.removeValue(remove, true);
+        effs.remove(remove);
         resetValues();
         for(Eff e:effs){
             add(e,false);
@@ -74,7 +77,7 @@ public class DamageProfile {
         target.getEntityPanel().layout();
     }
 
-    Array<Buff> allBuffs = new Array<>();
+    List<Buff> allBuffs = new ArrayList<>();
     public int getIncomingDamage(){
         allBuffs.clear();
         allBuffs.addAll(incomingBuffs);

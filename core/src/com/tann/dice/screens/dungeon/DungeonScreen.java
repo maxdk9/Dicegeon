@@ -31,6 +31,9 @@ import com.tann.dice.screens.dungeon.panels.*;
 import com.tann.dice.screens.dungeon.panels.Explanel.*;
 import com.tann.dice.util.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DungeonScreen extends Screen {
 
     public static DungeonScreen self;
@@ -119,7 +122,7 @@ public class DungeonScreen extends Screen {
 
     public void nextLevel() {
         level ++;
-        Array<Monster> monsters =  new Array<>();
+        List<Monster> monsters =  new ArrayList<>();
         for(int i=0;i<level+2;i++){
             monsters.add(new Monster(Monster.MonsterType.Goblin));
         }
@@ -127,11 +130,11 @@ public class DungeonScreen extends Screen {
         setup(monsters);
     }
 
-    public void setup(Array<Monster> monsters){
+    public void setup(List<Monster> monsters){
         Room.get().setEntities(monsters);
         spellHolder.hide();
         Party.get().resetMagic();
-        Array<Hero> heroes = new Array<>();
+        List<Hero> heroes = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
             heroes.add(new Hero(Hero.HeroType.Fighter));
             heroes.add(new Hero(Hero.HeroType.Fighter));
@@ -176,7 +179,7 @@ public class DungeonScreen extends Screen {
             m.slide(false);
         }
         Room.get().updateSlids(false);
-        Array<DiceEntity> monsters = Room.get().getActiveEntities();
+        List<DiceEntity> monsters = Room.get().getActiveEntities();
         float timer = 0;
         float timerAdd = .1f;
         for (final DiceEntity de : monsters) {
@@ -304,7 +307,7 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    static Array<DiceEntity> tmp = new Array<>();
+    static List<DiceEntity> tmp = new ArrayList<>();
 
     public boolean target(DiceEntity entity) {
         Targetable t = Party.get().getSelectedTargetable();
@@ -315,8 +318,8 @@ public class DungeonScreen extends Screen {
 
 
         Eff.TargetingType type = t.getEffects()[0].targetingType;
-        Array<DiceEntity> valids = EntityGroup.getValidTargets(type, true);
-        if(!valids.contains(entity, true)){
+        List<DiceEntity> valids = EntityGroup.getValidTargets(type, true);
+        if(!valids.contains(entity)){
             return false;
         }
 
@@ -349,20 +352,20 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    private void hitEntities(Array<DiceEntity> entities, Eff e){
-        for(int i=0;i<entities.size;i++){
+    private void hitEntities(List<DiceEntity> entities, Eff e){
+        for(int i=0;i<entities.size();i++){
             entities.get(i).hit(e, false);
         }
     }
 
     private boolean checkEnd() {
-        return Room.get().getActiveEntities().size == 0;
+        return Room.get().getActiveEntities().size() == 0;
     }
 
-    public Array<DiceEntity> getRandomTargetForEnemy(Side side) {
+    public List<DiceEntity> getRandomTargetForEnemy(Side side) {
         Eff e = side.effects[0];
-        Array<DiceEntity> targets = new Array<>();
-        DiceEntity target = EntityGroup.getValidTargets(e.targetingType, false).random();
+        List<DiceEntity> targets = new ArrayList<>();
+        DiceEntity target = Tann.getRandom(EntityGroup.getValidTargets(e.targetingType, false));
         return EntityGroup.getActualTargets(e.targetingType, false, target);
     }
 
@@ -437,16 +440,16 @@ public class DungeonScreen extends Screen {
     }
 
     public void pop(){
-        if(modalStack.size==0) return;
-        modalStack.removeIndex(modalStack.size-1).remove();
+        if(modalStack.size()==0) return;
+        modalStack.remove(modalStack.size()-1).remove();
         InputBlocker.get().remove();
-        if(modalStack.size>0){
+        if(modalStack.size()>0){
             addActor(InputBlocker.get());
-            modalStack.get(modalStack.size-1).toFront();
+            modalStack.get(modalStack.size()-1).toFront();
         }
     }
 
-    Array<Actor> modalStack = new Array<>();
+    List<Actor> modalStack = new ArrayList<>();
 
     public void showLevelupPanel(Hero hero) {
         LevelUpPanel lup = new LevelUpPanel(hero, new HeroType[]{HeroType.Protector, HeroType.Rogue, HeroType.Wizard});

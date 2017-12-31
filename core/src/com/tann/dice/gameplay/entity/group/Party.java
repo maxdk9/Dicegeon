@@ -7,6 +7,8 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
 
+import java.util.List;
+
 public class Party extends EntityGroup{
 
     private static final int BASE_ROLLS = 3;
@@ -15,7 +17,7 @@ public class Party extends EntityGroup{
     private int rolls = BASE_ROLLS;
     private int maxRolls = BASE_ROLLS;
     private boolean rolled;
-    private Array<Spell> spellList;
+    private List<Spell> spellList;
     private Targetable selectedTargetable;
 
     private static Party self;
@@ -60,7 +62,7 @@ public class Party extends EntityGroup{
         this.selectedTargetable = selectedTargetable;
     }
 
-    public Array<Spell> getSpells(){
+    public List<Spell> getSpells(){
         return spellList;
     }
 
