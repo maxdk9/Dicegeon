@@ -1,15 +1,11 @@
 package com.tann.dice.gameplay.effect;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import com.badlogic.gdx.utils.Array;
-import com.tann.dice.Images;
 import com.tann.dice.gameplay.entity.die.Die;
 
 public class Eff {
 
     public enum TargetingType{
-        EnemySingle, EnemySingleRanged, EnemyGroup, FriendlySingle, FriendlyGroup, EnemyAndAdjacents, EnemyOnlyAdjacents,
+        EnemySingle, EnemySingleRanged, EnemyGroup, FriendlySingle, FriendlyGroup, EnemyAndAdjacents, EnemyOnlyAdjacents, Self,
 
         Untargeted;
     }
@@ -22,7 +18,7 @@ public class Eff {
         Shield,
         Magic,
         Heal,
-        Poison,
+        Buff
 
 
         ;
@@ -36,6 +32,7 @@ public class Eff {
 	
 
 	public EffectType type;
+    public Buff.BuffType buffType;
 	public int value;
 	public Die sourceDie;
 
@@ -80,14 +77,15 @@ public class Eff {
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }
     public Eff heal(int amount) { return type(EffectType.Heal, amount); }
-    public Eff poison(int amount) {return type(EffectType.Poison, amount); }
-
+    public Eff poison(int amount) {return type(EffectType.Buff, amount).buffType(Buff.BuffType.dot); }
+    public Eff stealth() {return type(EffectType.Buff, 0).buffType(Buff.BuffType.stealth);}
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);}
     public Eff enemyGroup() { return targetType(TargetingType.EnemyGroup);}
     public Eff untargeted() { return targetType(TargetingType.Untargeted);}
     public Eff ranged() { return targetType(TargetingType.EnemySingleRanged);}
+    public Eff self() { return targetType(TargetingType.Self);}
 
 
     public Eff targetType(TargetingType type){
@@ -104,6 +102,10 @@ public class Eff {
         return this;
     }
 
+    private Eff buffType(Buff.BuffType type){
+        this.buffType = type;
+        return this;
+    }
 
     public Eff copy(){
         Eff e = new Eff();
@@ -111,6 +113,7 @@ public class Eff {
         e.type = type;
         e.value = value;
         e.sourceDie = sourceDie;
+        e.buffType = buffType;
         return e;
     }
 

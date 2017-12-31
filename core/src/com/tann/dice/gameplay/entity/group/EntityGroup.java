@@ -15,8 +15,14 @@ public class EntityGroup {
         activeEntities.removeValue(de, true);
     }
 
-    public DiceEntity getRandomActive(){
-        return activeEntities.random();
+    public DiceEntity getRandomActive(boolean targetRestriction){
+        if(!targetRestriction) return activeEntities.random();
+        int mod = (int) (Math.random()*activeEntities.size);
+        for(int i=mod;i<mod+activeEntities.size;i++){
+            DiceEntity de = activeEntities.get(i%activeEntities.size);
+            if(de.canBeTargeted()) return de;
+        }
+        return null;
     }
 
     public Array<DiceEntity> getEntities() {
@@ -58,5 +64,15 @@ public class EntityGroup {
         tmpALl.addAll(Party.get().getActiveEntities());
         tmpALl.addAll(Room.get().getActiveEntities());
         return tmpALl;
+    }
+
+    public static void activateDamage() {
+        Array<DiceEntity> all = EntityGroup.getAllActive();
+        for(int i=0;i<all.size;i++){
+            DiceEntity de = all.get(i);
+            de.getProfile().action();
+            de.upkeep();
+            de.getEntityPanel().layout();
+        }
     }
 }

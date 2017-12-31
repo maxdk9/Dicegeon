@@ -30,7 +30,7 @@ import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 public class Die implements Targetable{
 
     private static final float MAX_AIRTIME = 2.7f;
-    private static final float INTERP_SPEED = .4f;
+    private static final float INTERP_SPEED = .3f;
 
     public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
 
@@ -51,7 +51,7 @@ public class Die implements Targetable{
     public void slideToPanel(){
         removeFromPhysics();
         physical.transform.getRotation(originalRotation);
-        entity.getEntityPanel().slideAcross();
+        entity.getEntityPanel().lockDie();
     }
 
     public void toggleLock() {
@@ -60,7 +60,7 @@ public class Die implements Targetable{
                 slideToPanel();
                 break;
             case Locked:
-                entity.getEntityPanel().slideAway();
+                entity.getEntityPanel().unlockDie();
                 returnToPlay();
                 break;
         }

@@ -8,7 +8,7 @@ public class LevelUpPhase extends Phase {
 
     @Override
     public void activate() {
-        DungeonScreen.get().showLevelupPanel((Hero) Party.get().getRandomActive());
+        DungeonScreen.get().showLevelupPanel((Hero) Party.get().getRandomActive(false));
     }
 
     @Override

@@ -30,7 +30,7 @@ public abstract class DiceEntity {
     protected boolean dead;
     protected Array<Eff> potentialEffects = new Array<>();
     protected Array<DiceEntity> targets;
-
+    Array<Buff> buffs = new Array<>();
     public DiceEntity targeted;
     // rendering vars
     protected Color col;
@@ -115,17 +115,11 @@ public abstract class DiceEntity {
         }
     }
 
-    public void potentialDeath() {
-        if(!isPlayer()){
-            if (die.getActualSide() != null) {
-                DungeonScreen.get().cancelEffects(die.getActualSide().effects);
-            }
-        }
-    }
-
     private void die() {
         die.removeFromScreen();
-        getEntityPanel().remove();
+        getEntityPanel().setTargetingHighlight(false);
+        slide(false);
+//        getEntityPanel().remove();
         if (targets != null) {
             for (DiceEntity de : targets) {
                 de.untarget(this);
@@ -137,6 +131,12 @@ public abstract class DiceEntity {
             Room.get().getActiveEntities().removeValue(this, true);
         } else {
             Party.get().getActiveEntities().removeValue(this, true);
+        }
+        if(!isPlayer()){
+            if (die.getActualSide() != null) {
+                DungeonScreen.get().cancelEffects(die.getActualSide().effects);
+            }
+            Room.get().updateSlids(true);
         }
     }
 
@@ -150,14 +150,20 @@ public abstract class DiceEntity {
         }
     }
 
-    Array<Buff> buffs = new Array<>();
-
     public void addBuff(Buff buff) {
         buffs.add(buff);
     }
 
     public void removeBuff(Buff buff) {
         buffs.removeValue(buff, true);
+    }
+
+    Array<Buff> tempBuffs = new Array<>();
+    public Array<Buff> getBuffs(){
+        tempBuffs.clear();
+        tempBuffs.addAll(buffs);
+        tempBuffs.addAll(getProfile().incomingBuffs);
+        return tempBuffs;
     }
 
     public Array<DiceEntity> getTarget() {
@@ -220,8 +226,9 @@ public abstract class DiceEntity {
 
     public boolean slidOut;
 
-    public void slideOut() {
-        slidOut = true;
+    public void slide(boolean slid) {
+        slidOut = slid;
+        getEntityPanel().slide(slid);
     }
 
     private DiePanel panel;
@@ -252,6 +259,19 @@ public abstract class DiceEntity {
 
     public int getEffectiveHp() {
         return getProfile().getEffectiveHp();
+    }
+
+    public void upkeep() {
+        for(Buff b:buffs){
+            b.turn();
+        }
+    }
+
+    public boolean canBeTargeted() {
+        for(Buff b:getBuffs()){
+            if(b.type == Buff.BuffType.stealth) return false;
+        }
+        return true;
     }
 
     public enum EntitySize {

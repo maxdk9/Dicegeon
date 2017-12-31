@@ -1,12 +1,13 @@
 package com.tann.dice.gameplay.phase;
 
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 public class DamagePhase extends Phase {
     @Override
     public void activate() {
-        DungeonScreen.get().activateDamage();
+        EntityGroup.activateDamage();
         Main.popPhase();
     }
 

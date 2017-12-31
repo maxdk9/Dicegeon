@@ -1,25 +1,30 @@
 package com.tann.dice.gameplay.effect;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tann.dice.Images;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
 public class Buff {
 
     public enum BuffType{
-        dot
+        dot(Images.poison),
+        stealth(Images.stealth);
+
+        public TextureRegion image;
+        BuffType(TextureRegion image) {
+            this.image = image;
+        }
     }
 
-    BuffType type;
+    public BuffType type;
     int value;
     int turns;
     DiceEntity target;
-    public Buff(BuffType type, int value, int turns){
+    public Buff(DiceEntity target, BuffType type, int value, int turns){
         this.type = type;
         this.value = value;
         this.turns = turns;
-    }
-
-    public void setEntity(DiceEntity e){
-        this.target = e;
+        this.target = target;
     }
 
     public void turn(){

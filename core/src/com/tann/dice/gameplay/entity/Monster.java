@@ -61,12 +61,12 @@ public class Monster extends DiceEntity {
             TextureFlasher tf = new TextureFlasher(getDie().sides.get(0).tr[0]);
             DungeonScreen.get().addActor(tf);
             panel.addActor(tf);
-            tf.setPosition(panel.getWidth()*.7f-tf.getWidth()/2, panel.getHeight()/2-tf.getHeight()/2);
+            tf.setPosition(panel.getWidth()*.35f-tf.getWidth()/2, panel.getHeight()/2-tf.getHeight()/2);
             panel.flash();
         }
 
         EntityPanel ep = getDie().entity.getEntityPanel();
-        getDie().moveTo(Tann.getLocalCoordinates(ep).add(EntityPanel.gap, EntityPanel.gap));
+        ep.lockDie();
         locked = true;
     }
 

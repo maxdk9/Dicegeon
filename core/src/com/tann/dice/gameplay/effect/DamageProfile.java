@@ -4,14 +4,12 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
 public class DamageProfile {
-    public int incomingDamage;
-    public int blockedDamage;
-    public int dotDamage;
-    public int heals;
+    private int incomingDamage;
+    private int blockedDamage;
+    private int heals;
     public Array<Buff> incomingBuffs = new Array<>();
     DiceEntity target;
     public Array<Eff> effs = new Array<>();
-    boolean goingToDie = false;
 
     public DamageProfile(DiceEntity entity){
         this.target = entity;
@@ -26,9 +24,7 @@ public class DamageProfile {
         incomingBuffs.clear();
         incomingDamage = 0;
         blockedDamage = 0;
-        dotDamage = 0;
         heals = 0;
-        goingToDie = false;
     }
 
     public void addEffect(Eff e){
@@ -50,16 +46,10 @@ public class DamageProfile {
             case Heal:
                 heals += e.value;
                 break;
-            case Poison:
-                incomingBuffs.add(new Buff(Buff.BuffType.dot, e.value, -1));
-                dotDamage += e.value;
+            case Buff:
+                incomingBuffs.add(new Buff(target, e.buffType, e.value, -1));
                 break;
         }
-        boolean nowGoingToDie = isGoingToDie();
-        if(!goingToDie && nowGoingToDie){
-            target.potentialDeath();
-        }
-        goingToDie = isGoingToDie();
     }
 
     public void removeEff(Eff remove){
@@ -76,11 +66,25 @@ public class DamageProfile {
 
     public void action(){
         target.heal(heals);
-        target.damage(Math.max(0, incomingDamage - blockedDamage));
+        target.damage(Math.max(0, getIncomingDamage() - blockedDamage));
         for(Buff b: incomingBuffs){
             target.addBuff(b);
         }
         reset();
+        target.getEntityPanel().layout();
+    }
+
+    Array<Buff> allBuffs = new Array<>();
+    public int getIncomingDamage(){
+        allBuffs.clear();
+        allBuffs.addAll(incomingBuffs);
+        allBuffs.addAll(target.getBuffs());
+        for(Buff b:allBuffs){
+            if(b.type == Buff.BuffType.stealth){
+                return 0;
+            }
+        }
+        return incomingDamage;
     }
 
     public boolean isGoingToDie(){
@@ -88,7 +92,7 @@ public class DamageProfile {
     }
 
     public int getEffectiveHp() {
-        return getTopHealth() + blockedDamage - incomingDamage;
+        return getTopHealth() + blockedDamage - getIncomingDamage();
     }
 
     public int getTopHealth() {
@@ -96,6 +100,10 @@ public class DamageProfile {
     }
 
     public int totalIncoming() {
-        return Math.max(0, incomingDamage - blockedDamage);
+        return Math.max(0, getIncomingDamage() - blockedDamage);
+    }
+
+    public int getOverkill() {
+        return getIncomingDamage()  - Math.min(target.getMaxHp(), target.getHp() + heals) - blockedDamage;
     }
 }

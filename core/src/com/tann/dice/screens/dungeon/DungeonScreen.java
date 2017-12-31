@@ -171,14 +171,12 @@ public class DungeonScreen extends Screen {
     }
 
     public void enemyCombat(){
-        enemy.layout(false);
+//        enemy.layout(false);
         for(DiceEntity m:Room.get().getActiveEntities()){
-            m.slidOut = false;
+            m.slide(false);
         }
+        Room.get().updateSlids(false);
         Array<DiceEntity> monsters = Room.get().getActiveEntities();
-        for(DiceEntity m: Tann.pickNRandomElements(monsters, Math.min(monsters.size, 2))){
-            m.getEntityPanel().slideOut();
-        }
         float timer = 0;
         float timerAdd = .1f;
         for (final DiceEntity de : monsters) {
@@ -253,7 +251,26 @@ public class DungeonScreen extends Screen {
             d.toggleLock();
             return;
         }
-
+        Eff first = d.getEffects()[0];
+        if(first.targetingType == Eff.TargetingType.Self){
+            d.entity.hit(d.getEffects(), false);
+            d.use();
+            return;
+        }
+        if(first.targetingType == Eff.TargetingType.Untargeted){
+            for(Eff e:d.getEffects()){
+                switch(e.type){
+                    case Magic:
+                        Party.get().addMagic(e.value);
+                        break;
+                    default:
+                        System.err.println("oh shit you need to implement new untargeted effect");
+                        break;
+                }
+            }
+            d.use();
+            return;
+        }
         targetableClick(d);
     }
 
@@ -349,7 +366,7 @@ public class DungeonScreen extends Screen {
         }
         boolean allUsed = true;
         for (DiceEntity de : Party.get().getActiveEntities()) {
-            if (!de.getDie().getUsed() && de.getDie().getActualSide().effects[0].targetingType != Eff.TargetingType.Untargeted) {
+            if (!de.getDie().getUsed() && de.getDie().getActualSide().effects[0].type != Eff.EffectType.Nothing) {
                 allUsed = false;
                 break;
             }
@@ -386,13 +403,13 @@ public class DungeonScreen extends Screen {
             case EnemyAndAdjacents:
             case EnemyOnlyAdjacents:
             case EnemySingleRanged:
-                targets.add(Party.get().getRandomActive());
+                targets.add(Party.get().getRandomActive(true));
                 break;
             case EnemyGroup:
                 targets.addAll(Party.get().getActiveEntities());
                 break;
             case FriendlySingle:
-                targets.add(Room.get().getRandomActive());
+                targets.add(Room.get().getRandomActive(false));
                 break;
             case FriendlyGroup:
                 targets.addAll(Room.get().getActiveEntities());
@@ -407,15 +424,6 @@ public class DungeonScreen extends Screen {
         return targets;
     }
 
-    public void activateDamage() {
-        Array<DiceEntity> all = EntityGroup.getAllActive();
-        for(int i=0;i<all.size;i++){
-            DiceEntity de = all.get(i);
-            de.getProfile().action();
-            de.getEntityPanel().layout();
-        }
-    }
-
     private void positionExplanel() {
         Explanel.get().setPosition(Explanel.get().getNiceX(true), Explanel.get().getNiceY());
         addActor(Explanel.get());
@@ -428,15 +436,15 @@ public class DungeonScreen extends Screen {
     }
 
     public void activateAutoEffects() {
-        for(DiceEntity h:Party.get().getActiveEntities()){
-            for(Eff e:h.getDie().getActualSide().effects){
-                switch(e.type){
-                    case Magic:
-                        Party.get().addMagic(e.value);
-                        break;
-                }
-            }
-        }
+//        for(DiceEntity h:Party.get().getActiveEntities()){
+//            for(Eff e:h.getDie().getActualSide().effects){
+//                switch(e.type){
+//                    case Magic:
+//                        Party.get().addMagic(e.value);
+//                        break;
+//                }
+//            }
+//        }
     }
 
     public void clearTargetingHighlights(){

@@ -62,7 +62,7 @@ public class LevelUpPanel extends Group{
     HeroType currentChoice;
       public ChoicesPanel(HeroType[] options) {
         panels = new DiePanel[options.length];
-        currentChoice = options[1];
+        currentChoice = options[0];
         this.options = options;
         float rightPanelSize = 100;
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
@@ -20,16 +21,19 @@ public class EntityPanel extends Group {
     public DiceEntity e;
     boolean holdsDie;
     DamageProfile profile;
+    float startX;
+
     public EntityPanel(final DiceEntity e) {
-        this.e=e;
+        this.e = e;
         profile = e.getProfile();
-       layout();
+        layout();
         setColor(Colours.dark);
 
-        addListener(new InputListener(){
+        addListener(new InputListener() {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (e.isDead()) return false;
                 boolean dieSide = isClickOnDie(x);
                 DungeonScreen.get().clicked(EntityPanel.this.e, dieSide && holdsDie);
                 return false;
@@ -37,8 +41,8 @@ public class EntityPanel extends Group {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if(e.getTarget()!=null) {
-                    for(DiceEntity de:e.getTarget()){
+                if (e.getTarget() != null) {
+                    for (DiceEntity de : e.getTarget()) {
                         de.untarget(e);
                     }
                 }
@@ -55,6 +59,10 @@ public class EntityPanel extends Group {
                 super.exit(event, x, y, pointer, toActor);
             }
         });
+    }
+
+    public void lockStartX(){
+        this.startX = getX();
     }
 
     public boolean isClickOnDie(float x){
@@ -111,32 +119,57 @@ public class EntityPanel extends Group {
         float absHeartGap = 2;
         float heartSize = 18;
         DamageProfile profile = e.getProfile();
-        for(int i=e.getMaxHp()-1;i>=0;i--){
+
+        for(int i=0;i<e.getMaxHp();i++){
             ImageActor ia;
-            if(i < profile.getTopHealth()){
+            if(i>=profile.getTopHealth()){
+                ia = new ImageActor(Images.heart_empty, heartSize, heartSize);
+                ia.setColor(Colours.red);
+            }
+            else {
                 ia = new ImageActor(Images.heart, heartSize, heartSize);
-                int damageIndex = (e.getHp()-i);
-                if(profile.totalIncoming() >= damageIndex){
+                if(i>=profile.getTopHealth()-profile.totalIncoming()){
                     ia.setColor(Colours.sand);
                 }
                 else{
                     ia.setColor(Colours.red);
                 }
             }
-            else{
-                ia = new ImageActor(Images.heart_empty, heartSize, heartSize);
-                ia.setColor(Colours.red);
-            }
-
-
             r.actor(ia);
             if(i<e.getMaxHp()-1){
                 r.abs(absHeartGap);
             }
-            if (i == 5){
+            if (i == 4){
                 r.row(1);
             }
         }
+
+//        for(int i=e.getMaxHp()-1;i>=0;i--){
+//            ImageActor ia;
+//            if(i < profile.getTopHealth()){
+//                ia = new ImageActor(Images.heart, heartSize, heartSize);
+//                int damageIndex = (e.getHp()-i);
+//                if(profile.totalIncoming() >= damageIndex){
+//                    ia.setColor(Colours.sand);
+//                }
+//                else{
+//                    ia.setColor(Colours.red);
+//                }
+//            }
+//            else{
+//                ia = new ImageActor(Images.heart_empty, heartSize, heartSize);
+//                ia.setColor(Colours.red);
+//            }
+//
+//
+//            r.actor(ia);
+//            if(i<e.getMaxHp()-1){
+//                r.abs(absHeartGap);
+//            }
+//            if (i == 5){
+//                r.row(1);
+//            }
+//        }
         r.row(1);
         r.layoo();
         Layoo main = new Layoo(this);
@@ -155,11 +188,13 @@ public class EntityPanel extends Group {
         main.layoo();
     }
 
-    public void slideOut(){
-        addAction(Actions.moveBy(-30, 0, .3f, Interpolation.pow2Out));
-        e.slideOut();
+    public void slide(boolean targetable){
+        addAction(Actions.moveTo(startX + (targetable ? -30 : 0), getY(), .3f, Interpolation.pow2Out));
+        if(holdsDie){
+            float addX = getX() - (startX + (targetable ? -30 : 0));
+            e.getDie().moveTo(getDieHolderLocation().add(-addX,0));
+        }
     }
-
 
     @Override
     public void act(float delta) {
@@ -168,16 +203,31 @@ public class EntityPanel extends Group {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
+        float borderSize = 4;
         Color inner = getColor();
         if(e.targeted!=null) inner = Colours.red_dark;
         Color border = e.getColour();
-        Draw.fillActor(batch, this, inner, border,  4);
+        Draw.fillActor(batch, this, inner, border,  borderSize);
         super.draw(batch, parentAlpha);
-        int overkill = profile.incomingDamage  - Math.min(e.getMaxHp(), e.getHp() + profile.heals) - profile.blockedDamage;
+        int overkill = profile.getOverkill();
         if(overkill>0){
             Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, 0, 0);
         }
+
+        batch.setColor(Colours.z_white);
+        float buffX = 0;
+        float buffSize = 20;
+        if(e.isPlayer()){
+            buffX = getX() + borderSize;
+        }
+        else{
+            buffX = getX() + getWidth() - buffSize - borderSize;
+        }
+        for(int i=0;i<e.getBuffs().size;i++){
+            Buff b = e.getBuffs().get(i);
+            Draw.drawSize(batch, b.type.image, buffX, getY() + getHeight() - buffSize *(i+1) - borderSize, buffSize, buffSize);
+        }
+
         if(targetingHighlight) {
             batch.setColor(Colours.withAlpha(Colours.green_light, (float) (Math.sin(Main.ticks * 6) * .05f + .1f)));
             Draw.fillActor(batch, this);
@@ -187,12 +237,18 @@ public class EntityPanel extends Group {
         float holderX = holder.getX() + holder.getParent().getX() + holder.getParent().getParent().getX();
         float holderY = holder.getY() + holder.getParent().getY() + holder.getParent().getParent().getY();
 
-        if (e.getProfile().isGoingToDie() && e.isPlayer()) {
+        if(e.isDead()){
+            batch.setColor(Colours.grey);
+            Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
+        }
+        else if (e.getProfile().isGoingToDie() && e.isPlayer()) {
             batch.setColor(Colours.sand);
             Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
-        } else if (e.isDead() || e.getProfile().isGoingToDie()) {
-            batch.setColor(Colours.red);
-            Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
+        }
+
+        if(e.isDead()){
+            batch.setColor(0,0,0,.5f);
+            Draw.fillActor(batch, this);
         }
     }
 
@@ -200,7 +256,6 @@ public class EntityPanel extends Group {
         setColor(Colours.z_black);
         addAction(Actions.color(Colours.dark, .4f));
     }
-
 
     public Vector2 getDieHolderLocation(){
         return Tann.getLocalCoordinates(holder).add(DieHolder.extraGap, DieHolder.extraGap);
@@ -213,12 +268,12 @@ public class EntityPanel extends Group {
     }
 
 
-    public void slideAcross(){
+    public void lockDie(){
         holdsDie = true;
         e.getDie().moveTo(getDieHolderLocation());
     }
 
-    public void slideAway(){
+    public void unlockDie(){
         holdsDie = false;
     }
 
