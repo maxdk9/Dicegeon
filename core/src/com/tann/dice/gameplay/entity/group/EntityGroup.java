@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity.group;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Buff;
+import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 
@@ -74,5 +75,66 @@ public class EntityGroup {
             de.upkeep();
             de.getEntityPanel().layout();
         }
+    }
+
+    private static Array<DiceEntity> targetsTmp = new Array<>();
+    public static Array<DiceEntity> getValidTargets(Eff.TargetingType type, boolean player){
+        targetsTmp.clear();
+        Array<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        Array<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        switch(type){
+            case EnemySingle:
+            case EnemyOnlyAdjacents:
+            case EnemyAndAdjacents:
+                for(DiceEntity de:enemies){
+                    if(!de.slidOut && player || !de.canBeTargeted()) continue;
+                    targetsTmp.add(de);
+                }
+                break;
+            case EnemySingleRanged:
+                for(DiceEntity de:enemies){
+                    if(!de.canBeTargeted()) continue;
+                    targetsTmp.add(de);
+                }
+                break;
+            case FriendlySingle:
+                targetsTmp.addAll(friends);
+                break;
+            case EnemyGroup:
+            case FriendlyGroup:
+            case Self:
+            case Untargeted:
+                break;
+        }
+        return targetsTmp;
+    }
+
+    public static Array<DiceEntity> getActualTargets(Eff.TargetingType type, boolean player, DiceEntity target){
+        targetsTmp.clear();
+        Array<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        Array<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        switch(type){
+            case EnemySingle:
+            case EnemySingleRanged:
+            case Self:
+            case FriendlySingle:
+                targetsTmp.add(target);
+                break;
+            case EnemyAndAdjacents:
+                targetsTmp.addAll(target.getAdjacents(true));
+                break;
+            case EnemyOnlyAdjacents:
+                targetsTmp.addAll(target.getAdjacents(false));
+                break;
+            case EnemyGroup:
+                targetsTmp.addAll(enemies);
+                break;
+            case FriendlyGroup:
+                targetsTmp.addAll(friends);
+                break;
+            case Untargeted:
+                break;
+        }
+        return targetsTmp;
     }
 }

@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.effect.Eff.EffectType;
-import com.tann.dice.gameplay.phase.TargetingPhase;
 
 public class Side {
 
@@ -34,13 +32,13 @@ public class Side {
     public static final Side shield1 = new Side(Images.get("shield1"), new Eff().shield(1).friendlySingle());
     public static final Side shield2 = new Side(Images.get("shield2"), new Eff().shield(2).friendlySingle());
 
-    public static final Side sword1 = new Side(Images.get("sword1"), new Eff().sword(1));
-    public static final Side sword2 = new Side(Images.get("sword2"), new Eff().sword(2));
-    public static final Side sword3 = new Side(Images.get("sword3"), new Eff().sword(3));
-    public static final Side sword4 = new Side(Images.get("sword4"), new Eff().sword(4));
-    public static final Side sword5 = new Side(Images.get("sword5"), new Eff().sword(5));
+    public static final Side sword1 = new Side(Images.get("sword1"), new Eff().damage(1));
+    public static final Side sword2 = new Side(Images.get("sword2"), new Eff().damage(2));
+    public static final Side sword3 = new Side(Images.get("sword3"), new Eff().damage(3));
+    public static final Side sword4 = new Side(Images.get("sword4"), new Eff().damage(4));
+    public static final Side sword5 = new Side(Images.get("sword5"), new Eff().damage(5));
 
-    public static final Side poison1 = new Side(Images.get("poison"), new Eff().poison(1));
+    public static final Side poison1 = new Side(Images.get("poison"), new Eff().poison(1), new Eff().damage(1));
     public static final Side stealth = new Side(Images.get("stealth"), new Eff().stealth().self());
 
     public static final Side magic1 = new Side(Images.get("magic1"), new Eff().magic(1).untargeted());
@@ -49,8 +47,8 @@ public class Side {
     public static final Side heal2 = new Side(Images.get("heal2"), new Eff().heal(2).friendlySingle());
     public static final Side heal3 = new Side(Images.get("heal3"), new Eff().heal(3).friendlySingle());
 
-    public static final Side cleave1 = new Side(Images.get("cleave1"), new Eff().sword(1).enemyGroup());
-    public static final Side cleave2 = new Side(Images.get("cleave2"), new Eff().sword(2).enemyGroup());
+    public static final Side cleave1 = new Side(Images.get("cleave1"), new Eff().damage(1).enemyGroup());
+    public static final Side cleave2 = new Side(Images.get("cleave2"), new Eff().damage(2).enemyGroup());
 
     public static final Side nothing = new Side(Images.get("nothing"), new Eff().nothing().untargeted());
 

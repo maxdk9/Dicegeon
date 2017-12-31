@@ -14,7 +14,7 @@ public class Eff {
 
     public enum EffectType{
         Nothing,
-        Sword,
+        Damage,
         Shield,
         Magic,
         Heal,
@@ -46,7 +46,7 @@ public class Eff {
         switch(type){
             case Nothing:
                 return "Nothing!";
-            case Sword:
+            case Damage:
                 switch(targetingType){
                     case EnemySingle:
                         return value +" damage to a forward enemy";
@@ -55,7 +55,7 @@ public class Eff {
                     case EnemyGroup:
                         return value +" damage to all enemies";
                 }
-                return "ahh help sword";
+                return "ahh help damage";
             case Shield:
                 switch(targetingType){
                     case FriendlySingle:
@@ -73,7 +73,7 @@ public class Eff {
     }
 
     public Eff nothing() { return type(EffectType.Nothing, -1); }
-    public Eff sword(int amount) { return type(EffectType.Sword, amount); }
+    public Eff damage(int amount) { return type(EffectType.Damage, amount); }
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }
     public Eff heal(int amount) { return type(EffectType.Heal, amount); }

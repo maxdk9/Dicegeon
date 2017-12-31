@@ -7,7 +7,6 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 public class TargetingPhase extends Phase {
     @Override
     public void activate() {
-        DungeonScreen.get().activateAutoEffects();
     }
 
     @Override

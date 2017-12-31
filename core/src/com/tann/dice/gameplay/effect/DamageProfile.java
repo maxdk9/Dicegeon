@@ -37,7 +37,7 @@ public class DamageProfile {
             case Nothing:
             case Magic:
                 break;
-            case Sword:
+            case Damage:
                 incomingDamage += e.value;
                 break;
             case Shield:

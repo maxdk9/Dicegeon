@@ -255,6 +255,7 @@ public class DungeonScreen extends Screen {
         if(first.targetingType == Eff.TargetingType.Self){
             d.entity.hit(d.getEffects(), false);
             d.use();
+            checkAllDiceUsed();
             return;
         }
         if(first.targetingType == Eff.TargetingType.Untargeted){
@@ -312,58 +313,24 @@ public class DungeonScreen extends Screen {
         if(t.getEffects() == null) return false;
         if(t.getEffects().length==0) return false;
 
+
         Eff.TargetingType type = t.getEffects()[0].targetingType;
-
-        if(entity == null && type != Eff.TargetingType.EnemyGroup && type != Eff.TargetingType.FriendlyGroup) return false;
-
-        // validate the targeting
-        switch (type){
-            case EnemySingle:
-                if(!entity.slidOut || entity.isPlayer()) return false;
-                break;
-            case EnemySingleRanged:
-                if(entity.isPlayer()) return false;
-                break;
-            case EnemyGroup:
-            case FriendlyGroup:
-                if(entity!=null) return false;
-                break;
-            case FriendlySingle:
-                if(!entity.isPlayer()) return false;
-                break;
-            case Untargeted:
-                return false;
+        Array<DiceEntity> valids = EntityGroup.getValidTargets(type, true);
+        if(!valids.contains(entity, true)){
+            return false;
         }
-
 
         if(t.use()){
             for(Eff e:t.getEffects()){
-                tmp.clear();
-                switch(e.targetingType){
-                    case EnemySingle:
-                    case EnemySingleRanged:
-                    case FriendlySingle:
-                        entity.hit(e, false);
-                        break;
-                    case EnemyGroup:
-                        tmp.addAll(Room.get().getActiveEntities());
-                        hitEntities(tmp, e);
-                        break;
-                    case FriendlyGroup:
-                        tmp.addAll(Party.get().getActiveEntities());
-                        hitEntities(tmp, e);
-                        break;
-                    case EnemyAndAdjacents:
-                        hitEntities(entity.getAdjacents(true), e);
-                        break;
-                    case EnemyOnlyAdjacents:
-                        hitEntities(entity.getAdjacents(false), e);
-                        break;
-                    case Untargeted:
-                        break;
-                }
+                hitEntities(EntityGroup.getActualTargets(e.targetingType, true, entity), e);
             }
         }
+        deselectTargetable();
+        checkAllDiceUsed();
+        return true;
+    }
+
+    private void checkAllDiceUsed(){
         boolean allUsed = true;
         for (DiceEntity de : Party.get().getActiveEntities()) {
             if (!de.getDie().getUsed() && de.getDie().getActualSide().effects[0].type != Eff.EffectType.Nothing) {
@@ -377,17 +344,14 @@ public class DungeonScreen extends Screen {
         if (allUsed) {
             Main.popPhase();
         }
-        deselectTargetable();
-
         if(checkEnd()){
             nextLevel();
         }
-        return true;
     }
 
     private void hitEntities(Array<DiceEntity> entities, Eff e){
-        for(DiceEntity de:entities){
-            de.hit(e, false);
+        for(int i=0;i<entities.size;i++){
+            entities.get(i).hit(e, false);
         }
     }
 
@@ -398,30 +362,8 @@ public class DungeonScreen extends Screen {
     public Array<DiceEntity> getRandomTargetForEnemy(Side side) {
         Eff e = side.effects[0];
         Array<DiceEntity> targets = new Array<>();
-        switch (e.targetingType){
-            case EnemySingle:
-            case EnemyAndAdjacents:
-            case EnemyOnlyAdjacents:
-            case EnemySingleRanged:
-                targets.add(Party.get().getRandomActive(true));
-                break;
-            case EnemyGroup:
-                targets.addAll(Party.get().getActiveEntities());
-                break;
-            case FriendlySingle:
-                targets.add(Room.get().getRandomActive(false));
-                break;
-            case FriendlyGroup:
-                targets.addAll(Room.get().getActiveEntities());
-                break;
-            case Untargeted:
-                break;
-        }
-        while(targets.contains(null, true)){
-            System.err.println("ah feck");
-            targets.removeValue(null, true);
-        }
-        return targets;
+        DiceEntity target = EntityGroup.getValidTargets(e.targetingType, false).random();
+        return EntityGroup.getActualTargets(e.targetingType, false, target);
     }
 
     private void positionExplanel() {
@@ -435,18 +377,6 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    public void activateAutoEffects() {
-//        for(DiceEntity h:Party.get().getActiveEntities()){
-//            for(Eff e:h.getDie().getActualSide().effects){
-//                switch(e.type){
-//                    case Magic:
-//                        Party.get().addMagic(e.value);
-//                        break;
-//                }
-//            }
-//        }
-    }
-
     public void clearTargetingHighlights(){
         for(DiceEntity de: EntityGroup.getAllActive()){
             de.getEntityPanel().setTargetingHighlight(false);
@@ -455,38 +385,14 @@ public class DungeonScreen extends Screen {
         friendly.setTargetingHighlight(false);
     }
 
+
+
     public void showTargetingHighlights(){
         Targetable t = Party.get().getSelectedTargetable();
         if(t == null || t.getEffects().length == 0) return;
         Eff.TargetingType tType = t.getEffects()[0].targetingType;
-        switch (tType){
-            case EnemySingle:
-            case EnemyAndAdjacents:
-            case EnemyOnlyAdjacents:
-                for(DiceEntity m : Room.get().getActiveEntities()){
-                    if(m.slidOut){
-                        m.getEntityPanel().setTargetingHighlight(true);
-                    }
-                }
-                break;
-            case EnemySingleRanged:
-                for(DiceEntity m : Room.get().getActiveEntities()){
-                        m.getEntityPanel().setTargetingHighlight(true);
-                }
-                break;
-            case EnemyGroup:
-                enemy.setTargetingHighlight(true);
-                break;
-            case FriendlySingle:
-                for(DiceEntity h:Party.get().getActiveEntities()){
-                    h.getEntityPanel().setTargetingHighlight(true);
-                }
-                break;
-            case FriendlyGroup:
-                friendly.setTargetingHighlight(true);
-                break;
-            case Untargeted:
-                break;
+        for(DiceEntity de: EntityGroup.getValidTargets(tType, true)){
+            de.getEntityPanel().setTargetingHighlight(true);
         }
     }
 
