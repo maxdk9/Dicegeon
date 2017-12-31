@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.effect;
 
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
 
 public class Eff {
@@ -18,7 +19,8 @@ public class Eff {
         Shield,
         Magic,
         Heal,
-        Buff
+        Buff,
+        Execute
 
 
         ;
@@ -55,6 +57,8 @@ public class Eff {
                         return value +" damage to any enemy";
                     case EnemyGroup:
                         return value +" damage to all enemies";
+                    case EnemyAndAdjacents:
+                        return value +" damage a forward enemy and both adjacent enemies";
                 }
                 return "ahh help damage";
             case Shield:
@@ -63,12 +67,19 @@ public class Eff {
                         return "Block "+value+" incoming damage from anyone";
                     case FriendlyGroup:
                         return "Block "+value+" incoming damage from everyone";
+                    case Self:
+                        return "Block "+value+" incoming damage from yourself";
                 }
                 return "ahh help shield";
             case Magic:
                 return "Gain "+value+" magic to spend on spells this turn.";
             case Heal:
                 return "Restore "+value+" health to a damaged character";
+            case Execute:
+                return "Kills target if they are on exactly "+value+" hp";
+            case Buff:
+                return buffType.description+(buffDuration==-1?"":" for "+
+                        buffDuration+(buffDuration==1?" turn":"turns"));
         }
         return "yeowch?? "+type;
     }
@@ -78,15 +89,20 @@ public class Eff {
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }
     public Eff heal(int amount) { return type(EffectType.Heal, amount); }
+    public Eff execute(int amount) { return type(EffectType.Execute, amount); }
+
     public Eff poison(int amount) {return type(EffectType.Buff, amount).buffType(Buff.BuffType.dot, -1); }
     public Eff stealth() {return type(EffectType.Buff, 0).buffType(Buff.BuffType.stealth, 1);}
+
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);}
     public Eff enemyGroup() { return targetType(TargetingType.EnemyGroup);}
     public Eff untargeted() { return targetType(TargetingType.Untargeted);}
+    public Eff enemyAndAdjacents() { return targetType(TargetingType.EnemyAndAdjacents);}
     public Eff ranged() { return targetType(TargetingType.EnemySingleRanged);}
     public Eff self() { return targetType(TargetingType.Self);}
+
 
 
     public Eff targetType(TargetingType type){

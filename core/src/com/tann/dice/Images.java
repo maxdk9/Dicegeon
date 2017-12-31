@@ -13,7 +13,7 @@ public class Images {
 
     public static final TextureRegion magic = Main.atlas.findRegion("magic");
     public static final TextureRegion spell_shield = Main.atlas_3d.findRegion("dice/face/shield1");
-    public static final TextureRegion spell_bow = Main.atlas_3d.findRegion("dice/face/arrow1");
+    public static final TextureRegion spell_sword = Main.atlas_3d.findRegion("dice/face/sword1");
 
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");

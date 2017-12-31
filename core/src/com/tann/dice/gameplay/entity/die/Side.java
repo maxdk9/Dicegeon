@@ -38,8 +38,17 @@ public class Side {
     public static final Side sword4 = new Side(Images.get("sword4"), new Eff().damage(4));
     public static final Side sword5 = new Side(Images.get("sword5"), new Eff().damage(5));
 
+    public static final Side arrow1 = new Side(Images.get("arrow1"), new Eff().damage(1).ranged());
+    public static final Side arrow2 = new Side(Images.get("arrow2"), new Eff().damage(2).ranged());
+    public static final Side arrow3 = new Side(Images.get("arrow3"), new Eff().damage(3).ranged());
+
+    public static final Side sword1shield2 = new Side(Images.get("sword1shield2"), new Eff().damage(1), new Eff().shield(2).self());
+    public static final Side sword2shield1 = new Side(Images.get("sword2shield1"), new Eff().damage(2), new Eff().shield(1).self());
+    public static final Side trident = new Side(Images.get("trident"), new Eff().damage(1).enemyAndAdjacents());
+
     public static final Side poison1 = new Side(Images.get("poison"), new Eff().poison(1), new Eff().damage(1));
     public static final Side stealth = new Side(Images.get("stealth"), new Eff().stealth().self());
+    public static final Side snipe = new Side(Images.get("snipe"), new Eff().execute(3).ranged());
 
     public static final Side magic1 = new Side(Images.get("magic1"), new Eff().magic(1).untargeted());
     public static final Side magic2 = new Side(Images.get("magic2"), new Eff().magic(2).untargeted());

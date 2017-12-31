@@ -109,16 +109,19 @@ public class EntityGroup {
         return targetsTmp;
     }
 
-    public static List<DiceEntity> getActualTargets(Eff.TargetingType type, boolean player, DiceEntity target){
+    public static List<DiceEntity> getActualTargets(Eff eff, boolean player, DiceEntity target){
         List<DiceEntity> result = new ArrayList<>();
         List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
         List<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        Eff.TargetingType type = eff.targetingType;
         switch(type){
             case EnemySingle:
             case EnemySingleRanged:
-            case Self:
             case FriendlySingle:
                 result.add(target);
+                break;
+            case Self:
+                result.add(eff.sourceDie.entity);
                 break;
             case EnemyAndAdjacents:
                 result.addAll(target.getAdjacents(true));

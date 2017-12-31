@@ -52,6 +52,10 @@ public class DamageProfile {
             case Buff:
                 incomingBuffs.add(new Buff(target, e.buffType, e.value, e.buffDuration));
                 break;
+            case Execute:
+                if(target.getEffectiveHp() == e.value){
+                    incomingDamage += 100000;
+                }
         }
     }
 

@@ -13,7 +13,7 @@ public class Spell implements Targetable{
     public static final Spell healAll = new Spell("Mass Heal", "Heal 1 to all your characters", Main.atlas.findRegion("spell/healall"), 2, new Eff[]{new Eff().heal(1).friendlyGroup()});
 
     public static final Spell resist = new Spell("Resist", "Block one damage", Images.spell_shield, 1, new Eff[]{new Eff().shield(1).friendlySingle()});
-    public static final Spell dart = new Spell("Dart", "One ranged damage", Images.spell_bow, 1, new Eff[]{new Eff().damage(1).ranged()});
+    public static final Spell dart = new Spell("Slice", "One damage to a forward enemy", Images.spell_sword, 1, new Eff[]{new Eff().damage(1)});
 
     public final String name;
     public final String description;

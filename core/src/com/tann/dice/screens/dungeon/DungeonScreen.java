@@ -325,7 +325,7 @@ public class DungeonScreen extends Screen {
 
         if(t.use()){
             for(Eff e:t.getEffects()){
-                hitEntities(EntityGroup.getActualTargets(e.targetingType, true, entity), e);
+                hitEntities(EntityGroup.getActualTargets(e, true, entity), e);
             }
         }
         deselectTargetable();
@@ -369,7 +369,7 @@ public class DungeonScreen extends Screen {
         if(validTargets.size()> 0){
             target = Tann.getRandom(validTargets);
         }
-        return EntityGroup.getActualTargets(e.targetingType, false, target);
+        return EntityGroup.getActualTargets(e, false, target);
     }
 
     private void positionExplanel() {
@@ -463,7 +463,7 @@ public class DungeonScreen extends Screen {
     List<Actor> modalStack = new ArrayList<>();
 
     public void showLevelupPanel(Hero hero) {
-        LevelUpPanel lup = new LevelUpPanel(hero, new HeroType[]{HeroType.Protector, HeroType.Rogue, HeroType.Wizard});
+        LevelUpPanel lup = new LevelUpPanel(hero, new HeroType[]{HeroType.Ranger, HeroType.Rogue, HeroType.Fencer});
         lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
         addActor(lup);
     }

@@ -7,12 +7,14 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 public class Buff {
 
     public enum BuffType{
-        dot(Images.poison),
-        stealth(Images.stealth);
+        dot(Images.poison, "Deal one damage per turn"),
+        stealth(Images.stealth, "Become immune to damage");
 
         public TextureRegion image;
-        BuffType(TextureRegion image) {
+        public String description;
+        BuffType(TextureRegion image, String description) {
             this.image = image;
+            this.description = description;
         }
     }
 
