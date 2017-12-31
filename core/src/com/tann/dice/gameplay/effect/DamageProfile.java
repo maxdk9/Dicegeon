@@ -50,7 +50,7 @@ public class DamageProfile {
                 heals += e.value;
                 break;
             case Buff:
-                incomingBuffs.add(new Buff(target, e.buffType, e.value, -1));
+                incomingBuffs.add(new Buff(target, e.buffType, e.value, e.buffDuration));
                 break;
         }
     }

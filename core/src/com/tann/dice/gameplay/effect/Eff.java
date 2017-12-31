@@ -33,6 +33,7 @@ public class Eff {
 
 	public EffectType type;
     public Buff.BuffType buffType;
+    public int buffDuration;
 	public int value;
 	public Die sourceDie;
 
@@ -77,8 +78,8 @@ public class Eff {
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }
     public Eff heal(int amount) { return type(EffectType.Heal, amount); }
-    public Eff poison(int amount) {return type(EffectType.Buff, amount).buffType(Buff.BuffType.dot); }
-    public Eff stealth() {return type(EffectType.Buff, 0).buffType(Buff.BuffType.stealth);}
+    public Eff poison(int amount) {return type(EffectType.Buff, amount).buffType(Buff.BuffType.dot, -1); }
+    public Eff stealth() {return type(EffectType.Buff, 0).buffType(Buff.BuffType.stealth, 1);}
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);}
@@ -102,8 +103,9 @@ public class Eff {
         return this;
     }
 
-    private Eff buffType(Buff.BuffType type){
+    private Eff buffType(Buff.BuffType type, int duration){
         this.buffType = type;
+        this.buffDuration = duration;
         return this;
     }
 
@@ -114,24 +116,9 @@ public class Eff {
         e.value = value;
         e.sourceDie = sourceDie;
         e.buffType = buffType;
+        e.buffDuration = buffDuration;
         return e;
     }
-
-//    public static List<Eff> copyArray(List<Eff> effects) {
-//        List<Eff> results = new ArrayList<>();
-//        for(Eff e:effects){
-//            results.add(e.copy());
-//        }
-//        return results;
-//    }
-//
-//    public static List<Eff> copyArray(Eff[] effects) {
-//        List<Eff> results = new ArrayList<>();
-//        for(Eff e:effects){
-//            results.add(e.copy());
-//        }
-//        return results;
-//    }
 
     public Eff invert() {
         this.value = -this.value;

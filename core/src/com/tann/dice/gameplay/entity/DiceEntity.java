@@ -264,8 +264,8 @@ public abstract class DiceEntity {
     }
 
     public void upkeep() {
-        for(Buff b:buffs){
-            b.turn();
+        for(int i=buffs.size()-1; i>=0; i--){
+            buffs.get(i).turn();
         }
     }
 

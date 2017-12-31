@@ -318,7 +318,8 @@ public class DungeonScreen extends Screen {
 
         Eff.TargetingType type = t.getEffects()[0].targetingType;
         List<DiceEntity> valids = EntityGroup.getValidTargets(type, true);
-        if(!valids.contains(entity)){
+        boolean contains = valids.contains(entity);
+        if(!contains && !(entity==null && valids.isEmpty())){
             return false;
         }
 

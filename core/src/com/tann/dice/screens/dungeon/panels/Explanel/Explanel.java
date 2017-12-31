@@ -61,6 +61,21 @@ public class Explanel extends InfoPanel {
 
     public void setup(Spell spell){
         setup(spell.name, spell.description, spell.effects, spell.image, spell.cost);
+        switch(spell.effects[0].targetingType){
+            case EnemyGroup:
+            case FriendlyGroup:
+            case Untargeted:
+                Button confirmButton = new Button(60, 60, Images.tick, Colours.dark, new Runnable() {
+                    @Override
+                    public void run() {
+                        DungeonScreen.get().target(null);
+                    }
+                });
+                confirmButton.setColor(Colours.blue_dark);
+                addActor(confirmButton);
+                confirmButton.setPosition(getWidth()/2-confirmButton.getWidth()/2,  -confirmButton.getHeight() - 20);
+                break;
+        }
     }
 
     public void setup(Side side){
