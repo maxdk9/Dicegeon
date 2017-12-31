@@ -6,13 +6,11 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 
@@ -121,6 +119,9 @@ public class EntityPanel extends Group {
         DamageProfile profile = e.getProfile();
 
         for(int i=0;i<e.getMaxHp();i++){
+            if (i == 5){
+                r.row(1);
+            }
             ImageActor ia;
             if(i>=profile.getTopHealth()){
                 ia = new ImageActor(Images.heart_empty, heartSize, heartSize);
@@ -139,37 +140,8 @@ public class EntityPanel extends Group {
             if(i<e.getMaxHp()-1){
                 r.abs(absHeartGap);
             }
-            if (i == 4){
-                r.row(1);
-            }
         }
 
-//        for(int i=e.getMaxHp()-1;i>=0;i--){
-//            ImageActor ia;
-//            if(i < profile.getTopHealth()){
-//                ia = new ImageActor(Images.heart, heartSize, heartSize);
-//                int damageIndex = (e.getHp()-i);
-//                if(profile.totalIncoming() >= damageIndex){
-//                    ia.setColor(Colours.sand);
-//                }
-//                else{
-//                    ia.setColor(Colours.red);
-//                }
-//            }
-//            else{
-//                ia = new ImageActor(Images.heart_empty, heartSize, heartSize);
-//                ia.setColor(Colours.red);
-//            }
-//
-//
-//            r.actor(ia);
-//            if(i<e.getMaxHp()-1){
-//                r.abs(absHeartGap);
-//            }
-//            if (i == 5){
-//                r.row(1);
-//            }
-//        }
         r.row(1);
         r.layoo();
         Layoo main = new Layoo(this);
@@ -228,8 +200,8 @@ public class EntityPanel extends Group {
             Draw.drawSize(batch, b.type.image, buffX, getY() + getHeight() - buffSize *(i+1) - borderSize, buffSize, buffSize);
         }
 
-        if(targetingHighlight) {
-            batch.setColor(Colours.withAlpha(Colours.green_light, (float) (Math.sin(Main.ticks * 6) * .05f + .1f)));
+        if(possibleTarget || targeted) {
+            batch.setColor(Colours.withAlpha(possibleTarget ? Colours.green_light : Colours.red, (float) (Math.sin(Main.ticks * 6) * .05f + (targeted?.3f:.1f))));
             Draw.fillActor(batch, this);
         }
 
@@ -261,11 +233,11 @@ public class EntityPanel extends Group {
         return Tann.getLocalCoordinates(holder).add(DieHolder.extraGap, DieHolder.extraGap);
     }
 
-    private boolean targetingHighlight;
+    private boolean possibleTarget;
+    private boolean targeted;
 
-    public void setTargetingHighlight(boolean lit) {
-        this.targetingHighlight = lit;
-    }
+    public void setTargeted(boolean lit) {this.targeted = lit; }
+    public void setPossibleTarget(boolean lit) {this.possibleTarget = lit;}
 
 
     public void lockDie(){

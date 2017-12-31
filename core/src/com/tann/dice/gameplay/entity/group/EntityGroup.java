@@ -1,11 +1,8 @@
 package com.tann.dice.gameplay.entity.group;
 
-import com.badlogic.gdx.utils.Array;
-import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Monster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +110,7 @@ public class EntityGroup {
     }
 
     public static List<DiceEntity> getActualTargets(Eff.TargetingType type, boolean player, DiceEntity target){
-        targetsTmp.clear();
+        List<DiceEntity> result = new ArrayList<>();
         List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
         List<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
         switch(type){
@@ -121,23 +118,29 @@ public class EntityGroup {
             case EnemySingleRanged:
             case Self:
             case FriendlySingle:
-                targetsTmp.add(target);
+                result.add(target);
                 break;
             case EnemyAndAdjacents:
-                targetsTmp.addAll(target.getAdjacents(true));
+                result.addAll(target.getAdjacents(true));
                 break;
             case EnemyOnlyAdjacents:
-                targetsTmp.addAll(target.getAdjacents(false));
+                result.addAll(target.getAdjacents(false));
                 break;
             case EnemyGroup:
-                targetsTmp.addAll(enemies);
+                result.addAll(enemies);
                 break;
             case FriendlyGroup:
-                targetsTmp.addAll(friends);
+                result.addAll(friends);
                 break;
             case Untargeted:
                 break;
         }
-        return targetsTmp;
+        return result;
+    }
+
+    public static void clearTargetedHighlights() {
+        for(DiceEntity de : getAllActive()){
+            de.getEntityPanel().setTargeted(false);
+        }
     }
 }

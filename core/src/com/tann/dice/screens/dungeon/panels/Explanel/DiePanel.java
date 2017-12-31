@@ -7,10 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 
-public class DiePanel extends InfoPanel {
+public class DiePanel extends InfoPanel implements OnPop {
     public DiceEntity entity;
     public static float WIDTH = 320, HEIGHT = 230;
     public DiePanel(DiceEntity entity) {
@@ -87,5 +88,10 @@ public class DiePanel extends InfoPanel {
         Draw.fillActor(batch, this, Colours.dark);
 //        Draw.fillActor(batch, this, new Color(0,1,0,.1f));
         super.draw(batch, parentAlpha);
+    }
+
+    @Override
+    public void onPop() {
+        EntityGroup.clearTargetedHighlights();
     }
 }

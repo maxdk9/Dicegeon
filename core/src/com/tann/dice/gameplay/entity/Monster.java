@@ -64,7 +64,6 @@ public class Monster extends DiceEntity {
             tf.setPosition(panel.getWidth()*.35f-tf.getWidth()/2, panel.getHeight()/2-tf.getHeight()/2);
             panel.flash();
         }
-
         EntityPanel ep = getDie().entity.getEntityPanel();
         ep.lockDie();
         locked = true;

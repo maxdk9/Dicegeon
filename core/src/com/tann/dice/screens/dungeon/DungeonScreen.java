@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
@@ -364,8 +363,11 @@ public class DungeonScreen extends Screen {
 
     public List<DiceEntity> getRandomTargetForEnemy(Side side) {
         Eff e = side.effects[0];
-        List<DiceEntity> targets = new ArrayList<>();
-        DiceEntity target = Tann.getRandom(EntityGroup.getValidTargets(e.targetingType, false));
+        DiceEntity target = null;
+        List<DiceEntity> validTargets = EntityGroup.getValidTargets(e.targetingType, false);
+        if(validTargets.size()> 0){
+            target = Tann.getRandom(validTargets);
+        }
         return EntityGroup.getActualTargets(e.targetingType, false, target);
     }
 
@@ -382,7 +384,7 @@ public class DungeonScreen extends Screen {
 
     public void clearTargetingHighlights(){
         for(DiceEntity de: EntityGroup.getAllActive()){
-            de.getEntityPanel().setTargetingHighlight(false);
+            de.getEntityPanel().setPossibleTarget(false);
         }
         enemy.setTargetingHighlight(false);
         friendly.setTargetingHighlight(false);
@@ -395,7 +397,7 @@ public class DungeonScreen extends Screen {
         if(t == null || t.getEffects().length == 0) return;
         Eff.TargetingType tType = t.getEffects()[0].targetingType;
         for(DiceEntity de: EntityGroup.getValidTargets(tType, true)){
-            de.getEntityPanel().setTargetingHighlight(true);
+            de.getEntityPanel().setPossibleTarget(true);
         }
     }
 
@@ -408,27 +410,31 @@ public class DungeonScreen extends Screen {
     }
 
     public void clicked(DiceEntity entity, boolean dieSide) {
-        if(Party.get().getActiveEntities() != null){
-            if(target(entity)) return;
+        if (Party.get().getActiveEntities() != null) {
+            if (target(entity)) return;
         }
 
-        if(entity.isPlayer()){
-            if(dieSide){
+        if (entity.isPlayer()) {
+            if (dieSide) {
                 DungeonScreen.get().click(entity.getDie());
+            } else {
+                showDiePanel(entity);
             }
-           else{
-                showEntityPanel(entity);
-            }
-        }
-        else{
-            showEntityPanel(entity);
+        } else {
+            showDiePanel(entity);
         }
     }
 
-    private void showEntityPanel(DiceEntity entity){
+    private void showDiePanel(DiceEntity entity){
         DiePanel pan = entity.getDiePanel();
+        BorderGroup bg = new BorderGroup(pan);
         push(pan);
         pan.setPosition(pan.getNiceX(false), pan.getNiceY());
+        if(entity.getTarget() != null) {
+            for (DiceEntity de : entity.getTarget()) {
+                de.getEntityPanel().setTargeted(true);
+            }
+        }
     }
 
 
@@ -441,7 +447,11 @@ public class DungeonScreen extends Screen {
 
     public void pop(){
         if(modalStack.size()==0) return;
-        modalStack.remove(modalStack.size()-1).remove();
+        Actor a =modalStack.remove(modalStack.size()-1);
+        a.remove();
+        if(a instanceof OnPop){
+            ((OnPop) a).onPop();
+        }
         InputBlocker.get().remove();
         if(modalStack.size()>0){
             addActor(InputBlocker.get());

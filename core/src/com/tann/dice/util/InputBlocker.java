@@ -44,7 +44,7 @@ public class InputBlocker extends Actor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(0,0,0,.5f);
-        Draw.fillActor(batch, this);
+//        batch.setColor(0,0,0,.5f);
+//        Draw.fillActor(batch, this);
     }
 }

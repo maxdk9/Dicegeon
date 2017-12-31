@@ -231,7 +231,7 @@ public class Main extends ApplicationAdapter {
 	public static void popPhase(Class clazz) {
 		if (!clazz.isInstance(getPhase())) {
 			System.err.println(
-					"Trying to pop a class of type " + clazz.getSimpleName() + " when the phase is "
+					"Trying to onPop a class of type " + clazz.getSimpleName() + " when the phase is "
 							+ getPhase().toString());
 			return;
 		}

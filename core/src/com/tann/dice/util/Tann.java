@@ -27,7 +27,7 @@ public class Tann {
         return result;
     }
 
-    public static DiceEntity getRandom(List<DiceEntity> validTargets) {
-        return validTargets.get((int)Math.random()*validTargets.size());
+    public static <T> T getRandom(List<T> list){
+        return list.get((int)(Math.random()*list.size()));
     }
 }

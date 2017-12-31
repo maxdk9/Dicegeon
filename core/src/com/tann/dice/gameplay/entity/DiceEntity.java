@@ -3,7 +3,6 @@ package com.tann.dice.gameplay.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
@@ -120,7 +119,7 @@ public abstract class DiceEntity {
 
     private void die() {
         die.removeFromScreen();
-        getEntityPanel().setTargetingHighlight(false);
+        getEntityPanel().setPossibleTarget(false);
         slide(false);
 //        getEntityPanel().remove();
         if (targets != null) {
