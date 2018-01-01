@@ -102,8 +102,8 @@ public class DungeonScreen extends Screen {
         rollButton.setSquare();
         rollButton.setPosition(0, 0);
 
-        Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f, Images.tick, Colours.dark,
-                new Runnable() {
+        Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f,
+                Images.tick, Colours.dark, new Runnable() {
                     @Override
                     public void run() {
                         confirmDice();
@@ -117,15 +117,36 @@ public class DungeonScreen extends Screen {
 
 
 
-    int level;
+    int level=3;
 
     public void nextLevel() {
-        level ++;
         List<Monster> monsters =  new ArrayList<>();
-        for(int i=0;i<level+2;i++){
-            monsters.add(new Monster(Monster.MonsterType.Goblin));
+        level ++;
+        switch(level){
+            case 1:
+                monsters.add(new Monster(Monster.MonsterType.Ogre));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                break;
+            case 2:
+                monsters.add(new Monster(Monster.MonsterType.Archer));
+                monsters.add(new Monster(Monster.MonsterType.Archer));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                break;
+            case 3:
+                monsters.add(new Monster(Monster.MonsterType.Serpent));
+                monsters.add(new Monster(Monster.MonsterType.Serpent));
+                break;
+            case 4:
+                monsters.add(new Monster(Monster.MonsterType.Dragon));
+                monsters.add(new Monster(Monster.MonsterType.Archer));
+                monsters.add(new Monster(Monster.MonsterType.Archer));
+                break;
         }
-        monsters.add(new Monster(Monster.MonsterType.Ogre));
         setup(monsters);
     }
 

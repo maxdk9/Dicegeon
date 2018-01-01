@@ -78,28 +78,39 @@ public class EntityPanel extends Group {
     public void layout(){
         clearChildren();
         // probably need to do this eventually
-        switch(e.getSize()){
-            case Regular:
-                break;
-            case Big:
-                break;
-        }
+        boolean huge = e.getSize() == DiceEntity.EntitySize.Huge;
 
         float diceHoleSize = e.getDie().get2DSize() + DieHolder.extraGap*2;
         float gap = 10;
         float height = gap*2+diceHoleSize;
+        if(huge){
+            height = gap * 3 + diceHoleSize + 120;
+        }
         setSize(WIDTH, height);
 
         Group dieGroup = new Group(){
             @Override
             public void draw(Batch batch, float parentAlpha) {
+                Draw.fillActor(batch, this);
                 super.draw(batch, parentAlpha);
             }
         };
         dieGroup.setSize(diceHoleSize, diceHoleSize);
         addActor(dieGroup);
-        Group heartGroup = new Group();
-        heartGroup.setSize(getWidth()-dieGroup.getWidth()-gap*3, getHeight());
+        Group heartGroup = new Group(){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                super.draw(batch, parentAlpha);
+            }
+        };
+        float heartWidth = getWidth()-dieGroup.getWidth()-gap*3;
+        float heartHeight = getHeight();
+        if(huge){
+            heartWidth = getWidth();
+            heartHeight = getHeight() - dieGroup.getHeight() - 40;
+        }
+
+        heartGroup.setSize(heartWidth, heartHeight);
         addActor(heartGroup);
 
 
@@ -112,14 +123,13 @@ public class EntityPanel extends Group {
         TextWriter tw = new TextWriter(e.getName(), Fonts.fontSmall);
         r.row(1);
         r.actor(tw);
-        r.row(1);
 
         float absHeartGap = 2;
         float heartSize = 18;
         DamageProfile profile = e.getProfile();
-
+        if(huge)r.row(2);
         for(int i=0;i<e.getMaxHp();i++){
-            if (i == 5){
+            if (i % (huge?10:5)==0){
                 r.row(1);
             }
             ImageActor ia;
@@ -145,18 +155,34 @@ public class EntityPanel extends Group {
         r.row(1);
         r.layoo();
         Layoo main = new Layoo(this);
-        main.gap(1);
+        if(huge){
+            main.row(1);
+        }
+        else{
+            main.gap(1);
+        }
         if(e.isPlayer()){
             main.actor(heartGroup);
             main.gap(1);
             main.actor(dieGroup);
         }
         else{
+
             main.actor(dieGroup);
-            main.gap(1);
+            if(huge){
+                main.row(1);
+            }
+            else{
+                main.gap(1);
+            }
             main.actor(heartGroup);
         }
-        main.gap(1);
+        if(huge){
+            main.row(1);
+        }
+        else{
+            main.gap(1);
+        }
         main.layoo();
     }
 

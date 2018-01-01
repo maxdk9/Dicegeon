@@ -244,7 +244,8 @@ public class Die implements Targetable{
         float r1 = (rot + Maths.factor(rotRand))*Maths.mult();
         float r2 = (rot + Maths.factor(rotRand))*Maths.mult();
         float r3 = (rot + Maths.factor(rotRand))*Maths.mult();
-        applyForces(x, y, z, r1, r2, r3);
+        float mult = getForceMultiplier();
+        applyForces(x*mult, y*mult, z*mult, r1*mult, r2*mult, r3*mult);
     }
 
     private void applyForces(float x, float y, float z, float r1, float r2, float r3){
@@ -496,7 +497,7 @@ public class Die implements Targetable{
         Model model = mb.end();
 
         CollisionObject co = new CollisionObject(model, "dieIndex", new btBoxShape(new Vector3(DIE_SIZE, DIE_SIZE, DIE_SIZE)),
-                BulletStuff.mass);
+                getMass());
         physical = co;
         randomiseStart();
         co.body.setCollisionFlags(
@@ -509,6 +510,30 @@ public class Die implements Targetable{
         dieIndex = dieIndex + 1;
         co.body.userData=this;
         physical.userData = this;
+    }
+
+    public float getMass() {
+        switch(entity.getSize()){
+            case Small:
+            case Regular:
+            case Big:
+                return 1;
+            case Huge:
+                return 2;
+        }
+        return 1;
+    }
+
+    public float getForceMultiplier(){
+        switch(entity.getSize()){
+            case Small:
+            case Regular:
+            case Big:
+                return 1;
+            case Huge:
+                return 3;
+        }
+        return 1;
     }
 
     public void dispose() {

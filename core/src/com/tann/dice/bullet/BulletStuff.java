@@ -188,8 +188,6 @@ public class BulletStuff {
 		}
 	}
 	
-	public static final int mass = 1;
-
 	public static void render() {
         camController.update();
 		modelBatch.begin(cam);

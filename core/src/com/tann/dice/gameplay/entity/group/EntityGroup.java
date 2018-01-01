@@ -69,7 +69,7 @@ public class EntityGroup {
 
     public static void activateDamage() {
         List<DiceEntity> all = EntityGroup.getAllActive();
-        for(int i=0;i<all.size();i++){
+        for(int i=all.size()-1;i>=0;i--){
             DiceEntity de = all.get(i);
             de.getProfile().action();
             de.upkeep();

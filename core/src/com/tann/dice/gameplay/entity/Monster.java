@@ -17,7 +17,7 @@ public class Monster extends DiceEntity {
     public Monster(MonsterType type) {
         super(type.sides, type.toString(), type.size);
         this.type=type;
-        setMaxHp(type.minHp + (int)(Math.random()*(type.maxHp-type.minHp+1)));
+        setMaxHp(type.hp);
     }
 
     @Override
@@ -27,19 +27,25 @@ public class Monster extends DiceEntity {
 
     public enum MonsterType{
 
-        Goblin(4, 5, EntitySize.Regular, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
-        Ogre(8, 9, EntitySize.Big, Side.cleave1, Side.cleave1, Side.sword3, Side.sword4, Side.sword4, Side.sword5);
+        Goblin(5, EntitySize.Regular, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
+        Ogre(8, EntitySize.Big, Side.cleave1, Side.cleave1, Side.sword3, Side.sword4, Side.sword4, Side.sword5),
+        Archer(3, EntitySize.Small, Side.arrow2, Side.arrow2, Side.arrow2, Side.arrow2, Side.arrow3, Side.arrow3),
+        Serpent(8, EntitySize.Big, Side.trident2, Side.trident2, Side.sword3, Side.sword3, Side.poison1, Side.poison1),
+        Dragon(25, EntitySize.Huge, Side.cleave2, Side.cleave2, Side.sword4, Side.sword4, Side.poison2, Side.poison2);
+
+
+
+        ;
 
         public Side[] sides;
         public TextureRegion lapel;
-        public int minHp, maxHp;
+        int hp;
         public EntitySize size;
-        MonsterType(int minHp, int maxHp, EntitySize size, Side... sides){
+        MonsterType(int hp, EntitySize size, Side... sides){
             if(sides.length!=6){
                 System.err.println("side error making "+this);
             }
-            this.minHp = minHp;
-            this.maxHp = maxHp;
+            this.hp = hp;
             this.lapel = Images.lapel0;
             this.sides=sides;
             this.size = size;
