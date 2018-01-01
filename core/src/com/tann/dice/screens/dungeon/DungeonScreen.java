@@ -1,6 +1,7 @@
 package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -55,6 +56,8 @@ public class DungeonScreen extends Screen {
     private DungeonScreen() {
     }
 
+    Button rollButton;
+    TextButton confirmButton;
     private void init(){
 
         spellHolder = new SpellHolder();
@@ -82,7 +85,7 @@ public class DungeonScreen extends Screen {
         };
         addActor(bulletActor);
 
-        Button rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
+        rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
                 new Runnable() {
                     @Override
                     public void run() {
@@ -100,24 +103,33 @@ public class DungeonScreen extends Screen {
         };
         addActor(rollButton);
         rollButton.setSquare();
-        rollButton.setPosition(0, 0);
-
-        Button confirmButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .8f,
-                Images.tick, Colours.dark, new Runnable() {
+        rollButton.setPosition(-rollButton.getWidth(), 0);
+        confirmButton = new TextButton(SidePanel.width, BOTTOM_BUTTON_HEIGHT, "Confirm Dice");
+        confirmButton.setRunnable(new Runnable() {
                     @Override
                     public void run() {
                         confirmDice();
                     }
                 });
+        confirmButton.setFont(Fonts.font);
         confirmButton.setColor(Colours.green_light);
         addActor(confirmButton);
-        confirmButton.setSquare();
-        confirmButton.setPosition(Main.width-confirmButton.getWidth(), 0);
+        confirmButton.setPosition(getWidth(), 0);
     }
 
+    public void slideRollButton(boolean in){
+        rollButton.addAction(Actions.moveTo(in?0:-rollButton.getWidth(), 0, .3f, Interpolation.pow2Out));
+    }
 
+    public void slideConfirmButton(boolean in){
+        confirmButton.addAction(Actions.moveTo(in?getWidth()-confirmButton.getWidth(): getWidth(), 0, .3f, Interpolation.pow2Out));
+    }
 
-    int level=3;
+    public void setConfirmText(String s) {
+        confirmButton.setText(s);
+    }
+
+    int level=0;
 
     public void nextLevel() {
         List<Monster> monsters =  new ArrayList<>();
@@ -488,4 +500,5 @@ public class DungeonScreen extends Screen {
         lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
         addActor(lup);
     }
+
 }

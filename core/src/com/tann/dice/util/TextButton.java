@@ -2,6 +2,7 @@ package com.tann.dice.util;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,9 +11,15 @@ import com.tann.dice.Main;
 
 public class TextButton extends Group{
     String text;
+    BitmapFont font = Fonts.fontTiny;
+    boolean highlight;
     public TextButton(float width, float height, String text) {
-        this.text=text;
+        setText(text);
         setSize(width, height);
+    }
+
+    public void setText(String text){
+        this.text = text;
     }
 
     public void setRunnable(final Runnable runnable){
@@ -25,13 +32,11 @@ public class TextButton extends Group{
 
                 @Override
                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    background = Colours.fate_light;
                     super.enter(event, x, y, pointer, fromActor);
                 }
 
                 @Override
                 public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                    background = Colours.dark;
                     super.exit(event, x, y, pointer, toActor);
                 }
             }
@@ -47,6 +52,10 @@ public class TextButton extends Group{
         int BORDER = (int)(Main.h(.4f));
         super.draw(batch, parentAlpha);
         Draw.fillActor(batch, this, background, Colours.brown_dark, BORDER);
-        Fonts.draw(batch, text, Fonts.fontTiny, Colours.light, getX(), getY(), getWidth(), getHeight());
+        Fonts.draw(batch, text, font, Colours.light, getX(), getY(), getWidth(), getHeight());
+    }
+
+    public void setFont(BitmapFont font) {
+        this.font = font;
     }
 }

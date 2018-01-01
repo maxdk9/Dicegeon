@@ -13,6 +13,9 @@ public class PlayerRollingPhase extends Phase {
     @Override
     public void activate() {
         Party.get().firstRoll();
+        DungeonScreen.get().slideConfirmButton(true);
+        DungeonScreen.get().slideRollButton(true);
+        DungeonScreen.get().setConfirmText("Confirm Dice");
     }
 
     @Override
