@@ -165,12 +165,13 @@ public class SpellHolder extends Group {
         @Override
         public void draw(Batch batch, float parentAlpha) {
             Draw.draw(batch, tab, getX(), getY());
+            float size = getWidth()*.7f;
             if(Main.getPhase().canTarget()){
                 int magic = Party.get().getAvaliableMagic();
-                Fonts.draw(batch, ""+magic, Fonts.fontSmall, Colours.blue_dark, getX(), getY(), getWidth(), getHeight());
+                Draw.drawSizeCentered(batch, Images.magicEmpty, getX() + getWidth()/2, getY() + getHeight()/2, size, size);
+                Fonts.draw(batch, ""+magic, Fonts.fontSmall, Colours.light, getX(), getY(), getWidth(), getHeight());
             }
             else{
-                float size = getWidth()*.7f;
                 Draw.drawSizeCentered(batch, Images.magic, getX() + getWidth()/2, getY() + getHeight()/2, size, size);
             }
             super.draw(batch, parentAlpha);
