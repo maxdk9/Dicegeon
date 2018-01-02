@@ -23,15 +23,6 @@ public class SidePanel extends Group {
   public SidePanel(boolean friendly) {
     setSize(width, height);
     setPosition(friendly?0:Main.width-width, DungeonScreen.BOTTOM_BUTTON_HEIGHT);
-    addListener(new InputListener(){
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            super.touchDown(event, x, y, pointer, button);
-            boolean targeted = DungeonScreen.get().target(null);
-            if(targeted) event.stop();
-            return true;
-        }
-    });
   }
 
   public void layout(boolean slide){

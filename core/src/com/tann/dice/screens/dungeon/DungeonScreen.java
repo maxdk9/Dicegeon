@@ -279,11 +279,14 @@ public class DungeonScreen extends Screen {
 
     }
 
-    public void click(Die d) {
+    public void click(Die d, boolean fromPhysics) {
         if(d.entity instanceof Monster) return;
         if(d.getSide()==-1) return;
         if(Main.getPhase().canRoll()){
             d.toggleLock();
+            return;
+        }
+        if(fromPhysics){
             return;
         }
         Eff first = d.getEffects()[0];
@@ -450,7 +453,7 @@ public class DungeonScreen extends Screen {
 
         if (entity.isPlayer()) {
             if (dieSide) {
-                DungeonScreen.get().click(entity.getDie());
+                DungeonScreen.get().click(entity.getDie(), false);
             } else {
                 showDiePanel(entity);
             }

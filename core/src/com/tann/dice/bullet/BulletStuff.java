@@ -248,7 +248,7 @@ public class BulletStuff {
 	public static boolean click(float x, float y, int button) {
 		Die d = getClickedDie((int) x, Gdx.graphics.getHeight() - (int) y);
 		if (d != null) {
-			DungeonScreen.get().click(d);
+			DungeonScreen.get().click(d, true);
 			return true;
 		}
 		return false;
