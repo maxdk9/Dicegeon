@@ -23,7 +23,7 @@ public class SpellPanel extends Actor{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 DungeonScreen.get().click(spell);
-                return super.touchDown(event, x, y, pointer, button);
+                return true;
             }
         });
     }

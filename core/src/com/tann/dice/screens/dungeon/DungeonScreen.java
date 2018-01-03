@@ -335,6 +335,8 @@ public class DungeonScreen extends Screen {
                                 System.out.println("adding magic");
                                 Party.get().addMagic(e.value);
                                 break;
+                            case Nothing:
+                                break;
                             default:
                                 System.err.println("oh shit you need to implement new untargeted effect");
                                 break;
@@ -350,6 +352,11 @@ public class DungeonScreen extends Screen {
     }
 
     private void targetableClick(Targetable t){
+        if(!Main.getPhase().canTarget()){
+            Explanel.get().setup(t, false);
+            push(Explanel.get(), true, true);
+            return;
+        }
         for(DiceEntity de:Party.get().getActiveEntities()){
             de.setShaderState(DieShader.DieShaderState.Nothing);
         }
@@ -360,9 +367,9 @@ public class DungeonScreen extends Screen {
         deselectTargetable();
         Party.get().setSelectedTargetable(t);
         t.select();
-        Explanel.get().setup(t);
-        positionExplanel();
         showTargetingHighlights();
+        Explanel.get().setup(t, true);
+        positionExplanel();
     }
 
     private void deselectTargetable(){

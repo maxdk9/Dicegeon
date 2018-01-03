@@ -27,6 +27,7 @@ public class Explanel extends InfoPanel {
     Eff[] effects;
     TextureRegion image;
     Integer cost;
+    boolean usable;
 
     private static Explanel self;
     public static Explanel get(){
@@ -54,27 +55,30 @@ public class Explanel extends InfoPanel {
         layout();
     }
 
-    public void setup(Targetable targetable){
+    public void setup(Targetable targetable, boolean usable){
+        this.usable = usable;
         if(targetable instanceof Spell) setup((Spell) targetable);
         else if(targetable instanceof Die) setup(((Die) targetable).getActualSide());
     }
 
     public void setup(Spell spell){
         setup(spell.name, spell.description, spell.effects, spell.image, spell.cost);
-        switch(spell.effects[0].targetingType){
-            case EnemyGroup:
-            case FriendlyGroup:
-            case Untargeted:
-                Button confirmButton = new Button(60, 60, Images.tick, Colours.dark, new Runnable() {
-                    @Override
-                    public void run() {
-                        DungeonScreen.get().target(null);
-                    }
-                });
-                confirmButton.setColor(Colours.blue_dark);
-                addActor(confirmButton);
-                confirmButton.setPosition(getWidth()/2-confirmButton.getWidth()/2,  -confirmButton.getHeight() - 20);
-                break;
+        if(usable) {
+            switch (spell.effects[0].targetingType) {
+                case EnemyGroup:
+                case FriendlyGroup:
+                case Untargeted:
+                    Button confirmButton = new Button(60, 60, Images.tick, Colours.dark, new Runnable() {
+                        @Override
+                        public void run() {
+                            DungeonScreen.get().target(null);
+                        }
+                    });
+                    confirmButton.setColor(Colours.blue_dark);
+                    addActor(confirmButton);
+                    confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 20);
+                    break;
+            }
         }
     }
 
