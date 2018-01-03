@@ -49,10 +49,6 @@ public class SidePanel extends Group {
     batch.setColor(Colours.double_dark);
     Draw.fillActor(batch,this);
     super.draw(batch, parentAlpha);
-    if(targetingHighlight) {
-        batch.setColor(Colours.withAlpha(Colours.green_light, (float) (Math.sin(Main.ticks * 6) * .05f + .1f)));
-        Draw.fillActor(batch, this);
-    }
   }
 
 
@@ -63,9 +59,5 @@ public class SidePanel extends Group {
   }
 
 
-  private boolean targetingHighlight;
-    public void setTargetingHighlight(boolean lit) {
-        this.targetingHighlight = lit;
-    }
 
 }

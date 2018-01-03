@@ -29,7 +29,8 @@ import java.util.List;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1280, height = 720;
-	public static String version = "0.1";
+    public static String version = "0.1";
+    public static String versionName = "v"+version;
 	SpriteBatch batch;
 	public Stage stage;
 	public OrthographicCamera orthoCam;
@@ -133,19 +134,15 @@ public class Main extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
 		stage.draw();
+		batch.begin();
 		drawVersion();
 		if (Main.showFPS) {
-			batch.begin();
-			batch.setColor(Colours.light);
-//			drawFPS(batch);
-			batch.end();
+			drawFPS();
 		}
-		if(Main.showFPS){
-//			updateFPS(System.currentTimeMillis()-startTime);
-		}
+		batch.end();
 	}
 
-	public static float tickMult=1;
+    public static float tickMult=1;
 	public void update(float delta) {
 
 		getPhase().checkIfDone();
@@ -193,11 +190,14 @@ public class Main extends ApplicationAdapter {
 	}
 
 	private void drawVersion() {
-		batch.begin();
 		Fonts.fontSmall.setColor(Colours.blue_dark);
-		Fonts.fontSmall.draw(batch, version, 0, Fonts.fontSmall.getLineHeight());
-		batch.end();
+		Fonts.fontSmall.draw(batch, versionName, 0, Fonts.fontSmall.getLineHeight());
 	}
+
+    private void drawFPS() {
+        Fonts.fontSmall.setColor(Colours.blue_dark);
+        Fonts.fontSmall.draw(batch, Gdx.graphics.getFramesPerSecond()+"fps", 0, Fonts.fontSmall.getLineHeight()*2);
+    }
 
 	public static float w(float factor) {
 		return Main.width / 100f * factor;

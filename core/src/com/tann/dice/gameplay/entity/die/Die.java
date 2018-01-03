@@ -154,7 +154,7 @@ public class Die implements Targetable{
         undamp();
         timeInAir=0;
         physical.body.clearForces();
-        randomise(12, 3, 0, 8, 1, 0);
+        randomise(13, 3, 3, 6, 1.3f, 0);
     }
 
     public void resetForRoll() {

@@ -31,20 +31,14 @@ public class EntityPanel extends Group {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("touch");
                 if (e.isDead()) return false;
                 boolean dieSide = isClickOnDie(x);
                 DungeonScreen.get().clicked(EntityPanel.this.e, dieSide && holdsDie);
-                return false;
+                return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if (e.getTarget() != null) {
-                    for (DiceEntity de : e.getTarget()) {
-                        de.untarget(e);
-                    }
-                }
                 super.touchUp(event, x, y, pointer, button);
             }
 

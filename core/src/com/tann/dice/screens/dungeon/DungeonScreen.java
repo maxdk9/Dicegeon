@@ -23,10 +23,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
-import com.tann.dice.gameplay.phase.EnemyRollingPhase;
-import com.tann.dice.gameplay.phase.LevelUpPhase;
-import com.tann.dice.gameplay.phase.NothingPhase;
-import com.tann.dice.gameplay.phase.PlayerRollingPhase;
+import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.dungeon.panels.*;
 import com.tann.dice.screens.dungeon.panels.Explanel.*;
 import com.tann.dice.util.*;
@@ -115,6 +112,18 @@ public class DungeonScreen extends Screen {
         confirmButton.setColor(Colours.green_light);
         addActor(confirmButton);
         confirmButton.setPosition(getWidth(), 0);
+
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(!event.isHandled()) bottomClick();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+    }
+
+    private void bottomClick() {
+        deselectTargetable();
     }
 
     public void slideRollButton(boolean in){
@@ -189,20 +198,37 @@ public class DungeonScreen extends Screen {
     }
 
     private void confirmDice() {
-        if(!(Main.getPhase() instanceof PlayerRollingPhase)) return;
-        boolean allGood = true;
-        for(DiceEntity h:Party.get().getActiveEntities()){
-            Die d = h.getDie();
-            if(d.getSide()==-1){
-                allGood=false;
+        if(Main.getPhase() instanceof PlayerRollingPhase) {
+            boolean allGood = true;
+            for (DiceEntity h : Party.get().getActiveEntities()) {
+                Die d = h.getDie();
+                if (d.getSide() == -1) {
+                    allGood = false;
+                } else if (d.getState() != DieState.Locked && d.getState() != DieState.Locking) {
+                    d.slideToPanel();
+                }
             }
-            else if(d.getState()!= DieState.Locked && d.getState() != DieState.Locking){
-                d.slideToPanel();
+            if (allGood) {
+                Main.popPhase();
             }
         }
-        if(allGood){
+        else if (Main.getPhase() instanceof TargetingPhase){
+            if(Party.get().getAvaliableMagic() > 0){
+                showDialog("Spend all your magic first!");
+                return;
+            }
+            if(!checkAllDiceUsed()){
+                showDialog("Use all your dice first!");
+                return;
+            }
             Main.popPhase();
         }
+    }
+
+    private void showDialog(String s) {
+        TextButton tb = new TextButton(550, 100, s);
+        tb.setFont(Fonts.font);
+        push(tb, true, true);
     }
 
     public void enemyCombat(){
@@ -293,24 +319,30 @@ public class DungeonScreen extends Screen {
         if(first.targetingType == Eff.TargetingType.Self){
             d.entity.hit(d.getEffects(), false);
             d.use();
-            checkAllDiceUsed();
             return;
         }
-        if(first.targetingType == Eff.TargetingType.Untargeted){
-            for(Eff e:d.getEffects()){
-                switch(e.type){
-                    case Magic:
-                        Party.get().addMagic(e.value);
-                        break;
-                    default:
-                        System.err.println("oh shit you need to implement new untargeted effect");
-                        break;
-                }
-            }
-            d.use();
-            return;
-        }
+
         targetableClick(d);
+    }
+
+    public void activateAutoEffects(){
+        for(DiceEntity de:Party.get().getActiveEntities()){
+            Eff[] effs = de.getDie().getEffects();
+                if(effs[0].targetingType == Eff.TargetingType.Untargeted){
+                    for(Eff e:effs){
+                        switch(e.type){
+                            case Magic:
+                                System.out.println("adding magic");
+                                Party.get().addMagic(e.value);
+                                break;
+                            default:
+                                System.err.println("oh shit you need to implement new untargeted effect");
+                                break;
+                        }
+                    }
+                    return;
+            }
+        }
     }
 
     public void click(Spell spell){
@@ -365,27 +397,22 @@ public class DungeonScreen extends Screen {
             }
         }
         deselectTargetable();
-        checkAllDiceUsed();
         return true;
     }
 
-    private void checkAllDiceUsed(){
+    private boolean checkAllDiceUsed(){
         boolean allUsed = true;
         for (DiceEntity de : Party.get().getActiveEntities()) {
             if (!de.getDie().getUsed() && de.getDie().getActualSide().effects[0].type != Eff.EffectType.Nothing) {
-                allUsed = false;
-                break;
+                return false;
             }
         }
-        if (Party.get().getAvaliableMagic()>0){
-            allUsed = false;
-        }
-        if (allUsed) {
-            Main.popPhase();
-        }
+        return true;
+        /*
         if(checkEnd()){
             nextLevel();
         }
+         */
     }
 
     private void hitEntities(List<DiceEntity> entities, Eff e){
@@ -423,8 +450,6 @@ public class DungeonScreen extends Screen {
         for(DiceEntity de: EntityGroup.getAllActive()){
             de.getEntityPanel().setPossibleTarget(false);
         }
-        enemy.setTargetingHighlight(false);
-        friendly.setTargetingHighlight(false);
     }
 
 
@@ -474,15 +499,32 @@ public class DungeonScreen extends Screen {
         }
     }
 
-
-    public void push(Actor a){
+    private void push(Actor a, boolean center, boolean listener){
         addActor(InputBlocker.get());
         InputBlocker.get().toFront();
         modalStack.add(a);
         addActor(a);
+
+        if(center){
+            a.setPosition(getWidth()/2-a.getWidth()/2, getHeight()/2-a.getHeight()/2);
+        }
+        if(listener){
+            a.addListener(new InputListener(){
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    Main.popPhase();
+                    return super.touchDown(event, x, y, pointer, button);
+                }
+            });
+        }
+    }
+
+    public void push(Actor a){
+        push(a, false, false);
     }
 
     public void pop(){
+        deselectTargetable();
         if(modalStack.size()==0) return;
         Actor a =modalStack.remove(modalStack.size()-1);
         a.remove();
