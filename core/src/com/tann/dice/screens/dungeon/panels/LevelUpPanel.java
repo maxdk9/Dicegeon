@@ -27,10 +27,8 @@ public class LevelUpPanel extends Group{
     this.hero = hero;
     float gap = 50;
 
-    TextWriter tw = new TextWriter("Level up!", Fonts.font);
-
     Layoo l = new Layoo(this);
-    l.actor(tw);
+    TextWriter tw = new TextWriter("Level up!", Fonts.font);l.actor(tw);
     l.row(1);
     l.gap(1);
     l.actor(hero.getDiePanel());

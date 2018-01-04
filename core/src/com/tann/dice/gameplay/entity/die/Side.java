@@ -44,6 +44,8 @@ public class Side {
 
     public static final Side sword1shield2 = new Side(Images.get("sword1shield2"), new Eff().damage(1), new Eff().shield(2).self());
     public static final Side sword2shield1 = new Side(Images.get("sword2shield1"), new Eff().damage(2), new Eff().shield(1).self());
+    public static final Side shield2heal2 = new Side(Images.get("shield2heal2"), new Eff().shield(2).friendlySingle(), new Eff().heal(2).friendlySingle());
+
     public static final Side trident = new Side(Images.get("trident1"), new Eff().damage(1).enemyAndAdjacents());
     public static final Side trident2 = new Side(Images.get("trident2"), new Eff().damage(2).enemyAndAdjacents());
 
@@ -60,6 +62,9 @@ public class Side {
 
     public static final Side cleave1 = new Side(Images.get("cleave1"), new Eff().damage(1).enemyGroup());
     public static final Side cleave2 = new Side(Images.get("cleave2"), new Eff().damage(2).enemyGroup());
+
+    public static final Side reroll = new Side(Images.get("reroll"), new Eff().reroll(1).onRoll());
+    public static final Side wardingchord = new Side(Images.get("wardingchord"), new Eff().shield(1).friendlyGroup());
 
     public static final Side nothing = new Side(Images.get("nothing"), new Eff().nothing().untargeted());
 

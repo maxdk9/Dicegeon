@@ -316,10 +316,23 @@ public class DungeonScreen extends Screen {
             return;
         }
         Eff first = d.getEffects()[0];
-        if(first.targetingType == Eff.TargetingType.Self){
-            d.entity.hit(d.getEffects(), false);
-            d.use();
-            return;
+        switch(first.targetingType){
+            case EnemyGroup:
+                for(DiceEntity de:Room.get().getActiveEntities()){
+                    de.hit(d.getEffects(), false);
+                }
+                d.use();
+                break;
+            case FriendlyGroup:
+                for(DiceEntity de:Party.get().getActiveEntities()){
+                    de.hit(d.getEffects(), false);
+                }
+                d.use();
+                break;
+            case Self:
+                d.entity.hit(d.getEffects(), false);
+                d.use();
+                break;
         }
 
         targetableClick(d);
@@ -342,7 +355,6 @@ public class DungeonScreen extends Screen {
                                 break;
                         }
                     }
-                    return;
             }
         }
     }
@@ -547,8 +559,8 @@ public class DungeonScreen extends Screen {
 
     List<Actor> modalStack = new ArrayList<>();
 
-    public void showLevelupPanel(Hero hero) {
-        LevelUpPanel lup = new LevelUpPanel(hero, new HeroType[]{HeroType.Ranger, HeroType.Rogue, HeroType.Fencer});
+    public void showLevelupPanel(Hero hero, HeroType[] options) {
+        LevelUpPanel lup = new LevelUpPanel(hero, options);
         lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
         addActor(lup);
     }

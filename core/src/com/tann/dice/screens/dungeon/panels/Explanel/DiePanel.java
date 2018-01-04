@@ -28,6 +28,7 @@ public class DiePanel extends InfoPanel implements OnPop {
     }
     private static final float SIDE_SIZE = 60;
     public void layout(){
+        clearChildren();
         setSize(WIDTH, HEIGHT);
         Layoo l = new Layoo(this);
         l.row(1);

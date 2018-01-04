@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.entity.group;
 
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -72,6 +73,10 @@ public class Party extends EntityGroup{
         super.firstRoll();
     }
 
+    public void addRolls(int amount){
+        this.rolls += amount;
+    }
+
     @Override
     public void roll() {
         if(!Main.getPhase().canRoll()) return;
@@ -87,6 +92,21 @@ public class Party extends EntityGroup{
     public void actionEffects(){
         for(DiceEntity de:getActiveEntities()){
             de.getProfile().action();
+        }
+    }
+
+    public void activateRollEffect(Eff e) {
+        if(e.targetingType != Eff.TargetingType.OnRoll){
+            System.err.println("uhoh not onroll "+e);
+            return;
+        }
+        switch(e.type){
+            case Reroll:
+                Party.get().addRolls(e.value);
+                break;
+            default:
+                System.err.println("uhoh type not implemented for onroll "+e.type);
+                break;
         }
     }
 }

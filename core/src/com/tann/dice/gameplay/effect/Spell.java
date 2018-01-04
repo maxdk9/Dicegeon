@@ -71,4 +71,8 @@ public class Spell implements Targetable{
     public void select() {
         selected = true;
     }
+
+    public boolean canCast() {
+        return Party.get().getAvaliableMagic() >= cost;
+    }
 }

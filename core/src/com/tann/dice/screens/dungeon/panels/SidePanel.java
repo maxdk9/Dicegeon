@@ -29,7 +29,6 @@ public class SidePanel extends Group {
       clearChildren();
       Layoo l = new Layoo(this);
       for(int i=0;i<entities.size();i++){
-
           DiceEntity e = entities.get(i);
           if(e.isDead()) continue;
           EntityPanel ep = e.getEntityPanel();
@@ -37,10 +36,10 @@ public class SidePanel extends Group {
           l.gap(1);
           l.actor(ep);
           l.gap(1);
-
       }
       l.row(1);
       l.layoo(slide);
+      for(DiceEntity e :entities) e.getEntityPanel().lockStartX();
   }
 
 

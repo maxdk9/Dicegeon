@@ -16,6 +16,7 @@ import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
@@ -28,6 +29,7 @@ public class Explanel extends InfoPanel {
     TextureRegion image;
     Integer cost;
     boolean usable;
+    boolean enoughMagic;
 
     private static Explanel self;
     public static Explanel get(){
@@ -59,24 +61,28 @@ public class Explanel extends InfoPanel {
         this.usable = usable;
         if(targetable instanceof Spell) setup((Spell) targetable);
         else if(targetable instanceof Die) setup(((Die) targetable).getActualSide());
+
     }
 
     public void setup(Spell spell){
+        this.enoughMagic = spell.canCast();
         setup(spell.name, spell.description, spell.effects, spell.image, spell.cost);
         if(usable) {
             switch (spell.effects[0].targetingType) {
                 case EnemyGroup:
                 case FriendlyGroup:
                 case Untargeted:
-                    Button confirmButton = new Button(60, 60, Images.tick, Colours.dark, new Runnable() {
-                        @Override
-                        public void run() {
-                            DungeonScreen.get().target(null);
-                        }
-                    });
-                    confirmButton.setColor(Colours.blue_dark);
-                    addActor(confirmButton);
-                    confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 20);
+                    if(enoughMagic) {
+                        Button confirmButton = new Button(60, 60, Images.tick, Colours.dark, new Runnable() {
+                            @Override
+                            public void run() {
+                                DungeonScreen.get().target(null);
+                            }
+                        });
+                        confirmButton.setColor(Colours.blue_dark);
+                        addActor(confirmButton);
+                        confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 20);
+                    }
                     break;
             }
         }
@@ -118,7 +124,12 @@ public class Explanel extends InfoPanel {
         }
         if(cost!=null){
             for(int i=0;i<cost;i++){
-                l.actor(new ImageActor(Images.magic, 30, 30));
+                ImageActor c = new ImageActor(Images.magic, 30, 30);
+                l.actor(c);
+                if(usable && Party.get().getAvaliableMagic() <= i){
+                    c.setColor(Colours.red);
+                }
+
             }
             l.gap(1);
         }

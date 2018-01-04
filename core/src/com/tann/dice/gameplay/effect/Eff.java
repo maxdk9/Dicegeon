@@ -6,8 +6,15 @@ import com.tann.dice.gameplay.entity.die.Die;
 public class Eff {
 
     public enum TargetingType{
-        EnemySingle, EnemySingleRanged, EnemyGroup, FriendlySingle, FriendlyGroup, EnemyAndAdjacents, EnemyOnlyAdjacents, Self,
-
+        EnemySingle,
+        EnemySingleRanged,
+        EnemyGroup,
+        FriendlySingle,
+        FriendlyGroup,
+        EnemyAndAdjacents,
+        EnemyOnlyAdjacents,
+        Self,
+        OnRoll,
         Untargeted;
     }
 
@@ -20,7 +27,8 @@ public class Eff {
         Magic,
         Heal,
         Buff,
-        Execute
+        Execute,
+        Reroll
 
 
         ;
@@ -46,6 +54,8 @@ public class Eff {
     }
 
     public String toString(){
+        String result = "";
+        
         switch(type){
             case Nothing:
                 return "Nothing!";
@@ -77,6 +87,8 @@ public class Eff {
                 return "Restore "+value+" health to a damaged character";
             case Execute:
                 return "Kills target if they are on exactly "+value+" hp";
+            case Reroll:
+                return "When you roll this, gain +1 reroll this turn";
             case Buff:
                 return buffType.description+(buffDuration==-1?"":" for "+
                         buffDuration+(buffDuration==1?" turn":"turns"));
@@ -90,6 +102,7 @@ public class Eff {
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }
     public Eff heal(int amount) { return type(EffectType.Heal, amount); }
     public Eff execute(int amount) { return type(EffectType.Execute, amount); }
+    public Eff reroll(int amount) { return type(EffectType.Reroll, amount); }
 
     public Eff poison(int amount) {return type(EffectType.Buff, amount).buffType(Buff.BuffType.dot, -1); }
     public Eff stealth() {return type(EffectType.Buff, 0).buffType(Buff.BuffType.stealth, 1);}
@@ -102,6 +115,7 @@ public class Eff {
     public Eff enemyAndAdjacents() { return targetType(TargetingType.EnemyAndAdjacents);}
     public Eff ranged() { return targetType(TargetingType.EnemySingleRanged);}
     public Eff self() { return targetType(TargetingType.Self);}
+    public Eff onRoll() { return targetType(TargetingType.OnRoll);}
 
 
 
