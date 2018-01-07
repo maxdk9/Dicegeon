@@ -41,7 +41,7 @@ public class MyContactListener extends ContactListener {
 				Sounds.playSound(Sounds.clocks, .2f, 1.f+(float)Math.random()*.8f);
 			}
 			else{
-				Sounds.playSound(Sounds.clacks, Math.abs(magnitude*.3f), (float)(.8f+Math.random()*.2f));
+				Sounds.playSound(Sounds.clacks, Math.min(.5f,Math.abs(magnitude*.3f)), (float)(.8f+Math.random()*.2f));
 			}
 			
 		}

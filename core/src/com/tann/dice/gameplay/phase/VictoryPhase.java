@@ -7,7 +7,7 @@ public class VictoryPhase extends Phase{
     @Override
     public void activate() {
         TextButton tb = new TextButton(500, 100, "Wow you won!");
-        DungeonScreen.get().push(tb, true, false, true, false);
+        DungeonScreen.get().push(tb, true, false, true, false, true);
     }
 
     @Override

@@ -116,4 +116,9 @@ public class Party extends EntityGroup{
                 break;
         }
     }
+
+    public void rejig() {
+        getActiveEntities().clear();
+        activeEntities.addAll(getEntities());
+    }
 }

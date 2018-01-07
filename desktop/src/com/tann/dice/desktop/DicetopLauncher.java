@@ -1,5 +1,6 @@
 package com.tann.dice.desktop;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
@@ -12,7 +13,8 @@ public class DicetopLauncher {
 		config.width=Main.width;
 		config.height=Main.height;
 		config.samples=10;
-		config.title="Dicegeons";
+		config.title="Dicegeon";
+        config.addIcon("icon.png", Files.FileType.Internal);
         new LwjglApplication(new Main(), config);
 	}
 }

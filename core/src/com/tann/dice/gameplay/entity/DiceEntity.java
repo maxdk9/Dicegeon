@@ -30,7 +30,6 @@ public abstract class DiceEntity {
     protected int maxHp;
     protected int hp;
     protected boolean dead;
-    protected List<Eff> potentialEffects = new ArrayList<>();
     protected List<DiceEntity> targets;
     List<Buff> buffs = new ArrayList<>();
     public DiceEntity targeted;
@@ -79,6 +78,21 @@ public abstract class DiceEntity {
 
     public void heal(int amount) {
         this.hp = Math.min(maxHp, getHp() + amount);
+    }
+
+    public void reset(){
+        setHp(maxHp);
+        dead= false;
+        targeted = null;
+        buffs.clear();
+        if(targets != null){
+            targets.clear();
+        }
+        resetPanels();
+    }
+
+    private void setHp(int amount){
+        this.hp = amount;
     }
 
     public abstract void locked();

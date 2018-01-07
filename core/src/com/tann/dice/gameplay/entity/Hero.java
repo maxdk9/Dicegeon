@@ -60,7 +60,7 @@ public class Hero extends DiceEntity {
         Ranger(5, Side.arrow1, Side.arrow1, Side.arrow2, Side.arrow2, Side.snipe, Side.nothing),
 
         Fencer(6, Side.sword1shield2, Side.sword2shield1, Side.sword2shield1, Side.trident, Side.trident, Side.nothing),
-        Dabbler(6, Side.sword2, Side.arrow2, Side.heal2, Side.shield2, Side.sword1, Side.sword1),
+        Dabbler(6, Side.sword2, Side.arrow2, Side.heal2, Side.shield2, Side.magic2, Side.nothing),
 
         Paladin(7, Side.shield2, Side.shield2, Side.shield2heal2, Side.sword2, Side.sword2, Side.nothing),
         Bard(5, Side.wardingchord, Side.wardingchord, Side.reroll, Side.shield2, Side.shield2, Side.nothing),
@@ -69,7 +69,7 @@ public class Hero extends DiceEntity {
         Druid(5, new Side[]{Side.sword2, Side.magic2, Side.magic2, Side.heal4, Side.heal4, Side.nothing}, new Spell[]{Spell.balance}),
 
         Pyro(5, new Side[]{Side.magic1, Side.magic1, Side.magic2, Side.magic2, Side.flameWard, Side.nothing}, new Spell[]{Spell.inferno}),
-        Arcanist(5, new Side[]{Side.magic1, Side.magic1, Side.magic2, Side.magic2, Side.nothing, Side.nothing}, new Spell[]{Spell.arcaneMissile}),
+        Arcanist(5, new Side[]{Side.magic1, Side.magic1, Side.magic2, Side.magic2, Side.magic1, Side.nothing}, new Spell[]{Spell.arcaneMissile}),
         ;
 
         public Side[] sides;

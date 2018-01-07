@@ -16,6 +16,6 @@ public class Stealth extends Buff{
 
     @Override
     public String toNiceString() {
-        return "target is immune to damage for "+turns+" turns";
+        return "Become immune to damage for "+turns+" turns";
     }
 }

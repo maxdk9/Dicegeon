@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
@@ -14,11 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.*;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.phase.Phase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
@@ -29,7 +25,7 @@ import java.util.List;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1280, height = 720;
-    public static String version = "0.1";
+    public static String version = "0.1.2";
     public static String versionName = "v"+version;
 	SpriteBatch batch;
 	public Stage stage;
@@ -37,7 +33,8 @@ public class Main extends ApplicationAdapter {
 	public static TextureAtlas atlas;
 	public static TextureAtlas atlas_3d;
 	public static Main self;
-	public static boolean showFPS = true;
+	private static boolean showFPS = true;
+	private static boolean printCalls = false;
 	Screen currentScreen;
 	Screen previousScreen;
 	public static float ticks;
@@ -59,7 +56,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		System.out.println("create");
+		if(printCalls) System.out.println("create");
 		Main.width = Gdx.graphics.getWidth();
 		Main.height = Gdx.graphics.getHeight();
 		logTime(null);
@@ -160,7 +157,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void pause() {
 		super.pause();
-		System.out.println("pause");
+        if(printCalls) System.out.println("pause");
 	}
 
 	@Override
@@ -174,20 +171,20 @@ public class Main extends ApplicationAdapter {
 			currentScreen.layChain();
 		}
 		BulletStuff.updateCamera();
-		System.out.println("resize");
+        if(printCalls) System.out.println("resize");
 	}
 
 	@Override
 	public void dispose() {
 		super.dispose();
 		Fonts.dispose();
-		System.out.println("dispose");
+        if(printCalls) System.out.println("dispose");
 	}
 
 	@Override
 	public void resume() {
 		Fonts.setup();
-		System.out.println("resume");
+        if(printCalls) System.out.println("resume");
 	}
 
 	private void drawVersion() {

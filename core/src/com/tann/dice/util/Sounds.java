@@ -16,66 +16,12 @@ public class Sounds {
 
     public static String[] clacks;
     public static String[] clocks;
-    public static String[] cancel;
-    public static String buildPanel;
-    public static String build;
-
-    public static String unshake;
-    public static String[] shake;
-    public static String[] roll;
-    public static String accept;
-    public static String error;
-
-
-    public static String marimba_too_happy;
-    public static String marimba_happy;
-    public static String marimba_sad;
-    public static String marimba_dingdong;
-    public static String marimba_low_chords;
-    public static String marimba_single_high;
-
-
-    public static String[] eventPosBird;
-    public static String[] eventNegBird;
-    public static String[] eventNeuBird;
-
-
-
-
-    public static String beach;
-    public static String gem;
-    public static String storm;
 
 
 	public static void setup(){
 		//sfx//
         clacks = makeSounds("clack", 4);
         clocks = makeSounds("clock", 4);
-        cancel = makeSounds("drum/cancel", 1);
-        buildPanel = makeSound("sfx/buildpanel.wav", Sound.class);
-        build = makeSound("sfx/build.wav", Sound.class);
-        shake = makeSounds("shake", 4);
-        unshake = makeSound("sfx/unshake.wav", Sound.class);
-        roll = makeSounds("roll", 6);
-        accept = makeSound("sfx/accept.wav", Sound.class);
-        error= makeSound("sfx/error.wav", Sound.class);
-
-        marimba_too_happy = makeSound("sfx/marimba_too_happy.wav", Sound.class);
-        marimba_happy = makeSound("sfx/marimba_happy.wav", Sound.class);
-        marimba_sad = makeSound("sfx/marimba_sad.wav", Sound.class);
-        marimba_dingdong = makeSound("sfx/marimba_dingdong.wav", Sound.class);
-        marimba_low_chords = makeSound("sfx/marimba_low_chords.wav", Sound.class);
-        marimba_single_high = makeSound("sfx/marimba_single_high.wav", Sound.class);
-
-
-        eventPosBird = makeSounds("positivebird", 6, ".wav");
-        eventNegBird = makeSounds("negativebird", 3, ".wav");
-        eventNeuBird = makeSounds("neutralbird", 8, ".wav");
-
-        //music//
-        beach = makeSound("music/beach2.mp3", Music.class);
-        gem = makeSound("music/gem.mp3", Music.class);
-        storm = makeSound("music/storm.mp3", Music.class);
 
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();

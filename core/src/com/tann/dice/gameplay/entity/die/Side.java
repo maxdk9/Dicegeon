@@ -24,7 +24,7 @@ public class Side {
 		this.tr=tr;
 		this.effects=new Eff[]{effect, effect2};
 	}
-	
+
 	public Side(TextureRegion tr[], Eff[] effects){
 		this.tr=tr;
 		this.effects=effects;
@@ -39,6 +39,7 @@ public class Side {
     public static final Side sword3 = new Side(Images.get("sword3"), new Eff().damage(3));
     public static final Side sword4 = new Side(Images.get("sword4"), new Eff().damage(4));
     public static final Side sword5 = new Side(Images.get("sword5"), new Eff().damage(5));
+    public static final Side sword6 = new Side(Images.get("sword6"), new Eff().damage(6));
 
     public static final Side arrow1 = new Side(Images.get("arrow1"), new Eff().damage(1).ranged());
     public static final Side arrow2 = new Side(Images.get("arrow2"), new Eff().damage(2).ranged());
@@ -70,6 +71,7 @@ public class Side {
 
     public static final Side cleave1 = new Side(Images.get("cleave1"), new Eff().damage(1).enemyGroup());
     public static final Side cleave2 = new Side(Images.get("cleave2"), new Eff().damage(2).enemyGroup());
+    public static final Side cleave3 = new Side(Images.get("cleave3"), new Eff().damage(3).enemyGroup());
 
     public static final Side reroll = new Side(Images.get("reroll"), new Eff().reroll(1).onRoll());
     public static final Side wardingchord = new Side(Images.get("wardingchord"), new Eff().shield(1).friendlyGroup());

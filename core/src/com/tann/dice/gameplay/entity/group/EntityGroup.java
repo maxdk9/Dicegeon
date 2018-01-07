@@ -10,7 +10,7 @@ import java.util.List;
 
 public class EntityGroup {
     private List<DiceEntity> entities;
-    private List<DiceEntity> activeEntities;
+    protected List<DiceEntity> activeEntities;
     private List<Buff> buffs;
 
     public void die(DiceEntity de){

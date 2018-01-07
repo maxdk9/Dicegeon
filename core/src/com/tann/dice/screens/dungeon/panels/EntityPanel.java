@@ -203,7 +203,7 @@ public class EntityPanel extends Group {
         Draw.fillActor(batch, this, inner, border,  borderSize);
         super.draw(batch, parentAlpha);
         int overkill = profile.getOverkill();
-        if(overkill>0){
+        if(overkill>0 && !e.isDead()){
             Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, 0, 0);
         }
 

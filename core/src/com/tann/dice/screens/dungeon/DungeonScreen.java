@@ -15,6 +15,7 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.buff.BuffDot;
 import com.tann.dice.gameplay.effect.buff.DamageMultiplier;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
@@ -172,7 +173,8 @@ public class DungeonScreen extends Screen {
                 break;
             case 5:
                 monsters.add(new Monster(Monster.MonsterType.Dragon));
-                monsters.add(new Monster(Monster.MonsterType.Archer));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
                 monsters.add(new Monster(Monster.MonsterType.Archer));
                 break;
             case 6:
@@ -182,6 +184,7 @@ public class DungeonScreen extends Screen {
                 Main.popPhase();
                 return;
         }
+        Party.get().rejig();
         setup(monsters);
         spellHolder.setup(Party.get().getSpells());
         spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
@@ -191,8 +194,20 @@ public class DungeonScreen extends Screen {
         if(level>1){
             Main.pushPhase(new LevelUpPhase());
         }
+
+        for(DiceEntity de:Party.get().getActiveEntities()){
+            de.reset();
+        }
+
         Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
+//        for(DiceEntity de:Room.get().getActiveEntities()) {
+//            for (int i = 0; i < 2; i++) {
+//                Buff b = new BuffDot(-1, 1);
+//                b.target = de;
+//                de.addBuff(b);
+//            }
+//        }
     }
 
     public void restart() {
@@ -219,8 +234,8 @@ public class DungeonScreen extends Screen {
             heroes.add(new Hero(Hero.HeroType.Herbalist));
             heroes.add(new Hero(Hero.HeroType.Apprentice));
         }
-        Party.get().setEntities(heroes);
         friendly.setEntities(heroes);
+        Party.get().setEntities(heroes);
     }
 
     private void confirmDice(boolean force) {
@@ -258,7 +273,7 @@ public class DungeonScreen extends Screen {
     private void showDialog(String s) {
         TextButton tb = new TextButton(550, 100, s);
         tb.setFont(Fonts.font);
-        push(tb, true, true, true, false);
+        push(tb, true, true, true, false, false);
     }
 
     public void enemyCombat(){
@@ -382,7 +397,6 @@ public class DungeonScreen extends Screen {
                     for(Eff e:effs){
                         switch(e.type){
                             case Magic:
-                                System.out.println("adding magic");
                                 Party.get().addMagic(e.getValue());
                                 break;
                             case Nothing:
@@ -403,7 +417,7 @@ public class DungeonScreen extends Screen {
     private void targetableClick(Targetable t){
         if(!Main.getPhase().canTarget()){
             Explanel.get().setup(t, false);
-            push(Explanel.get(), true, true, true, false);
+            push(Explanel.get(), true, true, true, false, false);
             return;
         }
         for(DiceEntity de:Party.get().getActiveEntities()){
@@ -453,8 +467,13 @@ public class DungeonScreen extends Screen {
             }
         }
         deselectTargetable();
-        confirmDice(false);
-        checkEnd();
+        if(!checkEnd()) {
+            confirmDice(false);
+        }
+
+        if(Party.get().getAvaliableMagic() == 0){
+            DungeonScreen.get().spellHolder.hide();
+        }
         return true;
     }
 
@@ -577,7 +596,7 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    public void push(final Actor a, boolean center, boolean listener, boolean blockerListen, final boolean remove){
+    public void push(final Actor a, boolean center, boolean listener, boolean blockerListen, final boolean remove, final boolean endPhase){
         addActor(InputBlocker.get());
         InputBlocker.get().toFront();
         InputBlocker.get().setActiveClicker(blockerListen);
@@ -590,8 +609,13 @@ public class DungeonScreen extends Screen {
             a.addListener(new InputListener(){
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if(remove) pop();
-                    Main.popPhase();
+                    if(remove) {
+                        a.remove();
+                        pop();
+                    }
+                    if(endPhase) {
+                        Main.popPhase();
+                    }
                     return super.touchDown(event, x, y, pointer, button);
                 }
             });
@@ -599,7 +623,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void push(Actor a){
-        push(a, false, false, true,  false);
+        push(a, false, false, true,  false, false);
     }
 
     public void pop(){
