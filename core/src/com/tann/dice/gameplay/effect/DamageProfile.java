@@ -1,6 +1,5 @@
 package com.tann.dice.gameplay.effect;
 
-import com.badlogic.gdx.utils.Array;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ public class DamageProfile {
     private int incomingDamage;
     private int blockedDamage;
     private int heals;
-    public List<Buff> incomingBuffs = new ArrayList<>();
+    public List<com.tann.dice.gameplay.effect.buff.Buff> incomingBuffs = new ArrayList<>();
     DiceEntity target;
     public List<Eff> effs = new ArrayList<>();
 
@@ -50,7 +49,8 @@ public class DamageProfile {
                 heals += e.value;
                 break;
             case Buff:
-                incomingBuffs.add(new Buff(target, e.buffType, e.value, e.buffDuration));
+                //todo
+//                incomingBuffs.add(new com.tann.dice.gameplay.effect.buff.Buff(target, e.buffType, e.value, e.buffDuration));
                 break;
             case Execute:
                 if(target.getEffectiveHp() == e.value){
@@ -74,20 +74,20 @@ public class DamageProfile {
     public void action(){
         target.heal(heals);
         target.damage(Math.max(0, getIncomingDamage() - blockedDamage));
-        for(Buff b: incomingBuffs){
+        for(com.tann.dice.gameplay.effect.buff.Buff b: incomingBuffs){
             target.addBuff(b);
         }
         reset();
         target.getEntityPanel().layout();
     }
 
-    List<Buff> allBuffs = new ArrayList<>();
+    List<com.tann.dice.gameplay.effect.buff.Buff> allBuffs = new ArrayList<>();
     public int getIncomingDamage(){
         allBuffs.clear();
         allBuffs.addAll(incomingBuffs);
         allBuffs.addAll(target.getBuffs());
-        for(Buff b:allBuffs){
-            if(b.type == Buff.BuffType.stealth){
+        for(com.tann.dice.gameplay.effect.buff.Buff b:allBuffs){
+            if(b.type == com.tann.dice.gameplay.effect.buff.Buff.BuffType.stealth){
                 return 0;
             }
         }

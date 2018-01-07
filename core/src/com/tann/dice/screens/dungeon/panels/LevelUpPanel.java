@@ -20,10 +20,12 @@ import com.tann.dice.util.Layoo;
 import com.tann.dice.util.TextButton;
 import com.tann.dice.util.TextWriter;
 
+import java.util.List;
+
 public class LevelUpPanel extends Group{
   ChoicesPanel choicesPanel;
   public static Hero hero;
-  public LevelUpPanel(Hero hero, HeroType[] options) {
+  public LevelUpPanel(Hero hero, List<HeroType> options) {
     this.hero = hero;
     float gap = 50;
 
@@ -56,11 +58,11 @@ public class LevelUpPanel extends Group{
 
   static class ChoicesPanel extends Group{
     DiePanel[] panels;
-    HeroType[] options;
+    List<HeroType> options;
     HeroType currentChoice;
-      public ChoicesPanel(HeroType[] options) {
-        panels = new DiePanel[options.length];
-        currentChoice = options[0];
+      public ChoicesPanel(List<HeroType> options) {
+        panels = new DiePanel[options.size()];
+        currentChoice = options.get(0);
         this.options = options;
         float rightPanelSize = 100;
 
@@ -81,8 +83,8 @@ public class LevelUpPanel extends Group{
         };
         left.setSize(DiePanel.WIDTH, DiePanel.HEIGHT);
 
-        for(int i =0;i<options.length;i++){
-            DiePanel dp = new Hero(options[i]).getDiePanel();
+        for(int i =0;i<options.size();i++){
+            DiePanel dp = new Hero(options.get(i)).getDiePanel();
             panels[i] = dp;
             left.addActor(dp);
             dp.setPosition(0, DiePanel.HEIGHT*-1  - (i-1)*DiePanel.HEIGHT);
@@ -98,8 +100,8 @@ public class LevelUpPanel extends Group{
         right.setSize(rightPanelSize, DiePanel.HEIGHT);
         Layoo rightLayoo = new Layoo(right);
         float rightButtonSize = rightPanelSize * .8f;
-        for(int i =0;i<options.length;i++){
-            TextButton butt = new TextButton(rightButtonSize, 30, options[i].name());
+        for(int i =0;i<options.size();i++){
+            TextButton butt = new TextButton(rightButtonSize, 30, options.get(i).name());
             final int finalI = i;
             butt.setRunnable(new Runnable() {
                 @Override
@@ -134,7 +136,7 @@ public class LevelUpPanel extends Group{
         for(int i=0;i<panels.length;i++){
             DiePanel dp = panels[i];
             dp.clearActions();
-            currentChoice = options[index];
+            currentChoice = options.get(index);
             // DiePanel.HEIGHT  - (i-1)*DiePanel.HEIGHT
             dp.addAction(Actions.moveTo( dp.getX(), (index-i)*DiePanel.HEIGHT, .3f, Interpolation.pow2Out));
         }

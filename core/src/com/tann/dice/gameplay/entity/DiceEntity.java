@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
-import com.tann.dice.gameplay.effect.Buff;
+import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -265,7 +265,7 @@ public abstract class DiceEntity {
 
     public void upkeep() {
         for(int i=buffs.size()-1; i>=0; i--){
-            buffs.get(i).turn();
+            buffs.get(i).inturnal();
         }
     }
 

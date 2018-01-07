@@ -38,7 +38,7 @@ public class TextWriter extends Lay {
         textureMap.put("heart", Images.heart);
 
         colorMap.put("heart", Colours.red);
-        colorMap.put("turn", Colours.light);
+        colorMap.put("inturnal", Colours.light);
     }
 
     @Override

@@ -13,6 +13,8 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
+import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.buff.DamageMultiplier;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Hero.HeroType;
@@ -58,10 +60,7 @@ public class DungeonScreen extends Screen {
     private void init(){
 
         spellHolder = new SpellHolder();
-        spellHolder.addSpell(Spell.dart);
-        spellHolder.addSpell(Spell.resist);
-        spellHolder.addSpell(Spell.healAll);
-        spellHolder.addSpell(Spell.fireWave);
+        spellHolder.setup(Party.get().getSpells());
         addActor(spellHolder);
         spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
 
@@ -559,7 +558,7 @@ public class DungeonScreen extends Screen {
 
     List<Actor> modalStack = new ArrayList<>();
 
-    public void showLevelupPanel(Hero hero, HeroType[] options) {
+    public void showLevelupPanel(Hero hero, List<HeroType>options) {
         LevelUpPanel lup = new LevelUpPanel(hero, options);
         lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
         addActor(lup);

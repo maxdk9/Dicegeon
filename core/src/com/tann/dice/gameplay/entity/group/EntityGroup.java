@@ -1,6 +1,6 @@
 package com.tann.dice.gameplay.entity.group;
 
-import com.tann.dice.gameplay.effect.Buff;
+import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 

@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity.die;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.tann.dice.Images;
+import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 
 public class Side {
@@ -54,11 +55,17 @@ public class Side {
     public static final Side stealth = new Side(Images.get("stealth"), new Eff().stealth().self());
     public static final Side snipe = new Side(Images.get("snipe"), new Eff().execute(3).ranged());
 
+    public static final Side potionregen = new Side(Images.get("potionofregen"), new Eff().buff(1, Buff.BuffType.regen, -1));
+    public static final Side potionHeroism = new Side(Images.get("potionofregen"), new Eff().buff(1, Buff.BuffType.doubleDamage, -1));
+    public static final Side flameWard = new Side(Images.get("flameWard"), new Eff().buff(2, Buff.BuffType.fireShield, 1));
+
+
     public static final Side magic1 = new Side(Images.get("magic1"), new Eff().magic(1).untargeted());
     public static final Side magic2 = new Side(Images.get("magic2"), new Eff().magic(2).untargeted());
 
     public static final Side heal2 = new Side(Images.get("heal2"), new Eff().heal(2).friendlySingle());
     public static final Side heal3 = new Side(Images.get("heal3"), new Eff().heal(3).friendlySingle());
+    public static final Side heal4 = new Side(Images.get("heal4"), new Eff().heal(4).friendlySingle());
 
     public static final Side cleave1 = new Side(Images.get("cleave1"), new Eff().damage(1).enemyGroup());
     public static final Side cleave2 = new Side(Images.get("cleave2"), new Eff().damage(2).enemyGroup());

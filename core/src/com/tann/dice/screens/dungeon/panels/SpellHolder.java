@@ -34,7 +34,14 @@ public class SpellHolder extends Group {
     public SpellHolder() {
     }
 
-    public void addSpell (Spell spell){
+    public void setup(List<Spell> spells) {
+        spellMap.clear();
+        for(Spell spell:spells){
+            addSpell(spell);
+        }
+    }
+
+    private void addSpell (Spell spell){
         List<Spell> spells = spellMap.get(spell.cost);
         if(spells == null){
             spells = new ArrayList<>();

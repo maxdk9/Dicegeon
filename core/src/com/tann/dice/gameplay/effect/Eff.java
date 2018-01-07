@@ -1,6 +1,6 @@
 package com.tann.dice.gameplay.effect;
 
-import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.effect.buff.DamageMultiplier;
 import com.tann.dice.gameplay.entity.die.Die;
 
 public class Eff {
@@ -15,7 +15,8 @@ public class Eff {
         EnemyOnlyAdjacents,
         Self,
         OnRoll,
-        Untargeted;
+        Untargeted,
+        RandomEnemy;
     }
 
     public TargetingType targetingType = TargetingType.EnemySingle;
@@ -42,7 +43,7 @@ public class Eff {
 	
 
 	public EffectType type;
-    public Buff.BuffType buffType;
+    public com.tann.dice.gameplay.effect.buff.Buff.BuffType buffType;
     public int buffDuration;
 	public int value;
 	public Die sourceDie;
@@ -55,7 +56,6 @@ public class Eff {
 
     public String toString(){
         String result = "";
-        
         switch(type){
             case Nothing:
                 return "Nothing!";
@@ -82,16 +82,16 @@ public class Eff {
                 }
                 return "ahh help shield";
             case Magic:
-                return "Gain "+value+" magic to spend on spells this turn.";
+                return "Gain "+value+" magic to spend on spells this inturnal.";
             case Heal:
                 return "Restore "+value+" health to a damaged character";
             case Execute:
                 return "Kills target if they are on exactly "+value+" hp";
             case Reroll:
-                return "When you roll this, gain +1 reroll this turn";
+                return "When you roll this, gain +1 reroll this inturnal";
             case Buff:
                 return buffType.description+(buffDuration==-1?"":" for "+
-                        buffDuration+(buffDuration==1?" turn":"turns"));
+                        buffDuration+(buffDuration==1?" inturnal":"turns"));
         }
         return "yeowch?? "+type;
     }
@@ -104,8 +104,9 @@ public class Eff {
     public Eff execute(int amount) { return type(EffectType.Execute, amount); }
     public Eff reroll(int amount) { return type(EffectType.Reroll, amount); }
 
-    public Eff poison(int amount) {return type(EffectType.Buff, amount).buffType(Buff.BuffType.dot, -1); }
-    public Eff stealth() {return type(EffectType.Buff, 0).buffType(Buff.BuffType.stealth, 1);}
+    public Eff poison(int amount) {return buff(amount, com.tann.dice.gameplay.effect.buff.Buff.BuffType.dot, -1); }
+    public Eff stealth() {return buff(0, com.tann.dice.gameplay.effect.buff.Buff.BuffType.stealth, 1);}
+    public Eff buff(int amount, com.tann.dice.gameplay.effect.buff.Buff.BuffType type, int duration){return type(EffectType.Buff, amount).buffType(type, duration); }
 
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}
@@ -116,6 +117,7 @@ public class Eff {
     public Eff ranged() { return targetType(TargetingType.EnemySingleRanged);}
     public Eff self() { return targetType(TargetingType.Self);}
     public Eff onRoll() { return targetType(TargetingType.OnRoll);}
+    public Eff randomEnemy() { return targetType(TargetingType.RandomEnemy);}
 
 
 
@@ -133,7 +135,7 @@ public class Eff {
         return this;
     }
 
-    private Eff buffType(Buff.BuffType type, int duration){
+    private Eff buffType(com.tann.dice.gameplay.effect.buff.Buff.BuffType type, int duration){
         this.buffType = type;
         this.buffDuration = duration;
         return this;

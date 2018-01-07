@@ -6,8 +6,10 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Die;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Party extends EntityGroup{
@@ -18,7 +20,6 @@ public class Party extends EntityGroup{
     private int rolls = BASE_ROLLS;
     private int maxRolls = BASE_ROLLS;
     private boolean rolled;
-    private List<Spell> spellList;
     private Targetable selectedTargetable;
 
     private static Party self;
@@ -64,7 +65,13 @@ public class Party extends EntityGroup{
     }
 
     public List<Spell> getSpells(){
-        return spellList;
+        List<Spell> spells = new ArrayList<>();
+        spells.add(Spell.dart);
+        spells.add(Spell.resist);
+        for(DiceEntity de:getEntities()){
+            spells.addAll(((Hero)(de)).getSpells());
+        }
+        return spells;
     }
 
     @Override
