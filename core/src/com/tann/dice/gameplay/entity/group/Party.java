@@ -109,7 +109,7 @@ public class Party extends EntityGroup{
         }
         switch(e.type){
             case Reroll:
-                Party.get().addRolls(e.value);
+                Party.get().addRolls(e.getValue());
                 break;
             default:
                 System.err.println("uhoh type not implemented for onroll "+e.type);

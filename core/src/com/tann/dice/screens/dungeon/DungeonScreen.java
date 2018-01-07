@@ -60,9 +60,10 @@ public class DungeonScreen extends Screen {
     private void init(){
 
         spellHolder = new SpellHolder();
-        spellHolder.setup(Party.get().getSpells());
+        Buff b1 = new DamageMultiplier(.2f, 2);
+        b1.target = new Hero(HeroType.Alchemist);
+        Buff b2 = b1.copy();
         addActor(spellHolder);
-        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
 
         enemy = new SidePanel(false);
         addActor(enemy);
@@ -104,7 +105,7 @@ public class DungeonScreen extends Screen {
         confirmButton.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        confirmDice();
+                        confirmDice(true);
                     }
                 });
         confirmButton.setFont(Fonts.font);
@@ -168,6 +169,8 @@ public class DungeonScreen extends Screen {
                 break;
         }
         setup(monsters);
+        spellHolder.setup(Party.get().getSpells());
+        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
     }
 
     public void setup(List<Monster> monsters){
@@ -196,7 +199,7 @@ public class DungeonScreen extends Screen {
         Main.popPhase();
     }
 
-    private void confirmDice() {
+    private void confirmDice(boolean force) {
         if(Main.getPhase() instanceof PlayerRollingPhase) {
             boolean allGood = true;
             for (DiceEntity h : Party.get().getActiveEntities()) {
@@ -213,11 +216,15 @@ public class DungeonScreen extends Screen {
         }
         else if (Main.getPhase() instanceof TargetingPhase){
             if(Party.get().getAvaliableMagic() > 0){
-                showDialog("Spend all your magic first!");
+                if(force) {
+                    showDialog("Spend all your magic first!");
+                }
                 return;
             }
             if(!checkAllDiceUsed()){
-                showDialog("Use all your dice first!");
+                if(force) {
+                    showDialog("Use all your dice first!");
+                }
                 return;
             }
             Main.popPhase();
@@ -331,6 +338,9 @@ public class DungeonScreen extends Screen {
             case Self:
                 d.entity.hit(d.getEffects(), false);
                 d.use();
+            case RandomEnemy:
+                Tann.getRandom(Room.get().getActiveEntities()).hit(d.getEffects(), false);
+                d.use();
                 break;
         }
 
@@ -345,7 +355,7 @@ public class DungeonScreen extends Screen {
                         switch(e.type){
                             case Magic:
                                 System.out.println("adding magic");
-                                Party.get().addMagic(e.value);
+                                Party.get().addMagic(e.getValue());
                                 break;
                             case Nothing:
                                 break;
@@ -415,13 +425,14 @@ public class DungeonScreen extends Screen {
             }
         }
         deselectTargetable();
+        confirmDice(false);
         return true;
     }
 
     private boolean checkAllDiceUsed(){
         boolean allUsed = true;
         for (DiceEntity de : Party.get().getActiveEntities()) {
-            if (!de.getDie().getUsed() && de.getDie().getActualSide().effects[0].type != Eff.EffectType.Nothing) {
+            if (!de.getDie().getUsed() && de.getDie().getActualSide().effects[0].targetingType != Eff.TargetingType.Untargeted) {
                 return false;
             }
         }

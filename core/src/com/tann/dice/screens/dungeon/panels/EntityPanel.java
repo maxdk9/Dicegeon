@@ -218,7 +218,7 @@ public class EntityPanel extends Group {
         }
         for(int i=0;i<e.getBuffs().size();i++){
             Buff b = e.getBuffs().get(i);
-            Draw.drawSize(batch, b.type.image, buffX, getY() + getHeight() - buffSize *(i+1) - borderSize, buffSize, buffSize);
+            Draw.drawSize(batch, b.image, buffX, getY() + getHeight() - buffSize *(i+1) - borderSize, buffSize, buffSize);
         }
 
         if(possibleTarget || targeted) {

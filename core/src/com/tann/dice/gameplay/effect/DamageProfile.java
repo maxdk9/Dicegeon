@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.effect;
 
+import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public class DamageProfile {
     private int incomingDamage;
     private int blockedDamage;
     private int heals;
-    public List<com.tann.dice.gameplay.effect.buff.Buff> incomingBuffs = new ArrayList<>();
+    public List<Buff> incomingBuffs = new ArrayList<>();
     DiceEntity target;
     public List<Eff> effs = new ArrayList<>();
 
@@ -40,20 +41,21 @@ public class DamageProfile {
             case Magic:
                 break;
             case Damage:
-                incomingDamage += e.value;
+                incomingDamage += e.getValue();
                 break;
             case Shield:
-                blockedDamage += e.value;
+                blockedDamage += e.getValue();
                 break;
             case Heal:
-                heals += e.value;
+                heals += e.getValue();
                 break;
             case Buff:
-                //todo
-//                incomingBuffs.add(new com.tann.dice.gameplay.effect.buff.Buff(target, e.buffType, e.value, e.buffDuration));
+                Buff b = e.buff.copy();
+                b.target = target;
+                incomingBuffs.add(b);
                 break;
             case Execute:
-                if(target.getEffectiveHp() == e.value){
+                if(target.getEffectiveHp() == e.getValue()){
                     incomingDamage += 100000;
                 }
         }
@@ -74,22 +76,24 @@ public class DamageProfile {
     public void action(){
         target.heal(heals);
         target.damage(Math.max(0, getIncomingDamage() - blockedDamage));
-        for(com.tann.dice.gameplay.effect.buff.Buff b: incomingBuffs){
+        for(Eff e:effs){
+            target.attackedBy(e.source);
+        }
+        for(Buff b: incomingBuffs){
             target.addBuff(b);
         }
         reset();
         target.getEntityPanel().layout();
     }
 
-    List<com.tann.dice.gameplay.effect.buff.Buff> allBuffs = new ArrayList<>();
+    private List<Buff> allBuffs = new ArrayList<>();
     public int getIncomingDamage(){
         allBuffs.clear();
         allBuffs.addAll(incomingBuffs);
         allBuffs.addAll(target.getBuffs());
-        for(com.tann.dice.gameplay.effect.buff.Buff b:allBuffs){
-            if(b.type == com.tann.dice.gameplay.effect.buff.Buff.BuffType.stealth){
-                return 0;
-            }
+        int damage = incomingDamage;
+        for(Buff b:allBuffs){
+            damage = b.alterIncomingDamage(damage);
         }
         return incomingDamage;
     }

@@ -39,6 +39,7 @@ public class SpellHolder extends Group {
         for(Spell spell:spells){
             addSpell(spell);
         }
+        layout();
     }
 
     private void addSpell (Spell spell){
@@ -48,13 +49,20 @@ public class SpellHolder extends Group {
             spellMap.put(spell.cost, spells);
         }
         spells.add(spell);
-        layout();
     }
 
     private int getMaxSpells() {
         int result = 0;
         for (List a : spellMap.values()) {
             result = Math.max(result, a.size());
+        }
+        return result;
+    }
+
+    private int getMaxSpellLevel() {
+        int result = 0;
+        for (int i : spellMap.keySet()) {
+            result = Math.max(result, i);
         }
         return result;
     }
@@ -75,15 +83,16 @@ public class SpellHolder extends Group {
         setSize(WIDTH, BAR_HEIGHT*getSpellLevels());
         Layoo l = new Layoo(this);
         l.row(1);
-        for(int i=0;i<10;i++){
+        for(int i=1;i<=getMaxSpellLevel();i++){
             List<Spell> spells = spellMap.get(i);
-            if(spells==null) continue;
             SpellCostPanel scp = new SpellCostPanel(i);
             l.actor(scp);
             l.gap(1);
-            for(Spell s : spells) {
-                l.actor(s.getPanel());
-                l.gap(1);
+            if(spells != null) {
+                for (Spell s : spells) {
+                    l.actor(s.getPanel());
+                    l.gap(1);
+                }
             }
             l.row(1);
         }

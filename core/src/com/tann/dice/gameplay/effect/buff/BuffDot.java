@@ -1,9 +1,11 @@
 package com.tann.dice.gameplay.effect.buff;
 
+import com.tann.dice.Images;
+
 public class BuffDot extends Buff{
     int damage;
     public BuffDot(int turns, int damage) {
-        super(turns);
+        super(turns, Images.poison);
         this.damage = damage;
     }
 
@@ -12,8 +14,4 @@ public class BuffDot extends Buff{
         target.damage(damage);
     }
 
-    @Override
-    protected void finaliseCopy(Buff b) {
-        ((BuffDot)b).damage = damage;
-    }
 }

@@ -462,7 +462,7 @@ public class Die implements Targetable{
     public void addSide(Side side){
         Side copy = side.copy();
         sides.add(copy);
-        for(Eff e:copy.effects) e.sourceDie=this;
+        for(Eff e:copy.effects) e.source=entity;
     }
 
     public void construct(){

@@ -36,9 +36,14 @@ public class Hero extends DiceEntity {
             case Defender:
                 results.add(HeroType.Paladin);
                 results.add(HeroType.Bard);
+                break;
             case Apprentice:
+                results.add(HeroType.Pyro);
+                results.add(HeroType.Arcanist);
                 break;
             case Herbalist:
+                results.add(HeroType.Alchemist);
+                results.add(HeroType.Druid);
                 break;
         }
         return results;
@@ -63,7 +68,7 @@ public class Hero extends DiceEntity {
         Alchemist(5, new Side[]{Side.heal4, Side.magic2, Side.magic1, Side.potionregen, Side.potionHeroism, Side.nothing}, new Spell[]{Spell.stoneSkin}),
         Druid(5, new Side[]{Side.sword2, Side.magic2, Side.magic2, Side.heal4, Side.heal4, Side.nothing}, new Spell[]{Spell.balance}),
 
-        Pyromancer(5, new Side[]{Side.magic1, Side.magic1, Side.magic2, Side.magic2, Side.flameWard, Side.nothing}, new Spell[]{Spell.inferno}),
+        Pyro(5, new Side[]{Side.magic1, Side.magic1, Side.magic2, Side.magic2, Side.flameWard, Side.nothing}, new Spell[]{Spell.inferno}),
         Arcanist(5, new Side[]{Side.magic1, Side.magic1, Side.magic2, Side.magic2, Side.nothing, Side.nothing}, new Spell[]{Spell.arcaneMissile}),
 
         Wizard(4, Side.stealth, Side.stealth, Side.stealth, Side.magic2, Side.magic2, Side.magic2),
@@ -96,6 +101,8 @@ public class Hero extends DiceEntity {
         this.name = type.toString();
         setSides(type.sides);
         resetPanels();
+        DungeonScreen.get().spellHolder.setup(Party.get().getSpells());
+        DungeonScreen.get().spellHolder.layout();
     }
 
     @Override

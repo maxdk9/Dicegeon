@@ -269,11 +269,10 @@ public abstract class DiceEntity {
         }
     }
 
-    public boolean canBeTargeted() {
+    public void attackedBy(DiceEntity entity) {
         for(Buff b:getBuffs()){
-            if(b.type == Buff.BuffType.stealth) return false;
+            b.attackedBy(entity);
         }
-        return true;
     }
 
     public enum EntitySize {

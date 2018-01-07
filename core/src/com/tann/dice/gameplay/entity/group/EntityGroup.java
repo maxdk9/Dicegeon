@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity.group;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class EntityGroup {
         int mod = (int) (Math.random()*activeEntities.size());
         for(int i=mod;i<mod+activeEntities.size();i++){
             DiceEntity de = activeEntities.get(i%activeEntities.size());
-            if(de.canBeTargeted()) return de;
+            return de;
         }
         return null;
     }
@@ -72,6 +73,9 @@ public class EntityGroup {
         for(int i=all.size()-1;i>=0;i--){
             DiceEntity de = all.get(i);
             de.getProfile().action();
+        }
+        for(int i=all.size()-1;i>=0;i--){
+            DiceEntity de = all.get(i);
             de.upkeep();
             de.getEntityPanel().layout();
         }
@@ -87,13 +91,12 @@ public class EntityGroup {
             case EnemyOnlyAdjacents:
             case EnemyAndAdjacents:
                 for(DiceEntity de:enemies){
-                    if(!de.slidOut && player || !de.canBeTargeted()) continue;
+                    if(!de.slidOut && player) continue;
                     targetsTmp.add(de);
                 }
                 break;
             case EnemySingleRanged:
                 for(DiceEntity de:enemies){
-                    if(!de.canBeTargeted()) continue;
                     targetsTmp.add(de);
                 }
                 break;
@@ -103,6 +106,7 @@ public class EntityGroup {
             case EnemyGroup:
             case FriendlyGroup:
             case Self:
+            case RandomEnemy:
             case Untargeted:
                 break;
         }
@@ -121,7 +125,7 @@ public class EntityGroup {
                 result.add(target);
                 break;
             case Self:
-                result.add(eff.sourceDie.entity);
+                result.add(eff.source);
                 break;
             case EnemyAndAdjacents:
                 result.addAll(target.getAdjacents(true));
@@ -134,6 +138,9 @@ public class EntityGroup {
                 break;
             case FriendlyGroup:
                 result.addAll(friends);
+                break;
+            case RandomEnemy:
+                result.add(Tann.getRandom(enemies));
                 break;
             case Untargeted:
                 break;

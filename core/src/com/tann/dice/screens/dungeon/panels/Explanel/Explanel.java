@@ -71,6 +71,7 @@ public class Explanel extends InfoPanel {
             switch (spell.effects[0].targetingType) {
                 case EnemyGroup:
                 case FriendlyGroup:
+                case RandomEnemy:
                 case Untargeted:
                     if(enoughMagic) {
                         Button confirmButton = new Button(60, 60, Images.tick, Colours.dark, new Runnable() {

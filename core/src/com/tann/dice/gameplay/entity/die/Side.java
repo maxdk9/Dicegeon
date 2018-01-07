@@ -3,7 +3,7 @@ package com.tann.dice.gameplay.entity.die;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.tann.dice.Images;
-import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.buff.*;
 import com.tann.dice.gameplay.effect.Eff;
 
 public class Side {
@@ -50,14 +50,14 @@ public class Side {
     public static final Side trident = new Side(Images.get("trident1"), new Eff().damage(1).enemyAndAdjacents());
     public static final Side trident2 = new Side(Images.get("trident2"), new Eff().damage(2).enemyAndAdjacents());
 
-    public static final Side poison1 = new Side(Images.get("poison1"), new Eff().poison(1));
-    public static final Side poison2 = new Side(Images.get("poison2"), new Eff().poison(2));
-    public static final Side stealth = new Side(Images.get("stealth"), new Eff().stealth().self());
+    public static final Side poison1 = new Side(Images.get("poison1"), new Eff().buff(new BuffDot(-1, 1)));
+    public static final Side poison2 = new Side(Images.get("poison2"), new Eff().buff(new BuffDot(-1, 2)));
+    public static final Side stealth = new Side(Images.get("stealth"), new Eff().buff(new Stealth(1)).self());
     public static final Side snipe = new Side(Images.get("snipe"), new Eff().execute(3).ranged());
 
-    public static final Side potionregen = new Side(Images.get("potionofregen"), new Eff().buff(1, Buff.BuffType.regen, -1));
-    public static final Side potionHeroism = new Side(Images.get("potionofregen"), new Eff().buff(1, Buff.BuffType.doubleDamage, -1));
-    public static final Side flameWard = new Side(Images.get("flameWard"), new Eff().buff(2, Buff.BuffType.fireShield, 1));
+    public static final Side potionregen = new Side(Images.get("potionofregen"), new Eff().buff(new BuffDot(-1, -1)).friendlySingle());
+    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
+    public static final Side flameWard = new Side(Images.get("flameWard"), new Eff().buff(new ReturnDamage(1, 2)).friendlySingle());
 
 
     public static final Side magic1 = new Side(Images.get("magic1"), new Eff().magic(1).untargeted());
