@@ -92,7 +92,7 @@ public class Eff {
             case Reroll:
                 return "When you roll this, gain +1 reroll this inturnal";
             case Buff:
-                return buff.toString();
+                return buff.toNiceString();
         }
         return "yeowch?? "+type;
     }

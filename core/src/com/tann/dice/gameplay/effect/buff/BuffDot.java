@@ -14,4 +14,14 @@ public class BuffDot extends Buff{
         target.damage(damage);
     }
 
+    @Override
+    public String toNiceString() {
+        if(damage>0){
+            return damage + " damage per turn to an enemy target";
+        }
+        else{
+            return -damage + " healing per turn to a friendly target";
+        }
+    }
+
 }

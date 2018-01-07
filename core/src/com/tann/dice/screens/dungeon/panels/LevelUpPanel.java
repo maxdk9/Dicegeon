@@ -144,7 +144,6 @@ public class LevelUpPanel extends Group{
         DiePanel dp = panels[index];
         if(choiceSpell != null){
             choiceSpell.remove();
-            System.out.println("removed "+choiceSpell.getParent());
         }
         choiceSpell = dp.spellPanel;
         if(choiceSpell != null){

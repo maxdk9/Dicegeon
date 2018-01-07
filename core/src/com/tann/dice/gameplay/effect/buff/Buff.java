@@ -44,4 +44,6 @@ public abstract class Buff implements Cloneable{
         }
         return clone;
     }
+
+    public abstract String toNiceString();
 }

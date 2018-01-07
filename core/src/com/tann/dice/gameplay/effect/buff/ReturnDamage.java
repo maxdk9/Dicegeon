@@ -18,4 +18,9 @@ public class ReturnDamage extends Buff{
         }
     }
 
+    @Override
+    public String toNiceString() {
+        return "Target reflects "+damage+" damage for "+turns+" turns";
+    }
+
 }

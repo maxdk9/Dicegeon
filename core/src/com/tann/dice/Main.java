@@ -123,6 +123,7 @@ public class Main extends ApplicationAdapter {
 		logTime("bullet");
 		DungeonScreen.self = null;
 		setScreen(DungeonScreen.get());
+		DungeonScreen.get().resetHeroes();
 		DungeonScreen.get().nextLevel();
 		logTime("screen");
 	}
@@ -220,7 +221,7 @@ public class Main extends ApplicationAdapter {
 	}
 
 	public static void popPhase() {
-		Phase popped = phaseStack.remove(0);
+        Phase popped = phaseStack.remove(0);
 		popped.deactivate();
 		if (phaseStack.size() == 0) {
 			System.err.println("popping error, previous phase was " + popped.toString());

@@ -8,8 +8,9 @@ public class DamagePhase extends Phase {
     @Override
     public void activate() {
         EntityGroup.activateDamage();
-        DungeonScreen.get().checkEnd();
-        Main.popPhase();
+        if(!DungeonScreen.get().checkEnd()){
+            Main.popPhase();
+        }
     }
 
     @Override

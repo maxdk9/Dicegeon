@@ -20,4 +20,9 @@ public class DamageMultiplier extends Buff{
         return amount;
     }
 
+    @Override
+    public String toNiceString() {
+        return "x"+(int)multiplier+" damage to a friendly target for "+turns+" turns";
+    }
+
 }

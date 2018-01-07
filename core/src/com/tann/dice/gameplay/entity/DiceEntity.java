@@ -65,8 +65,8 @@ public abstract class DiceEntity {
     }
 
     protected void resetPanels() {
-        panel.layout();
-        ep.layout();
+        getEntityPanel().layout();
+        getDiePanel().layout();
     }
 
     public int getMaxHp() {

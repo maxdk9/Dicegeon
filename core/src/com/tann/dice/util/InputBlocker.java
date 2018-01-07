@@ -26,7 +26,10 @@ public class InputBlocker extends Actor{
             new Runnable() {
                 @Override
                 public void run() {
-                    DungeonScreen.get().pop();
+                    if(blockerListen) {
+                        DungeonScreen.get().pop();
+                    }
+
                 }
             }
         );
@@ -46,5 +49,10 @@ public class InputBlocker extends Actor{
     public void draw(Batch batch, float parentAlpha) {
 //        batch.setColor(0,0,0,.5f);
 //        Draw.fillActor(batch, this);
+    }
+
+    boolean blockerListen;
+    public void setActiveClicker(boolean blockerListen) {
+        this.blockerListen = blockerListen;
     }
 }

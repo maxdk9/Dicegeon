@@ -30,8 +30,8 @@ public class Monster extends DiceEntity {
         Goblin(5, EntitySize.Regular, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
         Ogre(8, EntitySize.Big, Side.cleave1, Side.cleave1, Side.sword3, Side.sword4, Side.sword4, Side.sword5),
         Archer(3, EntitySize.Small, Side.arrow2, Side.arrow2, Side.arrow2, Side.arrow2, Side.arrow3, Side.arrow3),
-        Serpent(8, EntitySize.Big, Side.trident2, Side.trident2, Side.sword3, Side.sword3, Side.poison1, Side.poison1),
-        Dragon(25, EntitySize.Huge, Side.cleave2, Side.cleave2, Side.sword4, Side.sword4, Side.poison2, Side.poison2);
+        Serpent(8, EntitySize.Big, Side.trident2, Side.trident2, Side.sword3, Side.sword3, Side.cleave1, Side.cleave1),
+        Dragon(30, EntitySize.Huge, Side.cleave2, Side.cleave2, Side.sword4, Side.sword4, Side.poison2, Side.poison2);
 
 
 
