@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Party extends EntityGroup{
 
-    private static final int BASE_ROLLS = 300;
+    private static final int BASE_ROLLS = 3;
 
     private int gold; // wow I wonder if this will ever do anything! I hope so
     private int rolls = BASE_ROLLS;

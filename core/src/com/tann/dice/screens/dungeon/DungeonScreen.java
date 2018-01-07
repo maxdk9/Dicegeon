@@ -171,6 +171,13 @@ public class DungeonScreen extends Screen {
         setup(monsters);
         spellHolder.setup(Party.get().getSpells());
         spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
+        Main.clearPhases();
+        Main.pushPhase(new NothingPhase());
+        if(level>1){
+            Main.pushPhase(new LevelUpPhase());
+        }
+        Main.pushPhase(new EnemyRollingPhase());
+        Main.popPhase();
     }
 
     public void setup(List<Monster> monsters){
@@ -190,13 +197,6 @@ public class DungeonScreen extends Screen {
         BulletStuff.refresh(EntityGroup.getAllActive());
         friendly.setEntities(heroes);
         enemy.setEntities(monsters);
-
-        Main.clearPhases();
-
-        Main.pushPhase(new NothingPhase());
-        Main.pushPhase(new LevelUpPhase());
-        Main.pushPhase(new EnemyRollingPhase());
-        Main.popPhase();
     }
 
     private void confirmDice(boolean force) {
@@ -324,15 +324,11 @@ public class DungeonScreen extends Screen {
         Eff first = d.getEffects()[0];
         switch(first.targetingType){
             case EnemyGroup:
-                for(DiceEntity de:Room.get().getActiveEntities()){
-                    de.hit(d.getEffects(), false);
-                }
+                hitMultiple(Room.get().getActiveEntities(), d.getEffects(), false);
                 d.use();
                 break;
             case FriendlyGroup:
-                for(DiceEntity de:Party.get().getActiveEntities()){
-                    de.hit(d.getEffects(), false);
-                }
+                hitMultiple(Party.get().getActiveEntities(), d.getEffects(), false);
                 d.use();
                 break;
             case Self:
@@ -345,6 +341,13 @@ public class DungeonScreen extends Screen {
         }
 
         targetableClick(d);
+        checkEnd();
+    }
+
+    private void hitMultiple(List<DiceEntity> entities, Eff[] effects, boolean instant){
+        for(int i=entities.size()-1;i>=0;i--){
+            entities.get(i).hit(effects, instant);
+        }
     }
 
     public void activateAutoEffects(){
@@ -426,6 +429,7 @@ public class DungeonScreen extends Screen {
         }
         deselectTargetable();
         confirmDice(false);
+        checkEnd();
         return true;
     }
 
@@ -437,11 +441,6 @@ public class DungeonScreen extends Screen {
             }
         }
         return true;
-        /*
-        if(checkEnd()){
-            nextLevel();
-        }
-         */
     }
 
     private void hitEntities(List<DiceEntity> entities, Eff e){
@@ -450,8 +449,13 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    private boolean checkEnd() {
-        return Room.get().getActiveEntities().size() == 0;
+    public void checkEnd() {
+        for(DiceEntity de:Room.get().getActiveEntities()){
+            if(!de.getProfile().isGoingToDie()){
+                return;
+            }
+        }
+        nextLevel();
     }
 
     public List<DiceEntity> getRandomTargetForEnemy(Side side) {
@@ -571,7 +575,7 @@ public class DungeonScreen extends Screen {
 
     public void showLevelupPanel(Hero hero, List<HeroType>options) {
         LevelUpPanel lup = new LevelUpPanel(hero, options);
-        lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
+        lup.setPosition(getWidth()/2, getHeight()*2/3f, Align.center);
         addActor(lup);
     }
 

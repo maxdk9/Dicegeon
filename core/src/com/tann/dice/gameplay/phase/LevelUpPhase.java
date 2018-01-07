@@ -4,13 +4,17 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.util.Tann;
 
 public class LevelUpPhase extends Phase {
 
     @Override
     public void activate() {
-        Hero h = (Hero) Party.get().getRandomActive(false);
-        h = (Hero) Party.get().getActiveEntities().get(3);
+        Hero h = null;
+        for(int i=0;i<1000;i++){
+            h = (Hero) Tann.getRandom(Party.get().getActiveEntities());
+            if(h.getLevelupOptions().size()>0) break;
+        }
         DungeonScreen.get().showLevelupPanel(h, h.getLevelupOptions());
     }
 

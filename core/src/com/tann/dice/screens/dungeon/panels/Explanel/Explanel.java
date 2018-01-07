@@ -37,7 +37,7 @@ public class Explanel extends InfoPanel {
         return self;
     }
 
-    private Explanel(){
+    public Explanel(){
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

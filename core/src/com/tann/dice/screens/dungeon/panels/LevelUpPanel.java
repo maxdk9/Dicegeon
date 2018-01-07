@@ -12,6 +12,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Hero.HeroType;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
+import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -25,6 +26,7 @@ import java.util.List;
 public class LevelUpPanel extends Group{
   ChoicesPanel choicesPanel;
   public static Hero hero;
+  static Explanel choiceSpell;
   public LevelUpPanel(Hero hero, List<HeroType> options) {
     this.hero = hero;
     float gap = 50;
@@ -33,7 +35,7 @@ public class LevelUpPanel extends Group{
     TextWriter tw = new TextWriter("Level up!", Fonts.font);l.actor(tw);
     l.row(1);
     l.gap(1);
-    l.actor(hero.getDiePanel());
+    l.actor(new DiePanel(hero));
     l.gap(1);
     l.actor(choicesPanel = new ChoicesPanel(options));
     l.gap(1);
@@ -42,7 +44,7 @@ public class LevelUpPanel extends Group{
 
     l.layoo();
 
-
+    choicesPanel.slideTo(0);
   }
 
   @Override
@@ -137,8 +139,17 @@ public class LevelUpPanel extends Group{
             DiePanel dp = panels[i];
             dp.clearActions();
             currentChoice = options.get(index);
-            // DiePanel.HEIGHT  - (i-1)*DiePanel.HEIGHT
             dp.addAction(Actions.moveTo( dp.getX(), (index-i)*DiePanel.HEIGHT, .3f, Interpolation.pow2Out));
+        }
+        DiePanel dp = panels[index];
+        if(choiceSpell != null){
+            choiceSpell.remove();
+            System.out.println("removed "+choiceSpell.getParent());
+        }
+        choiceSpell = dp.spellPanel;
+        if(choiceSpell != null){
+            getParent().addActor(choiceSpell);
+            choiceSpell.setPosition(getWidth(),-choiceSpell.getHeight()-50);
         }
     }
 

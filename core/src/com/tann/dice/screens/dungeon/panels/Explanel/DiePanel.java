@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -14,6 +16,7 @@ import com.tann.dice.util.*;
 public class DiePanel extends InfoPanel implements OnPop {
     public DiceEntity entity;
     public static float WIDTH = 320, HEIGHT = 230;
+    public Explanel spellPanel;
     public DiePanel(DiceEntity entity) {
         this.entity = entity;
         addListener(new InputListener(){
@@ -64,6 +67,16 @@ public class DiePanel extends InfoPanel implements OnPop {
         }
         l.row(1);
         l.layoo();
+        if(entity instanceof Hero){
+            Hero h = (Hero) entity;
+            for(Spell s: h.getSpells()){
+                spellPanel = new Explanel();
+
+                spellPanel.setup(s);
+                addActor(spellPanel);
+                spellPanel.setPosition(getWidth()/2-spellPanel.getWidth()/2, -spellPanel.getHeight()-50);
+            }
+        }
     }
 
     private ImageActor make(final Side s){
@@ -85,9 +98,7 @@ public class DiePanel extends InfoPanel implements OnPop {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        // todo scissorstack stuff
         Draw.fillActor(batch, this, Colours.dark);
-//        Draw.fillActor(batch, this, new Color(0,1,0,.1f));
         super.draw(batch, parentAlpha);
     }
 
