@@ -31,6 +31,8 @@ public class Images {
     public static final TextureRegion heart = Main.atlas.findRegion("heart");
     public static final TextureRegion heart_empty = Main.atlas.findRegion("heartEmpty");
 
+    public static final TextureRegion background = Main.atlas.findRegion("background");
+
     public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("dice/lapel/0");
     public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
     public static final TextureRegion lapel2 = Main.atlas_3d.findRegion("dice/lapel/2");

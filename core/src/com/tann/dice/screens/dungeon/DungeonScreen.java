@@ -311,6 +311,8 @@ public class DungeonScreen extends Screen {
         Draw.fillActor(batch, this);
         batch.setColor(Colours.brown_dark);
         batch.setColor(Colours.brown_dark);
+        batch.setColor(Colours.z_white);
+        Draw.drawSize(batch, Images.background, 0,0,getWidth(), getHeight());
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
