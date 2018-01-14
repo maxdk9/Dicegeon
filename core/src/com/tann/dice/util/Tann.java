@@ -30,4 +30,10 @@ public class Tann {
     public static <T> T getRandom(List<T> list){
         return list.get((int)(Math.random()*list.size()));
     }
+
+    public static float dist(float x, float y, float x1, float y1) {
+        float xDiff = x1-x;
+        float yDiff = y1-y;
+        return (float) Math.sqrt(xDiff*xDiff + yDiff*yDiff);
+    }
 }

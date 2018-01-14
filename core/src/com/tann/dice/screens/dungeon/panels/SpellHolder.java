@@ -94,16 +94,6 @@ public class SpellHolder extends Group {
             l.row(1);
         }
         l.layoo();
-        SpellPulltab sp = new SpellPulltab();
-        addActor(sp);
-        sp.setPosition(getWidth(), getHeight()/2-sp.getHeight()/2);
-        sp.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                togglePosition();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
     }
 
     public void hide(){
@@ -112,12 +102,12 @@ public class SpellHolder extends Group {
 
     public boolean active;
     private void togglePosition() {
-        active = !active;
-        if(!active){
-            DungeonScreen.get().closeSpellHolder();
-        }
-        addAction(Actions.moveTo(getX(active), getY(active), .3f, Interpolation.pow2Out));
-        Explanel.get().slide();
+//        active = !active;
+//        if(!active){
+//            DungeonScreen.get().closeSpellHolder();
+//        }
+//        addAction(Actions.moveTo(getX(active), getY(active), .3f, Interpolation.pow2Out));
+//        Explanel.get().slide();
     }
 
     public float getX(boolean out){

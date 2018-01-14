@@ -18,11 +18,11 @@ import java.util.List;
 
 public class SidePanel extends Group {
   public static final float width = Main.width*BulletStuff.sides;
-  static final float height = Main.height - DungeonScreen.BOTTOM_BUTTON_HEIGHT;
+  static final float height = Main.height - DungeonScreen.BOTTOM_BUTTON_HEIGHT-DungeonScreen.BUTT_GAP*2;
   private List<DiceEntity> entities = new ArrayList<>();
   public SidePanel(boolean friendly) {
     setSize(width, height);
-    setPosition(friendly?0:Main.width-width, DungeonScreen.BOTTOM_BUTTON_HEIGHT);
+    setPosition(friendly?0:Main.width-width, DungeonScreen.BOTTOM_BUTTON_HEIGHT+DungeonScreen.BUTT_GAP*2);
   }
 
   public void layout(boolean slide){
@@ -45,8 +45,6 @@ public class SidePanel extends Group {
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    batch.setColor(Colours.double_dark);
-    Draw.fillActor(batch,this);
     super.draw(batch, parentAlpha);
   }
 

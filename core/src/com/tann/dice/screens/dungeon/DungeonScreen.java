@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
@@ -15,7 +14,6 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
-import com.tann.dice.gameplay.effect.buff.BuffDot;
 import com.tann.dice.gameplay.effect.buff.DamageMultiplier;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
@@ -48,8 +46,9 @@ public class DungeonScreen extends Screen {
         return self;
     }
 
-    public static final float BOTTOM_BUTTON_HEIGHT = Main.height*.2f;
-
+    public static final float BOTTOM_BUTTON_HEIGHT = Main.height*.18f;
+    public static final float BOTTOM_BUTTON_WIDTH = BOTTOM_BUTTON_HEIGHT;
+    public static final float BUTT_GAP = 15;
     public SidePanel friendly;
     private SidePanel enemy;
     public SpellHolder spellHolder;
@@ -58,14 +57,15 @@ public class DungeonScreen extends Screen {
     }
 
     Button rollButton;
-    TextButton confirmButton;
+    Button confirmButton;
+    SpellButt spellButt;
     private void init(){
 
         spellHolder = new SpellHolder();
         Buff b1 = new DamageMultiplier(.2f, 2);
         b1.target = new Hero(HeroType.Alchemist);
         Buff b2 = b1.copy();
-        addActor(spellHolder);
+//        addActor(spellHolder);
 
         enemy = new SidePanel(false);
         addActor(enemy);
@@ -83,8 +83,7 @@ public class DungeonScreen extends Screen {
             }
         };
         addActor(bulletActor);
-
-        rollButton = new Button(SidePanel.width, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
+        rollButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
                 new Runnable() {
                     @Override
                     public void run() {
@@ -103,14 +102,13 @@ public class DungeonScreen extends Screen {
         addActor(rollButton);
         rollButton.setSquare();
         rollButton.setPosition(-rollButton.getWidth(), 0);
-        confirmButton = new TextButton(SidePanel.width, BOTTOM_BUTTON_HEIGHT, "Confirm Dice");
+        confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, .6f, Images.tick, Colours.dark);
         confirmButton.setRunnable(new Runnable() {
                     @Override
                     public void run() {
                         confirmDice(true);
                     }
                 });
-        confirmButton.setFont(Fonts.font);
         confirmButton.setColor(Colours.green_light);
         addActor(confirmButton);
         confirmButton.setPosition(getWidth(), 0);
@@ -122,6 +120,11 @@ public class DungeonScreen extends Screen {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
+
+        spellButt = new SpellButt();
+        addActor(spellButt);
+        float gap = 15;
+        spellButt.setPosition(SidePanel.width + gap,Main.height-spellButt.getHeight()-gap);
     }
 
     private void bottomClick() {
@@ -129,15 +132,15 @@ public class DungeonScreen extends Screen {
     }
 
     public void slideRollButton(boolean in){
-        rollButton.addAction(Actions.moveTo(in?0:-rollButton.getWidth(), 0, .3f, Interpolation.pow2Out));
+        rollButton.addAction(Actions.moveTo(in?BUTT_GAP:-rollButton.getWidth(), BUTT_GAP, .3f, Interpolation.pow2Out));
     }
 
     public void slideConfirmButton(boolean in){
-        confirmButton.addAction(Actions.moveTo(in?getWidth()-confirmButton.getWidth(): getWidth(), 0, .3f, Interpolation.pow2Out));
+        confirmButton.addAction(Actions.moveTo(in?getWidth()-confirmButton.getWidth()-BUTT_GAP: getWidth(), BUTT_GAP, .3f, Interpolation.pow2Out));
     }
 
     public void setConfirmText(String s) {
-        confirmButton.setText(s);
+//        confirmButton.setText(s);
     }
 
     public int level=0;
@@ -187,7 +190,9 @@ public class DungeonScreen extends Screen {
         Party.get().rejig();
         setup(monsters);
         spellHolder.setup(Party.get().getSpells());
-        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
+        spellButt.setSpellHolder(spellHolder);
+//        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
+
         Main.clearPhases();
         Main.pushPhase(new NothingPhase());
 
@@ -337,6 +342,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void keyPress(int keycode) {
+        
     }
 
     @Override
@@ -348,7 +354,6 @@ public class DungeonScreen extends Screen {
         for (DiceEntity de : EntityGroup.getAllActive()) {
             de.removeEffects(effects);
         }
-
     }
 
     public void click(Die d, boolean fromPhysics) {
