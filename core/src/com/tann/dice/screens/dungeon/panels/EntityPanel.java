@@ -77,11 +77,13 @@ public class EntityPanel extends Group {
         boolean huge = e.getSize() == DiceEntity.EntitySize.Huge;
 
         float diceHoleSize = e.getDie().get2DSize() + DieHolder.extraGap*2;
-        float gap = 10;
+        float gap = 2;
         float height = gap*2+diceHoleSize;
         if(huge){
             height = gap * 3 + diceHoleSize + 120;
         }
+        System.out.println(huge+":"+height);
+        System.out.println(e.getDie().get2DSize()+":"+DieHolder.extraGap);
         setSize(WIDTH, height);
 
         Group dieGroup = new Group(){
@@ -120,7 +122,7 @@ public class EntityPanel extends Group {
         r.actor(tw);
 
         float absHeartGap = 2;
-        float heartSize = 18;
+        float heartSize = 4;
         DamageProfile profile = e.getProfile();
         if(huge)r.row(2);
         for(int i=0;i<e.getMaxHp();i++){
@@ -206,7 +208,6 @@ public class EntityPanel extends Group {
         int n = 6;
 
         NinePatch np = new NinePatch(Images.patch, n,n,n,n);
-        np.scale(3,3);
         np.draw(batch, getX(), getY(), getWidth(), getHeight());
         super.draw(batch, parentAlpha);
 

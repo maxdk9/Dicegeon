@@ -430,7 +430,8 @@ public class Die implements Targetable{
     }
 
     public float get2DSize(){
-        float dimen = DIE_SIZE*2;
+        float dimen = DIE_SIZE*2f ;
+        dimen /= Main.scale;
 //        if(physical.dimensions.x!=0){
 //            dimen = physical.dimensions.x;
 //        }

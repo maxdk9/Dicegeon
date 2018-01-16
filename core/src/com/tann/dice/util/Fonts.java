@@ -28,7 +28,7 @@ public class Fonts {
         fontTiny= generator.generateFont(parameter);
         parameter.size = (int)Main.h(24/700f*100);
         fontSmall = generator.generateFont(parameter);
-        parameter.size=(int)Main.h(28/700f*100);
+        parameter.size=(int)Main.h(2/700f*100);
         fontSmallish= generator.generateFont(parameter);
         parameter.size=(int)Main.h(44/700f*100);
         font= generator.generateFont(parameter);

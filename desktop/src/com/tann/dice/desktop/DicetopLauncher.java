@@ -10,8 +10,8 @@ public class DicetopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.vSyncEnabled=true;
-		config.width=Main.width;
-		config.height=Main.height;
+		config.width=1280;
+		config.height=720;
 		config.samples=1;
 		config.title="Dicegeon";
         config.addIcon("icon.png", Files.FileType.Internal);

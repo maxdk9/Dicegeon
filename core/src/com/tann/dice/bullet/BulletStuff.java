@@ -217,7 +217,8 @@ public class BulletStuff {
 	}
 
 	public static Die getClickedDie (int screenX, int screenY) {
-		Ray ray = cam.getPickRay(screenX, screenY);
+        System.out.println(screenX+":"+screenY);
+        Ray ray = cam.getPickRay(screenX, screenY);
 		Die result = null;
 		float distance = -1;
 
@@ -233,7 +234,7 @@ public class BulletStuff {
 				continue;
 
 			float dist2 = dieClickPosition.dst2(ray.origin.x+ray.direction.x*len, ray.origin.y+ray.direction.y*len, ray.origin.z+ray.direction.z*len);
-			if (distance >= 0f && dist2 > distance) 
+            if (distance >= 0f && dist2 > distance)
 				continue;
 
 			if (dist2 <= instance.radius * instance.radius) {
@@ -246,7 +247,7 @@ public class BulletStuff {
 	}
 
 	public static boolean click(float x, float y, int button) {
-		Die d = getClickedDie((int) x, Gdx.graphics.getHeight() - (int) y);
+		Die d = getClickedDie(Gdx.input.getX(), Gdx.input.getY());
 		if (d != null) {
 			DungeonScreen.get().click(d, true);
 			return true;
@@ -285,11 +286,11 @@ public class BulletStuff {
     }
 
 	public static float convertToScreen(float length){
-		return length*Main.width/srcWidth;
+        return length*Main.SCREEN_WIDTH/srcWidth;
 	}
 
 	public static Vector2 convertToScreen(float x, float y){
-		return null;
+	    throw new RuntimeException();
 	}
 
 	public static Vector2 convertToScreen(Vector2 pos){

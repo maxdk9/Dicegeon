@@ -15,7 +15,7 @@ public class SpellButt extends Group {
     Group container = new Group();
     SpellHolder sh;
     public SpellButt() {
-        float size = 80;
+        float size = 20;
         setSize(size,size);
         container.setScale(0);
         container.setPosition(getWidth()/2, getHeight()/2);

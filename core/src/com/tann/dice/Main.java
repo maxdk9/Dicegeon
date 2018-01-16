@@ -26,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends ApplicationAdapter {
-	public static int width = 1280, height = 720;
+    public static final int scale = 5;
+    public static final int SCREEN_WIDTH = 1280, SCREEN_HEIGHT = 720;
+	public static final int width = 1280/scale, height = 720/scale;
     public static String version = "0.1.2";
     public static String versionName = "v"+version;
 	SpriteBatch batch;
@@ -40,7 +42,7 @@ public class Main extends ApplicationAdapter {
 	Screen currentScreen;
 	Screen previousScreen;
 	public static float ticks;
-    public static final int scale = 5;
+
     FrameBuffer fb;
 
     public enum MainState {
@@ -49,18 +51,12 @@ public class Main extends ApplicationAdapter {
 
 	public Main(){}
 
-	public Main(int width, int height){
-		Main.width = width;
-		Main.height=height;
-	}
 
 	//Callbacks
 
 	@Override
 	public void create() {
 		if(printCalls) System.out.println("create");
-		Main.width = Gdx.graphics.getWidth();
-		Main.height = Gdx.graphics.getHeight();
 		logTime(null);
 		logTime("start");
 		Sounds.setup();
@@ -78,7 +74,7 @@ public class Main extends ApplicationAdapter {
 		Fonts.setup();
 		TextWriter.setup();
 		logTime("setup");
-		stage = new Stage(new ScreenViewport());
+		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();
 		batch = (SpriteBatch) stage.getBatch();
         InputProcessor diceInput = new InputProcessor() {
@@ -125,7 +121,7 @@ public class Main extends ApplicationAdapter {
 		DungeonScreen.get().resetHeroes();
 		DungeonScreen.get().nextLevel();
 		logTime("screen");
-		fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width/scale, height/scale, true);
+		fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
 	}
 
 	@Override
@@ -143,7 +139,7 @@ public class Main extends ApplicationAdapter {
 		fb.end();
 		batch.begin();
         fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-        Draw.drawRotatedScaledFlipped(batch, fb.getColorBufferTexture(), 0, 0, scale, scale, 0, false, true);
+        Draw.drawRotatedScaledFlipped(batch, fb.getColorBufferTexture(), 0, 0, 1, 1, 0, false, true);
         batch.end();
         Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT );
         BulletStuff.render();
@@ -171,8 +167,8 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void resize(int width, int height) {
-		Main.width = width;
-		Main.height = height;
+//		Main.width = width;
+//		Main.height = height;
 		stage.getViewport().update(width, height);
 		Fonts.setup();
 		BulletStuff.resize();
