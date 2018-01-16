@@ -12,7 +12,7 @@ public class DicetopLauncher {
 		config.vSyncEnabled=true;
 		config.width=Main.width;
 		config.height=Main.height;
-		config.samples=10;
+		config.samples=1;
 		config.title="Dicegeon";
         config.addIcon("icon.png", Files.FileType.Internal);
         new LwjglApplication(new Main(), config);

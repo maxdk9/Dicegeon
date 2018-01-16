@@ -3,10 +3,12 @@ package com.tann.dice;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -38,8 +40,8 @@ public class Main extends ApplicationAdapter {
 	Screen currentScreen;
 	Screen previousScreen;
 	public static float ticks;
-
-
+    public static final int scale = 5;
+    FrameBuffer fb;
 
     public enum MainState {
 		Normal, Paused
@@ -123,21 +125,28 @@ public class Main extends ApplicationAdapter {
 		DungeonScreen.get().resetHeroes();
 		DungeonScreen.get().nextLevel();
 		logTime("screen");
+		fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width/scale, height/scale, true);
 	}
 
 	@Override
 	public void render() {
 		long startTime = System.currentTimeMillis();
 		update(Gdx.graphics.getDeltaTime());
+        fb.bind();
+        fb.begin();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
-		stage.draw();
 		batch.begin();
-		drawVersion();
-		if (Main.showFPS) {
-			drawFPS();
-		}
-		batch.end();
+//        Draw.fillRectangle(batch, 0,0,5000,5000);
+        batch.end();
+		stage.draw();
+		fb.end();
+		batch.begin();
+        fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        Draw.drawRotatedScaledFlipped(batch, fb.getColorBufferTexture(), 0, 0, scale, scale, 0, false, true);
+        batch.end();
+        Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT );
+        BulletStuff.render();
 	}
 
     public static float tickMult=1;

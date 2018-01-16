@@ -2,6 +2,7 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -86,7 +87,6 @@ public class EntityPanel extends Group {
         Group dieGroup = new Group(){
             @Override
             public void draw(Batch batch, float parentAlpha) {
-                Draw.fillActor(batch, this);
                 super.draw(batch, parentAlpha);
             }
         };
@@ -111,7 +111,7 @@ public class EntityPanel extends Group {
 
 
         Layoo left = new Layoo(dieGroup);
-        left.actor(holder = new DieHolder(diceHoleSize));
+        left.actor(holder = new DieHolder(diceHoleSize, e.getColour()));
         left.layoo();
 
         Layoo r = new Layoo(heartGroup);
@@ -200,8 +200,18 @@ public class EntityPanel extends Group {
         Color inner = getColor();
         if(e.targeted!=null) inner = Colours.red_dark;
         Color border = e.getColour();
-        Draw.fillActor(batch, this, inner, border,  borderSize);
+//        Draw.fillActor(batch, this, inner, border,  borderSize);
+
+        batch.setColor(Colours.z_white);
+        int n = 6;
+
+        NinePatch np = new NinePatch(Images.patch, n,n,n,n);
+        np.scale(3,3);
+        np.draw(batch, getX(), getY(), getWidth(), getHeight());
         super.draw(batch, parentAlpha);
+
+
+
         int overkill = profile.getOverkill();
         if(overkill>0 && !e.isDead()){
             Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, 0, 0);
@@ -276,15 +286,16 @@ public class EntityPanel extends Group {
 
     static class DieHolder extends Actor{
         public static final float extraGap = 3;
-        public DieHolder(float size){
+        public DieHolder(float size, Color col){
             setSize(size, size);
+            setColor(col);
         }
 
         @Override
         public void draw(Batch batch, float parentAlpha) {
-            batch.setColor(Colours.light);
-            Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
-            batch.setColor(Colours.grey);
+//            batch.setColor(Colours.light);
+//            Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
+            batch.setColor(getColor());
             Draw.fillRectangle(batch, getX()+extraGap, getY()+extraGap, getWidth()-extraGap*2, getHeight()-extraGap*2);
             super.draw(batch, parentAlpha);
         }

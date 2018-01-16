@@ -78,7 +78,7 @@ public class DungeonScreen extends Screen {
             public void draw(Batch batch, float parentAlpha) {
                 super.draw(batch, parentAlpha);
                 batch.end();
-                BulletStuff.render();
+//                BulletStuff.render();
                 batch.begin();
             }
         };

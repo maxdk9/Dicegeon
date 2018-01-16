@@ -11,6 +11,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		config.numSamples = 3;
 		config.resolutionStrategy = new FillResolutionStrategy();
 		initialize(new Main(), config);
 	}
