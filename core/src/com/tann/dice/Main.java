@@ -147,8 +147,7 @@ public class Main extends ApplicationAdapter {
 
     public static float tickMult=1;
 	public void update(float delta) {
-
-		getPhase().checkIfDone();
+        getPhase().checkIfDone();
 
 		tickMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 0.2f : 1;
 		delta *= tickMult;
