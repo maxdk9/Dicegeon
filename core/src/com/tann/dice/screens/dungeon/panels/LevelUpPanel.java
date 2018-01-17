@@ -16,7 +16,7 @@ import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
-import com.tann.dice.util.Fonts;
+
 import com.tann.dice.util.Layoo;
 import com.tann.dice.util.TextButton;
 import com.tann.dice.util.TextWriter;
@@ -32,7 +32,7 @@ public class LevelUpPanel extends Group{
     float gap = 50;
 
     Layoo l = new Layoo(this);
-    TextWriter tw = new TextWriter("Level up!", Fonts.font);l.actor(tw);
+    TextWriter tw = new TextWriter("Level up!");l.actor(tw);
     l.row(1);
     l.gap(1);
     l.actor(new DiePanel(hero));

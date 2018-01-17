@@ -11,7 +11,7 @@ import com.tann.dice.Main;
 
 public class TextButton extends Group{
     String text;
-    BitmapFont font = Fonts.fontTiny;
+    TannFont font = TannFont.font;
     boolean highlight;
     public TextButton(float width, float height, String text) {
         setText(text);
@@ -52,10 +52,7 @@ public class TextButton extends Group{
         int BORDER = (int)(Main.h(.4f));
         super.draw(batch, parentAlpha);
         Draw.fillActor(batch, this, background, Colours.brown_dark, BORDER);
-        Fonts.draw(batch, text, font, Colours.light, getX(), getY(), getWidth(), getHeight());
+        font.drawString(batch, text, getX(), getY());
     }
 
-    public void setFont(BitmapFont font) {
-        this.font = font;
-    }
 }

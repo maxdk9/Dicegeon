@@ -172,7 +172,7 @@ public class SpellHolder extends Group {
             if(Main.getPhase().canTarget()){
                 int magic = Party.get().getAvaliableMagic();
                 Draw.drawSizeCentered(batch, Images.magicEmpty, getX() + getWidth()/2, getY() + getHeight()/2, size, size);
-                Fonts.draw(batch, ""+magic, Fonts.fontSmall, Colours.light, getX(), getY(), getWidth(), getHeight());
+                TannFont.font.drawString(batch, ""+magic, getX(), getY());
             }
             else{
                 Draw.drawSizeCentered(batch, Images.magic, getX() + getWidth()/2, getY() + getHeight()/2, size, size);

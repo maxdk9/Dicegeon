@@ -99,7 +99,7 @@ public class Explanel extends InfoPanel {
         float width = 30;
         float height = 0;
         float gap = 2;
-        BitmapFont font = Fonts.fontSmall;
+        TannFont font = TannFont.font;
 
         height += gap;
         ImageActor ia = new ImageActor(image, 10, 10);
@@ -107,9 +107,9 @@ public class Explanel extends InfoPanel {
         height += gap;
         TextBox title=null;
         if(name != null) {
-            title = new TextBox(name, font, width, Align.center);
+            title = new TextBox(name, width, Align.center);
         }
-        TextBox descBox = new TextBox(description, font, width-gap*2, Align.center);
+        TextBox descBox = new TextBox(description, width-gap*2, Align.center);
         height += descBox.getHeight();
         height += gap;
 

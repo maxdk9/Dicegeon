@@ -117,7 +117,7 @@ public class EntityPanel extends Group {
         left.layoo();
 
         Layoo r = new Layoo(heartGroup);
-        TextWriter tw = new TextWriter(e.getName(), Fonts.fontSmall);
+        TextWriter tw = new TextWriter(e.getName());
         r.row(1);
         r.actor(tw);
 
@@ -215,7 +215,8 @@ public class EntityPanel extends Group {
 
         int overkill = profile.getOverkill();
         if(overkill>0 && !e.isDead()){
-            Fonts.draw(batch, "+"+overkill, Fonts.fontSmall, Colours.light, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, 0, 0);
+
+            TannFont.font.drawString(batch, "+"+overkill, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, false);
         }
 
         batch.setColor(Colours.z_white);

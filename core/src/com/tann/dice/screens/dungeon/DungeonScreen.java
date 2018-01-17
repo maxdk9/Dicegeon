@@ -95,8 +95,8 @@ public class DungeonScreen extends Screen {
             @Override
             public void draw(Batch batch, float parentAlpha) {
                 super.draw(batch, parentAlpha);
-                Fonts.draw(batch, Party.get().getRolls()+"/"+Party.get().getMaxRolls(),
-                        Fonts.fontSmall, Colours.light, this.getX(), this.getY(), this.getWidth(), this.getHeight()/5, Align.center);
+                TannFont.font.drawString(batch, Party.get().getRolls()+"/"+Party.get().getMaxRolls(),
+                        this.getX(), this.getY());
             }
         };
         addActor(rollButton);
@@ -277,7 +277,6 @@ public class DungeonScreen extends Screen {
 
     private void showDialog(String s) {
         TextButton tb = new TextButton(550, 100, s);
-        tb.setFont(Fonts.font);
         push(tb, true, true, true, false, false);
     }
 
@@ -327,7 +326,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
-        Fonts.draw(batch, "Level "+level+"/5", Fonts.fontSmall, Colours.light, 0, Main.height-Fonts.fontSmall.getLineHeight(), Main.width, Fonts.fontSmall.getLineHeight(), Align.center);
+        TannFont.font.drawString(batch, "Level "+level+"/5",Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
     }
 
     @Override

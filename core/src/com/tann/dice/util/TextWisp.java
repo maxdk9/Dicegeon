@@ -39,8 +39,8 @@ public class TextWisp extends BasicLay{
 
 //        batch.setColor(Colours.withAlpha(Colours.dark, alp));
 //        Draw.fillRectangle(batch,getX()-100,getY()-100,200,200);
-		Fonts.font.setColor(c.r, c.g, c.b, alp);
-		Fonts.font.draw(batch, text, getX(), getY(), 0, Align.center, false);
+		batch.setColor(c.r, c.g, c.b, alp);
+		TannFont.font.drawString(batch, text, getX(), getY());
 	}
 	
 }

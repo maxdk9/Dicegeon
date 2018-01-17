@@ -14,11 +14,10 @@ import java.util.Map;
 public class TextWriter extends Lay {
     String[] split;
     String text;
-    BitmapFont font;
-    public TextWriter(String text, BitmapFont font) {
+    TannFont font = TannFont.font;
+    public TextWriter(String text) {
         this.text=text;
         split = text.split("[\\[\\]]");
-        this.font=font;
         setColor(Colours.light);
         layout();
     }
@@ -49,7 +48,7 @@ public class TextWriter extends Lay {
         for(String s:split){
             if(index%2==0){
                 // text
-                TextBox tb =  new TextBox(s, font, -1, Align.center);
+                TextBox tb =  new TextBox(s, -1, Align.center);
                 tb.setTextColour(getColor());
                 addActor(tb);
                 tb.setX(x);
@@ -66,7 +65,7 @@ public class TextWriter extends Lay {
                     if (tr == null) {
                         System.err.println("unable to find texture '" + s + "' for string " + text);
                     }
-                    float scale = font.getCapHeight() / tr.getRegionHeight();
+                    float scale = font.getHeight() / tr.getRegionHeight();
                     ImageActor ia = new ImageActor(tr, tr.getRegionWidth() * scale, tr.getRegionHeight() * scale);
                     Color col = colorMap.get(s);
                     if (col != null) ia.setColor(col);
@@ -77,6 +76,6 @@ public class TextWriter extends Lay {
             }
             index++;
         }
-        setSize(x, font.getCapHeight());
+        setSize(x, font.getHeight());
     }
 }

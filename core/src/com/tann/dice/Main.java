@@ -71,7 +71,6 @@ public class Main extends ApplicationAdapter {
 		logTime("textures");
 		self = this;
 		Draw.setup();
-		Fonts.setup();
 		TextWriter.setup();
 		logTime("setup");
 		stage = new Stage(new FitViewport(Main.width, Main.height));
@@ -169,7 +168,6 @@ public class Main extends ApplicationAdapter {
 //		Main.width = width;
 //		Main.height = height;
 		stage.getViewport().update(width, height);
-		Fonts.setup();
 		BulletStuff.resize();
 		if (currentScreen != null) {
 			currentScreen.layChain();
@@ -181,24 +179,23 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		super.dispose();
-		Fonts.dispose();
         if(printCalls) System.out.println("dispose");
 	}
 
 	@Override
 	public void resume() {
-		Fonts.setup();
         if(printCalls) System.out.println("resume");
 	}
 
 	private void drawVersion() {
-		Fonts.fontSmall.setColor(Colours.blue_dark);
-		Fonts.fontSmall.draw(batch, versionName, 0, Fonts.fontSmall.getLineHeight());
+        batch.setColor(Colours.blue_dark);
+        TannFont.font.drawString(batch, versionName, 0, 5, false);
 	}
 
     private void drawFPS() {
-        Fonts.fontSmall.setColor(Colours.blue_dark);
-        Fonts.fontSmall.draw(batch, Gdx.graphics.getFramesPerSecond()+"fps", 0, Fonts.fontSmall.getLineHeight()*2);
+
+        batch.setColor(Colours.blue_dark);
+        TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond()+"fps", 0, TannFont.font.getHeight()*2);
     }
 
 	public static float w(float factor) {

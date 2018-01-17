@@ -87,9 +87,9 @@ public class Slider extends Actor{
 		batch.setColor(backGround);
 		Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), gap);
 		Draw.fillRectangle(batch, getX()+gap, getY()+gap, (getWidth()-gap*2)*value, getHeight()-gap*2);
-        Fonts.fontSmall.setColor(Colours.brown_light);
-		Fonts.fontSmall.draw(batch, title, (int)(getX()), (int)(getY()+getHeight()/2+Fonts.fontSmall.getCapHeight()/2), getWidth(), Align.center, true);
-		batch.flush();
+        batch.setColor(Colours.brown_light);
+        TannFont.font.drawString(batch, title, (int)(getX()), (int)(getY()+getHeight()/2+TannFont.font.getHeight()/2));
+        batch.flush();
 		clip.x=getParent().getX()+getX();
 		clip.y=getParent().getY()+getY();
 		clip.width=getWidth()*value;
@@ -97,7 +97,7 @@ public class Slider extends Actor{
 		boolean added =(ScissorStack.pushScissors(clip));
 		if(added){
 			batch.setColor(foreGround);
-			Fonts.font.draw(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2), 500, Align.center, true);
+            TannFont.font.drawString(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2));
 			batch.flush();
 			ScissorStack.popScissors();
 		}
