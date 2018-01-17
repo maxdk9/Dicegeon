@@ -15,7 +15,7 @@ import com.tann.dice.util.*;
 
 public class DiePanel extends InfoPanel implements OnPop {
     public DiceEntity entity;
-    public static float WIDTH = 320, HEIGHT = 230;
+    public static float WIDTH = 75, HEIGHT = 50;
     public Explanel spellPanel;
     public DiePanel(DiceEntity entity) {
         this.entity = entity;
@@ -29,7 +29,7 @@ public class DiePanel extends InfoPanel implements OnPop {
         });
         layout();
     }
-    private static final float SIDE_SIZE = 60;
+    private static final float SIDE_SIZE = 13;
     public void layout(){
         clearChildren();
         setSize(WIDTH, HEIGHT);
@@ -74,14 +74,14 @@ public class DiePanel extends InfoPanel implements OnPop {
 
                 spellPanel.setup(s);
                 addActor(spellPanel);
-                spellPanel.setPosition(getWidth()/2-spellPanel.getWidth()/2, -spellPanel.getHeight()-50);
+                spellPanel.setPosition(getWidth()/2-spellPanel.getWidth()/2, -spellPanel.getHeight()-5);
             }
         }
     }
 
     private ImageActor make(final Side s){
         ImageActor ia = new ImageActor(s.tr[0], SIDE_SIZE, SIDE_SIZE);
-        ia.setBorder(new Border(Colours.double_dark, entity.getColour(), 3));
+        ia.setBorder(new Border(Colours.double_dark, entity.getColour(), 1));
         ia.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

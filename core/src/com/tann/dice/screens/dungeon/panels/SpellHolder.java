@@ -26,7 +26,7 @@ public class SpellHolder extends Group {
 
     public static final float BAR_HEIGHT = (int)(SpellPanel.SIZE*1.2f);
     Map<Integer, List<Spell>> spellMap = new HashMap<>();
-    public static int GAP = 10;
+    public static int GAP = 2;
 
     public SpellHolder() {
     }

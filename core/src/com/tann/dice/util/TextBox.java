@@ -54,8 +54,9 @@ public class TextBox extends BasicLay{
 	public void draw(Batch batch, float parentAlpha) {
 //		batch.setColor(1,0,1,.5f);
 //		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
-		batch.setColor(bgCol);
-		Draw.fillRectangle(batch, getX()-50, getY()-50, getWidth()+100, getHeight()+100);
+		if(bgCol.a!=0) batch.setColor(bgCol);
+		int i = 1;
+//		Draw.fillRectangle(batch, getX()-i, getY()-i, getWidth()+i*2, getHeight()+i*2);
 		font.setColor(textCol);
 //		font.draw(batch, layout, getX(), getY()+getHeight());
 		font.draw(batch, text, getX(), getY()+getHeight(), layout.width,  align, true);

@@ -128,21 +128,21 @@ public class Main extends ApplicationAdapter {
 	public void render() {
 		long startTime = System.currentTimeMillis();
 		update(Gdx.graphics.getDeltaTime());
-        fb.bind();
-        fb.begin();
+		fb.bind();
+		fb.begin();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 //        Draw.fillRectangle(batch, 0,0,5000,5000);
-        batch.end();
+		batch.end();
 		stage.draw();
 		fb.end();
 		batch.begin();
-        fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-        Draw.drawRotatedScaledFlipped(batch, fb.getColorBufferTexture(), 0, 0, 1, 1, 0, false, true);
-        batch.end();
-        Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT );
-        BulletStuff.render();
+		fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		Draw.drawRotatedScaledFlipped(batch, fb.getColorBufferTexture(), 0, 0, 1, 1, 0, false, true);
+		batch.end();
+		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
+		BulletStuff.render();
 	}
 
     public static float tickMult=1;

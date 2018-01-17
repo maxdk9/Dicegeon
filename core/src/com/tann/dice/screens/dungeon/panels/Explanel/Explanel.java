@@ -96,13 +96,13 @@ public class Explanel extends InfoPanel {
     void layout(){
         clearChildren();
         clearActions();
-        float width = 300;
+        float width = 30;
         float height = 0;
-        float gap = 15;
+        float gap = 2;
         BitmapFont font = Fonts.fontSmall;
 
         height += gap;
-        ImageActor ia = new ImageActor(image, 70, 70);
+        ImageActor ia = new ImageActor(image, 10, 10);
         height += ia.getHeight();
         height += gap;
         TextBox title=null;
@@ -125,7 +125,7 @@ public class Explanel extends InfoPanel {
         }
         if(cost!=null){
             for(int i=0;i<cost;i++){
-                ImageActor c = new ImageActor(Images.magic, 30, 30);
+                ImageActor c = new ImageActor(Images.magic, 4, 4);
                 l.actor(c);
                 if(usable && Party.get().getAvaliableMagic() <= i){
                     c.setColor(Colours.red);
@@ -142,7 +142,7 @@ public class Explanel extends InfoPanel {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, Colours.green_dark, 3);
+        Draw.fillActor(batch, this, Colours.dark, Colours.green_dark, 1);
         super.draw(batch, parentAlpha);
     }
 

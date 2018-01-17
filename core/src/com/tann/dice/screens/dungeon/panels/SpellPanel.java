@@ -11,7 +11,7 @@ import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
 public class SpellPanel extends Actor{
-    public static final int SIZE = 100;
+    public static final int SIZE = 20;
     public static float IMAGE_MULT = .8f;
     public static float BORDER = 2f;
     final Spell spell;

@@ -46,9 +46,9 @@ public class DungeonScreen extends Screen {
         return self;
     }
 
-    public static final float BOTTOM_BUTTON_HEIGHT = Main.height*.18f;
+    public static final float BOTTOM_BUTTON_HEIGHT = 25;
     public static final float BOTTOM_BUTTON_WIDTH = BOTTOM_BUTTON_HEIGHT;
-    public static final float BUTT_GAP = 15;
+    public static final float BUTT_GAP = 2;
     public SidePanel friendly;
     private SidePanel enemy;
     public SpellHolder spellHolder;
@@ -123,7 +123,7 @@ public class DungeonScreen extends Screen {
 
         spellButt = new SpellButt();
         addActor(spellButt);
-        float gap = 15;
+        float gap = 2;
         spellButt.setPosition(SidePanel.width + gap,Main.height-spellButt.getHeight()-gap);
     }
 
@@ -317,7 +317,7 @@ public class DungeonScreen extends Screen {
         batch.setColor(Colours.brown_dark);
         batch.setColor(Colours.brown_dark);
         batch.setColor(Colours.z_white);
-        Draw.drawSize(batch, Images.background, 0,0,getWidth(), getHeight());
+        Draw.draw(batch, Images.background, 0,0);
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
