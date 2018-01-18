@@ -48,7 +48,7 @@ public class TextWriter extends Lay {
         for(String s:split){
             if(index%2==0){
                 // text
-                TextBox tb =  new TextBox(s, -1, Align.center);
+                TextBox tb =  new TextBox(s);
                 tb.setTextColour(getColor());
                 addActor(tb);
                 tb.setX(x);

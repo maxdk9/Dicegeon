@@ -3,10 +3,12 @@ package com.tann.dice.screens.dungeon.panels;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.buff.Buff;
@@ -21,13 +23,22 @@ public class EntityPanel extends Group {
     boolean holdsDie;
     DamageProfile profile;
     float startX;
-
+    static NinePatch np = new NinePatch(Images.patch, 6,6,6,6);
+    boolean huge;
     public EntityPanel(final DiceEntity e) {
         this.e = e;
+        huge = e.getSize() == DiceEntity.EntitySize.Huge;
         profile = e.getProfile();
         layout();
         setColor(Colours.dark);
-
+        float height = e.getDie().get2DSize();
+        if(huge){
+            height =  e.getDie().get2DSize() + 120;
+        }
+        setSize(WIDTH, height+borderSize*2);
+        holder = new DieHolder(e.getDie().get2DSize(), e.getColour());
+        addActor(holder);
+        holder.setPosition(getWidth()-holder.getWidth()-borderSize, borderSize);
         addListener(new InputListener() {
 
             @Override
@@ -66,121 +77,11 @@ public class EntityPanel extends Group {
 
     static float gapFactor = .9f;
     static float factor = 1f;
-    public static final float gap = 13;
     public static final float WIDTH = SidePanel.width * gapFactor * factor;
 
     DieHolder holder;
 
     public void layout(){
-        clearChildren();
-        // probably need to do this eventually
-        boolean huge = e.getSize() == DiceEntity.EntitySize.Huge;
-
-        float diceHoleSize = e.getDie().get2DSize() + DieHolder.extraGap*2;
-        float gap = 2;
-        float height = gap*2+diceHoleSize;
-        if(huge){
-            height = gap * 3 + diceHoleSize + 120;
-        }
-        System.out.println(huge+":"+height);
-        System.out.println(e.getDie().get2DSize()+":"+DieHolder.extraGap);
-        setSize(WIDTH, height);
-
-        Group dieGroup = new Group(){
-            @Override
-            public void draw(Batch batch, float parentAlpha) {
-                super.draw(batch, parentAlpha);
-            }
-        };
-        dieGroup.setSize(diceHoleSize, diceHoleSize);
-        addActor(dieGroup);
-        Group heartGroup = new Group(){
-            @Override
-            public void draw(Batch batch, float parentAlpha) {
-                super.draw(batch, parentAlpha);
-            }
-        };
-        float heartWidth = getWidth()-dieGroup.getWidth()-gap*3;
-        float heartHeight = getHeight();
-        if(huge){
-            heartWidth = getWidth();
-            heartHeight = getHeight() - dieGroup.getHeight() - 40;
-        }
-
-        heartGroup.setSize(heartWidth, heartHeight);
-        addActor(heartGroup);
-
-
-
-        Layoo left = new Layoo(dieGroup);
-        left.actor(holder = new DieHolder(diceHoleSize, e.getColour()));
-        left.layoo();
-
-        Layoo r = new Layoo(heartGroup);
-        TextWriter tw = new TextWriter(e.getName());
-        r.row(1);
-        r.actor(tw);
-
-        float absHeartGap = 2;
-        float heartSize = 4;
-        DamageProfile profile = e.getProfile();
-        if(huge)r.row(2);
-        for(int i=0;i<e.getMaxHp();i++){
-            if (i % (huge?10:5)==0){
-                r.row(1);
-            }
-            ImageActor ia;
-            if(i>=profile.getTopHealth()){
-                ia = new ImageActor(Images.heart_empty, heartSize, heartSize);
-                ia.setColor(Colours.red);
-            }
-            else {
-                ia = new ImageActor(Images.heart, heartSize, heartSize);
-                if(i>=profile.getTopHealth()-profile.totalIncoming()){
-                    ia.setColor(Colours.sand);
-                }
-                else{
-                    ia.setColor(Colours.red);
-                }
-            }
-            r.actor(ia);
-            if(i<e.getMaxHp()-1){
-                r.abs(absHeartGap);
-            }
-        }
-
-        r.row(1);
-        r.layoo();
-        Layoo main = new Layoo(this);
-        if(huge){
-            main.row(1);
-        }
-        else{
-            main.gap(1);
-        }
-        if(e.isPlayer()){
-            main.actor(heartGroup);
-            main.gap(1);
-            main.actor(dieGroup);
-        }
-        else{
-
-            main.actor(dieGroup);
-            if(huge){
-                main.row(1);
-            }
-            else{
-                main.gap(1);
-            }
-            main.actor(heartGroup);
-        }
-        if(huge){
-            main.row(1);
-        }
-        else{
-            main.gap(1);
-        }
-        main.layoo();
     }
 
     public void slide(boolean targetable){
@@ -196,21 +97,55 @@ public class EntityPanel extends Group {
         super.act(delta);
     }
 
+    static int borderSize = 5;
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        float borderSize = 4;
-        Color inner = getColor();
-        if(e.targeted!=null) inner = Colours.red_dark;
-        Color border = e.getColour();
-//        Draw.fillActor(batch, this, inner, border,  borderSize);
+
 
         batch.setColor(Colours.z_white);
-        int n = 6;
-
-        NinePatch np = new NinePatch(Images.patch, n,n,n,n);
         np.draw(batch, getX(), getY(), getWidth(), getHeight());
-        super.draw(batch, parentAlpha);
 
+        int rightSize = (int) holder.getWidth();
+
+        int leftSize = (int) (getWidth() - rightSize - borderSize*2);
+
+        int leftStart = (int) (getX()+borderSize);
+        batch.setColor(Colours.light);
+
+        int textY = (int) (getY() + getHeight()-borderSize-TannFont.font.getHeight());
+
+        TannFont.font.drawString(batch, e.getName(), leftStart + leftSize/2, textY, Align.center);
+
+
+        int heartGap = 1;
+        float heartSize = Images.heart.getRegionHeight();
+        int heartStartY = textY - 3;
+        int heartStartX = (int)   (leftSize/2 - (e.getMaxHp()*heartSize+heartGap*(e.getMaxHp()-1))/2  +getX()+borderSize);
+        int y = heartStartY;
+        int x = heartStartX;
+        TextureRegion tr;
+
+        for(int i=0;i<e.getMaxHp();i++){
+            if (i % (huge?10:5)==0){
+                y -= heartSize + heartGap;
+            }
+            if(i>=profile.getTopHealth()){
+                tr = Images.heart_empty;
+                batch.setColor(Colours.red);
+            }
+            else {
+                tr = Images.heart;
+                if(i>=profile.getTopHealth()-profile.totalIncoming()){
+                    batch.setColor(Colours.sand);
+                }
+                else{
+                    batch.setColor(Colours.red);
+                }
+            }
+            batch.draw(tr, x, y);
+            x += heartSize + heartGap;
+        }
 
 
         int overkill = profile.getOverkill();
@@ -239,8 +174,8 @@ public class EntityPanel extends Group {
         }
 
         //dang sorry future me, being lazy. My excuse is that this will probably change soon anyway
-        float holderX = holder.getX() + holder.getParent().getX() + holder.getParent().getParent().getX();
-        float holderY = holder.getY() + holder.getParent().getY() + holder.getParent().getParent().getY();
+        float holderX = holder.getX()+getX();
+        float holderY = holder.getY()+getY();
 
         if(e.isDead()){
             batch.setColor(Colours.grey);
@@ -255,6 +190,7 @@ public class EntityPanel extends Group {
             batch.setColor(0,0,0,.5f);
             Draw.fillActor(batch, this);
         }
+        super.draw(batch, parentAlpha);
     }
 
     public void flash() {
@@ -287,7 +223,7 @@ public class EntityPanel extends Group {
     }
 
     static class DieHolder extends Actor{
-        public static final float extraGap = 3;
+        public static final float extraGap = 0;
         public DieHolder(float size, Color col){
             setSize(size, size);
             setColor(col);

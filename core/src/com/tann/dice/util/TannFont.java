@@ -62,9 +62,9 @@ public class TannFont {
         }
     }
 
-    public void drawString(Batch batch, String text, int x, int y, boolean fixedWidth, int align) {
+    public void drawString(Batch batch, String text, float x, float y, int align) {
         if(align==Align.center){
-            drawString(batch, text, x-getWidth(text)/2, y, fixedWidth);
+            drawString(batch, text, x-getWidth(text)/2, y, false);
         }
 
     }
