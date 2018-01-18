@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends ApplicationAdapter {
-    public static final int scale = 5;
+    public static final int scale = 4;
     public static final int SCREEN_WIDTH = 1280, SCREEN_HEIGHT = 720;
 	public static final int width = 1280/scale, height = 720/scale;
     public static String version = "0.1.2";
@@ -56,11 +56,12 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+
 		if(printCalls) System.out.println("create");
 		logTime(null);
 		logTime("start");
 		Sounds.setup();
-		atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
+		atlas = new TextureAtlas(Gdx.files.internal("2d/atlas_image.atlas"));
 		for (Texture t : atlas.getTextures()) {
 //		    t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		}
