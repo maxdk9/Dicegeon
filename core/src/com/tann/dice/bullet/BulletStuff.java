@@ -217,7 +217,6 @@ public class BulletStuff {
 	}
 
 	public static Die getClickedDie (int screenX, int screenY) {
-        System.out.println(screenX+":"+screenY);
         Ray ray = cam.getPickRay(screenX, screenY);
 
 		Die result = null;

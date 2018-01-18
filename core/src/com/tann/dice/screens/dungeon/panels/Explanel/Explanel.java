@@ -109,7 +109,7 @@ public class Explanel extends InfoPanel {
         if(name != null) {
             title = new TextBox(name);
         }
-        TextBox descBox = new TextBox(description);
+        TextWriter descBox = new TextWriter(description);
         height += descBox.getHeight();
         height += gap;
 

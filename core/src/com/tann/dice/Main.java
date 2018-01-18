@@ -56,7 +56,6 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-
 		if(printCalls) System.out.println("create");
 		logTime(null);
 		logTime("start");
@@ -139,6 +138,7 @@ public class Main extends ApplicationAdapter {
 		fb.end();
 		batch.begin();
 		fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		batch.setColor(Colours.z_white);
 		Draw.drawRotatedScaledFlipped(batch, fb.getColorBufferTexture(), 0, 0, 1, 1, 0, false, true);
 		batch.end();
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
