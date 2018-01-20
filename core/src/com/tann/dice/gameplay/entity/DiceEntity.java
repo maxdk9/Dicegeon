@@ -290,7 +290,7 @@ public abstract class DiceEntity {
     }
 
     public enum EntitySize {
-        Small(.4f), Regular(.5f), Big(.63f), Huge(.95f);
+        Small(.4f), Regular(.475f), Big(.63f), Huge(.95f);
         public final float dieSize;
 
         EntitySize(float dieSize) {

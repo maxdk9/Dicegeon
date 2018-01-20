@@ -36,11 +36,11 @@ public class Images {
     public static final TextureRegion patch = Main.atlas.findRegion("patch/test");
 
     public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("dice/lapel/0");
-    public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
-    public static final TextureRegion lapel2 = Main.atlas_3d.findRegion("dice/lapel/2");
-    public static final TextureRegion lapel3 = Main.atlas_3d.findRegion("dice/lapel/3");
-    public static final TextureRegion lapel4 = Main.atlas_3d.findRegion("dice/lapel/4");
-    public static final TextureRegion lapel5 = Main.atlas_3d.findRegion("dice/lapel/5");
+//    public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
+//    public static final TextureRegion lapel2 = Main.atlas_3d.findRegion("dice/lapel/2");
+//    public static final TextureRegion lapel3 = Main.atlas_3d.findRegion("dice/lapel/3");
+//    public static final TextureRegion lapel4 = Main.atlas_3d.findRegion("dice/lapel/4");
+//    public static final TextureRegion lapel5 = Main.atlas_3d.findRegion("dice/lapel/5");
 	
 	private static Map<String, TextureRegion[]> threeDTextures = new HashMap<>();
 	private static TextureRegion[] makeFace(String name){

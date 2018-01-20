@@ -11,6 +11,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class DicetopLauncher {
+    private static final boolean forcePack = true;
 	public static void main (String[] arg)  {
         checkPack("../../images_3d", "imagehash3d.txt", true);
         checkPack("../../images", "imagehash2d.txt", false);
@@ -18,13 +19,17 @@ public class DicetopLauncher {
 		config.vSyncEnabled=true;
 		config.width=1280;
 		config.height=720;
-		config.samples=1;
+		config.samples=100;
 		config.title="Dicegeon";
         config.addIcon("icon.png", Files.FileType.Internal);
         new LwjglApplication(new Main(), config);
 	}
 
 	private static void checkPack(String dir, String file, boolean threeD){
+	    if(forcePack){
+	        packImages(threeD);
+	        return;
+        }
         int total = hash(new File(dir));
         int c = 0;
         try {
@@ -74,18 +79,21 @@ public class DicetopLauncher {
     }
 
     private static void packImages(boolean threeD){
+        System.out.println("packing "+(threeD?"3d":"2d"));
         TexturePacker.Settings settings = new TexturePacker.Settings();
         settings.silent = true;
         settings.maxWidth = 2048;
         settings.maxHeight = 2048;
 	    if(threeD){
-            settings.minWidth = 2048;
-            settings.minHeight = 2048;
+            settings.minWidth = 256;
+            settings.minHeight = 256;
+            settings.maxWidth = 256;
+            settings.maxHeight = 256;
             settings.paddingX = 2;
             settings.paddingY = 2;
             settings.combineSubdirectories = true;
-            settings.filterMag = Texture.TextureFilter.MipMap;
-            settings.filterMin = Texture.TextureFilter.MipMap;
+            settings.filterMag = Texture.TextureFilter.Linear;
+            settings.filterMin = Texture.TextureFilter.Linear;
             TexturePacker.process(settings, "../../images_3d", "3d", "atlas_image");
         }
         else{

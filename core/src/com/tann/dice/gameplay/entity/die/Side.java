@@ -11,24 +11,22 @@ public class Side {
     public TextureRegion[] tr;
 	public Eff[] effects;
 	public Side(TextureRegion tr[], Eff effect){
-		this.tr=tr;
-		this.effects=new Eff[]{effect};
+	    this(tr, new Eff[]{effect});
 	}
 	
 	public Side(TextureRegion tr[], Eff effect, Eff effect2, Eff effect3) {
-		this.tr=tr;
-		this.effects=new Eff[]{effect, effect2, effect3};
+		this(tr, new Eff[]{effect, effect2, effect3});
 	}
 	
 	public Side(TextureRegion tr[], Eff effect, Eff effect2){
-		this.tr=tr;
-		this.effects=new Eff[]{effect, effect2};
+		this(tr, new Eff[]{effect, effect2});
 	}
 
 	public Side(TextureRegion tr[], Eff[] effects){
-		this.tr=tr;
+		this.tr=Images.get("sword1");
 		this.effects=effects;
 	}
+
 
     public static final Side shield1 = new Side(Images.get("shield1"), new Eff().shield(1).friendlySingle());
     public static final Side shield2 = new Side(Images.get("shield2"), new Eff().shield(2).friendlySingle());
