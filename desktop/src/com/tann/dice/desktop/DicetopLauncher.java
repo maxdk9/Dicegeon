@@ -85,15 +85,16 @@ public class DicetopLauncher {
         settings.maxWidth = 2048;
         settings.maxHeight = 2048;
 	    if(threeD){
-            settings.minWidth = 256;
-            settings.minHeight = 256;
-            settings.maxWidth = 256;
-            settings.maxHeight = 256;
+	        int size = 256;
+            settings.minWidth = size;
+            settings.minHeight = size;
+            settings.maxWidth = size;
+            settings.maxHeight = size;
             settings.paddingX = 2;
             settings.paddingY = 2;
             settings.combineSubdirectories = true;
-            settings.filterMag = Texture.TextureFilter.Linear;
-            settings.filterMin = Texture.TextureFilter.Linear;
+            settings.filterMag = Texture.TextureFilter.MipMapLinearLinear;
+            settings.filterMin = Texture.TextureFilter.MipMapLinearLinear;
             TexturePacker.process(settings, "../../images_3d", "3d", "atlas_image");
         }
         else{
