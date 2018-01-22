@@ -291,10 +291,10 @@ public abstract class DiceEntity {
     }
 
 
-    static final float BASE_SIZE = .12615f;
+    static final float BASE_SIZE = .12625f;
     public enum EntitySize {
 
-        Small(.4f), Regular(BASE_SIZE*Main.scale), Big(.63f), Huge(.95f);
+        Small(.4f), Regular(BASE_SIZE*4), Big(.63f), Huge(.95f);
         public final float dieSize;
 
         EntitySize(float dieSize) {

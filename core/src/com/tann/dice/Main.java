@@ -26,9 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends ApplicationAdapter {
-    public static final int scale = 4;
-    public static final int SCREEN_WIDTH = 1280, SCREEN_HEIGHT = 720;
-	public static final int width = 1280/scale, height = 720/scale;
+    public static int scale = 4;
+    public static int SCREEN_WIDTH, SCREEN_HEIGHT;
+	public static int width, height;
     public static String version = "0.1.2";
     public static String versionName = "v"+version;
 	SpriteBatch batch;
@@ -57,6 +57,11 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		if(printCalls) System.out.println("create");
+		SCREEN_WIDTH = Gdx.graphics.getWidth();
+		SCREEN_HEIGHT = Gdx.graphics.getHeight();
+		scale = SCREEN_HEIGHT / 180;
+		width = SCREEN_WIDTH / scale;
+		height = SCREEN_HEIGHT / scale;
 		logTime(null);
 		logTime("start");
 		Sounds.setup();

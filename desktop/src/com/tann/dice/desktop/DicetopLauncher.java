@@ -24,8 +24,8 @@ public class DicetopLauncher {
         System.out.println(System.currentTimeMillis()-time);
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.vSyncEnabled=true;
-		config.width=1280;
-		config.height=720;
+		config.width=1920;
+		config.height=1080;
 		config.samples=100;
 		config.title="Dicegeon";
         config.addIcon("icon.png", Files.FileType.Internal);
