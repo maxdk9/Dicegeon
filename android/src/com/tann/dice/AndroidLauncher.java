@@ -13,6 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.numSamples = 3;
 		config.resolutionStrategy = new FillResolutionStrategy();
+		config.useImmersiveMode = true;
 		initialize(new Main(), config);
 	}
 }

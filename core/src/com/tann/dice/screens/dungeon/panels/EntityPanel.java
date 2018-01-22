@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -23,7 +24,8 @@ public class EntityPanel extends Group {
     boolean holdsDie;
     DamageProfile profile;
     float startX;
-    static NinePatch np = new NinePatch(Images.patch, 6,6,6,6);
+    static final int n = 5;
+    static NinePatch np = new NinePatch(Images.patch, n,n,n,n);
     boolean huge;
     public EntityPanel(final DiceEntity e) {
         this.e = e;
@@ -31,9 +33,9 @@ public class EntityPanel extends Group {
         profile = e.getProfile();
         layout();
         setColor(Colours.dark);
-        float height = e.getDie().get2DSize();
+        int height = e.getDie().get2DSize();
         if(huge){
-            height =  e.getDie().get2DSize() + 120;
+            height = (e.getDie().get2DSize() + 120);
         }
         setSize(WIDTH, height+borderSize*2);
         holder = new DieHolder(e.getDie().get2DSize(), e.getColour());
@@ -75,9 +77,7 @@ public class EntityPanel extends Group {
         return x/getWidth()>threshold == e.isPlayer();
     }
 
-    static float gapFactor = .9f;
-    static float factor = 1f;
-    public static final float WIDTH = SidePanel.width * gapFactor * factor;
+    public static final float WIDTH = SidePanel.width;
 
     DieHolder holder;
 
@@ -199,7 +199,9 @@ public class EntityPanel extends Group {
     }
 
     public Vector2 getDieHolderLocation(){
-        return Tann.getLocalCoordinates(holder).add(DieHolder.extraGap, DieHolder.extraGap);
+        Vector2 result = Tann.getLocalCoordinates(holder).add(DieHolder.extraGap, DieHolder.extraGap);
+        System.out.println(result);
+        return result;
     }
 
     private boolean possibleTarget;

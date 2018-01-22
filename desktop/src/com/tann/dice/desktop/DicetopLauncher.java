@@ -4,17 +4,24 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Polyline;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
+import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DicetopLauncher {
-    private static final boolean forcePack = true;
+    private static final boolean forcePack = false;
 	public static void main (String[] arg)  {
+	    long time = System.currentTimeMillis();
         checkPack("../../images_3d", "imagehash3d.txt", true);
         checkPack("../../images", "imagehash2d.txt", false);
+        System.out.println(System.currentTimeMillis()-time);
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.vSyncEnabled=true;
 		config.width=1280;
@@ -26,6 +33,7 @@ public class DicetopLauncher {
 	}
 
 	private static void checkPack(String dir, String file, boolean threeD){
+
 	    if(forcePack){
 	        packImages(threeD);
 	        return;
@@ -98,7 +106,7 @@ public class DicetopLauncher {
             TexturePacker.process(settings, "../../images_3d", "3d", "atlas_image");
         }
         else{
-            settings.combineSubdirectories = false;
+            settings.combineSubdirectories = true;
             settings.filterMag = Texture.TextureFilter.Nearest;
             settings.filterMin = Texture.TextureFilter.Nearest;
             TexturePacker.process(settings, "../../images", "2d", "atlas_image");

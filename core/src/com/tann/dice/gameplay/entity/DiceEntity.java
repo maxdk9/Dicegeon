@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.tann.dice.Images;
+import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.buff.Buff;
@@ -289,8 +290,11 @@ public abstract class DiceEntity {
         }
     }
 
+
+    static final float BASE_SIZE = .12615f;
     public enum EntitySize {
-        Small(.4f), Regular(.475f), Big(.63f), Huge(.95f);
+
+        Small(.4f), Regular(BASE_SIZE*Main.scale), Big(.63f), Huge(.95f);
         public final float dieSize;
 
         EntitySize(float dieSize) {

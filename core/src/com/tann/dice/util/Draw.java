@@ -2,6 +2,7 @@ package com.tann.dice.util;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +18,6 @@ import java.util.Map;
 public class Draw {
 	
 	public static void setup(){
-        circle150 = Main.atlas.findRegion("circle150");
         circle300 = Main.atlas.findRegion("circle300");
 	}
 	
