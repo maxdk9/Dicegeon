@@ -84,7 +84,7 @@ public class DungeonScreen extends Screen {
             }
         };
         addActor(bulletActor);
-        rollButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, .6f, Images.roll, Colours.dark,
+        rollButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.roll, Colours.dark,
                 new Runnable() {
                     @Override
                     public void run() {
@@ -103,7 +103,7 @@ public class DungeonScreen extends Screen {
         addActor(rollButton);
         rollButton.setSquare();
         rollButton.setPosition(-rollButton.getWidth(), 0);
-        confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, .6f, Images.tick, Colours.dark);
+        confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.tick, Colours.dark);
         confirmButton.setRunnable(new Runnable() {
                     @Override
                     public void run() {
@@ -125,7 +125,7 @@ public class DungeonScreen extends Screen {
         spellButt = new SpellButt();
         addActor(spellButt);
         float gap = 2;
-        spellButt.setPosition(SidePanel.width + gap,Main.height-spellButt.getHeight()-gap);
+        spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
     }
 
     private void bottomClick() {

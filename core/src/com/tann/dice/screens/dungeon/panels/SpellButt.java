@@ -55,11 +55,8 @@ public class SpellButt extends Group {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.setColor(Colours.dark);
-        Draw.fillEllipse(batch, getX()+getWidth()/2, getY()+getHeight()/2, getWidth(), getHeight());
         batch.setColor(Colours.z_white);
-        float size = getWidth()*.7f;
-        Draw.drawSizeCentered(batch, Images.magic, getX()+getWidth()/2, getY()+getHeight()/2, size, size);
+        batch.draw(Images.magic, getX(), getY());
     }
 }
 

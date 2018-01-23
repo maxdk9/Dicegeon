@@ -55,7 +55,7 @@ public class Button extends Lay{
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(bg);
+        batch.setColor(bg);
 		if(border==null) border=bg;
 		Draw.fillActor(batch, this, bg, border, borderSize);
 		batch.setColor(getColor());
@@ -65,10 +65,11 @@ public class Button extends Lay{
             imageHeight = Math.min(imageHeight, imageHeight);
             imageWidth = imageHeight;
         }
-		Draw.drawSize(batch, region,
-				getX()+getWidth()/2-imageWidth/2,
-				getY()+getHeight()/2-imageHeight/2,
-				imageWidth, imageHeight);
+        batch.draw(region, getX(), getY());
+//		Draw.drawSize(batch, region,
+//				getX()+getWidth()/2-imageWidth/2,
+//				getY()+getHeight()/2-imageHeight/2,
+//				imageWidth, imageHeight);
 		super.draw(batch, parentAlpha);
 	}
 
