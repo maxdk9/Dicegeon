@@ -85,9 +85,10 @@ public class EntityPanel extends Group {
     }
 
     public void slide(boolean targetable){
-        addAction(Actions.moveTo(startX + (targetable ? -30 : 0), getY(), .3f, Interpolation.pow2Out));
+        int slideAmount = 14;
+        addAction(Actions.moveTo(startX + (targetable ? -slideAmount : 0), getY(), .3f, Interpolation.pow2Out));
         if(holdsDie){
-            float addX = getX() - (startX + (targetable ? -30 : 0));
+            float addX = getX() - (startX + (targetable ? -slideAmount : 0));
             e.getDie().moveTo(getDieHolderLocation().add(-addX,0));
         }
     }
