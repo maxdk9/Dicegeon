@@ -26,12 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends ApplicationAdapter {
-    public static int scale = 4;
+    public static int scale;
     public static int SCREEN_WIDTH, SCREEN_HEIGHT;
 	public static int width, height;
     public static String version = "0.1.2";
     public static String versionName = "v"+version;
 	SpriteBatch batch;
+	SpriteBatch bufferDrawer;
 	public Stage stage;
 	public OrthographicCamera orthoCam;
 	public static TextureAtlas atlas;
@@ -80,7 +81,8 @@ public class Main extends ApplicationAdapter {
 		logTime("setup");
 		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();
-		batch = (SpriteBatch) stage.getBatch();
+		batch = new SpriteBatch();
+		bufferDrawer = new SpriteBatch();
         InputProcessor diceInput = new InputProcessor() {
 
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -125,29 +127,45 @@ public class Main extends ApplicationAdapter {
 		DungeonScreen.get().resetHeroes();
 		DungeonScreen.get().nextLevel();
 		logTime("screen");
-		fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
+        fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
 	}
 
 	@Override
 	public void render() {
 		long startTime = System.currentTimeMillis();
 		update(Gdx.graphics.getDeltaTime());
+
+        int sc = Main.scale;
+
+        fb.bind();
+        fb.begin();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        ((DungeonScreen) currentScreen).drawBackground(batch);
+        batch.end();
+        fb.end();
+        fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        bufferDrawer.begin();
+        Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
+        bufferDrawer.end();
+
+        BulletStuff.render();
+
 		fb.bind();
 		fb.begin();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-//        Draw.fillRectangle(batch, 0,0,5000,5000);
-		batch.end();
 		stage.draw();
 		fb.end();
-		batch.begin();
-		fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		batch.setColor(Colours.z_white);
-		Draw.drawRotatedScaledFlipped(batch, fb.getColorBufferTexture(), 0, 0, 1, 1, 0, false, true);
-		batch.end();
+
+
+        bufferDrawer.begin();
+        Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
+        bufferDrawer.end();
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
-		BulletStuff.render();
+
 	}
 
     public static float tickMult=1;

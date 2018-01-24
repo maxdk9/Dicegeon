@@ -106,6 +106,13 @@ public class EntityPanel extends Group {
         batch.setColor(Colours.z_white);
         np.draw(batch, getX(), getY(), getWidth(), getHeight());
 
+        batch.setColor(Colours.dark);
+        int fuk = 3;
+        Draw.fillRectangle(batch, getX()+fuk, getY()+fuk, getWidth()-fuk*2, holder.getY()-fuk);
+        Draw.fillRectangle(batch, getX()+fuk, getY()+holder.getHeight()+holder.getY(), getWidth()-fuk*2, holder.getY()-fuk);
+        Draw.fillRectangle(batch, getX()+fuk, getY()+fuk, holder.getX()-fuk, getHeight()-fuk*2);
+        Draw.fillRectangle(batch, getX()+holder.getX()+holder.getWidth(), getY()+fuk, fuk, getHeight()-fuk*2);
+
         int rightSize = (int) holder.getWidth();
 
         int leftSize = (int) (getWidth() - rightSize - borderSize*2);
@@ -200,7 +207,6 @@ public class EntityPanel extends Group {
 
     public Vector2 getDieHolderLocation(){
         Vector2 result = Tann.getLocalCoordinates(holder).add(DieHolder.extraGap, DieHolder.extraGap);
-        System.out.println(result);
         return result;
     }
 
@@ -224,6 +230,13 @@ public class EntityPanel extends Group {
         holdsDie = false;
     }
 
+    public void drawBackground(Batch batch) {
+        batch.setColor(holder.getColor());
+        Vector2 loc = getDieHolderLocation();
+        loc = new Vector2().mulAdd(loc, Main.scale);
+        Draw.fillRectangle(batch, loc.x, loc.y, holder.getWidth()*Main.scale, holder.getHeight()*Main.scale);
+    }
+
     static class DieHolder extends Actor{
         public static final float extraGap = 0;
         public DieHolder(float size, Color col){
@@ -235,8 +248,8 @@ public class EntityPanel extends Group {
         public void draw(Batch batch, float parentAlpha) {
 //            batch.setColor(Colours.light);
 //            Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
-            batch.setColor(getColor());
-            Draw.fillRectangle(batch, getX()+extraGap, getY()+extraGap, getWidth()-extraGap*2, getHeight()-extraGap*2);
+//            batch.setColor(getColor());
+//            Draw.fillRectangle(batch, getX()+extraGap, getY()+extraGap, getWidth()-extraGap*2, getHeight()-extraGap*2);
             super.draw(batch, parentAlpha);
         }
     }

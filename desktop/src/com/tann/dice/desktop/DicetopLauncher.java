@@ -25,7 +25,7 @@ public class DicetopLauncher {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.vSyncEnabled=true;
 		config.width=1280;
-		config.height=720;
+		config.height=800;
 		config.samples=10;
 		config.title="Dicegeon";
         config.addIcon("icon.png", Files.FileType.Internal);

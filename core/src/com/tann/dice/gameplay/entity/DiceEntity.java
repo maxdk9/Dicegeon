@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -291,10 +292,24 @@ public abstract class DiceEntity {
     }
 
 
-    static final float BASE_SIZE = .12625f;
+    static final float BASE_SIZE = 91f/Gdx.graphics.getHeight()*Main.scale;
     public enum EntitySize {
 
-        Small(.4f), Regular(BASE_SIZE*4), Big(.63f), Huge(.95f);
+
+
+        // 1 is 9
+        // 2 is 18
+        // 3 is 27
+        // 27 at 400
+        // 54 at 800
+        // so I have to divide by height?
+        // width doesn't change it
+
+        // so I should just be able to multiply by scale after dividing by height
+
+        // ok so multiplaying it works
+
+        Small(.4f), Regular((BASE_SIZE)), Big(.63f), Huge(.95f);
         public final float dieSize;
 
         EntitySize(float dieSize) {

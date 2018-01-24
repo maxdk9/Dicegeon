@@ -244,6 +244,14 @@ public class DungeonScreen extends Screen {
         Party.get().setEntities(heroes);
     }
 
+    public void drawBackground(Batch batch){
+        batch.setColor(Colours.z_white);
+        Draw.drawScaled(batch, Images.background, 0,0, Main.scale, Main.scale);
+        for(DiceEntity de: EntityGroup.getAllActive()){
+            de.getEntityPanel().drawBackground(batch);
+        }
+    }
+
     private void confirmDice(boolean force) {
         if(Main.getPhase() instanceof PlayerRollingPhase) {
             boolean allGood = true;
@@ -311,13 +319,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void preDraw(Batch batch) {
-        Draw.fillRectangle(batch, 0,0,Main.width, Main.height);
-        batch.setColor(Colours.bg);
-        Draw.fillActor(batch, this);
-        batch.setColor(Colours.brown_dark);
-        batch.setColor(Colours.brown_dark);
-        batch.setColor(Colours.z_white);
-        Draw.draw(batch, Images.background, 0,0);
+
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
