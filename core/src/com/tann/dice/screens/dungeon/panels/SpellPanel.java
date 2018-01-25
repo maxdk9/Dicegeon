@@ -30,7 +30,7 @@ public class SpellPanel extends Actor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, (spell.selected) ? Colours.light : Colours.magic_dark, BORDER);
+        Draw.fillActor(batch, this, Colours.dark, (spell.selected) ? Colours.light : Colours.blue, BORDER);
         batch.setColor(Colours.z_white);
         Draw.drawSizeCentered(batch, spell.image, getX()+getWidth()/2, getY()+getHeight()/2, getWidth()*IMAGE_MULT, getHeight()*IMAGE_MULT);
         super.draw(batch, parentAlpha);

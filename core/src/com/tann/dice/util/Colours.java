@@ -9,34 +9,14 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Colours {
 
-	public static final Color rogue = make(133,49,49);
-	public static final Color wizard = make(49,89,133);
-	public static final Color protector = make(133,127,127);
-	public static final Color druid = make(94,133,49);
-	public static final Color fighter = make(133,76,48);
-
-	public static final Color bg = make (20,12,28);
-
-	public static final Color[] classes = new Color[]{rogue, wizard, protector, druid, fighter};
-	
-	public static final Color light;
-	public static final Color sand;
-	public static final Color dark;
-	public static final Color fate_darkest;
-	public static final Color fate_light;
-	public static final Color fate_lightest;
-	public static final Color blue_light;
-	public static final Color blue_dark;
-	public static final Color green_light;
-	public static final Color green_dark;
-	public static final Color grey;
-	public static final Color brown_light;	
-	public static final Color brown_dark;
+    public static final Color dark;
+    public static final Color light;
+    public static final Color yellow;
+    public static final Color orange;
     public static final Color red;
-    public static final Color red_dark = new Color(.4f, .1f, .1f, 1);
-    public static final Color double_dark;
-    public static final Color sun;
-    public static final Color magic_dark = make(55,47,60);
+    public static final Color blue;
+    public static final Color grey;
+    public static final Color purple;
 
     public static final Color z_white = new Color(1,1,1,1);
     public static final Color z_black = new Color(0,0,0,1);
@@ -45,23 +25,14 @@ public class Colours {
 	static{
 		Texture t = new Texture(Gdx.files.internal("palette.png"));
 		p = Draw.getPixmap(t);
-		
-		light = palette(0,0);
-		sand = palette(1,0);
-		dark = palette(2,0);
-		fate_darkest = palette(3,0);
-		fate_light = palette(4,0);
-		fate_lightest = palette(5,0);
-		blue_light = palette(6,0);
-		blue_dark = palette(7,0);
-		green_light = palette(8,0);
-		green_dark = palette(9,0);
-		grey = palette(10,0);
-		brown_light = palette(11,0);
-		brown_dark = palette(12,0);
-		red = palette(13,0);
-		double_dark = palette(14,0);
-		sun = palette(15,0);
+		dark = palette(0, 0);
+		light = palette(1, 0);
+        yellow = palette(2, 0);
+        orange = palette(3, 0);
+		red = palette(4, 0);
+		blue = palette(5, 0);
+		grey = palette(6, 0);
+		purple = palette(7, 0);
 	}
 	
 	

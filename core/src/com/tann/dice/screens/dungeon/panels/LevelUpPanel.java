@@ -115,7 +115,7 @@ public class LevelUpPanel extends Group{
             rightLayoo.actor(butt);
         }
         rightLayoo.row(2);
-        Button butt = new Button(rightButtonSize, rightButtonSize, Images.tick, Colours.double_dark,
+        Button butt = new Button(rightButtonSize, rightButtonSize, Images.tick, Colours.dark,
             new Runnable() {
               @Override
               public void run() {
@@ -124,7 +124,7 @@ public class LevelUpPanel extends Group{
                   Main.popPhase();
               }
             });
-        butt.setColor(Colours.green_light);
+        butt.setColor(Colours.yellow);
         rightLayoo.actor(butt);
         rightLayoo.row(1);
         rightLayoo.layoo();

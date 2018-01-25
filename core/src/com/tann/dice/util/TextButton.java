@@ -51,7 +51,7 @@ public class TextButton extends Group{
     public void draw(Batch batch, float parentAlpha) {
         int BORDER = (int)(Main.h(.4f));
         super.draw(batch, parentAlpha);
-        Draw.fillActor(batch, this, background, Colours.brown_dark, BORDER);
+        Draw.fillActor(batch, this, background, Colours.purple, BORDER);
         font.drawString(batch, text, getX(), getY());
     }
 

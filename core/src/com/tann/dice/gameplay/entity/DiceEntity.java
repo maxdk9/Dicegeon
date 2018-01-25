@@ -46,11 +46,11 @@ public abstract class DiceEntity {
     public boolean locked; // only used for monster
 
 
-    public DiceEntity(Side[] sides, String name, EntitySize size) {
+    public DiceEntity(Side[] sides, String name, EntitySize size, Color col) {
         this.sides = sides;
         this.name = name;
         this.lapel = Images.lapel0;
-        this.col = Colours.classes[(ixix++) % Colours.classes.length];
+        this.col = col;
         this.size = size;
     }
 

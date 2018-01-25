@@ -80,7 +80,7 @@ public class Explanel extends InfoPanel {
                                 DungeonScreen.get().target(null);
                             }
                         });
-                        confirmButton.setColor(Colours.blue_dark);
+                        confirmButton.setColor(Colours.blue);
                         addActor(confirmButton);
                         confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 20);
                     }
@@ -142,7 +142,7 @@ public class Explanel extends InfoPanel {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, Colours.green_dark, 1);
+        Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
         super.draw(batch, parentAlpha);
     }
 

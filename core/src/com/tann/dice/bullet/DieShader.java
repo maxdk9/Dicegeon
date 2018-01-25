@@ -94,7 +94,7 @@ public class DieShader implements Shader{
 		program.setUniformi(side, d.getSide());
 		setTexLocs(d.getTexLocs());
 		program.setUniformi(v_state, d.entity.shaderState.num);
-		program.setUniformf(v_villagerColour, d.getColour());
+        program.setUniformf(v_villagerColour, d.getColour());
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 
 		renderable.meshPart.render(program, true);

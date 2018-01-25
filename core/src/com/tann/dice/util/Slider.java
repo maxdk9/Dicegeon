@@ -87,7 +87,7 @@ public class Slider extends Actor{
 		batch.setColor(backGround);
 		Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), gap);
 		Draw.fillRectangle(batch, getX()+gap, getY()+gap, (getWidth()-gap*2)*value, getHeight()-gap*2);
-        batch.setColor(Colours.brown_light);
+        batch.setColor(Colours.purple);
         TannFont.font.drawString(batch, title, (int)(getX()), (int)(getY()+getHeight()/2+TannFont.font.getHeight()/2));
         batch.flush();
 		clip.x=getParent().getX()+getX();

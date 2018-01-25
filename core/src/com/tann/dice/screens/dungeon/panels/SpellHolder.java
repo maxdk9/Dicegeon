@@ -120,9 +120,9 @@ public class SpellHolder extends Group {
 
     public static Color getColor(int spellLevel){
         switch (spellLevel){
-            case 3: return Colours.fate_darkest;
-            case 2: return Colours.fate_light;
-            case 1: return Colours.fate_lightest;
+            case 3: return Colours.blue;
+            case 2: return Colours.blue;
+            case 1: return Colours.blue;
         }
         return null;
     }

@@ -57,15 +57,11 @@ void main() {
 	
 
 	// base colour 
-	gl_FragColor.rgba =  vec4(.078,.047,.110,1);
+	gl_FragColor.rgba =  vec4(.070,.059,.090,1);
 	vec2 lapel = vec2(l_x,l_y);
 	// add lapels
 	vec4 colour = texture2D(u_texture, lapel+UV);
-	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) + (v_villagerColour.rgb*(float(1+v_state)*.6)*(colour.a));
-
-	
-
-	
+	gl_FragColor.rgb =  gl_FragColor.rgb*(1.0-colour.a) + v_villagerColour.rgb*colour.a;	
 
 	int mySide = int(v_normal.x+0.1);
 
@@ -88,9 +84,9 @@ void main() {
 	float wrongSide = (side == -1) ?0.0:(1.0-correctSide);
 	
 	// draw highlight face if applicable
-	colour = texture2D(u_texture, highlight+UV);
-	float alpha = colour.a * v_glow * correctSide * 0.5;
-	gl_FragColor.rgb +=  colour.rgb * alpha * v_glow * correctSide;
+	// colour = texture2D(u_texture, highlight+UV);
+	// float alpha = colour.a * v_glow * correctSide * 0.5;
+	// gl_FragColor.rgb +=  colour.rgb * alpha * v_glow * correctSide;
 
 	// draw grey face if applicable
 	colour =texture2D(u_texture, face+UV);

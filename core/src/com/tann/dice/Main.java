@@ -216,13 +216,13 @@ public class Main extends ApplicationAdapter {
 	}
 
 	private void drawVersion() {
-        batch.setColor(Colours.blue_dark);
+        batch.setColor(Colours.blue);
         TannFont.font.drawString(batch, versionName, 0, 5, false);
 	}
 
     private void drawFPS() {
 
-        batch.setColor(Colours.blue_dark);
+        batch.setColor(Colours.blue);
         TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond()+"fps", 0, TannFont.font.getHeight()*2);
     }
 

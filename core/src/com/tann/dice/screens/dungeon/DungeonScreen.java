@@ -110,7 +110,7 @@ public class DungeonScreen extends Screen {
                         confirmDice(true);
                     }
                 });
-        confirmButton.setColor(Colours.green_light);
+        confirmButton.setColor(Colours.yellow);
         addActor(confirmButton);
         confirmButton.setPosition(getWidth(), 0);
 
@@ -235,7 +235,7 @@ public class DungeonScreen extends Screen {
         List<Hero> heroes = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
             heroes.add(new Hero(Hero.HeroType.Fighter));
-            heroes.add(new Hero(Hero.HeroType.Fighter));
+            heroes.add(new Hero(Hero.HeroType.Fighter2));
             heroes.add(new Hero(Hero.HeroType.Defender));
             heroes.add(new Hero(Hero.HeroType.Herbalist));
             heroes.add(new Hero(Hero.HeroType.Apprentice));
@@ -245,8 +245,10 @@ public class DungeonScreen extends Screen {
     }
 
     public void drawBackground(Batch batch){
-        batch.setColor(Colours.z_white);
-        Draw.drawScaled(batch, Images.background, 0,0, Main.scale, Main.scale);
+        batch.setColor(Colours.dark);
+        Draw.fillRectangle(batch, 0, 0, getWidth()*Main.scale, getHeight()*Main.scale);
+//        batch.setColor(Colours.z_white);
+//        Draw.drawScaled(batch, Images.background, 0,0, Main.scale, Main.scale);
         for(DiceEntity de: EntityGroup.getAllActive()){
             de.getEntityPanel().drawBackground(batch);
         }

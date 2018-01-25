@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Align;
 
 public class TextWisp extends BasicLay{
 	public String text;
-	Color c = Colours.green_dark;
+	Color c = Colours.light;
 	final float initialDuration = 1.3f;
 	float duration = initialDuration;
 	public TextWisp(String text, float x, float y) {

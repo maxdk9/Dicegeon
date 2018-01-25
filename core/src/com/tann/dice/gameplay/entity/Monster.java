@@ -15,7 +15,7 @@ public class Monster extends DiceEntity {
     MonsterType type;
 
     public Monster(MonsterType type) {
-        super(type.sides, type.toString(), type.size);
+        super(type.sides, type.toString(), type.size, Colours.purple);
         this.type=type;
         setMaxHp(type.hp);
     }
@@ -76,7 +76,7 @@ public class Monster extends DiceEntity {
     }
 
     public Color getColour() {
-        return Colours.brown_dark;
+        return Colours.purple;
     }
 
 }
