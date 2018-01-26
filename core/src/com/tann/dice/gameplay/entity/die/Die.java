@@ -227,7 +227,7 @@ public class Die implements Targetable{
 
     private float getFloat(TextureRegion tr){
         if(tr==null){
-            System.out.println("ahh");
+            System.out.println("oh no!");
         }
         return getFloat(tr.getRegionX()/128, tr.getRegionY()/128);
     }
@@ -482,6 +482,7 @@ public class Die implements Targetable{
             Side side = sides.get(i);
             TextureRegion base = side.tr[0];
             TextureRegion highlight = side.tr[1];
+            System.out.println(entity);
             mpb.setColor(getFloat(base), getFloat(highlight), inner, dieIndex /5f+0.1f);
             switch(i){
                 case 0: mpb.rect(-DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, -1); break;

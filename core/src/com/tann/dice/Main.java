@@ -58,6 +58,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		if(printCalls) System.out.println("create");
+
 		SCREEN_WIDTH = Gdx.graphics.getWidth();
 		SCREEN_HEIGHT = Gdx.graphics.getHeight();
 		scale = SCREEN_HEIGHT / 180;
@@ -128,6 +129,7 @@ public class Main extends ApplicationAdapter {
 		DungeonScreen.get().nextLevel();
 		logTime("screen");
         fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
+
 	}
 
 	@Override

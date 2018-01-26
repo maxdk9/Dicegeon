@@ -63,10 +63,6 @@ public class DungeonScreen extends Screen {
     private void init(){
 
         spellHolder = new SpellHolder();
-        Buff b1 = new DamageMultiplier(.2f, 2);
-        b1.target = new Hero(HeroType.Alchemist);
-        Buff b2 = b1.copy();
-//        addActor(spellHolder);
 
         enemy = new SidePanel(false);
         addActor(enemy);
@@ -157,30 +153,30 @@ public class DungeonScreen extends Screen {
                 monsters.add(new Monster(Monster.MonsterType.Goblin));
                 monsters.add(new Monster(Monster.MonsterType.Goblin));
                 break;
-            case 2:
-                monsters.add(new Monster(Monster.MonsterType.Archer));
-                monsters.add(new Monster(Monster.MonsterType.Archer));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                break;
-            case 3:
-                monsters.add(new Monster(Monster.MonsterType.Serpent));
-                monsters.add(new Monster(Monster.MonsterType.Serpent));
-                monsters.add(new Monster(Monster.MonsterType.Serpent));
-                break;
-            case 4:
-                monsters.add(new Monster(Monster.MonsterType.Ogre));
-                monsters.add(new Monster(Monster.MonsterType.Ogre));
-                monsters.add(new Monster(Monster.MonsterType.Ogre));
-                break;
-            case 5:
-                monsters.add(new Monster(Monster.MonsterType.Dragon));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Archer));
-                break;
+//            case 2:
+//                monsters.add(new Monster(Monster.MonsterType.Archer));
+//                monsters.add(new Monster(Monster.MonsterType.Archer));
+//                monsters.add(new Monster(Monster.MonsterType.Goblin));
+//                monsters.add(new Monster(Monster.MonsterType.Goblin));
+//                monsters.add(new Monster(Monster.MonsterType.Goblin));
+//                monsters.add(new Monster(Monster.MonsterType.Goblin));
+//                break;
+//            case 3:
+//                monsters.add(new Monster(Monster.MonsterType.Serpent));
+//                monsters.add(new Monster(Monster.MonsterType.Serpent));
+//                monsters.add(new Monster(Monster.MonsterType.Serpent));
+//                break;
+//            case 4:
+//                monsters.add(new Monster(Monster.MonsterType.Ogre));
+//                monsters.add(new Monster(Monster.MonsterType.Ogre));
+//                monsters.add(new Monster(Monster.MonsterType.Ogre));
+//                break;
+//            case 5:
+//                monsters.add(new Monster(Monster.MonsterType.Dragon));
+//                monsters.add(new Monster(Monster.MonsterType.Goblin));
+//                monsters.add(new Monster(Monster.MonsterType.Goblin));
+//                monsters.add(new Monster(Monster.MonsterType.Archer));
+//                break;
             case 6:
                 Main.clearPhases();
                 Main.pushPhase(new NothingPhase());
@@ -247,8 +243,8 @@ public class DungeonScreen extends Screen {
     public void drawBackground(Batch batch){
         batch.setColor(Colours.dark);
         Draw.fillRectangle(batch, 0, 0, getWidth()*Main.scale, getHeight()*Main.scale);
-//        batch.setColor(Colours.z_white);
-//        Draw.drawScaled(batch, Images.background, 0,0, Main.scale, Main.scale);
+        batch.setColor(Colours.z_white);
+        Draw.drawScaled(batch, Images.background, 0,0, Main.scale, Main.scale);
         for(DiceEntity de: EntityGroup.getAllActive()){
             de.getEntityPanel().drawBackground(batch);
         }

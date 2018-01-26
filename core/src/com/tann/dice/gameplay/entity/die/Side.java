@@ -23,7 +23,7 @@ public class Side {
 	}
 
 	public Side(TextureRegion tr[], Eff[] effects){
-		this.tr=Images.get("sword1");
+		this.tr=tr;
 		this.effects=effects;
 	}
 
