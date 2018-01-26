@@ -132,7 +132,7 @@ public class SpellHolder extends Group {
         for(int i=1;i<=getSpellLevels();i++){
             batch.setColor(getColor(i));
             Draw.fillRectangle(batch, getX(), getY()+(getHeight()/getSpellLevels())*(i-1), getWidth(), getHeight()/getSpellLevels());
-            batch.setColor(Colours.withAlpha(Colours.dark, .6f));
+            batch.setColor(Colours.withAlpha(Colours.dark, i*.2f));
             Draw.fillRectangle(batch, getX(), getY()+(getHeight()/getSpellLevels())*(i-1), getWidth(), getHeight()/getSpellLevels());
         }
         super.draw(batch, parentAlpha);
@@ -140,7 +140,8 @@ public class SpellHolder extends Group {
 
     static class SpellCostPanel extends Actor{
         int cost;
-        public static final float WIDTH = SpellPanel.SIZE/2;
+        public static final int gap = 2;
+        public static final int WIDTH = Images.magic.getRegionWidth()+gap*2;
         public SpellCostPanel(int cost) {
             this.cost = cost;
             setSize(WIDTH, BAR_HEIGHT);
@@ -152,35 +153,13 @@ public class SpellHolder extends Group {
             batch.setColor(Colours.withAlpha(Colours.dark, .8f));
             Draw.fillActor(batch, this);
             batch.setColor(Colours.z_white);
+            int between = (int) (getHeight() - Images.magic.getRegionHeight() * cost) / (cost+1);
+            int extra = (int) (getHeight() - ((between * (cost+1)) + (cost*Images.magic.getRegionHeight())));
+            int startGap = extra/2;
+
             for(int i=0;i<cost;i++){
-                float scale = .7f;
-                Draw.drawSizeCentered(batch, Images.magic, getX()+getWidth()/2, getY()+getHeight()/(cost+1)*(i+1), getWidth()*scale, getWidth()*scale);
+                batch.draw(Images.magic, getX()+gap, getY()+startGap+between*(i+1) + (Images.magic.getRegionHeight()*i));
             }
         }
     }
-
-    static class SpellPulltab extends Actor{
-        static TextureRegion tab = Images.spellTab;
-        public SpellPulltab() {
-            setSize(tab.getRegionWidth(), tab.getRegionHeight());
-        }
-
-        @Override
-        public void draw(Batch batch, float parentAlpha) {
-            Draw.draw(batch, tab, getX(), getY());
-            float size = getWidth()*.7f;
-            if(Main.getPhase().canTarget()){
-                int magic = Party.get().getAvaliableMagic();
-                Draw.drawSizeCentered(batch, Images.magicEmpty, getX() + getWidth()/2, getY() + getHeight()/2, size, size);
-                TannFont.font.drawString(batch, ""+magic, getX(), getY());
-            }
-            else{
-                Draw.drawSizeCentered(batch, Images.magic, getX() + getWidth()/2, getY() + getHeight()/2, size, size);
-            }
-            super.draw(batch, parentAlpha);
-        }
-    }
-
-
-
 }

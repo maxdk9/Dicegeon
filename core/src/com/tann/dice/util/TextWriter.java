@@ -31,13 +31,6 @@ public class TextWriter extends Lay {
     private static Map<String, Color> colorMap = new HashMap<>();
 
     public static void setup(){
-        textureMap.put("frill-left", Main.atlas.findRegion("frill-left"));
-        textureMap.put("frill-right", Main.atlas.findRegion("frill-right"));
-
-        textureMap.put("heart", Images.heart);
-
-        colorMap.put("heart", Colours.red);
-        colorMap.put("inturnal", Colours.light);
     }
 
     @Override

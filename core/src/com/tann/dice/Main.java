@@ -1,7 +1,7 @@
 package com.tann.dice;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.GL20;
+import static com.badlogic.gdx.graphics.GL20.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -129,28 +129,26 @@ public class Main extends ApplicationAdapter {
 		DungeonScreen.get().nextLevel();
 		logTime("screen");
         fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
-
 	}
 
 	@Override
 	public void render() {
-		long startTime = System.currentTimeMillis();
 		update(Gdx.graphics.getDeltaTime());
 
         int sc = Main.scale;
 
         fb.bind();
         fb.begin();
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
         batch.begin();
         ((DungeonScreen) currentScreen).drawBackground(batch);
         batch.end();
         fb.end();
         fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 
         bufferDrawer.begin();
@@ -161,8 +159,11 @@ public class Main extends ApplicationAdapter {
 
 		fb.bind();
 		fb.begin();
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+
+        stage.getBatch().setBlendFunctionSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 		stage.draw();
 		fb.end();
 
@@ -170,7 +171,7 @@ public class Main extends ApplicationAdapter {
         bufferDrawer.begin();
         Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
         bufferDrawer.end();
-		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
+		Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT);
 
 	}
 

@@ -122,8 +122,10 @@ public class Draw {
 	}
 
 	public static void drawCenteredRotatedScaledFlipped(Batch batch, TextureRegion t, float x, float y, float scaleX, float scaleY, float radianRotation) {
-		batch.draw(t, x - t.getRegionWidth() / 2f,
-				y - t.getRegionHeight() / 2f, t.getRegionWidth() / 2f,
+		batch.draw(t,
+                (int)(x - t.getRegionWidth() / 2f),
+                (int)(y - t.getRegionHeight() / 2f),
+                t.getRegionWidth() / 2f,
 				t.getRegionHeight() / 2f, t.getRegionWidth(),
 				t.getRegionHeight(), scaleX, scaleY, rad2deg(radianRotation));
 	}

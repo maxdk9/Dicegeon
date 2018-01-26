@@ -199,6 +199,7 @@ public class EntityPanel extends Group {
             Draw.fillActor(batch, this);
         }
         super.draw(batch, parentAlpha);
+
     }
 
     public void flash() {

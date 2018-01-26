@@ -15,7 +15,7 @@ public class SpellButt extends Group {
     Group container = new Group();
     SpellHolder sh;
     public SpellButt() {
-        float size = 20;
+        float size = Images.magicButt.getRegionHeight();
         setSize(size,size);
         container.setScale(0);
         container.setPosition(getWidth()/2, getHeight()/2);
@@ -56,7 +56,7 @@ public class SpellButt extends Group {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.setColor(Colours.z_white);
-        batch.draw(Images.magic, getX(), getY());
+        batch.draw(Images.magicButt, getX(), getY());
     }
 }
 

@@ -83,7 +83,7 @@ public class DicetopLauncher {
                 e.printStackTrace();
             }
         }
-        return total;
+        return total + f.getName().hashCode();
     }
 
     private static void packImages(boolean threeD){

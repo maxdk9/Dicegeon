@@ -54,7 +54,7 @@ public class Explanel extends InfoPanel {
         this.effects = effects;
         this.image = image;
         this.cost = cost;
-        layout();
+        setSize(70, 60);
     }
 
     public void setup(Targetable targetable, boolean usable){
@@ -93,56 +93,19 @@ public class Explanel extends InfoPanel {
         setup(null, Eff.describe(side.effects), side.effects, side.tr[0], null);
     }
 
-    void layout(){
-        clearChildren();
-        clearActions();
-        float width = 30;
-        float height = 0;
-        float gap = 2;
-        TannFont font = TannFont.font;
-
-        height += gap;
-        ImageActor ia = new ImageActor(image, 10, 10);
-        height += ia.getHeight();
-        height += gap;
-        TextBox title=null;
-        if(name != null) {
-            title = new TextBox(name);
-        }
-        TextWriter descBox = new TextWriter(description);
-        height += descBox.getHeight();
-        height += gap;
-
-        setSize(width, height);
-        Layoo l = new Layoo(this);
-        l.row(1);
-        l.gap(1);
-        l.actor(ia);
-        l.gap(1);
-        if(name!=null){
-            l.actor(title);
-            l.gap(1);
-        }
-        if(cost!=null){
-            for(int i=0;i<cost;i++){
-                ImageActor c = new ImageActor(Images.magic, 4, 4);
-                l.actor(c);
-                if(usable && Party.get().getAvaliableMagic() <= i){
-                    c.setColor(Colours.red);
-                }
-
-            }
-            l.gap(1);
-        }
-        l.row(1);
-        l.actor(descBox);
-        l.row(1);
-        l.layoo();
-    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
+
+        int gap = 2;
+        batch.setColor(Colours.z_white);
+        int scale = 2;
+        Draw.drawScaled(batch, image, getX()+getWidth()/2-(float)image.getRegionWidth()/2*scale, getY() + getHeight()-gap-image.getRegionHeight()*scale, scale, scale);
+
+        batch.setColor(Colours.light);
+        TannFont.font.drawString(batch, description, getX()+ gap, getY() +getHeight() - gap*2 - image.getRegionHeight()*scale);
+
         super.draw(batch, parentAlpha);
     }
 

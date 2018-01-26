@@ -92,6 +92,7 @@ public class DungeonScreen extends Screen {
             @Override
             public void draw(Batch batch, float parentAlpha) {
                 super.draw(batch, parentAlpha);
+                batch.setColor(Colours.light);
                 TannFont.font.drawString(batch, Party.get().getRolls()+"/"+Party.get().getMaxRolls(),
                         this.getX(), this.getY());
             }
@@ -120,7 +121,7 @@ public class DungeonScreen extends Screen {
 
         spellButt = new SpellButt();
         addActor(spellButt);
-        float gap = 2;
+        float gap = 4;
         spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
     }
 
@@ -327,6 +328,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
+        batch.setColor(Colours.light);
         TannFont.font.drawString(batch, "Level "+level+"/5",Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
     }
 
