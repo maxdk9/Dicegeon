@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
@@ -11,20 +13,23 @@ import com.tann.dice.Main;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TextWriter extends Lay {
+public class TextWriter extends Group {
     String[] split;
     String text;
     TannFont font = TannFont.font;
+    int width;
     public TextWriter(String text) {
-        this.text=text;
-        split = text.split("[\\[\\]]");
-        setColor(Colours.light);
-        layout();
+        this(text, Integer.MAX_VALUE);
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
+    public TextWriter(String text, int width) {
+        this.text=text;
+        this.width=width;
+        split = text.split("[\\[\\]]");
+        setColor(Colours.light);
+        width = Math.min(100, width);
+        setSize(width, width/4);
+        layout();
     }
 
     private static Map<String, TextureRegion> textureMap = new HashMap<>();
@@ -33,7 +38,6 @@ public class TextWriter extends Lay {
     public static void setup(){
     }
 
-    @Override
     public void layout() {
         clearChildren();
         int index=0;

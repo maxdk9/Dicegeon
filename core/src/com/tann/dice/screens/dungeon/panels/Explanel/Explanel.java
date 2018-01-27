@@ -54,6 +54,9 @@ public class Explanel extends InfoPanel {
         this.effects = effects;
         this.image = image;
         this.cost = cost;
+        TextWriter tw = new TextWriter(description, 50);
+        addActor(tw);
+        tw.setPosition(10,20);
         setSize(70, 60);
     }
 
@@ -103,9 +106,6 @@ public class Explanel extends InfoPanel {
         int scale = 2;
         Draw.drawScaled(batch, image, getX()+getWidth()/2-(float)image.getRegionWidth()/2*scale, getY() + getHeight()-gap-image.getRegionHeight()*scale, scale, scale);
 
-        batch.setColor(Colours.light);
-        TannFont.font.drawString(batch, description, getX()+ gap, getY() +getHeight() - gap*2 - image.getRegionHeight()*scale);
-
         super.draw(batch, parentAlpha);
     }
 
@@ -114,12 +114,12 @@ public class Explanel extends InfoPanel {
     }
 
     @Override
-    public float getNiceX(boolean care) {
+    public int getNiceX(boolean care) {
         if(care && DungeonScreen.get().spellHolder.active){
-            return SidePanel.width + SpellHolder.WIDTH + Images.spellTab.getRegionWidth()*0 + (Main.width- SidePanel.width*2 - SpellHolder.WIDTH - Images.spellTab.getRegionWidth()*0)/2 - getWidth()/2;
+            return (int) (SidePanel.width + SpellHolder.WIDTH + Images.spellTab.getRegionWidth()*0 + (Main.width- SidePanel.width*2 - SpellHolder.WIDTH - Images.spellTab.getRegionWidth()*0)/2 - getWidth()/2);
         }
         else{
-            return Main.width/2-getWidth()/2;
+            return (int) (Main.width/2-getWidth()/2);
         }
     }
 }

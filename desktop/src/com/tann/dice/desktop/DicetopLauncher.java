@@ -18,10 +18,8 @@ import java.util.Scanner;
 public class DicetopLauncher {
     private static final boolean forcePack = false;
 	public static void main (String[] arg)  {
-	    long time = System.currentTimeMillis();
         checkPack("../../images_3d", "imagehash3d.txt", true);
         checkPack("../../images", "imagehash2d.txt", false);
-        System.out.println(System.currentTimeMillis()-time);
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.vSyncEnabled=true;
 		config.width=1280;
