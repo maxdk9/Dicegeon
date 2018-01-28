@@ -8,13 +8,14 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Party extends EntityGroup{
 
-    private static final int BASE_ROLLS = 3;
+    private static final int BASE_ROLLS = 30;
 
     private int gold; // wow I wonder if this will ever do anything! I hope so
     private int rolls = BASE_ROLLS;
@@ -46,6 +47,9 @@ public class Party extends EntityGroup{
 
     public void spendMagic(int cost) {
         magic -= cost;
+        for(int i=0;i<cost;i++){
+            DungeonScreen.get().spellButt.removeHover();
+        }
     }
 
     public int getRolls() {

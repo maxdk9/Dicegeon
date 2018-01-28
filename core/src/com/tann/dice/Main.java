@@ -141,6 +141,7 @@ public class Main extends ApplicationAdapter {
         fb.begin();
         Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+        stage.getViewport().apply();
         batch.begin();
         ((DungeonScreen) currentScreen).drawBackground(batch);
         batch.end();

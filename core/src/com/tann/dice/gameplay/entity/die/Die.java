@@ -154,7 +154,7 @@ public class Die implements Targetable{
         undamp();
         timeInAir=0;
         physical.body.clearForces();
-        randomise(13, 3, 3, 6, 1.3f, 0);
+        randomise(13, 3, 0, 0, 1.3f, 0, 2.2f);
     }
 
     public void resetForRoll() {
@@ -168,7 +168,7 @@ public class Die implements Targetable{
 
     public void jiggle(){
         timeInAir=0;
-        randomise(4, 0, 3.5f, 0, 1, 0);
+        randomise(4, 0, 3.5f, 0, 1, 0, 0);
     }
 
     public int getSide(){
@@ -237,7 +237,7 @@ public class Die implements Targetable{
         return num/255f+0.002f;
     }
 
-    private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand){
+    private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand, float centeringMult){
         float x = (side + Maths.factor(sideRand))*Maths.mult();
         float y = (up + Maths.factor(upRand));
         float z = (side + Maths.factor(sideRand))*Maths.mult();
@@ -245,6 +245,13 @@ public class Die implements Targetable{
         float r2 = (rot + Maths.factor(rotRand))*Maths.mult();
         float r3 = (rot + Maths.factor(rotRand))*Maths.mult();
         float mult = getForceMultiplier();
+
+        Vector3 pos = new Vector3();
+        getPosition(pos);
+        x += -pos.x*centeringMult;
+        z += -pos.z*centeringMult;
+
+
         applyForces(x*mult, y*mult, z*mult, r1*mult, r2*mult, r3*mult);
     }
 

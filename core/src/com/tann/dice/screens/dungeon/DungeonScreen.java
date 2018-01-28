@@ -1,6 +1,7 @@
 package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
@@ -59,7 +60,7 @@ public class DungeonScreen extends Screen {
 
     Button rollButton;
     Button confirmButton;
-    SpellButt spellButt;
+    public SpellButt spellButt;
     private void init(){
 
         spellHolder = new SpellHolder();
@@ -121,7 +122,7 @@ public class DungeonScreen extends Screen {
 
         spellButt = new SpellButt();
         addActor(spellButt);
-        float gap = 4;
+        float gap = 12;
         spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
     }
 
@@ -243,9 +244,9 @@ public class DungeonScreen extends Screen {
 
     public void drawBackground(Batch batch){
         batch.setColor(Colours.dark);
-        Draw.fillRectangle(batch, 0, 0, getWidth()*Main.scale, getHeight()*Main.scale);
+        Draw.fillRectangle(batch, 0, 0, getWidth(), getHeight());
         batch.setColor(Colours.z_white);
-        Draw.drawScaled(batch, Images.background, 0,0, Main.scale, Main.scale);
+        batch.draw(Images.background, 0,0);
         for(DiceEntity de: EntityGroup.getAllActive()){
             de.getEntityPanel().drawBackground(batch);
         }
@@ -344,7 +345,12 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void keyPress(int keycode) {
-        
+        if(keycode == Input.Keys.B) {
+            ImageActor ia = new ImageActor(Images.magicHover);
+            addActor(ia);
+            ia.setPosition(10, 10);
+            spellButt.addSpellHover(ia);
+        }
     }
 
     @Override
@@ -407,6 +413,12 @@ public class DungeonScreen extends Screen {
                         switch(e.type){
                             case Magic:
                                 Party.get().addMagic(e.getValue());
+                                for(int i=0;i<e.getValue();i++) {
+                                    ImageActor ia = new ImageActor(Images.magicHover);
+                                    addActor(ia);
+                                    ia.setPosition(de.getDiePanel().getX(), de.getDiePanel().getY());
+                                    spellButt.addSpellHover(ia);
+                                }
                                 break;
                             case Nothing:
                                 break;

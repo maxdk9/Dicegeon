@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Images;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -101,6 +104,7 @@ public class TextWriter extends Group {
                     TextureRegion tr = textureMap.get(s);
                     if (tr == null) {
                         System.err.println("unable to find texture '" + s + "' for string " + text);
+                        return;
                     }
 
                     ImageActor ia = new ImageActor(tr, tr.getRegionWidth(), tr.getRegionHeight());

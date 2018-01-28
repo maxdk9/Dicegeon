@@ -1,8 +1,6 @@
 package com.tann.dice.util;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +16,7 @@ import java.util.Map;
 public class Draw {
 	
 	public static void setup(){
-        circle300 = Main.atlas.findRegion("circle300");
+        circle50 = Main.atlas.findRegion("circle50");
 	}
 	
 	//Texture stuff//
@@ -143,9 +141,9 @@ public class Draw {
 	}
 
     public static TextureRegion circle150;
-    public static TextureRegion circle300;
+    public static TextureRegion circle50;
 	public static void fillEllipse(Batch batch, float x, float y, float width, float height){
-		Draw.drawScaled(batch, circle300, x-width/2, y-width/2, width/300f, height/300f);
+		Draw.drawScaled(batch, circle50, x-width/2, y-width/2, width/50f, height/50f);
 	}
 	
 	public static void drawLine(Batch batch, float x, float y, float tX, float tY, float width) {

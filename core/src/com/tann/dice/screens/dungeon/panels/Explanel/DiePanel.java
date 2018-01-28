@@ -38,7 +38,7 @@ public class DiePanel extends InfoPanel implements OnPop {
         Side[] sides = entity.getSides();
         int panelSize = sides[0].tr[0].getRegionHeight()-1;
 
-        TextWriter name = new TextWriter(entity.name+"  ("+entity.getMaxHp()+"[h][heart][h])");
+        TextWriter name = new TextWriter(entity.name+"  ("+entity.getMaxHp()+"[h][red][heart][h][light])");
         addActor(name);
         name.setPosition((int)(getWidth()/2 - name.getWidth()/2), gap*2 + panelSize*3);
         setSize(WIDTH, HEIGHT);

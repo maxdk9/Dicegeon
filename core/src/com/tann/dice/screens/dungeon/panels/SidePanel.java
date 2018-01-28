@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SidePanel extends Group {
-  public static final int width = (int) (Main.width*BulletStuff.sides);
+  public static final int width = (int) 75;
   static final float height = Main.height - DungeonScreen.BOTTOM_BUTTON_HEIGHT-DungeonScreen.BUTT_GAP*2;
   private List<DiceEntity> entities = new ArrayList<>();
   public SidePanel(boolean friendly) {

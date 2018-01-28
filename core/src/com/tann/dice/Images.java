@@ -13,13 +13,14 @@ public class Images {
 
     public static final TextureRegion magic = Main.atlas.findRegion("icon/magic");
     public static final TextureRegion magicBigger = Main.atlas.findRegion("icon/magicBigger");
+    public static final TextureRegion magicHover = Main.atlas.findRegion("ui/magicHover");
     public static final TextureRegion magicButt = Main.atlas.findRegion("ui/magicButton");
     public static final TextureRegion magicEmpty = Main.atlas.findRegion("magicEmpty");
     public static final TextureRegion spell_shield = Main.atlas_3d.findRegion("dice/face/shield1");
 
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");
-    public static final TextureRegion skull = Main.atlas.findRegion("skull");
+    public static final TextureRegion skull = Main.atlas.findRegion("icon/skull");
 
     public static final TextureRegion poison = Main.atlas.findRegion("buff/poison");
     public static final TextureRegion doubleDamage = Main.atlas.findRegion("buff/doubledamage");

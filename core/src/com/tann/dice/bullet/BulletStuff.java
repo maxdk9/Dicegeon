@@ -67,7 +67,7 @@ public class BulletStuff {
 
 	public static Rectangle playerArea;
 
-	public static float sides = .23f;
+	public static float sides = .30f;
 
 	public static void init(){
 
@@ -97,11 +97,13 @@ public class BulletStuff {
 
 		float playArea =(1-border*2-sides*2);
 		float literalBorder = border* srcWidth;
+		float topBar = .1f * srcWidth;
+		float bottomCutoff = .1f * srcWidth;
 		playerArea = new Rectangle(
 		        literalBorder + sides*srcWidth,
-                literalBorder,
+                literalBorder +topBar ,
                 playArea* srcWidth,
-                heightFactor*(1)-literalBorder*(2)); // - buttonHeight (if I put something back at the bottom I'll need this)
+                heightFactor*(1)-literalBorder*(2)- topBar - bottomCutoff); // - buttonHeight (if I put something back at the bottom I'll need this)
 
 		walls.addAll(makeWalls(mb, playerArea.x, 0, playerArea.y, playerArea.width, playerArea.height, height,.005f));
 

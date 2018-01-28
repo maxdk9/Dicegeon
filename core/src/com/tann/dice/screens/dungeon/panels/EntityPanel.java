@@ -123,6 +123,9 @@ public class EntityPanel extends Group {
 
         int textY = (int) (getY() + getHeight()-borderSize-TannFont.font.getHeight());
 
+        if(e.isDead()){
+            batch.setColor(Colours.purple);
+        }
         TannFont.font.drawString(batch, e.getName(), leftStart + leftSize/2, textY, Align.center);
 
 
@@ -140,12 +143,12 @@ public class EntityPanel extends Group {
             }
             if(i>=profile.getTopHealth()){
                 tr = Images.heart_empty;
-                batch.setColor(Colours.red);
+                batch.setColor(Colours.purple);
             }
             else {
                 tr = Images.heart;
                 if(i>=profile.getTopHealth()-profile.totalIncoming()){
-                    batch.setColor(Colours.orange);
+                    batch.setColor(Colours.light);
                 }
                 else{
                     batch.setColor(Colours.red);
@@ -185,19 +188,6 @@ public class EntityPanel extends Group {
         float holderX = holder.getX()+getX();
         float holderY = holder.getY()+getY();
 
-        if(e.isDead()){
-            batch.setColor(Colours.grey);
-            Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
-        }
-        else if (e.getProfile().isGoingToDie() && e.isPlayer()) {
-            batch.setColor(Colours.orange);
-            Draw.drawSize(batch, Images.skull, holderX, holderY, holder.getWidth(), holder.getHeight());
-        }
-
-        if(e.isDead()){
-            batch.setColor(0,0,0,.5f);
-            Draw.fillActor(batch, this);
-        }
         super.draw(batch, parentAlpha);
 
     }
@@ -234,14 +224,26 @@ public class EntityPanel extends Group {
 
     public void drawBackground(Batch batch) {
         Vector2 loc = getDieHolderLocation();
-        loc = new Vector2().mulAdd(loc, Main.scale);
-
         batch.setColor(holder.getColor());
-        Draw.fillRectangle(batch, loc.x, loc.y, holder.getWidth()*Main.scale, holder.getHeight()*Main.scale);
+        Draw.fillRectangle(batch, loc.x, loc.y, holder.getWidth(), holder.getHeight());
         int middle = 1;
 
         batch.setColor(Colours.dark);
-        Draw.fillRectangle(batch, loc.x+middle*Main.scale, loc.y+middle*Main.scale, (holder.getWidth()-middle*2)*Main.scale, (holder.getHeight()-middle*2)*Main.scale);
+        Draw.fillRectangle(batch, loc.x+middle, loc.y+middle, (holder.getWidth()-middle*2), (holder.getHeight()-middle*2));
+
+
+        int holderX = (int) (holder.getX() + getX() + getParent().getX()) ;
+        int holderY = (int) (holder.getY() + getY() + getParent().getY()) ;
+        if(e.isDead()){
+            batch.setColor(Colours.dark);
+            Draw.fillRectangle(batch, holderX, holderY, 16, 16);
+            batch.setColor(Colours.purple);
+            batch.draw(Images.skull, holderX, holderY);
+        }
+        else if (e.getProfile().isGoingToDie() && e.isPlayer()) {
+//            batch.setColor(Colours.grey);
+//            batch.draw(Images.skull, holderX, holderY);
+        }
     }
 
     static class DieHolder extends Actor{
