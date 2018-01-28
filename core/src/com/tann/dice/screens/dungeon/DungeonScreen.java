@@ -145,6 +145,7 @@ public class DungeonScreen extends Screen {
     public int level=0;
 
     public void nextLevel() {
+        spellButt.removeAllHovers();
         Explanel.get().remove();
         List<Monster> monsters =  new ArrayList<>();
         level ++;
@@ -346,10 +347,7 @@ public class DungeonScreen extends Screen {
     @Override
     public void keyPress(int keycode) {
         if(keycode == Input.Keys.B) {
-            ImageActor ia = new ImageActor(Images.magicHover);
-            addActor(ia);
-            ia.setPosition(10, 10);
-            spellButt.addSpellHover(ia);
+            spellButt.addSpellHover(7);
         }
     }
 
@@ -413,12 +411,7 @@ public class DungeonScreen extends Screen {
                         switch(e.type){
                             case Magic:
                                 Party.get().addMagic(e.getValue());
-                                for(int i=0;i<e.getValue();i++) {
-                                    ImageActor ia = new ImageActor(Images.magicHover);
-                                    addActor(ia);
-                                    ia.setPosition(de.getDiePanel().getX(), de.getDiePanel().getY());
-                                    spellButt.addSpellHover(ia);
-                                }
+                                spellButt.addSpellHover(e.getValue());
                                 break;
                             case Nothing:
                                 break;

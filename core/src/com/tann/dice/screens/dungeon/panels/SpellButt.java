@@ -8,8 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
+import com.tann.dice.util.ImageActor;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class SpellButt extends Group {
         }
         else{
             container.addAction(Actions.scaleTo(1,1, speed, terp));
-            container.addAction(Actions.moveTo(getWidth()/2, -sh.getHeight()+getHeight()/2, speed, terp));
+            container.addAction(Actions.moveTo((int)(getWidth()/2), (int)(-sh.getHeight()+getHeight()/2), speed, terp));
         }
         shown=!shown;
     }
@@ -65,21 +67,34 @@ public class SpellButt extends Group {
     }
 
     List<Actor> spellHovers = new ArrayList<>();
-    public void addSpellHover(Actor a){
-        float radius = 13f;
-        double startAngle = Math.PI*3/4f;
-        double increment = Math.PI/5;
-        double angle = startAngle + increment * ((spellHovers.size()+1)/2) * ((spellHovers.size()%2==0?1:-1));
-        a.addAction(Actions.moveTo(
-                (int)(getX()+getWidth()/2f+ Math.cos(angle)*radius - a.getWidth()/2f+.5f),
-                (int)(getY()+getHeight()/2f+ Math.sin(angle)*radius - a.getHeight()/2f+.5f),
-                .7f, Interpolation.pow2Out
-        ));
-        spellHovers.add(a);
+    public void addSpellHover(int amount){
+        for(int i=0;i<amount;i++) {
+            Actor a = new ImageActor(Images.magicHover);
+            DungeonScreen.get().addActor(a);
+            a.setPosition(getX() + getWidth() / 2, getY() + getHeight() / 2);
+            float radius = 13f;
+            double startAngle = Math.PI * 3 / 4f;
+            double increment = Math.PI / 5;
+            double angle = startAngle + increment * ((spellHovers.size() + 1) / 2) * ((spellHovers.size() % 2 == 0 ? 1 : -1));
+            a.addAction(Actions.moveTo(
+                    (int) (getX() + getWidth() / 2f + Math.cos(angle) * radius - a.getWidth() / 2f + .5f),
+                    (int) (getY() + getHeight() / 2f + Math.sin(angle) * radius - a.getHeight() / 2f + .5f),
+                    .3f, Interpolation.pow2Out
+            ));
+            spellHovers.add(a);
+        }
+    }
+
+    public void removeAllHovers(){
+        while(spellHovers.size()>0){
+            removeHover();
+        }
     }
 
     public void removeHover(){
-        spellHovers.remove(spellHovers.size()-1).remove();
+        if(spellHovers.size()>0) {
+            spellHovers.remove(spellHovers.size() - 1).remove();
+        }
     }
 }
 
