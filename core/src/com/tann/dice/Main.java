@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.*;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.phase.Phase;
@@ -144,6 +145,7 @@ public class Main extends ApplicationAdapter {
         stage.getViewport().apply();
         batch.begin();
         ((DungeonScreen) currentScreen).drawBackground(batch);
+        drawFPS();
         batch.end();
         fb.end();
         fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
@@ -225,9 +227,8 @@ public class Main extends ApplicationAdapter {
 	}
 
     private void drawFPS() {
-
         batch.setColor(Colours.blue);
-        TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond()+"fps", 0, TannFont.font.getHeight()*2);
+        TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond()+"fps", width/2, TannFont.font.getHeight()/2, Align.center);
     }
 
 	public static float w(float factor) {

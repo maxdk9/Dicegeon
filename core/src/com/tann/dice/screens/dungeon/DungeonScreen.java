@@ -87,6 +87,7 @@ public class DungeonScreen extends Screen {
                     public void run() {
                         if(Party.get().getRolls()>0){
                             Party.get().roll();
+                            spellButt.hide();
                         }
                     }
                 }){
@@ -96,7 +97,7 @@ public class DungeonScreen extends Screen {
                 batch.setColor(Colours.light);
                 TannFont.font.drawString(batch, Party.get().getRolls()+"/"+Party.get().getMaxRolls(), (int)(this.getX()+this.getWidth()/3), (int)(this.getY()+this.getHeight()/2), Align.center);
                 batch.setColor(Colours.z_white);
-                batch.draw(Images.roll, this.getX()+this.getWidth()/3*2-Images.roll.getRegionWidth()/2, this.getY() + this.getHeight()/2 - Images.roll.getRegionHeight()/2);
+                batch.draw(Images.roll, (int)(this.getX()+this.getWidth()/3*2-Images.roll.getRegionWidth()/2), (int)(this.getY() + this.getHeight()/2 - Images.roll.getRegionHeight()/2));
             }
         };
         addActor(rollButton);
@@ -107,7 +108,7 @@ public class DungeonScreen extends Screen {
             public void draw(Batch batch, float parentAlpha) {
                 Draw.fillActor(batch, this, Colours.dark, Colours.grey, 1);
                 batch.setColor(Colours.light);
-                batch.draw(Images.tick, this.getX()+this.getWidth()/2-Images.tick.getRegionWidth()/2, this.getY() + this.getHeight()/2 - Images.tick.getRegionHeight()/2);
+                batch.draw(Images.tick, (int)(this.getX()+this.getWidth()/2-Images.tick.getRegionWidth()/2), (int)(this.getY() + this.getHeight()/2 - Images.tick.getRegionHeight()/2));
             }
         };
         confirmButton.setRunnable(new Runnable() {
