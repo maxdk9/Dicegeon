@@ -15,7 +15,7 @@ public class TextBox extends BasicLay{
 	String text;
 	TannFont font = TannFont.font;
 	Color textCol = Colours.light;
-	public TextBox(String text){
+    public TextBox(String text){
 		this.text=text;
 		setup(text);
 	}
@@ -24,7 +24,6 @@ public class TextBox extends BasicLay{
 	    this.text=text;
         setSize(font.getWidth(text), font.getHeight());
     }
-	
 
 	public void setTextColour(Color col){
 		this.textCol = col;

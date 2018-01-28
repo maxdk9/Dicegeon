@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -21,6 +22,9 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Explanel extends InfoPanel {
     String name;
@@ -48,16 +52,56 @@ public class Explanel extends InfoPanel {
         });
     }
 
-    private void setup(String name, String description, Eff[] effects, TextureRegion image, Integer cost) {
+    private void setup(String name, String description, Eff[] effects, TextureRegion image, final Integer cost) {
+        clearChildren();
         this.name = name;
         this.description = description;
         this.effects = effects;
         this.image = image;
         this.cost = cost;
-        TextWriter tw = new TextWriter(description, 50);
-        addActor(tw);
-        tw.setPosition(10,20);
-        setSize(70, 60);
+        //TextWriter tw = new TextWriter(description, 50);
+        setWidth(100);
+        int textW = 85;
+        int border = 1;
+        int gap = 4;
+
+        List<Actor> actors = new ArrayList<>();
+
+        if(cost!=null){
+            actors.add(new TextWriter(name));
+            final int blipGap = 2;
+            final TextureRegion magicRegion = Images.magicBigger;
+            Actor blips = new Actor(){
+                @Override
+                public void draw(Batch batch, float parentAlpha) {
+                    for(int i=0;i<cost;i++){
+                        batch.setColor(Colours.blue);
+                        if(Party.get().getAvaliableMagic() <= i){
+                            batch.setColor(Colours.grey);
+                        }
+                        batch.draw(magicRegion, getX() + (magicRegion.getRegionWidth()+blipGap)*i, getY());
+                    }
+
+                    super.draw(batch, parentAlpha);
+                }
+            };
+            blips.setSize(cost*(blipGap+magicRegion.getRegionWidth()) -  blipGap, magicRegion.getRegionHeight());
+            actors.add(blips);
+        }
+        int imageScale = 2;
+        actors.add(new ImageActor(image, image.getRegionWidth()*imageScale, image.getRegionHeight()*imageScale));
+        actors.add(new TextWriter(description, textW, Colours.purple, 2));
+
+
+        int y = border + gap;
+        for(int i = actors.size()-1;i>=0;i--){
+            Actor a = actors.get(i);
+            addActor(a);
+            a.setPosition((int)(getWidth()/2-a.getWidth()/2), y);
+            y += a.getHeight()+gap;
+        }
+        y += border;
+        setHeight(y);
     }
 
     public void setup(Targetable targetable, boolean usable){
@@ -100,12 +144,6 @@ public class Explanel extends InfoPanel {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
-
-        int gap = 2;
-        batch.setColor(Colours.z_white);
-        int scale = 2;
-        Draw.drawScaled(batch, image, getX()+getWidth()/2-(float)image.getRegionWidth()/2*scale, getY() + getHeight()-gap-image.getRegionHeight()*scale, scale, scale);
-
         super.draw(batch, parentAlpha);
     }
 

@@ -426,7 +426,8 @@ public class DungeonScreen extends Screen {
     private void targetableClick(Targetable t){
         if(!Main.getPhase().canTarget()){
             Explanel.get().setup(t, false);
-            push(Explanel.get(), true, true, true, false, false);
+            positionExplanel();
+            push(Explanel.get(), false, true, true, false, false);
             return;
         }
         for(DiceEntity de:Party.get().getActiveEntities()){

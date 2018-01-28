@@ -84,13 +84,13 @@ public class Eff {
                 }
                 return "ahh help shield";
             case Magic:
-                return "Gain "+value+" magic to spend on spells this inturnal.";
+                return "Gain "+value+" magic to spend on spells this turn.";
             case Heal:
                 return "Restore "+value+" health to a damaged character";
             case Execute:
                 return "Kills target if they are on exactly "+value+" hp";
             case Reroll:
-                return "When you roll this, gain +1 reroll this inturnal";
+                return "When you roll this, gain +1 reroll this turn";
             case Buff:
                 return buff.toNiceString();
         }
