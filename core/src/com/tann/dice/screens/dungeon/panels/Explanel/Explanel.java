@@ -151,13 +151,4 @@ public class Explanel extends InfoPanel {
         Explanel.get().addAction(Actions.moveTo(Explanel.get().getNiceX(true), Explanel.get().getY(), .3f, Interpolation.pow2Out));
     }
 
-    @Override
-    public int getNiceX(boolean care) {
-        if(care && DungeonScreen.get().spellHolder.active){
-            return (int) (SidePanel.width + SpellHolder.WIDTH + Images.spellTab.getRegionWidth()*0 + (Main.width- SidePanel.width*2 - SpellHolder.WIDTH - Images.spellTab.getRegionWidth()*0)/2 - getWidth()/2);
-        }
-        else{
-            return (int) (Main.width/2-getWidth()/2);
-        }
-    }
 }

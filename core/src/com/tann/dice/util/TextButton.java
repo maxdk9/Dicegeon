@@ -52,7 +52,7 @@ public class TextButton extends Group{
         int BORDER = (int)(Main.h(.4f));
         super.draw(batch, parentAlpha);
         Draw.fillActor(batch, this, background, Colours.purple, BORDER);
-        font.drawString(batch, text, getX(), getY());
+        font.drawString(batch, text, (int)(getX()), (int) getY());
     }
 
 }

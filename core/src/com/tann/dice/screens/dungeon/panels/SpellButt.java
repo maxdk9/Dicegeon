@@ -96,5 +96,17 @@ public class SpellButt extends Group {
             spellHovers.remove(spellHovers.size() - 1).remove();
         }
     }
+
+    public void show() {
+        if(!shown){
+            toggleButt();
+        }
+    }
+
+    public void hide(){
+        if(shown){
+            toggleButt();
+        }
+    }
 }
 

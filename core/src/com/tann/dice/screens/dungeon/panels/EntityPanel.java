@@ -79,7 +79,7 @@ public class EntityPanel extends Group {
 
     public static final float WIDTH = SidePanel.width;
 
-    DieHolder holder;
+    public DieHolder holder;
 
     public void layout(){
     }
@@ -131,7 +131,7 @@ public class EntityPanel extends Group {
 
         int heartGap = 1;
         float heartSize = Images.heart.getRegionHeight();
-        int heartStartY = textY - 3;
+        int heartStartY = textY - 4;
         int heartStartX = (int)   (leftSize/2 - (e.getMaxHp()*heartSize+heartGap*(e.getMaxHp()-1))/2  +getX()+borderSize);
         int y = heartStartY;
         int x = heartStartX;
@@ -148,7 +148,7 @@ public class EntityPanel extends Group {
             else {
                 tr = Images.heart;
                 if(i>=profile.getTopHealth()-profile.totalIncoming()){
-                    batch.setColor(Colours.light);
+                    batch.setColor(Colours.yellow);
                 }
                 else{
                     batch.setColor(Colours.red);
@@ -161,8 +161,8 @@ public class EntityPanel extends Group {
 
         int overkill = profile.getOverkill();
         if(overkill>0 && !e.isDead()){
-
-            TannFont.font.drawString(batch, "+"+overkill, getX()+getWidth()*4/7f, getY()+getHeight()*.3f, false);
+            batch.setColor(Colours.yellow);
+            TannFont.font.drawString(batch, "+"+overkill, (int)(getX()+getWidth()*4/7f), (int) (getY()+getHeight()*.3f), false);
         }
 
         batch.setColor(Colours.z_white);
@@ -198,8 +198,7 @@ public class EntityPanel extends Group {
     }
 
     public Vector2 getDieHolderLocation(){
-        Vector2 result = Tann.getLocalCoordinates(holder).add(DieHolder.extraGap, DieHolder.extraGap);
-        return result;
+        return Tann.getLocalCoordinates(holder);
     }
 
     private boolean possibleTarget;
@@ -246,8 +245,7 @@ public class EntityPanel extends Group {
         }
     }
 
-    static class DieHolder extends Actor{
-        public static final float extraGap = 0;
+    public static class DieHolder extends Actor{
         public DieHolder(float size, Color col){
             setSize(size, size);
             setColor(col);

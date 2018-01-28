@@ -96,20 +96,6 @@ public class SpellHolder extends Group {
         l.layoo();
     }
 
-    public void hide(){
-        if(active) togglePosition();
-    }
-
-    public boolean active;
-    private void togglePosition() {
-//        active = !active;
-//        if(!active){
-//            DungeonScreen.get().closeSpellHolder();
-//        }
-//        addAction(Actions.moveTo(getX(active), getY(active), .3f, Interpolation.pow2Out));
-//        Explanel.get().slide();
-    }
-
     public float getX(boolean out){
         return out ? SidePanel.width : SidePanel.width-getWidth();
     }

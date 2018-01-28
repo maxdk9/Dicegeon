@@ -11,13 +11,16 @@ public class TargetingPhase extends Phase {
         DungeonScreen.get().slideConfirmButton(true);
         DungeonScreen.get().setConfirmText("End Turn");
         DungeonScreen.get().activateAutoEffects();
+        if(Party.get().getAvaliableMagic()>0) {
+            DungeonScreen.get().spellButt.show();
+        }
     }
 
     @Override
     public void deactivate() {
         Party.get().resetMagic();
         DungeonScreen.get().removeLeftoverDice();
-        DungeonScreen.get().spellHolder.hide();
+        DungeonScreen.get().spellButt.hide();
         Main.pushPhase(new DamagePhase());
     }
 

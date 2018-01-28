@@ -49,7 +49,7 @@ public class DungeonScreen extends Screen {
     }
 
     public static final float BOTTOM_BUTTON_HEIGHT = 25;
-    public static final float BOTTOM_BUTTON_WIDTH = BOTTOM_BUTTON_HEIGHT;
+    public static final float BOTTOM_BUTTON_WIDTH = 78;
     public static final float BUTT_GAP = 2;
     public SidePanel friendly;
     private SidePanel enemy;
@@ -92,16 +92,24 @@ public class DungeonScreen extends Screen {
                 }){
             @Override
             public void draw(Batch batch, float parentAlpha) {
-                super.draw(batch, parentAlpha);
+                Draw.fillActor(batch, this, Colours.dark, Colours.grey, 1);
                 batch.setColor(Colours.light);
-                TannFont.font.drawString(batch, Party.get().getRolls()+"/"+Party.get().getMaxRolls(),
-                        this.getX(), this.getY());
+                TannFont.font.drawString(batch, Party.get().getRolls()+"/"+Party.get().getMaxRolls(), (int)(this.getX()+this.getWidth()/3), (int)(this.getY()+this.getHeight()/2), Align.center);
+                batch.setColor(Colours.z_white);
+                batch.draw(Images.roll, this.getX()+this.getWidth()/3*2-Images.roll.getRegionWidth()/2, this.getY() + this.getHeight()/2 - Images.roll.getRegionHeight()/2);
             }
         };
         addActor(rollButton);
-        rollButton.setSquare();
-        rollButton.setPosition(-rollButton.getWidth(), 0);
-        confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.tick, Colours.dark);
+        rollButton.setPosition(-500, 0);
+        slideRollButton(false);
+        confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.tick, Colours.dark){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                Draw.fillActor(batch, this, Colours.dark, Colours.grey, 1);
+                batch.setColor(Colours.light);
+                batch.draw(Images.tick, this.getX()+this.getWidth()/2-Images.tick.getRegionWidth()/2, this.getY() + this.getHeight()/2 - Images.tick.getRegionHeight()/2);
+            }
+        };
         confirmButton.setRunnable(new Runnable() {
                     @Override
                     public void run() {
@@ -111,6 +119,7 @@ public class DungeonScreen extends Screen {
         confirmButton.setColor(Colours.yellow);
         addActor(confirmButton);
         confirmButton.setPosition(getWidth(), 0);
+        slideConfirmButton(false);
 
         addListener(new InputListener(){
             @Override
@@ -223,7 +232,7 @@ public class DungeonScreen extends Screen {
 
     public void setup(List<Monster> monsters){
         Room.get().setEntities(monsters);
-        spellHolder.hide();
+        spellButt.hide();
         Party.get().resetMagic();
         BulletStuff.reset();
         BulletStuff.refresh(EntityGroup.getAllActive());
@@ -286,8 +295,8 @@ public class DungeonScreen extends Screen {
     }
 
     private void showDialog(String s) {
-        TextButton tb = new TextButton(550, 100, s);
-        push(tb, true, true, true, false, false);
+        TextWriter tw = new TextWriter(s, Integer.MAX_VALUE, Colours.purple, 2);
+        push(tw, true, true, true, false, false);
     }
 
     public void enemyCombat(){
@@ -487,7 +496,7 @@ public class DungeonScreen extends Screen {
         }
 
         if(Party.get().getAvaliableMagic() == 0){
-            DungeonScreen.get().spellHolder.hide();
+            DungeonScreen.get().spellButt.hide();
         }
         return true;
     }
@@ -618,7 +627,7 @@ public class DungeonScreen extends Screen {
         modalStack.add(a);
         addActor(a);
         if(center){
-            a.setPosition(getWidth()/2-a.getWidth()/2, getHeight()/2-a.getHeight()/2);
+            a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
         }
         if(listener){
             a.addListener(new InputListener(){

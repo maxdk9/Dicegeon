@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -67,7 +68,9 @@ public class Monster extends DiceEntity {
             TextureFlasher tf = new TextureFlasher(getDie().sides.get(0).tr[0]);
             DungeonScreen.get().addActor(tf);
             panel.addActor(tf);
-            tf.setPosition(panel.getWidth()*.35f-tf.getWidth()/2, panel.getHeight()/2-tf.getHeight()/2);
+            int x = (int) (panel.getWidth()*.3f);
+            int y = (int) (panel.getHeight()/2-tf.getHeight()/2 - 2);
+            tf.setPosition(x, y);
             panel.flash();
         }
         EntityPanel ep = getDie().entity.getEntityPanel();

@@ -22,7 +22,7 @@ public class DicetopLauncher {
         checkPack("../../images", "imagehash2d.txt", false);
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.vSyncEnabled=true;
-		config.width=1281;
+		config.width=1280;
 		config.height=800;
 		config.samples=10;
 		config.title="Dicegeon";

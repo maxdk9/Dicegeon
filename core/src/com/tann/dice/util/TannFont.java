@@ -48,11 +48,11 @@ public class TannFont {
     }
 
 
-    public void drawString(Batch batch, String text, float x, float y){
+    public void drawString(Batch batch, String text, int x, int y){
         drawString(batch, text, x, y, false);
     }
 
-    public void drawString(Batch batch, String text, float x, float y, boolean fixedWidth){
+    public void drawString(Batch batch, String text, int x, int y, boolean fixedWidth){
         //will probably want to cache this
         for(char c:text.toCharArray()){
             TextureRegion t= glyphs.get(c);
@@ -62,9 +62,9 @@ public class TannFont {
         }
     }
 
-    public void drawString(Batch batch, String text, float x, float y, int align) {
+    public void drawString(Batch batch, String text, int x, int y, int align) {
         if(align==Align.center){
-            drawString(batch, text, x-getWidth(text)/2, y, false);
+            drawString(batch, text, x-getWidth(text)/2, y-getHeight()/2, false);
         }
 
     }

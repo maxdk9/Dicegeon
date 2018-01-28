@@ -10,12 +10,12 @@ public class TextureFlasher extends Actor {
     public TextureFlasher(TextureRegion tr) {
         this.tr=tr;
         addAction(Actions.sequence(Actions.fadeOut(.7f), Actions.removeActor()));
-        setSize(100,100);
+        setSize(tr.getRegionWidth(),tr.getRegionHeight());
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(getColor());
-        Draw.drawSize(batch, tr, getX(), getY(), getWidth(), getHeight());
+        batch.draw(tr, getX(), getY());
     }
 }

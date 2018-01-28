@@ -32,7 +32,7 @@ public class TextBox extends BasicLay{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(textCol);
-        font.drawString(batch, text, getX(), getY(), false);
+        font.drawString(batch, text, (int)(getX()), (int) getY(), false);
 		super.draw(batch, parentAlpha);
 	}
 	
