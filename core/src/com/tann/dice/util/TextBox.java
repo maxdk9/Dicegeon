@@ -26,13 +26,13 @@ public class TextBox extends BasicLay{
     }
 
 	public void setTextColour(Color col){
-		this.textCol = col;
-	}
+        this.textCol = col;
+    }
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(textCol);
-		font.drawString(batch, text, getX(), getY(), false);
+        font.drawString(batch, text, getX(), getY(), false);
 		super.draw(batch, parentAlpha);
 	}
 	
