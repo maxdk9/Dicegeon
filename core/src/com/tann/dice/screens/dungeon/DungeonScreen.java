@@ -30,6 +30,7 @@ import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.dungeon.panels.*;
 import com.tann.dice.screens.dungeon.panels.Explanel.*;
+import com.tann.dice.screens.particles.SwordParticle;
 import com.tann.dice.util.*;
 
 import java.util.ArrayList;
@@ -342,6 +343,9 @@ public class DungeonScreen extends Screen {
     public void postDraw(Batch batch) {
         batch.setColor(Colours.light);
         TannFont.font.drawString(batch, "Level "+level+"/5",Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
+        batch.setColor(Colours.grey);
+        Draw.fillRectangle(batch, 78, 78, 4, 4);
+        batch.setColor(Colours.light);
     }
 
     @Override
@@ -499,6 +503,11 @@ public class DungeonScreen extends Screen {
         if(Party.get().getAvaliableMagic() == 0){
             DungeonScreen.get().spellButt.hide();
         }
+
+        Particle p = new SwordParticle((int) entity.getEntityPanel().getX(), (int)(entity.getEntityPanel().getY()));
+        addParticle(p);
+        System.out.println("adding particle");
+
         return true;
     }
 
@@ -674,4 +683,8 @@ public class DungeonScreen extends Screen {
         addActor(lup);
     }
 
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+    }
 }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
 import com.tann.dice.Main;
 
 import java.util.HashMap;
@@ -151,10 +150,13 @@ public class Draw {
 				* (tY - y));
 		float radians = (float) Math.atan2(tY - y, tX - x);
 
-		x += Math.sin(radians) * width / 2f;
-		y -= Math.cos(radians) * width / 2f;
+//		x += Math.cos(radians) * width / 2f;
+//		y += Math.sin(radians) * width / 2f;
 
-		Draw.drawRotatedScaled(batch, getSq(), (int)x, (int)y, dist, width/2f, radians);
+		batch.draw(getSq(), x, y, 0, .5f, 1, 1, dist, width,
+				(float) Math.toDegrees(radians));
+
+//		Draw.drawRotatedScaled(batch, getSq(), (int)x, (int)y, dist, width/2f, radians);
 	}
 
 	
