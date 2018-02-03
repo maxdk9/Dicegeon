@@ -3,22 +3,20 @@ package com.tann.dice.gameplay.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
-import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
-import com.tann.dice.util.Colours;
+import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +125,9 @@ public abstract class DiceEntity {
     }
 
     public void damage(int value) {
+        if(value > 0){
+            getEntityPanel().addDamageFlib(value);
+        }
         hp -= value;
         if (hp <= 0) {
             die();

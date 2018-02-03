@@ -16,6 +16,7 @@ import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.particles.SwordParticle;
 import com.tann.dice.util.*;
 
 public class EntityPanel extends Group {
@@ -99,7 +100,7 @@ public class EntityPanel extends Group {
     }
 
     static int borderSize = 5;
-
+    public int heartStartXX, heartCenterY;
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
@@ -133,10 +134,11 @@ public class EntityPanel extends Group {
         float heartSize = Images.heart.getRegionHeight();
         int heartStartY = textY - 4;
         int heartStartX = (int)   (leftSize/2 - (e.getMaxHp()*heartSize+heartGap*(e.getMaxHp()-1))/2  +getX()+borderSize);
+        heartStartXX = (int) ( (heartStartX - getX() + heartSize/2f) + e.getMaxHp() * (heartSize + heartGap) - heartGap);
+        heartCenterY = (int) (heartStartY - getY() + heartSize/2f);
         int y = heartStartY;
         int x = heartStartX;
         TextureRegion tr;
-
         for(int i=0;i<e.getMaxHp();i++){
             if (i % (huge?10:5)==0){
                 y -= heartSize + heartGap;
@@ -183,10 +185,6 @@ public class EntityPanel extends Group {
             batch.setColor(Colours.withAlpha(possibleTarget ? Colours.light : Colours.red, (float) (Math.sin(Main.ticks * 6) * .05f + (targeted?.3f:.1f))));
             Draw.fillActor(batch, this);
         }
-
-        //dang sorry future me, being lazy. My excuse is that this will probably change soon anyway
-        float holderX = holder.getX()+getX();
-        float holderY = holder.getY()+getY();
 
         super.draw(batch, parentAlpha);
 
@@ -258,6 +256,51 @@ public class EntityPanel extends Group {
 //            batch.setColor(getColor());
 //            Draw.fillRectangle(batch, getX()+extraGap, getY()+extraGap, getWidth()-extraGap*2, getHeight()-extraGap*2);
             super.draw(batch, parentAlpha);
+        }
+    }
+
+    public void addDamageFlib(int amount){
+            int gap = 4;
+            for(int i=0;i<amount;i++) {
+                int heartIndex = i + (e.getMaxHp() - e.getHp());
+                int x = (int) (heartStartXX - SwordParticle.dx / 2 - heartIndex * gap - 3);
+                int y = (int) (heartCenterY - (-SwordParticle.dy / 2));
+
+                SwipeyActor sa = new SwipeyActor();
+                sa.setPosition(x, y);
+                addActor(sa);
+//
+//                Particle p = new SwordParticle(x, y);
+//                DungeonScreen.get().addParticle(p);
+//                System.out.println("adding particle");
+            }
+    }
+
+    private static class SwipeyActor extends  Actor{
+
+        static final float maxLife = .7f, dx = -4, dy = -4;
+        float life = maxLife;
+        float ratio;
+        public SwipeyActor() {
+
+        }
+
+        @Override
+        public void act(float delta) {
+            super.act(delta);
+            life -= delta;
+            ratio = life/maxLife;
+            if(life <= 0) remove();
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            super.draw(batch, parentAlpha);
+            float lineDist = Interpolation.pow3Out.apply(Math.min(1, (1-ratio)*2));
+            float alpha = Interpolation.pow2In.apply(Math.min(1, (ratio*2)));
+            batch.setColor(Colours.withAlpha(Colours.light, alpha));
+            System.out.println(getX()+":"+getY());
+            Draw.drawLine(batch, getX(), getY(), getX()+dx*lineDist, getY()+dy*lineDist, 1);
         }
     }
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
@@ -503,11 +504,6 @@ public class DungeonScreen extends Screen {
         if(Party.get().getAvaliableMagic() == 0){
             DungeonScreen.get().spellButt.hide();
         }
-
-        Particle p = new SwordParticle((int) entity.getEntityPanel().getX(), (int)(entity.getEntityPanel().getY()));
-        addParticle(p);
-        System.out.println("adding particle");
-
         return true;
     }
 
