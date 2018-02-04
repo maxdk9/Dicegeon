@@ -124,7 +124,6 @@ public class Main extends ApplicationAdapter {
 		logTime("bits");
 		BulletStuff.init();
 		logTime("bullet");
-		DungeonScreen.self = null;
 		setScreen(DungeonScreen.get());
 		DungeonScreen.get().resetHeroes();
 		DungeonScreen.get().nextLevel();

@@ -16,12 +16,14 @@ public class Sounds {
 
     public static String[] clacks;
     public static String[] clocks;
-
+    public static String[] fwips;
 
 	public static void setup(){
 		//sfx//
         clacks = makeSounds("clack", 4);
         clocks = makeSounds("clock", 4);
+        fwips = makeSounds("combat/fwip", 5);
+
 
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();

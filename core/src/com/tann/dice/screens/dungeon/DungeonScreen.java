@@ -17,7 +17,6 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
-import com.tann.dice.gameplay.effect.buff.DamageMultiplier;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Hero.HeroType;
@@ -31,7 +30,6 @@ import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.dungeon.panels.*;
 import com.tann.dice.screens.dungeon.panels.Explanel.*;
-import com.tann.dice.screens.particles.SwordParticle;
 import com.tann.dice.util.*;
 
 import java.util.ArrayList;
@@ -39,9 +37,7 @@ import java.util.List;
 
 public class DungeonScreen extends Screen {
 
-    public static DungeonScreen self;
-
-
+    private static DungeonScreen self;
     public static DungeonScreen get() {
         if (self == null) {
             self = new DungeonScreen();
@@ -491,10 +487,17 @@ public class DungeonScreen extends Screen {
             return false;
         }
 
+        boolean containsDamage = false;
         if(t.use()){
             for(Eff e:t.getEffects()){
                 hitEntities(EntityGroup.getActualTargets(e, true, entity), e);
+                if(e.type == Eff.EffectType.Damage){
+                    containsDamage = true;
+                }
             }
+        }
+        if(containsDamage){
+            Sounds.playSound(Sounds.fwips, 4, 1);
         }
         deselectTargetable();
         if(!checkEnd()) {
@@ -504,6 +507,8 @@ public class DungeonScreen extends Screen {
         if(Party.get().getAvaliableMagic() == 0){
             DungeonScreen.get().spellButt.hide();
         }
+
+
         return true;
     }
 

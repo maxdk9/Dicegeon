@@ -17,6 +17,7 @@ import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
+import com.tann.dice.util.Sounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,12 +97,6 @@ public abstract class DiceEntity {
     }
 
     public abstract void locked();
-
-    public void hit(List<Eff> effects, boolean instant) {
-        for (Eff e : effects) {
-            hit(e, instant);
-        }
-    }
 
     public void hit(Eff[] effects, boolean instant) {
         for (Eff e : effects) {

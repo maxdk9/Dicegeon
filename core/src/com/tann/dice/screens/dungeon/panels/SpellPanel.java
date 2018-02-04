@@ -12,8 +12,9 @@ import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
 public class SpellPanel extends Actor{
-    public static final int SIZE = Images.side_sword.getRegionHeight();
-    public static int BORDER = 1;
+    public static int BORDER = 4;
+    public static final int SIZE = Images.side_sword.getRegionHeight() + BORDER*2;
+
     final Spell spell;
 
     public SpellPanel(final Spell spell){
@@ -30,9 +31,9 @@ public class SpellPanel extends Actor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, (spell.selected) ? Colours.light : Colours.blue, BORDER);
+        Draw.fillActor(batch, this, Colours.dark, Colours.transparent, BORDER);
         batch.setColor(Colours.z_white);
-        batch.draw(spell.image, getX(), getY());
+        batch.draw(spell.image, getX()+BORDER, getY()+BORDER);
         super.draw(batch, parentAlpha);
     }
 }

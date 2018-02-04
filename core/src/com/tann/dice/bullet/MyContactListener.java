@@ -16,11 +16,11 @@ public class MyContactListener extends ContactListener {
 	}
 	static List<Integer> collisions = new ArrayList<>();
 	long second;
+
 	@Override
 	public void onContactProcessed(btManifoldPoint cp, btCollisionObject colObj0, btCollisionObject colObj1) {
-		
-		
-		boolean wall = colObj0.getCollisionFlags()==1||colObj1.getCollisionFlags()==1;
+
+        boolean wall = colObj0.getCollisionFlags()==1||colObj1.getCollisionFlags()==1;
 		Integer five = 5;
 		boolean ground =
 				five.equals(colObj0.userData) || five.equals(colObj1.userData);
@@ -41,7 +41,8 @@ public class MyContactListener extends ContactListener {
 				Sounds.playSound(Sounds.clocks, .2f, 1.f+(float)Math.random()*.8f);
 			}
 			else{
-				Sounds.playSound(Sounds.clacks, Math.min(.5f,Math.abs(magnitude*.3f)), (float)(.8f+Math.random()*.2f));
+			    float volume = Math.min(.5f,Math.abs(magnitude*.3f));
+                Sounds.playSound(Sounds.clacks, volume, (float)(.8f+Math.random()*.2f));
 			}
 			
 		}

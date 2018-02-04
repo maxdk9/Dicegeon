@@ -31,7 +31,7 @@ public class Side {
     public static final Side shield1 = new Side(Images.get("shield1"), new Eff().shield(1).friendlySingle());
     public static final Side shield2 = new Side(Images.get("shield2"), new Eff().shield(2).friendlySingle());
 
-    public static final Side sword1 = new Side(Images.get("sword1"), new Eff().damage(1));
+    public static final Side sword1 = new Side(Images.get("claw6"), new Eff().damage(1));
 //    public static final Side sword1 = new Side(Images.get("sword1"), new Eff().damage(100).enemyGroup());
     public static final Side sword2 = new Side(Images.get("sword2"), new Eff().damage(2));
     public static final Side sword3 = new Side(Images.get("sword3"), new Eff().damage(3));

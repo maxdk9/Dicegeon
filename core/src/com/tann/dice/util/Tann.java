@@ -2,8 +2,10 @@ package com.tann.dice.util;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,5 +37,9 @@ public class Tann {
         float xDiff = x1-x;
         float yDiff = y1-y;
         return (float) Math.sqrt(xDiff*xDiff + yDiff*yDiff);
+    }
+
+    public static void delay(Runnable runnable, float delay) {
+        DungeonScreen.get().addAction(Actions.delay(delay, Actions.run(runnable)));
     }
 }

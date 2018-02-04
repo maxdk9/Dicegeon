@@ -5,18 +5,19 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.DamageProfile;
+import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.screens.particles.SwordParticle;
 import com.tann.dice.util.*;
 
 public class EntityPanel extends Group {
@@ -260,25 +261,21 @@ public class EntityPanel extends Group {
     }
 
     public void addDamageFlib(int amount){
-            int gap = 4;
-            for(int i=0;i<amount;i++) {
-                int heartIndex = i + (e.getMaxHp() - e.getHp());
-                int x = (int) (heartStartXX - SwordParticle.dx / 2 - heartIndex * gap - 3);
-                int y = (int) (heartCenterY - (-SwordParticle.dy / 2));
+        int gap = 4;
+        for(int i=0;i<amount;i++) {
+            int heartIndex = i + (e.getMaxHp() - e.getHp());
+            int x = (int) (heartStartXX - SwipeyActor.dx / 2 - heartIndex * gap - 3);
+            int y = (int) (heartCenterY - (-SwipeyActor.dy / 2));
 
-                SwipeyActor sa = new SwipeyActor();
-                sa.setPosition(x, y);
-                addActor(sa);
-//
-//                Particle p = new SwordParticle(x, y);
-//                DungeonScreen.get().addParticle(p);
-//                System.out.println("adding particle");
-            }
+            SwipeyActor sa = new SwipeyActor();
+            sa.setPosition(x, y);
+            addActor(sa);
+        }
     }
 
     private static class SwipeyActor extends  Actor{
 
-        static final float maxLife = .7f, dx = -4, dy = -4;
+        static final float maxLife = .6f, dx = -4, dy = -4;
         float life = maxLife;
         float ratio;
         public SwipeyActor() {
@@ -299,7 +296,6 @@ public class EntityPanel extends Group {
             float lineDist = Interpolation.pow3Out.apply(Math.min(1, (1-ratio)*2));
             float alpha = Interpolation.pow2In.apply(Math.min(1, (ratio*2)));
             batch.setColor(Colours.withAlpha(Colours.light, alpha));
-            System.out.println(getX()+":"+getY());
             Draw.drawLine(batch, getX(), getY(), getX()+dx*lineDist, getY()+dy*lineDist, 1);
         }
     }
