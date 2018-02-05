@@ -177,17 +177,19 @@ public class Main extends ApplicationAdapter {
 
 	}
 
-    public static float tickMult=1;
 	public void update(float delta) {
         getPhase().checkIfDone();
 
-		tickMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 0.2f : 1;
-		delta *= tickMult;
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+            delta *= .1f;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)){
+            delta *= 3;
+        }
 		BulletStuff.update(delta);
-
-		ticks += delta;
-		Sounds.tickFaders(delta);
-		stage.act(delta);
+        stage.act(delta);
+        Sounds.tickFaders(delta);
+        ticks += delta;
 	}
 
 	@Override
