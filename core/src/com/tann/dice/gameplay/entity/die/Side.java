@@ -50,6 +50,8 @@ public class Side {
     public static final Side trident = new Side(Images.get("trident1"), new Eff().damage(1).enemyAndAdjacents());
     public static final Side trident2 = new Side(Images.get("trident2"), new Eff().damage(2).enemyAndAdjacents());
 
+    public static final Side axe = new Side(Images.get("axe"), new Eff().damage(2).enemyAndAdjacents());
+
     public static final Side poison1 = new Side(Images.get("poison1"), new Eff().buff(new BuffDot(-1, 1)));
     public static final Side poison2 = new Side(Images.get("poison2"), new Eff().buff(new BuffDot(-1, 2)));
     public static final Side stealth = new Side(Images.get("stealth"), new Eff().buff(new Stealth(1)).self());

@@ -23,7 +23,7 @@ public class Colours {
 	public static final Color transparent = new Color(0,0,0,0);
 	private static Pixmap p;
 	static{
-		Texture t = new Texture(Gdx.files.internal("palette.png"));
+		Texture t = new Texture(Gdx.files.internal("misc/palette.png"));
 		p = Draw.getPixmap(t);
 		dark = palette(0, 0);
 		light = palette(1, 0);

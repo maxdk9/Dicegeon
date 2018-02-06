@@ -150,7 +150,7 @@ public class DungeonScreen extends Screen {
 //        confirmButton.setText(s);
     }
 
-    public int level=0;
+    public int level=1;
 
     public void nextLevel() {
         spellButt.removeAllHovers();
@@ -164,14 +164,14 @@ public class DungeonScreen extends Screen {
                 monsters.add(new Monster(Monster.MonsterType.Goblin));
                 monsters.add(new Monster(Monster.MonsterType.Goblin));
                 break;
-//            case 2:
-//                monsters.add(new Monster(Monster.MonsterType.Archer));
-//                monsters.add(new Monster(Monster.MonsterType.Archer));
-//                monsters.add(new Monster(Monster.MonsterType.Goblin));
-//                monsters.add(new Monster(Monster.MonsterType.Goblin));
-//                monsters.add(new Monster(Monster.MonsterType.Goblin));
-//                monsters.add(new Monster(Monster.MonsterType.Goblin));
-//                break;
+            case 2:
+                monsters.add(new Monster(Monster.MonsterType.Archer));
+                monsters.add(new Monster(Monster.MonsterType.Archer));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(Monster.MonsterType.Serpent));
+                monsters.add(new Monster(Monster.MonsterType.Serpent));
+                break;
 //            case 3:
 //                monsters.add(new Monster(Monster.MonsterType.Serpent));
 //                monsters.add(new Monster(Monster.MonsterType.Serpent));
@@ -205,7 +205,7 @@ public class DungeonScreen extends Screen {
         Main.pushPhase(new NothingPhase());
 
         if(level>1){
-            Main.pushPhase(new LevelUpPhase());
+//            Main.pushPhase(new LevelUpPhase());
         }
 
         for(DiceEntity de:Party.get().getActiveEntities()){

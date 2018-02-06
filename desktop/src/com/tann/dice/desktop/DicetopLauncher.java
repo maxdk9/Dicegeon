@@ -19,15 +19,15 @@ import java.util.Scanner;
 public class DicetopLauncher {
     private static final boolean forcePack = false;
 	public static void main (String[] arg)  {
-        checkPack("../../images_3d", "imagehash3d.txt", true);
-        checkPack("../../images", "imagehash2d.txt", false);
+        checkPack("../../images_3d", "misc/imagehash3d.txt", true);
+        checkPack("../../images", "misc/imagehash2d.txt", false);
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.vSyncEnabled=true;
 		config.width=1280;
 		config.height=800;
 		config.samples=10;
 		config.title="Dicegeon";
-        config.addIcon("icon.png", Files.FileType.Internal);
+        config.addIcon("misc/icon.png", Files.FileType.Internal);
         new LwjglApplication(new Main(), config);
 	}
 

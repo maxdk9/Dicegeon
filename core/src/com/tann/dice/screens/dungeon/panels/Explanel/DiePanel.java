@@ -73,7 +73,7 @@ public class DiePanel extends InfoPanel implements OnPop {
     }
 
     private ImageActor make(final Side s){
-        ImageActor ia = new ImageActor(s.tr[0], SIDE_SIZE, SIDE_SIZE);
+        ImageActor ia = new ImageActor(s.tr[0], entity.getPixelSize(), entity.getPixelSize());
         ia.setBorder(new Border(Colours.dark, entity.getColour(), 1));
         ia.addListener(new InputListener(){
             @Override

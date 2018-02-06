@@ -50,10 +50,12 @@ uniform float s_5y;
 uniform float l_x;
 uniform float l_y;
 
+uniform float size; 
+
 void main() {
 
 
-	vec2 UV = v_diffuseUV/16.0;
+	vec2 UV = v_diffuseUV/(256.0/size);
 	
 
 	// base colour 

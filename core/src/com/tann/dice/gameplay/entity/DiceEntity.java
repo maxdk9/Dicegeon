@@ -49,6 +49,13 @@ public abstract class DiceEntity {
         this.sides = sides;
         this.name = name;
         this.lapel = Images.lapel0;
+        if(size.pixels==12){
+            this.lapel = Images.lapelSmall;
+        }
+        if(size.pixels==24){
+            this.lapel = Images.lapelBig;
+        }
+
         this.col = col;
         this.size = size;
     }
@@ -288,7 +295,10 @@ public abstract class DiceEntity {
     }
 
 
-    static final float BASE_SIZE = 91f/Gdx.graphics.getHeight()*Main.scale;
+    static final float BASE_SIZE = 5.69f/Gdx.graphics.getHeight()*Main.scale;
+
+    public abstract float getPixelSize();
+
     public enum EntitySize {
 
 
@@ -305,11 +315,12 @@ public abstract class DiceEntity {
 
         // ok so multiplaying it works
 
-        Small(.4f), Regular((BASE_SIZE)), Big(.63f), Huge(.95f);
+        Small(12), Regular(16), Big(24), Huge(32);
         public final float dieSize;
-
-        EntitySize(float dieSize) {
-            this.dieSize = dieSize;
+        public final int pixels;
+        EntitySize(int pixels) {
+            this.pixels = pixels;
+            this.dieSize = BASE_SIZE * pixels;
         }
     }
 

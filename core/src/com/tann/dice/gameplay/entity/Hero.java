@@ -113,6 +113,11 @@ public class Hero extends DiceEntity {
     }
 
     @Override
+    public float getPixelSize() {
+        return 16;
+    }
+
+    @Override
     public void locked() {
         Eff[] effs = die.getActualSide().effects;
         if(effs[0].targetingType == Eff.TargetingType.OnRoll){
