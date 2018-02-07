@@ -21,6 +21,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Hero.HeroType;
 import com.tann.dice.gameplay.entity.Monster;
+import com.tann.dice.gameplay.entity.Monster.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -159,18 +160,17 @@ public class DungeonScreen extends Screen {
         level ++;
         switch(level){
             case 1:
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
+                monsters.add(new Monster(MonsterType.Goblin));
+                monsters.add(new Monster(MonsterType.Goblin));
+                monsters.add(new Monster(MonsterType.Goblin));
+                monsters.add(new Monster(MonsterType.Goblin));
                 break;
             case 2:
-                monsters.add(new Monster(Monster.MonsterType.Archer));
-                monsters.add(new Monster(Monster.MonsterType.Archer));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Goblin));
-                monsters.add(new Monster(Monster.MonsterType.Serpent));
-                monsters.add(new Monster(Monster.MonsterType.Serpent));
+                monsters.add(new Monster(MonsterType.Archer));
+                monsters.add(new Monster(MonsterType.Archer));
+                monsters.add(new Monster(MonsterType.Goblin));
+                monsters.add(new Monster(MonsterType.Goblin));
+                monsters.add(new Monster(MonsterType.Serpent));
                 break;
 //            case 3:
 //                monsters.add(new Monster(Monster.MonsterType.Serpent));

@@ -64,13 +64,13 @@ public class Eff {
             case Damage:
                 switch(targetingType){
                     case EnemySingle:
-                        return value +" damage to a forward enemy";
+                        return value +" damage to an enemy";
                     case EnemySingleRanged:
-                        return value +" damage to any enemy";
+                        return value +" damage to ANY enemy";
                     case EnemyGroup:
-                        return value +" damage to all enemies";
+                        return value +" damage to ALL enemies";
                     case EnemyAndAdjacents:
-                        return value +" damage a forward enemy and both adjacent enemies";
+                        return value +" damage an enemy and both adjacent enemies";
                 }
                 return "ahh help damage";
             case Shield:

@@ -123,7 +123,7 @@ public class EntityPanel extends Group {
         int leftStart = (int) (getX()+borderSize);
         batch.setColor(Colours.light);
 
-        int textY = (int) (getY() + getHeight()-borderSize-TannFont.font.getHeight());
+        int textY = (int) (getY() + getHeight()-3-TannFont.font.getHeight());
 
         if(e.isDead()){
             batch.setColor(Colours.purple);
@@ -131,11 +131,14 @@ public class EntityPanel extends Group {
         TannFont.font.drawString(batch, e.getName(), leftStart + leftSize/2, textY, Align.center);
 
 
+
+        int heartsPerRow = 5;
         int heartGap = 1;
         float heartSize = Images.heart.getRegionHeight();
+        int maxOrRow = Math.min(heartsPerRow, e.getMaxHp());
         int heartStartY = textY - 4;
-        int heartStartX = (int)   (leftSize/2 - (e.getMaxHp()*heartSize+heartGap*(e.getMaxHp()-1))/2  +getX()+borderSize);
-        heartStartXX = (int) ( (heartStartX - getX() + heartSize/2f) + e.getMaxHp() * (heartSize + heartGap) - heartGap);
+        int heartStartX = (int)   (leftSize/2 - (maxOrRow*heartSize+heartGap*(maxOrRow-1))/2  +getX()+borderSize);
+        heartStartXX = (int) ( (heartStartX - getX() + heartSize/2f) + maxOrRow * (heartSize + heartGap) - heartGap);
         heartCenterY = (int) (heartStartY - getY() + heartSize/2f);
         int y = heartStartY;
         int x = heartStartX;
@@ -143,6 +146,7 @@ public class EntityPanel extends Group {
         for(int i=0;i<e.getMaxHp();i++){
             if (i % (huge?10:5)==0){
                 y -= heartSize + heartGap;
+                x = heartStartX;
             }
             if(i>=profile.getTopHealth()){
                 tr = Images.heart_empty;

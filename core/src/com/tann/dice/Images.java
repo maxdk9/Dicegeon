@@ -27,7 +27,7 @@ public class Images {
     public static final TextureRegion flameWard = Main.atlas.findRegion("buff/flameWard");
     public static final TextureRegion regen = Main.atlas.findRegion("buff/regen");
 
-	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("dice/face/sword1");
+	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("dice/face/reg/sword1");
 
     public static final TextureRegion heart = Main.atlas.findRegion("icon/hp");
     public static final TextureRegion heart_empty = Main.atlas.findRegion("icon/hp_empty");

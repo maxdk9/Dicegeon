@@ -28,7 +28,7 @@ public class Monster extends DiceEntity {
 
     public enum MonsterType{
 
-        Goblin(5, EntitySize.Regular, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1, Side.sword1),
+        Goblin(5, EntitySize.Regular, Side.sword2, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1),
 //        Ogre(9, EntitySize.Big, Side.cleave1, Side.cleave1, Side.sword3, Side.sword4, Side.sword4, Side.sword5),
         Archer(3, EntitySize.Small, Side.arrow2, Side.arrow2, Side.arrow2, Side.arrow2, Side.arrow2, Side.arrow2),
         Serpent(7, EntitySize.Big, Side.axe, Side.axe, Side.axe, Side.axe, Side.axe, Side.axe),
@@ -86,7 +86,7 @@ public class Monster extends DiceEntity {
                 ep.lockDie();
                 locked = true;
             }
-        }, 1.0f);
+        }, .3f);
 
 
     }

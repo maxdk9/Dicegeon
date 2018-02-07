@@ -69,20 +69,7 @@ public class DicetopLauncher {
                 total += hash(content);
             }
         }
-        if(!f.isDirectory()) {
-            try {
-                FileInputStream in = new FileInputStream(f.getPath());
-                int c;
-                while ((c = in.read()) != -1) {
-                    total += c;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return total + f.getName().hashCode();
+        return (int) (total + f.getName().hashCode() + f.lastModified());
     }
 
     private static void packImages(boolean threeD){
