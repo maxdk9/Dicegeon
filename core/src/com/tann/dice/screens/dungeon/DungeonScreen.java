@@ -151,7 +151,7 @@ public class DungeonScreen extends Screen {
 //        confirmButton.setText(s);
     }
 
-    public int level=0;
+    public int level=1;
 
     public void nextLevel() {
         spellButt.removeAllHovers();
@@ -212,7 +212,8 @@ public class DungeonScreen extends Screen {
             de.reset();
         }
 
-        Main.pushPhase(new EnemyRollingPhase());
+        Main.pushPhase(new LevelUpPhase());
+//        Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
 //        for(DiceEntity de:Room.get().getActiveEntities()) {
 //            for (int i = 0; i < 2; i++) {
@@ -677,7 +678,7 @@ public class DungeonScreen extends Screen {
 
     public void showLevelupPanel(Hero hero, List<HeroType>options) {
         LevelUpPanel lup = new LevelUpPanel(hero, options);
-        lup.setPosition(getWidth()/2, getHeight()*2/3f, Align.center);
+        lup.setPosition(getWidth()/2, getHeight()/2f, Align.center);
         addActor(lup);
     }
 

@@ -25,6 +25,10 @@ public class Side {
 	}
 
     public Side(TextureRegion tr, Eff[] effects){
+	    if(tr == null){
+            System.out.println(effects[0]);
+            throw new NullPointerException();
+        }
         this.tr = tr;
         this.effects=effects;
     }
@@ -54,7 +58,7 @@ public class Side {
     public static final Side arrow2 = new Side(Images.get("smol/face/arrow"), new Eff().damage(2).ranged());
     public static final Side arrow3 = new Side(Images.get("smol/face/arrow"), new Eff().damage(3).ranged());
 
-    public static final Side axe = new Side(Images.get("big/axe"), new Eff().damage(2).enemyAndAdjacents());
+    public static final Side axe = new Side(Images.get("big/face/axe"), new Eff().damage(2).enemyAndAdjacents());
 
 //    public static final Side poison1 = new Side(Images.get("poison1"), new Eff().buff(new BuffDot(-1, 1)));
 //    public static final Side poison2 = new Side(Images.get("poison2"), new Eff().buff(new BuffDot(-1, 2)));
