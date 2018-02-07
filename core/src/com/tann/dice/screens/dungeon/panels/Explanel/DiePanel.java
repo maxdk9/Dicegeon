@@ -11,6 +11,7 @@ import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.panels.DieSidePanel;
 import com.tann.dice.util.*;
 
 public class DiePanel extends InfoPanel implements OnPop {
@@ -36,7 +37,7 @@ public class DiePanel extends InfoPanel implements OnPop {
     public void layout(){
         clearChildren();
         Side[] sides = entity.getSides();
-        int panelSize = sides[0].tr[0].getRegionHeight()-1;
+        int panelSize = sides[0].tr.getRegionHeight()-1;
 
         TextWriter name = new TextWriter(entity.name+"  ("+entity.getMaxHp()+"[h][red][heart][h][light])");
         addActor(name);
@@ -46,15 +47,15 @@ public class DiePanel extends InfoPanel implements OnPop {
         int startX = (int) (getWidth()/2 - panelSize*4/2);
 
         for(int i=0;i<sides.length;i++){
-            ImageActor ia = make(sides[i]);
-            addActor(ia);
+            DieSidePanel dsp = setup(sides[i]);
+            addActor(dsp);
             switch (i){
-                case 0: ia.setPosition(startX, gap + panelSize); break;
-                case 1: ia.setPosition(startX + panelSize, gap + panelSize); break;
-                case 2: ia.setPosition(startX + panelSize*2, gap + panelSize); break;
-                case 3: ia.setPosition(startX + panelSize*3, gap + panelSize); break;
-                case 4: ia.setPosition(startX + panelSize, gap); break;
-                case 5: ia.setPosition(startX + panelSize, gap+panelSize*2); break;
+                case 0: dsp.setPosition(startX, gap + panelSize); break;
+                case 1: dsp.setPosition(startX + panelSize, gap + panelSize); break;
+                case 2: dsp.setPosition(startX + panelSize*2, gap + panelSize); break;
+                case 3: dsp.setPosition(startX + panelSize*3, gap + panelSize); break;
+                case 4: dsp.setPosition(startX + panelSize, gap); break;
+                case 5: dsp.setPosition(startX + panelSize, gap+panelSize*2); break;
             }
 
         }
@@ -72,10 +73,9 @@ public class DiePanel extends InfoPanel implements OnPop {
 //        }
     }
 
-    private ImageActor make(final Side s){
-        ImageActor ia = new ImageActor(s.tr[0], entity.getPixelSize(), entity.getPixelSize());
-        ia.setBorder(new Border(Colours.dark, entity.getColour(), 1));
-        ia.addListener(new InputListener(){
+    private DieSidePanel setup(final Side s) {
+        DieSidePanel dsp = new DieSidePanel(entity, s);
+        dsp.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Explanel exp = Explanel.get();
@@ -86,7 +86,7 @@ public class DiePanel extends InfoPanel implements OnPop {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
-        return ia;
+        return dsp;
     }
 
     @Override

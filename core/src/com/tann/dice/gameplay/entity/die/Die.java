@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.badlogic.gdx.utils.Array;
 
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
@@ -288,14 +287,17 @@ public class Die implements Targetable{
     public float[] getTexLocs() {
         if(texLocs != null) return texLocs;
         texLocs = new float[26];
-        float width = sides.get(0).tr[0].getTexture().getWidth();
-        float height = sides.get(0).tr[0].getTexture().getHeight();
+
+        float width = sides.get(0).tr.getTexture().getWidth();
+        float height = sides.get(0).tr.getTexture().getHeight();
         for(int i=0;i<sides.size();i++){
             Side s = sides.get(i);
-            texLocs[4*i] = s.tr[0].getRegionX()/width;
-            texLocs[4*i+1] = s.tr[0].getRegionY()/height;
-            texLocs[4*i+2] = s.tr[1].getRegionX()/width;
-            texLocs[4*i+3] = s.tr[1].getRegionY()/height;
+            TextureRegion face = s.tr;
+            texLocs[4*i] = face.getRegionX()/width;
+            texLocs[4*i+1] = face.getRegionY()/height;
+            TextureRegion pips = Side.sizeToPips.get(entity.getSize())[s.effects[0].getValue()];
+            texLocs[4*i+2] = pips.getRegionX()/width;
+            texLocs[4*i+3] = pips.getRegionY()/height;
         }
         texLocs[24]=entity.getLapel().getRegionX()/width;
         texLocs[25]=entity.getLapel().getRegionY()/height;
@@ -477,7 +479,7 @@ public class Die implements Targetable{
         mb.node().id = "dieIndex";
 
         if(MATERIAL==null){
-            MATERIAL =new Material(TextureAttribute.createDiffuse(sides.get(0).tr[0].getTexture()));
+            MATERIAL =new Material(TextureAttribute.createDiffuse(sides.get(0).tr.getTexture()));
         }
 
         MeshPartBuilder mpb = mb.part("dieIndex", GL20.GL_TRIANGLES, ATTRIBUTES, MATERIAL);
@@ -488,9 +490,8 @@ public class Die implements Targetable{
         for(int i=0;i<6;i++){
             normalX=i;
             Side side = sides.get(i);
-            TextureRegion base = side.tr[0];
-            TextureRegion highlight = side.tr[1];
-            mpb.setColor(getFloat(base), getFloat(highlight), inner, dieIndex /5f+0.1f);
+            TextureRegion base = side.tr;
+            mpb.setColor(getFloat(base), 0, inner, dieIndex /5f+0.1f);
             switch(i){
                 case 0: mpb.rect(-DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, -1); break;
                 case 1: mpb.rect(-DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, normalX, normalY, 1); break;
@@ -520,9 +521,9 @@ public class Die implements Targetable{
 
     public float getMass() {
         switch(entity.getSize()){
-            case Small:
-            case Regular:
-            case Big:
+            case smol:
+            case reg:
+            case big:
                 return 1;
             case Huge:
                 return 2;
@@ -532,9 +533,9 @@ public class Die implements Targetable{
 
     public float getForceMultiplier(){
         switch(entity.getSize()){
-            case Small:
-            case Regular:
-            case Big:
+            case smol:
+            case reg:
+            case big:
                 return 1;
             case Huge:
                 return 3;

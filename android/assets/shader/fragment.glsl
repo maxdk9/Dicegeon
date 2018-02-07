@@ -86,15 +86,11 @@ void main() {
 	float wrongSide = (side == -1) ?0.0:(1.0-correctSide);
 	
 	// draw highlight face if applicable
-	// colour = texture2D(u_texture, highlight+UV);
+	colour = texture2D(u_texture, highlight+UV);
 	// float alpha = colour.a * v_glow * correctSide * 0.5;
-	// gl_FragColor.rgb +=  colour.rgb * alpha * v_glow * correctSide;
+	gl_FragColor.rgb +=  colour.rgb * colour.a;
 
-	// draw grey face if applicable
-	colour =texture2D(u_texture, face+UV);
-	colour.rgb=vec3(0.3,0.3,0.3);
-	colour.a = colour.a*wrongSide;
-	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) +colour.rgb*(colour.a);
+	
 
 	
 }	

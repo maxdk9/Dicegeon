@@ -151,7 +151,7 @@ public class DungeonScreen extends Screen {
 //        confirmButton.setText(s);
     }
 
-    public int level=1;
+    public int level=0;
 
     public void nextLevel() {
         spellButt.removeAllHovers();
@@ -340,9 +340,6 @@ public class DungeonScreen extends Screen {
     public void postDraw(Batch batch) {
         batch.setColor(Colours.light);
         TannFont.font.drawString(batch, "Level "+level+"/5",Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
-        batch.setColor(Colours.grey);
-        Draw.fillRectangle(batch, 78, 78, 4, 4);
-        batch.setColor(Colours.light);
     }
 
     @Override

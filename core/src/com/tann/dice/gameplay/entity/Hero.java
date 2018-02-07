@@ -16,7 +16,7 @@ import java.util.List;
 public class Hero extends DiceEntity {
     HeroType type;
     public Hero(HeroType type) {
-        super(type.sides, type.toString(), EntitySize.Regular, type.color);
+        super(type.sides, type.toString(), EntitySize.reg, type.color);
         this.type=type;
         setMaxHp(type.hp);
     }

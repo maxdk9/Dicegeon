@@ -97,7 +97,7 @@ public class Eff {
         return "yeowch?? "+type;
     }
 
-    public Eff nothing() { return type(EffectType.Nothing, -1); }
+    public Eff nothing() { return type(EffectType.Nothing, 0); }
     public Eff damage(int amount) { return type(EffectType.Damage, amount); }
     public Eff shield(int amount) { return type(EffectType.Shield, amount); }
     public Eff magic(int amount) { return type(EffectType.Magic, amount); }

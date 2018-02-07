@@ -137,7 +137,7 @@ public class Explanel extends InfoPanel {
     }
 
     public void setup(Side side){
-        setup(null, Eff.describe(side.effects), side.effects, side.tr[0], null);
+        setup(null, Eff.describe(side.effects), side.effects, side.tr, null);
     }
 
 

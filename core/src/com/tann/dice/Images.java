@@ -27,7 +27,7 @@ public class Images {
     public static final TextureRegion flameWard = Main.atlas.findRegion("buff/flameWard");
     public static final TextureRegion regen = Main.atlas.findRegion("buff/regen");
 
-	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("dice/face/reg/sword1");
+	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("reg/face/sword");
 
     public static final TextureRegion heart = Main.atlas.findRegion("icon/hp");
     public static final TextureRegion heart_empty = Main.atlas.findRegion("icon/hp_empty");
@@ -36,7 +36,7 @@ public class Images {
 
     public static final TextureRegion patch = Main.atlas.findRegion("patch/test");
 
-    public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("dice/lapel/0");
+    public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("reg/lapel/lapel");
     public static final TextureRegion lapelSmall = Main.atlas_3d.findRegion("dice/lapel/small");
     public static final TextureRegion lapelBig = Main.atlas_3d.findRegion("dice/lapel/big");
 //    public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
@@ -52,12 +52,15 @@ public class Images {
 		return  new TextureRegion[]{base,base};
 	}
 	
-	public static TextureRegion[] get(String name){
-		TextureRegion[] tr = threeDTextures.get(name);
-		if(tr==null){
-			tr = makeFace(name);
-			threeDTextures.put(name, tr);
-		}
-		return tr;
+	public static TextureRegion get(String name){
+
+	    return Main.atlas_3d.findRegion(name);
+
+//		TextureRegion[] tr = threeDTextures.get(name);
+//		if(tr==null){
+//			tr = makeFace(name);
+//			threeDTextures.put(name, tr);
+//		}
+//		return tr;
 	}
 }

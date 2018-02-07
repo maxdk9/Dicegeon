@@ -315,7 +315,7 @@ public abstract class DiceEntity {
 
         // ok so multiplaying it works
 
-        Small(12), Regular(16), Big(24), Huge(32);
+        smol(12), reg(16), big(24), Huge(32);
         public final float dieSize;
         public final int pixels;
         EntitySize(int pixels) {
