@@ -10,6 +10,7 @@ public class DamageProfile {
     private int incomingDamage;
     private int blockedDamage;
     private int heals;
+    boolean execute;
     public List<Buff> incomingBuffs = new ArrayList<>();
     DiceEntity target;
     public List<Eff> effs = new ArrayList<>();
@@ -56,8 +57,9 @@ public class DamageProfile {
                 break;
             case Execute:
                 if(target.getEffectiveHp() == e.getValue()){
-                    incomingDamage += 100000;
+                    execute = true;
                 }
+                break;
         }
     }
 
@@ -82,6 +84,9 @@ public class DamageProfile {
         for(Buff b: incomingBuffs){
             target.addBuff(b);
         }
+        if(execute){
+            target.kill();
+        }
         reset();
         target.getEntityPanel().layout();
     }
@@ -95,11 +100,11 @@ public class DamageProfile {
         for(Buff b:allBuffs){
             damage = b.alterIncomingDamage(damage);
         }
-        return incomingDamage;
+        return damage;
     }
 
     public boolean isGoingToDie(){
-        return getEffectiveHp() <= 0;
+        return getEffectiveHp() <= 0 || execute;
     }
 
     public int getEffectiveHp() {

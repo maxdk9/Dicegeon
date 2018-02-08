@@ -136,7 +136,12 @@ public abstract class DiceEntity {
         }
     }
 
+    public void kill() {
+        die();
+    }
+
     private void die() {
+        hp = 0;
         die.removeFromScreen();
         getEntityPanel().setPossibleTarget(false);
         slide(false);

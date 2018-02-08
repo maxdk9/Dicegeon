@@ -174,13 +174,8 @@ public class EntityPanel extends Group {
 
         batch.setColor(Colours.z_white);
         float buffX = 0;
-        float buffSize = 20;
-        if(e.isPlayer()){
-            buffX = getX() + borderSize;
-        }
-        else{
-            buffX = getX() + getWidth() - buffSize - borderSize;
-        }
+        float buffSize = 4;
+        buffX = getX() + borderSize;
         for(int i=0;i<e.getBuffs().size();i++){
             Buff b = e.getBuffs().get(i);
             Draw.drawSize(batch, b.image, buffX, getY() + getHeight() - buffSize *(i+1) - borderSize, buffSize, buffSize);

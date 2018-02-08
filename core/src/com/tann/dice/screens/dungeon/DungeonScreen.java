@@ -213,7 +213,7 @@ public class DungeonScreen extends Screen {
         }
 
         Main.pushPhase(new LevelUpPhase());
-//        Main.pushPhase(new EnemyRollingPhase());
+        Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
 //        for(DiceEntity de:Room.get().getActiveEntities()) {
 //            for (int i = 0; i < 2; i++) {

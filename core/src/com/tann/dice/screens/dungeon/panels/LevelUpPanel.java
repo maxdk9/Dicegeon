@@ -6,6 +6,7 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Hero.HeroType;
+import com.tann.dice.gameplay.phase.LevelUpPhase;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
@@ -20,7 +21,7 @@ public class LevelUpPanel extends Group{
     DiePanel basePanel;
     DiePanel[] optionsPanels;
     static final int topHeight = 14, hGap = 10, vGap = 4, tickSize = 20;
-    public LevelUpPanel(Hero hero, List<HeroType> options) {
+    public LevelUpPanel(final Hero hero, List<HeroType> options) {
     this.hero = hero;
 
     basePanel = new DiePanel(hero);
@@ -38,14 +39,16 @@ public class LevelUpPanel extends Group{
     basePanel.setPosition(hGap, (int)(bottomHeight/2-basePanel.getHeight()/2));
     optionsPanels = new DiePanel[options.size()];
     for(int i=0;i<options.size();i++){
-        HeroType ht = options.get(i);
+        final HeroType ht = options.get(i);
         DiePanel dp = new Hero(ht).getDiePanel();
         addActor(dp);
         dp.setPosition(dp.getWidth() + hGap*2, i*(vGap+dp.getHeight())+vGap);
         Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
           @Override
           public void run() {
-            System.out.println("magpie");
+              hero.levelUpTo(ht);
+              Main.popPhase(LevelUpPhase.class);
+              remove();
           }
         });
         tick.setBorder(Colours.dark, Colours.purple, 1);
@@ -68,7 +71,7 @@ public class LevelUpPanel extends Group{
       int lineEndX = (int)(getX() + optionsPanels[0].getX());
       int lineDist = 16;
       int lineStartY = (int) (getY() + basePanel.getY() + basePanel.getHeight());
-      //TODO fix this magic number -2 ugh
+      //TODO fix this magic number +1 ugh
       super.draw(batch, parentAlpha);
       batch.setColor(Colours.light);
       Draw.drawLine(batch, lineStartX, lineStartY, lineStartX, lineStartY+lineDist+1, 1);
