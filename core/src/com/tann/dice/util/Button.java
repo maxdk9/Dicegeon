@@ -54,13 +54,7 @@ public class Button extends Lay{
 		if(border==null) border=bg;
 		Draw.fillActor(batch, this, bg, border, borderSize);
 		batch.setColor(getColor());
-        float imageWidth = getWidth()*imageScale;
-        float imageHeight = getHeight()*imageScale;
         batch.draw(region, (int)(getX()+getWidth()/2-region.getRegionWidth()/2), (int)(getY()+getHeight()/2-region.getRegionHeight()/2));
-//		Draw.drawSize(batch, region,
-//				getX()+getWidth()/2-imageWidth/2,
-//				getY()+getHeight()/2-imageHeight/2,
-//				imageWidth, imageHeight);
 		super.draw(batch, parentAlpha);
 	}
 

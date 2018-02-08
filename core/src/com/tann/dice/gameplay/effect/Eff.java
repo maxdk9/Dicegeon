@@ -50,7 +50,7 @@ public class Eff {
 	private int value;
 	public DiceEntity source;
 
-    public Eff(){};
+    public Eff(){}
 
     public String getValueString(){
 	     return (value>=0?"":"-")+Math.abs(value);
@@ -105,7 +105,7 @@ public class Eff {
     public Eff execute(int amount) { return type(EffectType.Execute, amount); }
     public Eff reroll(int amount) { return type(EffectType.Reroll, amount); }
 
-    public Eff buff(Buff buff){this.buff = buff; return type(EffectType.Buff, 1); }
+    public Eff buff(Buff buff){this.buff = buff; return type(EffectType.Buff); }
 
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}
@@ -117,7 +117,7 @@ public class Eff {
     public Eff self() { return targetType(TargetingType.Self);}
     public Eff onRoll() { return targetType(TargetingType.OnRoll);}
     public Eff randomEnemy() { return targetType(TargetingType.RandomEnemy);}
-
+    public Eff justValue(int amount) {this.value = amount; return this;}
 
 
     public Eff targetType(TargetingType type){
@@ -131,6 +131,14 @@ public class Eff {
         }
         this.type=type;
         this.value=amount;
+        return this;
+    }
+
+    private Eff type(EffectType type){
+        if(this.type!=null){
+            System.err.println(this+": trying to overwrite type: "+this.type+" to "+type);
+        }
+        this.type=type;
         return this;
     }
 

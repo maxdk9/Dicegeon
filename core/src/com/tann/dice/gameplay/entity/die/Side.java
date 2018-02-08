@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
+import com.tann.dice.gameplay.effect.buff.BuffDot;
+import com.tann.dice.gameplay.effect.buff.Stealth;
 import com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 
 import java.util.HashMap;
@@ -55,15 +57,17 @@ public class Side {
     public static final Side sword5 = new Side(Images.get("reg/face/sword"), new Eff().damage(5));
 //    public static final Side sword6 = new Side(Images.get("reg/face/sword"), new Eff().damage(6));
 //    public static final Side arrow1 = new Side(Images.get("smol/face/arrow"), new Eff().damage(1).ranged());
-    public static final Side arrow2 = new Side(Images.get("smol/face/arrow"), new Eff().damage(2).ranged());
-    public static final Side arrow3 = new Side(Images.get("smol/face/arrow"), new Eff().damage(3).ranged());
+    public static final Side arrow1 = new Side(Images.get("reg/face/arrow"), new Eff().damage(1).ranged());
+    public static final Side arrow2 = new Side(Images.get("reg/face/arrow"), new Eff().damage(2).ranged());
+    public static final Side execute3 = new Side(Images.get("reg/face/execute"), new Eff().execute(3).ranged());
+    public static final Side smol_arrow2 = new Side(Images.get("smol/face/arrow"), new Eff().damage(2).ranged());
 
     public static final Side axe = new Side(Images.get("big/face/axe"), new Eff().damage(2).enemyAndAdjacents());
 
-//    public static final Side poison1 = new Side(Images.get("poison1"), new Eff().buff(new BuffDot(-1, 1)));
+    public static final Side poison1 = new Side(Images.get("reg/face/poison"), new Eff().justValue(1).buff(new BuffDot(-1, 1)));
 //    public static final Side poison2 = new Side(Images.get("poison2"), new Eff().buff(new BuffDot(-1, 2)));
-//    public static final Side stealth = new Side(Images.get("stealth"), new Eff().buff(new Stealth(1)).self());
-//    public static final Side snipe = new Side(Images.get("snipe"), new Eff().execute(3).ranged());
+    public static final Side vanish = new Side(Images.get("reg/face/vanish"), new Eff().buff(new Stealth(1)).self());
+
 //
 //    public static final Side potionregen = new Side(Images.get("potionofregen"), new Eff().buff(new BuffDot(-1, -1)).friendlySingle());
 //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());

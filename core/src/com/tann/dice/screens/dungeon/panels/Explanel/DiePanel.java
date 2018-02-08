@@ -30,10 +30,10 @@ public class DiePanel extends InfoPanel implements OnPop {
         layout();
     }
     private static final int SIDE_SIZE = 16;
-    private static final int gap = 4;
-    public static final int WIDTH = (SIDE_SIZE-1) * 4 + 1 + gap*2 + 20; //plus10 noo
-    public static final int HEIGHT = (SIDE_SIZE-1) * 3 + 1 + TannFont.font.getHeight() + gap*3;
-
+    private static final int gap = 3;
+    public static final int WIDTH = (SIDE_SIZE-1) * 4 + 1 + gap*2 +gap*2; //plus10 noo
+    public static final int TEXT_GAP = 3, TEXT_SIZE = TEXT_GAP*2+TannFont.font.getHeight();
+    public static final int HEIGHT = (SIDE_SIZE-1) * 3 +  TEXT_SIZE + gap*2;
     public void layout(){
         clearChildren();
         Side[] sides = entity.getSides();
@@ -42,7 +42,7 @@ public class DiePanel extends InfoPanel implements OnPop {
         TextWriter name = new TextWriter(entity.name+"  ("+entity.getMaxHp()+"[h][red][heart][h][light])");
         addActor(name);
         setSize(WIDTH, HEIGHT);
-        name.setPosition((int)(getWidth()/2 - name.getWidth()/2), gap*2 + panelSize*3);
+        name.setPosition((int)(getWidth()/2 - name.getWidth()/2), getHeight()-TEXT_GAP-TannFont.font.getHeight());
 
         int startX = (int) (getWidth()/2 - panelSize*4/2);
 
@@ -59,18 +59,6 @@ public class DiePanel extends InfoPanel implements OnPop {
             }
 
         }
-
-
-//        if(entity instanceof Hero){
-//            Hero h = (Hero) entity;
-//            for(Spell s: h.getSpells()){
-//                spellPanel = new Explanel();
-//
-//                spellPanel.setup(s);
-//                addActor(spellPanel);
-//                spellPanel.setPosition((int)(getWidth()/2-spellPanel.getWidth()/2), -spellPanel.getHeight()-5);
-//            }
-//        }
     }
 
     private DieSidePanel setup(final Side s) {
@@ -92,6 +80,9 @@ public class DiePanel extends InfoPanel implements OnPop {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Draw.fillActor(batch, this, Colours.dark, entity.getColour(), 1);
+        batch.setColor(entity.getColour());
+        int rectHeight = TEXT_GAP*2 + TannFont.font.getHeight();
+        Draw.drawRectangle(batch, getX(), getY()+getHeight()-rectHeight, getWidth(), rectHeight, 1);
         super.draw(batch, parentAlpha);
     }
 

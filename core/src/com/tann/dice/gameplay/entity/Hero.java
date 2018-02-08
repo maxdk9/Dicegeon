@@ -59,8 +59,8 @@ public class Hero extends DiceEntity {
         Apprentice(Colours.blue, 4, new Side[]{Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing, Side.nothing}, new Spell[]{Spell.fireWave}),
         Herbalist(Colours.red, 4, new Side[]{Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing}, new Spell[]{Spell.healAll}),
 
-        Rogue(Colours.orange, 5, Side.sword2, Side.sword2, Side.sword2, Side.sword2, Side.sword2, Side.nothing),
-        Ranger(Colours.orange, 5, Side.sword2, Side.sword2, Side.arrow2, Side.arrow2, Side.sword2, Side.nothing),
+        Rogue(Colours.orange, 5, Side.poison1, Side.poison1, Side.sword2, Side.sword2, Side.vanish, Side.nothing),
+        Ranger(Colours.orange, 5, Side.arrow1, Side.arrow1, Side.arrow2, Side.arrow2, Side.execute3, Side.nothing),
 //
 //        Fencer(null, 6, Side.sword1shield2, Side.sword2shield1, Side.sword2shield1, Side.trident, Side.trident, Side.nothing),
 //        Dabbler(null, 6, Side.sword2, Side.arrow2, Side.heal2, Side.shield2, Side.magic2, Side.nothing),
