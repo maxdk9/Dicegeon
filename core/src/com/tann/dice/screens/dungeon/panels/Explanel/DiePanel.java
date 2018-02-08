@@ -91,7 +91,7 @@ public class DiePanel extends InfoPanel implements OnPop {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark);
+        Draw.fillActor(batch, this, Colours.dark, entity.getColour(), 1);
         super.draw(batch, parentAlpha);
     }
 
