@@ -1,6 +1,5 @@
 package com.tann.dice.gameplay.entity;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Eff;
@@ -8,7 +7,6 @@ import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.util.Colours;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.List;
 public class Hero extends DiceEntity {
     HeroType type;
     public Hero(HeroType type) {
-        super(type.sides, type.toString(), EntitySize.reg, type.color);
+        super(type.sides, type.toString(), EntitySize.reg);
         this.type=type;
         setMaxHp(type.hp);
     }
@@ -30,8 +28,9 @@ public class Hero extends DiceEntity {
         List<HeroType> results = new ArrayList<>();
         switch(type){
             case Fighter:
-                results.add(HeroType.Rogue);
+//                results.add(HeroType.Rogue);
                 results.add(HeroType.Ranger);
+                results.add(HeroType.Gladiator);
 //                results.add(HeroType.Fencer);
 //                results.add(HeroType.Dabbler);
 //                break;
@@ -53,16 +52,15 @@ public class Hero extends DiceEntity {
 
     public enum HeroType{
 
-        Fighter(Colours.orange, 5, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.shield1, Side.nothing),
-        Fighter2(Colours.yellow, 5, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.shield1, Side.nothing),
-        Defender(Colours.grey, 5, Side.shield2, Side.shield2, Side.shield1, Side.sword1, Side.sword1, Side.nothing),
-        Apprentice(Colours.blue, 4, new Side[]{Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing, Side.nothing}, new Spell[]{Spell.fireWave}),
-        Herbalist(Colours.red, 4, new Side[]{Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing}, new Spell[]{Spell.healAll}),
+        Fighter(5, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.shield1, Side.nothing),
+        Defender(5, Side.shield2, Side.shield2, Side.shield1, Side.sword1, Side.sword1, Side.nothing),
+        Apprentice(4, new Side[]{Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing, Side.nothing}, new Spell[]{Spell.fireWave}),
+        Herbalist(4, new Side[]{Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing}, new Spell[]{Spell.healAll}),
 
-        Rogue(Colours.orange, 5, Side.poison1, Side.poison1, Side.sword2, Side.sword2, Side.vanish, Side.nothing),
-        Ranger(Colours.orange, 5, Side.arrow1, Side.arrow1, Side.arrow2, Side.arrow2, Side.execute3, Side.nothing),
+        Rogue(6, Side.poison1, Side.poison1, Side.sword2, Side.sword2, Side.vanish, Side.nothing),
+        Ranger(6, Side.arrow1, Side.arrow1, Side.arrow2, Side.arrow2, Side.execute3, Side.nothing),
 //
-//        Fencer(null, 6, Side.sword1shield2, Side.sword2shield1, Side.sword2shield1, Side.trident, Side.trident, Side.nothing),
+        Gladiator(6, Side.swordShield1, Side.swordShield1, Side.swordShield2, Side.swordShield2, Side.shield2, Side.nothing),
 //        Dabbler(null, 6, Side.sword2, Side.arrow2, Side.heal2, Side.shield2, Side.magic2, Side.nothing),
 //
 //        Paladin(null, 7, Side.shield2, Side.shield2, Side.shield2heal2, Side.sword2, Side.sword2, Side.nothing),
@@ -79,14 +77,12 @@ public class Hero extends DiceEntity {
         public Spell[] spells;
         public TextureRegion lapel;
         int hp;
-        public Color color;
 
-        HeroType(Color col, int hp, Side... sides){
-            this(col, hp, sides, new Spell[0]);
+        HeroType(int hp, Side... sides){
+            this(hp, sides, new Spell[0]);
         }
 
-        HeroType(Color col, int hp, Side[] sides, Spell[] spells){
-            this.color = col;
+        HeroType(int hp, Side[] sides, Spell[] spells){
             if(sides.length!=6){
                 System.err.println("side error making "+this);
             }

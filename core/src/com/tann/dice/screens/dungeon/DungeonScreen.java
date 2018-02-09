@@ -241,13 +241,21 @@ public class DungeonScreen extends Screen {
 
     public void resetHeroes(){
         List<Hero> heroes = new ArrayList<>();
-        for (int i = 0; i < 1; i++) {
-            heroes.add(new Hero(Hero.HeroType.Fighter));
-            heroes.add(new Hero(Hero.HeroType.Fighter2));
-            heroes.add(new Hero(Hero.HeroType.Defender));
-            heroes.add(new Hero(Hero.HeroType.Herbalist));
-            heroes.add(new Hero(Hero.HeroType.Apprentice));
-        }
+        Hero f1 = new Hero(HeroType.Fighter);
+        f1.setColour(Colours.orange);
+        heroes.add(f1);
+        Hero f2 = new Hero(HeroType.Fighter);
+        f2.setColour(Colours.yellow);
+        heroes.add(f2);
+        Hero d = new Hero(HeroType.Defender);
+        d.setColour(Colours.grey);
+        heroes.add(d);
+        Hero h = new Hero(HeroType.Herbalist);
+        h.setColour(Colours.red);
+        heroes.add(h);
+        Hero m = new Hero(HeroType.Apprentice);
+        m.setColour(Colours.blue);
+        heroes.add(m);
         friendly.setEntities(heroes);
         Party.get().setEntities(heroes);
     }

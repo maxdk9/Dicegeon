@@ -55,6 +55,11 @@ public class Side {
     public static final Side sword3 = new Side(Images.get("reg/face/sword"), new Eff().damage(3));
     public static final Side sword4 = new Side(Images.get("reg/face/sword"), new Eff().damage(4));
     public static final Side sword5 = new Side(Images.get("reg/face/sword"), new Eff().damage(5));
+
+    public static final Side swordShield1 = new Side(Images.get("reg/face/swordShield"), new Eff().damage(1), new Eff().shield(1).self());
+    public static final Side swordShield2 = new Side(Images.get("reg/face/swordShield"), new Eff().damage(2), new Eff().shield(2).self());
+
+
 //    public static final Side sword6 = new Side(Images.get("reg/face/sword"), new Eff().damage(6));
 //    public static final Side arrow1 = new Side(Images.get("smol/face/arrow"), new Eff().damage(1).ranged());
     public static final Side arrow1 = new Side(Images.get("reg/face/arrow"), new Eff().damage(1).ranged());

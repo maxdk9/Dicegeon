@@ -17,6 +17,7 @@ import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
+import com.tann.dice.util.Colours;
 import com.tann.dice.util.Sounds;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public abstract class DiceEntity {
     List<Buff> buffs = new ArrayList<>();
     public DiceEntity targeted;
     // rendering vars
-    protected Color col;
+    protected Color col = Colours.purple;
     protected TextureRegion lapel;
     private EntityPanel ep;
     // temp junky variables
@@ -45,7 +46,7 @@ public abstract class DiceEntity {
     public boolean locked; // only used for monster
 
 
-    public DiceEntity(Side[] sides, String name, EntitySize size, Color col) {
+    public DiceEntity(Side[] sides, String name, EntitySize size) {
         this.sides = sides;
         this.name = name;
         this.lapel = Images.lapel0;
@@ -56,7 +57,6 @@ public abstract class DiceEntity {
             this.lapel = Images.lapelBig;
         }
 
-        this.col = col;
         this.size = size;
     }
 
@@ -218,6 +218,10 @@ public abstract class DiceEntity {
 
     public Color getColour() {
         return col;
+    }
+
+    public void setColour(Color col) {
+        this.col = col;
     }
 
     public String getName() {

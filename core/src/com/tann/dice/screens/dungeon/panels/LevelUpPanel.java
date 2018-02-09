@@ -40,7 +40,9 @@ public class LevelUpPanel extends Group{
     optionsPanels = new DiePanel[options.size()];
     for(int i=0;i<options.size();i++){
         final HeroType ht = options.get(i);
-        DiePanel dp = new Hero(ht).getDiePanel();
+        Hero choice = new Hero(ht);
+        choice.setColour(hero.getColour());
+        DiePanel dp = choice.getDiePanel();
         addActor(dp);
         dp.setPosition(dp.getWidth() + hGap*2, i*(vGap+dp.getHeight())+vGap);
         Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
