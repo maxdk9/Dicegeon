@@ -310,20 +310,6 @@ public abstract class DiceEntity {
 
     public enum EntitySize {
 
-
-
-        // 1 is 9
-        // 2 is 18
-        // 3 is 27
-        // 27 at 400
-        // 54 at 800
-        // so I have to divide by height?
-        // width doesn't change it
-
-        // so I should just be able to multiply by scale after dividing by height
-
-        // ok so multiplaying it works
-
         smol(12), reg(16), big(24), Huge(32);
         public final float dieSize;
         public final int pixels;

@@ -15,6 +15,8 @@ public class Images {
     public static final TextureRegion magicBigger = Main.atlas.findRegion("icon/magicBigger");
     public static final TextureRegion magicHover = Main.atlas.findRegion("ui/magicHover");
     public static final TextureRegion magicButt = Main.atlas.findRegion("ui/magicButton");
+    public static final TextureRegion spellBorder = Main.atlas.findRegion("spell/border");
+    public static final TextureRegion spellBorderBig = Main.atlas.findRegion("spell/borderBig");
     public static final TextureRegion spell_shield = Main.atlas_3d.findRegion("dice/face/shield1");
 
 	public static final TextureRegion roll = Main.atlas.findRegion("ui/roll");
@@ -32,7 +34,7 @@ public class Images {
     public static final TextureRegion heart = Main.atlas.findRegion("icon/hp");
     public static final TextureRegion heart_empty = Main.atlas.findRegion("icon/hp_empty");
 
-    public static final TextureRegion background = Main.atlas.findRegion("background");
+    public static final TextureRegion background = Main.atlas.findRegion("background3");
 
     public static final TextureRegion patch = Main.atlas.findRegion("patch/test");
 

@@ -12,7 +12,10 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.DieSidePanel;
+import com.tann.dice.screens.dungeon.panels.SpellPanel;
 import com.tann.dice.util.*;
+
+import java.util.List;
 
 public class DiePanel extends InfoPanel implements OnPop {
     public DiceEntity entity;
@@ -47,7 +50,7 @@ public class DiePanel extends InfoPanel implements OnPop {
         int startX = (int) (getWidth()/2 - panelSize*4/2);
 
         for(int i=0;i<sides.length;i++){
-            DieSidePanel dsp = setup(sides[i]);
+            DieSidePanel dsp = setup(sides[i], entity);
             addActor(dsp);
             switch (i){
                 case 0: dsp.setPosition(startX, gap + panelSize); break;
@@ -57,17 +60,26 @@ public class DiePanel extends InfoPanel implements OnPop {
                 case 4: dsp.setPosition(startX + panelSize, gap); break;
                 case 5: dsp.setPosition(startX + panelSize, gap+panelSize*2); break;
             }
-
+        }
+        if(entity instanceof Hero){
+            Hero h  = (Hero) entity;
+            List<Spell> spellList = h.getSpells();
+            for(int i=0;i<spellList.size();i++){
+                Spell s = spellList.get(i);
+                SpellPanel panel = new SpellPanel(s, false);
+                panel.setPosition(startX + panelSize * (2+i) +1, gap + panelSize*2 +1);
+                addActor(panel);
+            }
         }
     }
 
-    private DieSidePanel setup(final Side s) {
+    private DieSidePanel setup(final Side s, final DiceEntity ent) {
         DieSidePanel dsp = new DieSidePanel(entity, s);
         dsp.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Explanel exp = Explanel.get();
-                exp.setup(s);
+                exp.setup(s, false, ent.getColour());
                 DungeonScreen.get().push(exp);
                 exp.setPosition(exp.getNiceX(false), exp.getNiceY());
                 event.stop();

@@ -20,9 +20,7 @@ public class DieSidePanel extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Draw.fillActor(batch, this, Colours.dark, e.getColour(), 1);
-        batch.setColor(Colours.z_white);
-        batch.draw(s.tr, getX(), getY());
-        batch.draw(Side.sizeToPips.get(e.getSize())[s.effects[0].getValue()], getX(), getY());
+        s.draw(batch, getX(), getY(), 1, e.getColour());
         super.draw(batch, parentAlpha);
     }
 }

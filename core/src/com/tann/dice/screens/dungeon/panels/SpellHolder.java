@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class SpellHolder extends Group {
 
-    public static final float BAR_HEIGHT = (int)(SpellPanel.SIZE*1.2f);
+    public static final float BAR_HEIGHT = (int)(Images.spellBorderBig.getRegionHeight()*1.2f);
     Map<Integer, List<Spell>> spellMap = new HashMap<>();
     public static int GAP = 2;
 
@@ -76,7 +76,7 @@ public class SpellHolder extends Group {
 
     public void layout(){
         clearChildren();
-        WIDTH = SpellPanel.SIZE*getMaxSpells() + GAP*(getMaxSpells()+2) + SpellCostPanel.WIDTH;
+        WIDTH = Images.spellBorderBig.getRegionWidth()*getMaxSpells() + GAP*(getMaxSpells()+2) + SpellCostPanel.WIDTH;
         setSize(WIDTH, BAR_HEIGHT*getSpellLevels());
         Layoo l = new Layoo(this);
         l.row(1);

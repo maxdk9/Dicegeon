@@ -151,7 +151,7 @@ public class DungeonScreen extends Screen {
 //        confirmButton.setText(s);
     }
 
-    public int level=1;
+    public int level=0;
 
     public void nextLevel() {
         spellButt.removeAllHovers();
@@ -200,19 +200,20 @@ public class DungeonScreen extends Screen {
         spellHolder.setup(Party.get().getSpells());
         spellButt.setSpellHolder(spellHolder);
 //        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
-
-        Main.clearPhases();
-        Main.pushPhase(new NothingPhase());
-
-        if(level>1){
-//            Main.pushPhase(new LevelUpPhase());
-        }
-
         for(DiceEntity de:Party.get().getActiveEntities()){
             de.reset();
         }
 
+        
+        Main.clearPhases();
+        Main.pushPhase(new NothingPhase());
         Main.pushPhase(new LevelUpPhase());
+        if(level>1){
+            Main.pushPhase(new LevelUpPhase());
+        }
+
+
+
         Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
 //        for(DiceEntity de:Room.get().getActiveEntities()) {

@@ -1,5 +1,6 @@
 package com.tann.dice.screens.dungeon.panels.Explanel;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,6 +16,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
@@ -34,6 +36,9 @@ public class Explanel extends InfoPanel {
     Integer cost;
     boolean usable;
     boolean enoughMagic;
+    Spell spell;
+    Side side;
+    Color colour;
 
     private static Explanel self;
     public static Explanel get(){
@@ -52,7 +57,7 @@ public class Explanel extends InfoPanel {
         });
     }
 
-    private void setup(String name, String description, Eff[] effects, TextureRegion image, final Integer cost) {
+    private void setup(String name, String description, final Eff[] effects, TextureRegion image, final Integer cost) {
         clearChildren();
         this.name = name;
         this.description = description;
@@ -75,9 +80,9 @@ public class Explanel extends InfoPanel {
                 @Override
                 public void draw(Batch batch, float parentAlpha) {
                     for(int i=0;i<cost;i++){
-                        batch.setColor(Colours.blue);
+                        batch.setColor(Colours.z_white);
                         if(Party.get().getAvaliableMagic() <= i){
-                            batch.setColor(Colours.grey);
+                            Draw.setAlpha(batch, .3f);
                         }
                         batch.draw(magicRegion, getX() + (magicRegion.getRegionWidth()+blipGap)*i, getY());
                     }
@@ -88,8 +93,22 @@ public class Explanel extends InfoPanel {
             blips.setSize(cost*(blipGap+magicRegion.getRegionWidth()) -  blipGap, magicRegion.getRegionHeight());
             actors.add(blips);
         }
-        int imageScale = 2;
-        actors.add(new ImageActor(image, image.getRegionWidth()*imageScale, image.getRegionHeight()*imageScale));
+
+        Actor imageActor = new Actor(){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                if(spell != null){
+                    spell.draw(batch, getX(), getY(), 2);
+                }
+                if(side != null){
+                    side.draw(batch, getX(), getY(), 2, colour);
+                }
+                super.draw(batch, parentAlpha);
+            }
+        };
+        actors.add(imageActor);
+        imageActor.setSize(Images.side_sword.getRegionWidth()*2, Images.side_sword.getRegionHeight()*2);
+
         actors.add(new TextWriter(description, textW, Colours.purple, 2));
 
 
@@ -101,17 +120,27 @@ public class Explanel extends InfoPanel {
             y += a.getHeight()+gap;
         }
         y += border;
-        setHeight(y);
+        setHeight(y+gap);
     }
 
     public void setup(Targetable targetable, boolean usable){
-        this.usable = usable;
-        if(targetable instanceof Spell) setup((Spell) targetable);
-        else if(targetable instanceof Die) setup(((Die) targetable).getActualSide());
-
+        if(targetable instanceof Spell) setup((Spell) targetable, usable);
+        else if(targetable instanceof Die){
+            Die d = (Die) targetable;
+            setup(d.getActualSide(), usable, d.getColour());
+        }
     }
 
-    public void setup(Spell spell){
+    private void reset() {
+        this.spell = null;
+        this.side = null;
+        this.effects = null;
+    }
+
+    private void setup(Spell spell, boolean usable){
+        reset();
+        this.usable = usable;
+        this.spell = spell;
         this.enoughMagic = spell.canCast();
         setup(spell.name, spell.description, spell.effects, spell.image, spell.cost);
         if(usable) {
@@ -136,7 +165,11 @@ public class Explanel extends InfoPanel {
         }
     }
 
-    public void setup(Side side){
+    public void setup(Side side, boolean usable, Color colour){
+        reset();
+        this.colour = colour;
+        this.usable = usable;
+        this.side = side;
         setup(null, Eff.describe(side.effects), side.effects, side.tr, null);
     }
 

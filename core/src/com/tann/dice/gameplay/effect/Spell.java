@@ -1,10 +1,13 @@
 package com.tann.dice.gameplay.effect;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
+import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
 
 public class Spell implements Targetable{
 
@@ -37,7 +40,7 @@ public class Spell implements Targetable{
 
     private SpellPanel panel;
     public SpellPanel getPanel() {
-        if(panel == null) panel = new SpellPanel(this);
+        if(panel == null) panel = new SpellPanel(this, true);
         return panel;
     }
 
@@ -79,5 +82,16 @@ public class Spell implements Targetable{
 
     public boolean canCast() {
         return Party.get().getAvaliableMagic() >= cost;
+    }
+
+    public void draw(Batch batch, float x, float y){
+        draw(batch, x, y, 1);
+    }
+
+    public void draw(Batch batch, float x, float y, int scale){
+        batch.setColor(Colours.blue);
+        Draw.drawScaled(batch, Images.spellBorder, (int)x, (int)y, scale, scale);
+        batch.setColor(Colours.z_white);
+        Draw.drawScaled(batch, image, (int)x, (int)y, scale, scale);
     }
 }

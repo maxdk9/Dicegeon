@@ -56,7 +56,7 @@ public class DamageProfile {
                 incomingBuffs.add(b);
                 break;
             case Execute:
-                if(target.getEffectiveHp() == e.getValue()){
+                if(target.getHp() == e.getValue()){
                     execute = true;
                 }
                 break;

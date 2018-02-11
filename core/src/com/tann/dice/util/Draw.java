@@ -273,4 +273,7 @@ public class Draw {
     }
 
 
+    public static void setAlpha(Batch batch, float alpha) {
+        batch.setColor(Colours.withAlpha(batch.getColor(), alpha));
+    }
 }

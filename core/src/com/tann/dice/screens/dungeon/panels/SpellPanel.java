@@ -7,23 +7,22 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
 
 public class SpellPanel extends Actor{
-    public static int BORDER = 4;
-    public static final int SIZE = Images.side_sword.getRegionHeight() + BORDER*2;
+    private static final int SIZE = Images.spellBorderBig.getRegionHeight();
 
     final Spell spell;
-
-    public SpellPanel(final Spell spell){
+    boolean big;
+    public SpellPanel(final Spell spell, boolean big){
+        this.big = big;
         setSize(SIZE, SIZE);
         this.spell = spell;
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 DungeonScreen.get().click(spell);
+                event.cancel();
                 return true;
             }
         });
@@ -31,9 +30,11 @@ public class SpellPanel extends Actor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, Colours.transparent, BORDER);
+        batch.setColor(Colours.blue);
+        batch.draw(big?Images.spellBorderBig:Images.spellBorder, getX(), getY());
+        int imageSize = spell.image.getRegionHeight();
         batch.setColor(Colours.z_white);
-        batch.draw(spell.image, getX()+BORDER, getY()+BORDER);
+        batch.draw(spell.image, getX()+getWidth()/2-imageSize/2, getY()+getHeight()/2-imageSize/2);
         super.draw(batch, parentAlpha);
     }
 }
