@@ -46,18 +46,12 @@ public abstract class DiceEntity {
     public boolean locked; // only used for monster
 
 
-    public DiceEntity(Side[] sides, String name, EntitySize size) {
+    public DiceEntity(String name, int hp, Side[] sides, EntitySize size) {
         this.sides = sides;
         this.name = name;
-        this.lapel = Images.lapel0;
-        if(size.pixels==12){
-            this.lapel = Images.lapelSmall;
-        }
-        if(size.pixels==24){
-            this.lapel = Images.lapelBig;
-        }
-
+        this.lapel = size.lapel;
         this.size = size;
+        setMaxHp(hp);
     }
 
     protected void setSides(Side[] sides) {
@@ -310,12 +304,14 @@ public abstract class DiceEntity {
 
     public enum EntitySize {
 
-        smol(12), reg(16), big(24), Huge(32);
+        smol(12, Images.lapelSmall), reg(16, Images.lapel0), big(24, Images.lapelBig), Huge(32, Images.lapelSmall);
         public final float dieSize;
         public final int pixels;
-        EntitySize(int pixels) {
+        public final TextureRegion lapel;
+        EntitySize(int pixels, TextureRegion lapel) {
             this.pixels = pixels;
             this.dieSize = BASE_SIZE * pixels;
+            this.lapel = lapel;
         }
     }
 

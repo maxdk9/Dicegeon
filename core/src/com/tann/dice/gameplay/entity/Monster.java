@@ -14,9 +14,8 @@ public class Monster extends DiceEntity {
     MonsterType type;
 
     public Monster(MonsterType type) {
-        super(type.sides, type.toString(), type.size);
+        super(type.toString(), type.hp, type.sides, type.size);
         this.type=type;
-        setMaxHp(type.hp);
     }
 
     @Override

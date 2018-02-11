@@ -38,28 +38,29 @@ public class LevelUpPanel extends Group{
 
     basePanel.setPosition(hGap, (int)(bottomHeight/2-basePanel.getHeight()/2));
     optionsPanels = new DiePanel[options.size()];
-    for(int i=0;i<options.size();i++){
-        final HeroType ht = options.get(i);
-        Hero choice = new Hero(ht);
-        choice.setColour(hero.getColour());
-        DiePanel dp = choice.getDiePanel();
-        addActor(dp);
-        dp.setPosition(dp.getWidth() + hGap*2, i*(vGap+dp.getHeight())+vGap);
-        Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
-          @Override
-          public void run() {
-              hero.levelUpTo(ht);
-              Main.popPhase(LevelUpPhase.class);
-              remove();
-          }
-        });
-        tick.setBorder(Colours.dark, Colours.purple, 1);
-        tick.setColor(hero.getColour());
-        addActor(tick);
-        tick.setPosition((int)(dp.getWidth()*2 + hGap * 2.5f),
-            (int)(dp.getY() + dp.getHeight()/2 - tick.getHeight()/2));
-        optionsPanels[i] = dp;
-    }
+    //TODO update this for new EntityType stuff
+//    for(int i=0;i<options.size();i++){
+//        final HeroType ht = options.get(i);
+//        Hero choice = new Hero(ht);
+//        choice.setColour(hero.getColour());
+//        DiePanel dp = choice.getDiePanel();
+//        addActor(dp);
+//        dp.setPosition(dp.getWidth() + hGap*2, i*(vGap+dp.getHeight())+vGap);
+//        Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
+//          @Override
+//          public void run() {
+//              hero.levelUpTo(ht);
+//              Main.popPhase(LevelUpPhase.class);
+//              remove();
+//          }
+//        });
+//        tick.setBorder(Colours.dark, Colours.purple, 1);
+//        tick.setColor(hero.getColour());
+//        addActor(tick);
+//        tick.setPosition((int)(dp.getWidth()*2 + hGap * 2.5f),
+//            (int)(dp.getY() + dp.getHeight()/2 - tick.getHeight()/2));
+//        optionsPanels[i] = dp;
+//    }
   }
 
   @Override

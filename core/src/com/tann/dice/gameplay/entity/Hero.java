@@ -9,14 +9,15 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Hero extends DiceEntity {
-    HeroType type;
-    public Hero(HeroType type) {
-        super(type.sides, type.toString(), EntitySize.reg);
-        this.type=type;
-        setMaxHp(type.hp);
+
+    List<Spell> spells;
+    public Hero(int hp, String name, Side[] sides, Spell[] spells) {
+        super(name, hp, sides, EntitySize.reg);
+        this.spells = Arrays.asList(spells);
     }
 
     @Override
@@ -26,27 +27,27 @@ public class Hero extends DiceEntity {
 
     public List<HeroType> getLevelupOptions() {
         List<HeroType> results = new ArrayList<>();
-        switch(type){
-            case Fighter:
-//                results.add(HeroType.Rogue);
-                results.add(HeroType.Ranger);
-                results.add(HeroType.Gladiator);
-//                results.add(HeroType.Fencer);
-//                results.add(HeroType.Dabbler);
-//                break;
-//            case Defender:
-//                results.add(HeroType.Paladin);
-//                results.add(HeroType.Bard);
-//                break;
-//            case Apprentice:
-//                results.add(HeroType.Pyro);
-//                results.add(HeroType.Arcanist);
-//                break;
-//            case Herbalist:
-//                results.add(HeroType.Alchemist);
-//                results.add(HeroType.Druid);
-//                break;
-        }
+//        switch(type){
+//            case Fighter:
+////                results.add(HeroType.Rogue);
+//                results.add(HeroType.Ranger);
+//                results.add(HeroType.Gladiator);
+////                results.add(HeroType.Fencer);
+////                results.add(HeroType.Dabbler);
+////                break;
+////            case Defender:
+////                results.add(HeroType.Paladin);
+////                results.add(HeroType.Bard);
+////                break;
+////            case Apprentice:
+////                results.add(HeroType.Pyro);
+////                results.add(HeroType.Arcanist);
+////                break;
+////            case Herbalist:
+////                results.add(HeroType.Alchemist);
+////                results.add(HeroType.Druid);
+////                break;
+//        }
         return results;
     }
 
@@ -94,7 +95,7 @@ public class Hero extends DiceEntity {
     }
 
     public void levelUpTo(HeroType type) {
-        this.type = type;
+//        this.type = type;
         this.name = type.toString();
         setMaxHp(type.hp);
         setSides(type.sides);
@@ -105,7 +106,7 @@ public class Hero extends DiceEntity {
 
     @Override
     public String getName() {
-        return type.toString();
+        return name;
     }
 
     @Override
@@ -124,10 +125,6 @@ public class Hero extends DiceEntity {
     }
 
     public List<Spell> getSpells() {
-        List<Spell> spells = new ArrayList<>();
-        for(Spell s:type.spells){
-            spells.add(s);
-        }
         return spells;
     }
 }

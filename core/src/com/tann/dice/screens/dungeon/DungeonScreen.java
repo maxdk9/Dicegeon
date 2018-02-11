@@ -18,6 +18,7 @@ import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.EntityType;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Hero.HeroType;
 import com.tann.dice.gameplay.entity.Monster;
@@ -207,7 +208,7 @@ public class DungeonScreen extends Screen {
         
         Main.clearPhases();
         Main.pushPhase(new NothingPhase());
-        Main.pushPhase(new LevelUpPhase());
+//        Main.pushPhase(new LevelUpPhase());
         if(level>1){
             Main.pushPhase(new LevelUpPhase());
         }
@@ -242,19 +243,19 @@ public class DungeonScreen extends Screen {
 
     public void resetHeroes(){
         List<Hero> heroes = new ArrayList<>();
-        Hero f1 = new Hero(HeroType.Fighter);
+        Hero f1 = EntityType.fighter.buildHero();
         f1.setColour(Colours.orange);
         heroes.add(f1);
-        Hero f2 = new Hero(HeroType.Fighter);
+        Hero f2 = EntityType.fighter.buildHero();
         f2.setColour(Colours.yellow);
         heroes.add(f2);
-        Hero d = new Hero(HeroType.Defender);
+        Hero d = EntityType.defender.buildHero();
         d.setColour(Colours.grey);
         heroes.add(d);
-        Hero h = new Hero(HeroType.Herbalist);
+        Hero h = EntityType.herbalist.buildHero();
         h.setColour(Colours.red);
         heroes.add(h);
-        Hero m = new Hero(HeroType.Apprentice);
+        Hero m = EntityType.apprentice.buildHero();
         m.setColour(Colours.blue);
         heroes.add(m);
         friendly.setEntities(heroes);
