@@ -8,15 +8,16 @@ import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
 
 public class SpellPanel extends Actor{
-    private static final int SIZE = Images.spellBorderBig.getRegionHeight();
 
     final Spell spell;
     boolean big;
     public SpellPanel(final Spell spell, boolean big){
         this.big = big;
-        setSize(SIZE, SIZE);
+        int size = big?Images.spellBorderBig.getRegionHeight():Images.spellBorder.getRegionHeight();
+        setSize(size, size);
         this.spell = spell;
         addListener(new InputListener(){
             @Override

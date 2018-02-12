@@ -11,11 +11,9 @@ import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextureFlasher;
 
 public class Monster extends DiceEntity {
-    MonsterType type;
 
-    public Monster(MonsterType type) {
-        super(type.toString(), type.hp, type.sides, type.size);
-        this.type=type;
+    public Monster(EntityType type) {
+        super(type);
     }
 
     @Override
@@ -23,40 +21,10 @@ public class Monster extends DiceEntity {
         return false;
     }
 
-    public enum MonsterType{
-
-        Goblin(5, EntitySize.reg, Side.sword2, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1),
-//        Ogre(9, EntitySize.big, Side.cleave1, Side.cleave1, Side.sword3, Side.sword4, Side.sword4, Side.sword5),
-        Archer(3, EntitySize.smol, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2),
-        Serpent(7, EntitySize.big, Side.axe, Side.axe, Side.axe, Side.axe, Side.axe, Side.axe),
-//        Dragon(40, EntitySize.Huge, Side.cleave2, Side.cleave3, Side.cleave3, Side.sword6, Side.sword6, Side.poison2);
-
-
-
-        ;
-
-        public Side[] sides;
-        public TextureRegion lapel;
-        int hp;
-        public EntitySize size;
-        MonsterType(int hp, EntitySize size, Side... sides){
-            if(sides.length!=6){
-                System.err.println("side error making "+this);
-            }
-            this.hp = hp;
-            this.lapel = Images.lapel0;
-            this.sides=sides;
-            this.size = size;
-        }
-    }
-    @Override
-    public String getName() {
-        return type.toString();
-    }
 
     @Override
     public float getPixelSize() {
-        return type.size.pixels;
+        return size.pixels;
     }
 
     @Override

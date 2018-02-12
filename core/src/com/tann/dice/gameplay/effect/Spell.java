@@ -14,7 +14,7 @@ public class Spell implements Targetable{
     public static final Spell arcaneMissile = new Spell("Arcane Missile", "4 damage to a random enemy", Main.atlas.findRegion("spell/arcaneMissile"), 2, new Eff[]{new Eff().damage(5).randomEnemy()});
     public static final Spell inferno = new Spell("Inferno", "2 damage to an enemy and both adjacents", Main.atlas.findRegion("spell/inferno"), 3, new Eff[]{new Eff().damage(2).enemyAndAdjacents()});
 
-    public static final Spell stoneSkin = new Spell("Midas Touch", "Block all damage from a friendly target", Main.atlas.findRegion("spell/stoneskin"), 3, new Eff[]{new Eff().shield(1000).friendlySingle()});
+    public static final Spell stoneSkin = new Spell("Midas Touch", "Block all damage from a friendly target", Main.atlas.findRegion("spell/firewave"), 3, new Eff[]{new Eff().shield(1000).friendlySingle()});
     public static final Spell balance = new Spell("Balance", "Heal 1 to all your characters, deal 1 damage to all enemies", Main.atlas.findRegion("spell/balance"), 3, new Eff[]{new Eff().heal(1).friendlyGroup(), new Eff().damage(1).enemyGroup()});
 
     public static final Spell fireWave = new Spell("Fire Wave", "1 damage to all enemies", Main.atlas.findRegion("spell/firewave"), 3, new Eff[]{new Eff().damage(1).enemyGroup()});

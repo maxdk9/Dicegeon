@@ -1,12 +1,12 @@
 package com.tann.dice.screens.dungeon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
@@ -16,13 +16,10 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
-import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.EntityType;
 import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.Hero.HeroType;
 import com.tann.dice.gameplay.entity.Monster;
-import com.tann.dice.gameplay.entity.Monster.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -30,8 +27,12 @@ import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.phase.*;
-import com.tann.dice.screens.dungeon.panels.*;
-import com.tann.dice.screens.dungeon.panels.Explanel.*;
+import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
+import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
+import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
+import com.tann.dice.screens.dungeon.panels.SidePanel;
+import com.tann.dice.screens.dungeon.panels.SpellButt;
+import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.*;
 
 import java.util.ArrayList;
@@ -71,16 +72,6 @@ public class DungeonScreen extends Screen {
         friendly = new SidePanel(true);
         addActor(friendly);
 
-        Actor bulletActor = new Actor(){
-            @Override
-            public void draw(Batch batch, float parentAlpha) {
-                super.draw(batch, parentAlpha);
-                batch.end();
-//                BulletStuff.render();
-                batch.begin();
-            }
-        };
-        addActor(bulletActor);
         rollButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.roll, Colours.dark,
                 new Runnable() {
                     @Override
@@ -157,21 +148,13 @@ public class DungeonScreen extends Screen {
     public void nextLevel() {
         spellButt.removeAllHovers();
         Explanel.get().remove();
-        List<Monster> monsters =  new ArrayList<>();
         level ++;
         switch(level){
             case 1:
-                monsters.add(new Monster(MonsterType.Goblin));
-                monsters.add(new Monster(MonsterType.Goblin));
-                monsters.add(new Monster(MonsterType.Goblin));
-                monsters.add(new Monster(MonsterType.Goblin));
+                setup(EntityType.monsterList(EntityType.goblin, EntityType.goblin, EntityType.goblin, EntityType.goblin));
                 break;
             case 2:
-                monsters.add(new Monster(MonsterType.Archer));
-                monsters.add(new Monster(MonsterType.Archer));
-                monsters.add(new Monster(MonsterType.Goblin));
-                monsters.add(new Monster(MonsterType.Goblin));
-                monsters.add(new Monster(MonsterType.Serpent));
+                setup(EntityType.monsterList(EntityType.archer, EntityType.archer, EntityType.goblin, EntityType.goblin, EntityType.serpent));
                 break;
 //            case 3:
 //                monsters.add(new Monster(Monster.MonsterType.Serpent));
@@ -197,7 +180,6 @@ public class DungeonScreen extends Screen {
                 return;
         }
         Party.get().rejig();
-        setup(monsters);
         spellHolder.setup(Party.get().getSpells());
         spellButt.setSpellHolder(spellHolder);
 //        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
@@ -208,7 +190,7 @@ public class DungeonScreen extends Screen {
         
         Main.clearPhases();
         Main.pushPhase(new NothingPhase());
-//        Main.pushPhase(new LevelUpPhase());
+        Main.pushPhase(new LevelUpPhase());
         if(level>1){
             Main.pushPhase(new LevelUpPhase());
         }
@@ -686,7 +668,7 @@ public class DungeonScreen extends Screen {
 
     List<Actor> modalStack = new ArrayList<>();
 
-    public void showLevelupPanel(Hero hero, List<HeroType>options) {
+    public void showLevelupPanel(Hero hero, List<EntityType> options) {
         LevelUpPanel lup = new LevelUpPanel(hero, options);
         lup.setPosition(getWidth()/2, getHeight()/2f, Align.center);
         addActor(lup);

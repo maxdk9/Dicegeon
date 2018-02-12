@@ -4,16 +4,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.entity.EntityType;
 import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.Hero.HeroType;
 import com.tann.dice.gameplay.phase.LevelUpPhase;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
-
-import com.tann.dice.util.ImageActor;
 import com.tann.dice.util.TextWriter;
+
 import java.util.List;
 
 public class LevelUpPanel extends Group{
@@ -21,7 +20,7 @@ public class LevelUpPanel extends Group{
     DiePanel basePanel;
     DiePanel[] optionsPanels;
     static final int topHeight = 14, hGap = 10, vGap = 4, tickSize = 20;
-    public LevelUpPanel(final Hero hero, List<HeroType> options) {
+    public LevelUpPanel(final Hero hero, List<EntityType> options) {
     this.hero = hero;
 
     basePanel = new DiePanel(hero);
@@ -39,28 +38,28 @@ public class LevelUpPanel extends Group{
     basePanel.setPosition(hGap, (int)(bottomHeight/2-basePanel.getHeight()/2));
     optionsPanels = new DiePanel[options.size()];
     //TODO update this for new EntityType stuff
-//    for(int i=0;i<options.size();i++){
-//        final HeroType ht = options.get(i);
-//        Hero choice = new Hero(ht);
-//        choice.setColour(hero.getColour());
-//        DiePanel dp = choice.getDiePanel();
-//        addActor(dp);
-//        dp.setPosition(dp.getWidth() + hGap*2, i*(vGap+dp.getHeight())+vGap);
-//        Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
-//          @Override
-//          public void run() {
-//              hero.levelUpTo(ht);
-//              Main.popPhase(LevelUpPhase.class);
-//              remove();
-//          }
-//        });
-//        tick.setBorder(Colours.dark, Colours.purple, 1);
-//        tick.setColor(hero.getColour());
-//        addActor(tick);
-//        tick.setPosition((int)(dp.getWidth()*2 + hGap * 2.5f),
-//            (int)(dp.getY() + dp.getHeight()/2 - tick.getHeight()/2));
-//        optionsPanels[i] = dp;
-//    }
+    for(int i=0;i<options.size();i++){
+        final EntityType et = options.get(i);
+        Hero choice = new Hero(et);
+        choice.setColour(hero.getColour());
+        DiePanel dp = choice.getDiePanel();
+        addActor(dp);
+        dp.setPosition(dp.getWidth() + hGap*2, i*(vGap+dp.getHeight())+vGap);
+        Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
+          @Override
+          public void run() {
+              hero.levelUpTo(et);
+              Main.popPhase(LevelUpPhase.class);
+              remove();
+          }
+        });
+        tick.setBorder(Colours.dark, Colours.purple, 1);
+        tick.setColor(hero.getColour());
+        addActor(tick);
+        tick.setPosition((int)(dp.getWidth()*2 + hGap * 2.5f),
+            (int)(dp.getY() + dp.getHeight()/2 - tick.getHeight()/2));
+        optionsPanels[i] = dp;
+    }
   }
 
   @Override

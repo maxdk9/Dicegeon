@@ -44,14 +44,16 @@ public abstract class DiceEntity {
     public String name;
     EntitySize size;
     public boolean locked; // only used for monster
+    public EntityType entityType;
 
 
-    public DiceEntity(String name, int hp, Side[] sides, EntitySize size) {
-        this.sides = sides;
-        this.name = name;
-        this.lapel = size.lapel;
-        this.size = size;
-        setMaxHp(hp);
+    public DiceEntity(EntityType type) {
+        this.entityType = type;
+        this.sides = type.sides;
+        this.name = type.name;
+        this.size = type.size;
+        this.lapel = this.size.lapel;
+        setMaxHp(type.hp);
     }
 
     protected void setSides(Side[] sides) {
@@ -219,7 +221,7 @@ public abstract class DiceEntity {
     }
 
     public String getName() {
-        return this.getClass().getSimpleName();
+        return name;
     }
 
     public EntityPanel getEntityPanel() {

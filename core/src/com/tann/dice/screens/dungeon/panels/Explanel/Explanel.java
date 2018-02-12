@@ -107,7 +107,8 @@ public class Explanel extends InfoPanel {
             }
         };
         actors.add(imageActor);
-        imageActor.setSize(Images.side_sword.getRegionWidth()*2, Images.side_sword.getRegionHeight()*2);
+        int size = ((spell != null) ? Images.spellBorder.getRegionHeight() : Images.side_sword.getRegionHeight()) * 2;
+        imageActor.setSize(size, size);
 
         actors.add(new TextWriter(description, textW, Colours.purple, 2));
 

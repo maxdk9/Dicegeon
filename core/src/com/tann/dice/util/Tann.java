@@ -8,6 +8,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,5 +42,17 @@ public class Tann {
 
     public static void delay(Runnable runnable, float delay) {
         DungeonScreen.get().addAction(Actions.delay(delay, Actions.run(runnable)));
+    }
+
+    public static boolean inArray(Object object, Object[] array){
+        return Arrays.asList(array).contains(object);
+    }
+
+    public static boolean anySharedItems(Object[] array1, Object[] array2){
+        List<Object> listOne = Arrays.asList(array1);
+        for(Object o:array2){
+            if(listOne.contains(o)) return true;
+        }
+        return false;
     }
 }
