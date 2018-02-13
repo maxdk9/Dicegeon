@@ -6,6 +6,7 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.EntityType;
 import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.HeroType;
 import com.tann.dice.gameplay.phase.LevelUpPhase;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Button;
@@ -20,7 +21,7 @@ public class LevelUpPanel extends Group{
     DiePanel basePanel;
     DiePanel[] optionsPanels;
     static final int topHeight = 14, hGap = 10, vGap = 4, tickSize = 20;
-    public LevelUpPanel(final Hero hero, List<EntityType> options) {
+    public LevelUpPanel(final Hero hero, List<HeroType> options) {
     this.hero = hero;
 
     basePanel = new DiePanel(hero);
@@ -39,7 +40,7 @@ public class LevelUpPanel extends Group{
     optionsPanels = new DiePanel[options.size()];
     //TODO update this for new EntityType stuff
     for(int i=0;i<options.size();i++){
-        final EntityType et = options.get(i);
+        final HeroType et = options.get(i);
         Hero choice = et.buildHero();
         choice.setColour(hero.getColour());
         DiePanel dp = choice.getDiePanel();

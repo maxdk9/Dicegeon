@@ -119,6 +119,10 @@ public class Eff {
     public Eff randomEnemy() { return targetType(TargetingType.RandomEnemy);}
     public Eff justValue(int amount) {this.value = amount; return this;}
 
+    public Eff nextTurn() {
+        return this;
+
+    }
 
     public Eff targetType(TargetingType type){
         this.targetingType = type;

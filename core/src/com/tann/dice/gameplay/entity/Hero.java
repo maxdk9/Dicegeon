@@ -15,7 +15,7 @@ import java.util.List;
 public class Hero extends DiceEntity {
 
     List<Spell> spells;
-    public Hero(EntityType type) {
+    public Hero(HeroType type) {
         super(type);
         this.spells = Arrays.asList(type.spells);
     }
@@ -25,7 +25,7 @@ public class Hero extends DiceEntity {
         return true;
     }
 
-    public void levelUpTo(EntityType type) {
+    public void levelUpTo(HeroType type) {
         this.entityType = type;
         this.name = type.name;
         setMaxHp(type.hp);
@@ -59,5 +59,9 @@ public class Hero extends DiceEntity {
 
     public List<Spell> getSpells() {
         return spells;
+    }
+
+    public HeroType getHeroType() {
+        return (HeroType) entityType;
     }
 }

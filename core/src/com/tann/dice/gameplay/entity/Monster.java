@@ -12,7 +12,7 @@ import com.tann.dice.util.TextureFlasher;
 
 public class Monster extends DiceEntity {
 
-    public Monster(EntityType type) {
+    public Monster(MonsterType type) {
         super(type);
     }
 
