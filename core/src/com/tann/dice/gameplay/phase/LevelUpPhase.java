@@ -14,7 +14,7 @@ public class LevelUpPhase extends Phase {
         for(int i=0;i<1000;i++){
             h = (Hero) Tann.getRandom(Party.get().getActiveEntities());
 //            if(h.entityType.getLevelupOptions().size()>0) break;
-            if(h.name.equals("Herbalist")) break;
+            if(h.name.equals("Apprentice")) break;
         }
         DungeonScreen.get().showLevelupPanel(h, Tann.pickNRandomElements(h.entityType.getLevelupOptions(), 2));
     }

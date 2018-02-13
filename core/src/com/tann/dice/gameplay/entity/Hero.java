@@ -30,9 +30,11 @@ public class Hero extends DiceEntity {
         this.name = type.name;
         setMaxHp(type.hp);
         setSides(type.sides);
+        this.spells = Arrays.asList(type.spells);
         resetPanels();
         DungeonScreen.get().spellHolder.setup(Party.get().getSpells());
         DungeonScreen.get().spellHolder.layout();
+        getDiePanel().layout();
     }
 
     @Override

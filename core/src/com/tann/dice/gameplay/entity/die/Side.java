@@ -7,6 +7,7 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.buff.BuffDot;
+import com.tann.dice.gameplay.effect.buff.ReturnDamage;
 import com.tann.dice.gameplay.effect.buff.Stealth;
 import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize.*;
 import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
@@ -96,9 +97,10 @@ public class Side {
 
     public static final Side potionregen = new Side(reg, Images.get("reg/face/potionOfRegen"), new Eff().buff(new BuffDot(-1, -1)).friendlySingle().justValue(1));
 
+    public static final Side flameWard = new Side(reg, Images.get("reg/face/flameWard"), new Eff().buff(new ReturnDamage(1, 2)).friendlySingle().justValue(2));
 
 //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
-//    public static final Side flameWard = new Side(Images.get("flameWard"), new Eff().buff(new ReturnDamage(1, 2)).friendlySingle());
+
 
 
 

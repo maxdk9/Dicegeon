@@ -49,11 +49,14 @@ public abstract class DiceEntity {
 
     public DiceEntity(EntityType type) {
         this.entityType = type;
-        this.sides = type.sides;
         this.name = type.name;
         this.size = type.size;
         this.lapel = this.size.lapel;
         setMaxHp(type.hp);
+    }
+
+    public void init(){
+        setSides(entityType.sides);
     }
 
     protected void setSides(Side[] sides) {

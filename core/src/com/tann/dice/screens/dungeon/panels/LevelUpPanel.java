@@ -40,7 +40,7 @@ public class LevelUpPanel extends Group{
     //TODO update this for new EntityType stuff
     for(int i=0;i<options.size();i++){
         final EntityType et = options.get(i);
-        Hero choice = new Hero(et);
+        Hero choice = et.buildHero();
         choice.setColour(hero.getColour());
         DiePanel dp = choice.getDiePanel();
         addActor(dp);

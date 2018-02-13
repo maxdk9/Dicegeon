@@ -47,14 +47,17 @@ public class EntityType {
     public static final EntityType alchemist = hero().name("Alchemist").hp(5).tag(healer1)
             .sides(Side.heal4, Side.magic2, Side.magic1, Side.potionregen, Side.potionregen, Side.nothing)
             .spells(Spell.stoneSkin);
+    public static final EntityType druid = hero().name("Druid").hp(7).tag(healer1)
+        .sides(Side.heal4, Side.heal4, Side.sword2, Side.magic1, Side.magic2, Side.nothing)
+        .spells(Spell.balance);
 
-    public static final EntityType alchemist2 = hero().name("Alchemist").hp(5).tag(healer1)
-            .sides(Side.heal4, Side.magic2, Side.magic1, Side.potionregen, Side.potionregen, Side.nothing)
-            .spells(Spell.stoneSkin);
-//        Druid(null, 5, new Side[]{Side.sword2, Side.magic2, Side.magic2, Side.heal4, Side.heal4, Side.nothing}, new Spell[]{Spell.balance}),
-//
-//        Pyro(null, 5, new Side[]{Side.magic1, Side.magic1, Side.magic2, Side.magic2, Side.flameWard, Side.nothing}, new Spell[]{Spell.inferno}),
-//        Arcanist(null, 5, new Side[]{Side.magic1, Side.magic1, Side.magic2, Side.magic2, Side.magic1, Side.nothing}, new Spell[]{Spell.arcaneMissile}),
+    public static final EntityType pyro = hero().name("Pyro").hp(7).tag(magic1)
+        .sides(Side.flameWard, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
+        .spells(Spell.inferno);
+
+    public static final EntityType arcanist = hero().name("Arcanist").hp(5).tag(magic1)
+        .sides(Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.magic1, Side.nothing)
+        .spells(Spell.arcaneMissile);
 
     // monsters!
     public static final EntityType goblin = monster().name("Goblin").hp(5)
@@ -132,14 +135,18 @@ public class EntityType {
         if(hp==0 || name==null || sides==null || sides.length!=6){
             System.err.println("Uhoh, bad entity type: "+name+". It will probably throw an error soon.");
         }
-        return new Hero(this);
+        Hero h = new Hero(this);
+        h.init();
+        return h;
     }
 
     public Monster buildMonster(){
         if(spells.length>0){
             System.err.println("Uhoh, bad entity type: "+name+". Monsters can't have spells.");
         }
-        return new Monster(this);
+        Monster m = new Monster(this);
+        m.init();
+        return m;
     }
 
     public static List<Monster> monsterList(EntityType... monsters){
