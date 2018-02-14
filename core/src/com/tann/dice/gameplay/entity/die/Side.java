@@ -51,6 +51,8 @@ public class Side {
         return this;
     }
 
+    public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing());
+
     public static final Side shield1 = new Side().image("shield").effect(new Eff().shield(1).friendlySingle());
     public static final Side shield2 = shield1.withValue(2);
     public static final Side shield3 = shield1.withValue(3);
@@ -105,8 +107,6 @@ public class Side {
 //
 //    public static final Side reroll = new Side(Images.get("reroll"), new Eff().reroll(1).onRoll());
 
-
-    public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing().targetType(Eff.TargetingType.DoesNothing));
 
     private Side withValue(int value) {
         Side copy = copy();

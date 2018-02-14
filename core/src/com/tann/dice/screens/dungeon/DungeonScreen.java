@@ -209,7 +209,7 @@ public class DungeonScreen extends Screen {
 
     public void resetHeroes(){
         List<Hero> heroes = new ArrayList<>();
-        Hero f1 = HeroType.fighter.buildHero();
+        Hero f1 = HeroType.bard.buildHero();
         f1.setColour(Colours.orange);
         heroes.add(f1);
         Hero f2 = HeroType.fighter.buildHero();
@@ -370,6 +370,7 @@ public class DungeonScreen extends Screen {
             case Self:
                 d.entity.hit(d.getEffects(), false);
                 d.use();
+                break;
             case RandomEnemy:
                 Tann.getRandom(Room.get().getActiveEntities()).hit(d.getEffects(), false);
                 d.use();
@@ -384,8 +385,9 @@ public class DungeonScreen extends Screen {
                 targetableClick(d);
                 break;
         }
-
-        checkEnd();
+        if(!checkEnd()){
+            confirmDice(false);
+        }
     }
 
     private void hitMultiple(List<DiceEntity> entities, Eff[] effects, boolean instant){
