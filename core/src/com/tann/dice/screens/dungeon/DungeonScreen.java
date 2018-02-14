@@ -495,6 +495,7 @@ public class DungeonScreen extends Screen {
             DungeonScreen.get().spellButt.hide();
         }
 
+        Room.get().removeDeadEffects();
 
         return true;
     }

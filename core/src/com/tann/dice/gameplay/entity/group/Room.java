@@ -41,4 +41,10 @@ public class Room extends EntityGroup {
             }
         }
     }
+
+    public void removeDeadEffects() {
+        for(DiceEntity de:getEntities()){
+            de.removeEffectsIfDead();
+        }
+    }
 }

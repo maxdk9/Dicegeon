@@ -158,10 +158,13 @@ public abstract class DiceEntity {
             Party.get().getActiveEntities().remove(this);
         }
         if(!isPlayer()){
-            if (die.getActualSide() != null) {
-                DungeonScreen.get().cancelEffects(die.getActualSide().effects);
-            }
             Room.get().updateSlids(true);
+        }
+    }
+
+    public void removeEffectsIfDead(){
+        if(!isPlayer() && die.getActualSide() != null && isDead()) {
+            DungeonScreen.get().cancelEffects(die.getActualSide().effects);
         }
     }
 
