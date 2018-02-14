@@ -71,7 +71,7 @@ public class SpellButt extends Group {
         for(int i=0;i<amount;i++) {
             Actor a = new ImageActor(Images.magicHover);
             DungeonScreen.get().addActor(a);
-            a.setPosition(getX() + getWidth() / 2, getY() + getHeight() / 2);
+            a.setPosition(getX() + getWidth() / 2 - a.getWidth()/2, getY() + getHeight() / 2 - a.getHeight()/2);
             float radius = 13f;
             double startAngle = Math.PI * 3 / 4f;
             double increment = Math.PI / 5;

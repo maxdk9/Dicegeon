@@ -94,7 +94,7 @@ public class Side {
 
     public static final Side flameWard = new Side().image("flameWard").effect(new Eff().buff(new ReturnDamage(1, 2)).friendlySingle().justValue(2));
 
-    public static final Side magic1NextTurn = new Side().image("magicNextTurn").effect(new Eff().magic(1).nextTurn());
+    public static final Side magic1NextTurn = new Side().image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
     public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
 
 //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
@@ -106,7 +106,7 @@ public class Side {
 //    public static final Side reroll = new Side(Images.get("reroll"), new Eff().reroll(1).onRoll());
 
 
-    public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing().untargeted());
+    public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing().targetType(Eff.TargetingType.DoesNothing));
 
     private Side withValue(int value) {
         Side copy = copy();

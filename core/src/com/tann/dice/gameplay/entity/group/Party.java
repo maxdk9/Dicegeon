@@ -35,6 +35,8 @@ public class Party extends EntityGroup{
 
     public void addMagic(int add){
         this.magic += add;
+        DungeonScreen.get().spellButt.show();
+        DungeonScreen.get().spellButt.addSpellHover(add);
     }
 
     public void resetMagic(){
@@ -124,5 +126,21 @@ public class Party extends EntityGroup{
     public void rejig() {
         getActiveEntities().clear();
         activeEntities.addAll(getEntities());
+    }
+
+    private List<Eff> nextTurnEffects = new ArrayList<>();
+    public void addNextTurnEffect(Eff eff) {
+        nextTurnEffects.add(eff);
+    }
+
+    public void activateNextTurnEffects(){
+        for(Eff e:nextTurnEffects){
+            e.untargetedUse(true);
+        }
+        clearNextTurnEffects();
+    }
+
+    public void clearNextTurnEffects(){
+        nextTurnEffects.clear();
     }
 }

@@ -11,7 +11,7 @@ import com.tann.dice.util.Draw;
 
 public class Spell implements Targetable{
 
-    public static final Spell arcaneMissile = new Spell("Arcane Missile", "4 damage to a random enemy", Main.atlas.findRegion("spell/arcaneMissile"), 2, new Eff[]{new Eff().damage(5).randomEnemy()});
+    public static final Spell arcaneMissile = new Spell("Arcane Missile", "4 damage to a random enemy", Main.atlas.findRegion("spell/arcaneMissile"), 2, new Eff[]{new Eff().damage(4).randomEnemy()});
     public static final Spell inferno = new Spell("Inferno", "2 damage to an enemy and both adjacents", Main.atlas.findRegion("spell/inferno"), 3, new Eff[]{new Eff().damage(2).enemyAndAdjacents()});
 
     public static final Spell stoneSkin = new Spell("Stoneskin", "Block all damage from a friendly target", Main.atlas.findRegion("spell/stoneskin"), 3,

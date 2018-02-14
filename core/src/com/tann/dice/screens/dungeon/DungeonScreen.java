@@ -387,6 +387,12 @@ public class DungeonScreen extends Screen {
                 Tann.getRandom(Room.get().getActiveEntities()).hit(d.getEffects(), false);
                 d.use();
                 break;
+            case Untargeted:
+                for(Eff e:d.getEffects()){
+                    e.untargetedUse(false);
+                }
+                d.use();
+                break;
             default:
                 targetableClick(d);
                 break;
@@ -398,27 +404,6 @@ public class DungeonScreen extends Screen {
     private void hitMultiple(List<DiceEntity> entities, Eff[] effects, boolean instant){
         for(int i=entities.size()-1;i>=0;i--){
             entities.get(i).hit(effects, instant);
-        }
-    }
-
-    public void activateAutoEffects(){
-        for(DiceEntity de:Party.get().getActiveEntities()){
-            Eff[] effs = de.getDie().getEffects();
-                if(effs[0].targetingType == Eff.TargetingType.Untargeted){
-                    for(Eff e:effs){
-                        switch(e.type){
-                            case Magic:
-                                Party.get().addMagic(e.getValue());
-                                spellButt.addSpellHover(e.getValue());
-                                break;
-                            case Nothing:
-                                break;
-                            default:
-                                System.err.println("oh shit you need to implement new untargeted effect");
-                                break;
-                        }
-                    }
-            }
         }
     }
 
@@ -504,7 +489,7 @@ public class DungeonScreen extends Screen {
         for (DiceEntity de : Party.get().getActiveEntities()) {
             Die d = de.getDie();
             Eff.TargetingType tt = d.getActualSide().effects[0].targetingType;
-            if (!d.getUsed() && tt != Eff.TargetingType.Untargeted && tt != Eff.TargetingType.OnRoll) {
+            if (!d.getUsed() && tt != Eff.TargetingType.OnRoll && tt != Eff.TargetingType.DoesNothing) {
                 return false;
             }
         }

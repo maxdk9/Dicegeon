@@ -1,24 +1,15 @@
 package com.tann.dice.gameplay.effect;
 
 import com.tann.dice.gameplay.effect.buff.Buff;
-import com.tann.dice.gameplay.effect.buff.DamageMultiplier;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.group.Party;
 
 public class Eff {
 
     public enum TargetingType{
-        EnemySingle,
-        EnemySingleRanged,
-        EnemyGroup,
-        FriendlySingle,
-        FriendlyGroup,
-        EnemyAndAdjacents,
-        EnemyOnlyAdjacents,
-        Self,
-        OnRoll,
-        Untargeted,
-        RandomEnemy;
+        EnemySingle, EnemySingleRanged, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy,
+        FriendlySingle, FriendlyGroup, EnemyAndAdjacents,
+        Self, OnRoll, Untargeted, DoesNothing
     }
 
     public TargetingType targetingType = TargetingType.EnemySingle;
@@ -49,6 +40,7 @@ public class Eff {
     public int buffDuration;
 	private int value;
 	public DiceEntity source;
+	boolean nextTurn;
 
     public Eff(){}
 
@@ -120,8 +112,8 @@ public class Eff {
     public Eff justValue(int amount) {this.value = amount; return this;}
 
     public Eff nextTurn() {
+        this.nextTurn = true;
         return this;
-
     }
 
     public Eff targetType(TargetingType type){
@@ -154,6 +146,7 @@ public class Eff {
         e.source = source;
         e.buff = buff;
         e.buffDuration = buffDuration;
+        e.nextTurn = nextTurn;
         return e;
     }
 
@@ -179,6 +172,19 @@ public class Eff {
             }
         }
         return actualValue;
+    }
+
+    public void untargetedUse(boolean delayed) {
+        switch(type) {
+            case Magic:
+                if(nextTurn && !delayed){
+                    Party.get().addNextTurnEffect(this);
+                }
+                else{
+                    Party.get().addMagic(value);
+                }
+                break;
+        }
     }
 
 }
