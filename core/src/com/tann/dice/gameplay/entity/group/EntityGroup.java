@@ -153,4 +153,7 @@ public class EntityGroup {
             de.getEntityPanel().setTargeted(false);
         }
     }
+
+    public void reset() {
+    }
 }

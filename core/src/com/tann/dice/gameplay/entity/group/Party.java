@@ -39,6 +39,13 @@ public class Party extends EntityGroup{
         DungeonScreen.get().spellButt.addSpellHover(add);
     }
 
+    @Override
+    public void reset() {
+        super.reset();
+        nextTurnEffects.clear();
+        resetMagic();
+    }
+
     public void resetMagic(){
         this.magic = 0;
     }

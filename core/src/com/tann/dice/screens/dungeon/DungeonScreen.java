@@ -179,30 +179,16 @@ public class DungeonScreen extends Screen {
         Party.get().rejig();
         spellHolder.setup(Party.get().getSpells());
         spellButt.setSpellHolder(spellHolder);
-//        spellHolder.setPosition(spellHolder.getX(false), spellHolder.getY(false));
         for(DiceEntity de:Party.get().getActiveEntities()){
             de.reset();
         }
-
-        
         Main.clearPhases();
         Main.pushPhase(new NothingPhase());
-        Main.pushPhase(new LevelUpPhase());
         if(level>1){
             Main.pushPhase(new LevelUpPhase());
         }
-
-
-
         Main.pushPhase(new EnemyRollingPhase());
         Main.popPhase();
-//        for(DiceEntity de:Room.get().getActiveEntities()) {
-//            for (int i = 0; i < 2; i++) {
-//                Buff b = new BuffDot(-1, 1);
-//                b.target = de;
-//                de.addBuff(b);
-//            }
-//        }
     }
 
     public void restart() {
@@ -212,9 +198,10 @@ public class DungeonScreen extends Screen {
     }
 
     public void setup(List<Monster> monsters){
+        Party.get().reset();
+        Room.get().reset();
         Room.get().setEntities(monsters);
         spellButt.hide();
-        Party.get().resetMagic();
         BulletStuff.reset();
         BulletStuff.refresh(EntityGroup.getAllActive());
         enemy.setEntities(monsters);
