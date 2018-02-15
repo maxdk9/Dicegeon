@@ -31,7 +31,7 @@ public class EntityPanel extends Group {
     boolean huge;
     public EntityPanel(final DiceEntity e) {
         this.e = e;
-        huge = e.getSize() == DiceEntity.EntitySize.Huge;
+//        huge = e.getSize() == DiceEntity.EntitySize.huge;
         profile = e.getProfile();
         layout();
         setColor(Colours.dark);

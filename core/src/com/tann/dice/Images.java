@@ -41,6 +41,7 @@ public class Images {
     public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("reg/lapel/lapel");
     public static final TextureRegion lapelSmall = Main.atlas_3d.findRegion("smol/lapel/lapel");
     public static final TextureRegion lapelBig = Main.atlas_3d.findRegion("big/lapel/lapel");
+    public static final TextureRegion lapelHuge = Main.atlas_3d.findRegion("huge/lapel/lapel");
 //    public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
 //    public static final TextureRegion lapel2 = Main.atlas_3d.findRegion("dice/lapel/2");
 //    public static final TextureRegion lapel3 = Main.atlas_3d.findRegion("dice/lapel/3");

@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.entity;
 
+import com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 import com.tann.dice.gameplay.entity.die.Side;
 
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType archer = new MonsterType().name("Archer").hp(3).size(DiceEntity.EntitySize.smol)
             .sides(Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2);
     public static final MonsterType serpent = new MonsterType().name("Serpent").hp(7).size(DiceEntity.EntitySize.big)
-            .sides(Side.axe, Side.axe, Side.axe, Side.axe, Side.axe, Side.axe);
+        .sides(Side.axe, Side.axe, Side.axe, Side.axe, Side.axe, Side.axe);
+    public static final MonsterType dragon = new MonsterType().name("Dragon").hp(30).size(EntitySize.huge)
+        .sides(Side.flame2, Side.flame2, Side.flame2, Side.flame2, Side.flame2, Side.flame2);
 
     public Monster buildMonster(){
         Monster m = new Monster(this);

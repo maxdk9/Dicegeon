@@ -312,7 +312,8 @@ public abstract class DiceEntity {
 
     public enum EntitySize {
 
-        smol(12, Images.lapelSmall), reg(16, Images.lapel0), big(24, Images.lapelBig), Huge(32, Images.lapelSmall);
+        smol(12, Images.lapelSmall), reg(16, Images.lapel0), big(24, Images.lapelBig), huge(32, Images.lapelHuge);
+
         public final float dieSize;
         public final int pixels;
         public final TextureRegion lapel;

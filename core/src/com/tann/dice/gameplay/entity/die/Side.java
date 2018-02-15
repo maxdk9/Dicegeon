@@ -101,7 +101,8 @@ public class Side {
 
 //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
 
-//    public static final Side cleave1 = new Side(Images.get("cleave1"), new Eff().damage(1).enemyGroup());
+    public static final Side flame = new Side().size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
+    public static final Side flame2 = flame.withValue(2);
 //    public static final Side cleave2 = new Side(Images.get("cleave2"), new Eff().damage(2).enemyGroup());
 //    public static final Side cleave3 = new Side(Images.get("cleave3"), new Eff().damage(3).enemyGroup());
 //
