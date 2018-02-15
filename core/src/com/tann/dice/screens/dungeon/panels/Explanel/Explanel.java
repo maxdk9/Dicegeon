@@ -151,15 +151,16 @@ public class Explanel extends InfoPanel {
                 case RandomEnemy:
                 case Untargeted:
                     if(enoughMagic) {
-                        Button confirmButton = new Button(60, 60, Images.tick, Colours.dark, new Runnable() {
+                        Button confirmButton = new Button(20, 20, Images.tick, Colours.dark, new Runnable() {
                             @Override
                             public void run() {
                                 DungeonScreen.get().target(null);
                             }
                         });
+                        confirmButton.setBorder(Colours.dark, Colours.light, 1);
                         confirmButton.setColor(Colours.blue);
                         addActor(confirmButton);
-                        confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 20);
+                        confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 2);
                     }
                     break;
             }
