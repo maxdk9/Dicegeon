@@ -17,7 +17,6 @@ public class Images {
     public static final TextureRegion magicButt = Main.atlas.findRegion("ui/magicButton");
     public static final TextureRegion spellBorder = Main.atlas.findRegion("spell/border");
     public static final TextureRegion spellBorderBig = Main.atlas.findRegion("spell/borderBig");
-    public static final TextureRegion spell_shield = Main.atlas_3d.findRegion("dice/face/shield1");
 
 	public static final TextureRegion roll = Main.atlas.findRegion("ui/roll");
     public static final TextureRegion tick = Main.atlas.findRegion("ui/tick");
@@ -38,32 +37,6 @@ public class Images {
 
     public static final TextureRegion patch = Main.atlas.findRegion("patch/test");
 
-    public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("reg/lapel/lapel");
-    public static final TextureRegion lapelSmall = Main.atlas_3d.findRegion("smol/lapel/lapel");
-    public static final TextureRegion lapelBig = Main.atlas_3d.findRegion("big/lapel/lapel");
-    public static final TextureRegion lapelHuge = Main.atlas_3d.findRegion("huge/lapel/lapel");
-//    public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
-//    public static final TextureRegion lapel2 = Main.atlas_3d.findRegion("dice/lapel/2");
-//    public static final TextureRegion lapel3 = Main.atlas_3d.findRegion("dice/lapel/3");
-//    public static final TextureRegion lapel4 = Main.atlas_3d.findRegion("dice/lapel/4");
-//    public static final TextureRegion lapel5 = Main.atlas_3d.findRegion("dice/lapel/5");
-	
-	private static Map<String, TextureRegion[]> threeDTextures = new HashMap<>();
-	private static TextureRegion[] makeFace(String name){
-		TextureRegion base = Main.atlas_3d.findRegion("dice/face/"+name);
-		TextureRegion highlight = Main.atlas_3d.findRegion("dice/face/"+name+"_highlight");
-		return  new TextureRegion[]{base,base};
-	}
-	
-	public static TextureRegion get(String name){
+    public static final TextureRegion portrait = Main.atlas.findRegion("portrait/goblin");
 
-	    return Main.atlas_3d.findRegion(name);
-
-//		TextureRegion[] tr = threeDTextures.get(name);
-//		if(tr==null){
-//			tr = makeFace(name);
-//			threeDTextures.put(name, tr);
-//		}
-//		return tr;
-	}
 }

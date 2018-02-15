@@ -20,7 +20,7 @@ public class MonsterType extends EntityType<MonsterType>{
             .sides(Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2);
     public static final MonsterType serpent = new MonsterType().name("Serpent").hp(7).size(DiceEntity.EntitySize.big)
         .sides(Side.axe, Side.axe, Side.axe, Side.axe, Side.axe, Side.axe);
-    public static final MonsterType dragon = new MonsterType().name("Dragon").hp(40).size(EntitySize.huge)
+    public static final MonsterType dragon = new MonsterType().name("Dragon").hp(30).size(EntitySize.huge)
         .sides(Side.flame2, Side.flame2, Side.flame2, Side.flame2, Side.flame2, Side.flame2);
 
     public Monster buildMonster(){

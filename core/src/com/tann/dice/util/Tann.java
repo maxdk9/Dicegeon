@@ -40,6 +40,10 @@ public class Tann {
         return (float) Math.sqrt(xDiff*xDiff + yDiff*yDiff);
     }
 
+    public static int between (int a, int b){
+        return a + (b-a)/2;
+    }
+
     public static void delay(Runnable runnable, float delay) {
         DungeonScreen.get().addAction(Actions.delay(delay, Actions.run(runnable)));
     }

@@ -37,7 +37,7 @@ public class Side {
     }
 
     public Side image(String image){
-        this.tr = Images.get(size+"/face/"+image);
+        this.tr = Main.atlas_3d.findRegion(size+"/face/"+image);
         return this;
     }
 
