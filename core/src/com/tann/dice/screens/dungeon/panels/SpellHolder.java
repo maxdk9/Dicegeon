@@ -77,7 +77,7 @@ public class SpellHolder extends Group {
     public void layout(){
         clearChildren();
         WIDTH = Images.spellBorderBig.getRegionWidth()*getMaxSpells() + GAP*(getMaxSpells()+2) + SpellCostPanel.WIDTH;
-        setSize(WIDTH, BAR_HEIGHT*getSpellLevels());
+        setSize(WIDTH, BAR_HEIGHT*getSpellLevels()+1);
         Layoo l = new Layoo(this);
         l.row(1);
         for(int i=1;i<=getMaxSpellLevel();i++){
@@ -115,11 +115,10 @@ public class SpellHolder extends Group {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        for(int i=1;i<=getSpellLevels();i++){
-            batch.setColor(getColor(i));
-            Draw.fillRectangle(batch, getX(), getY()+(getHeight()/getSpellLevels())*(i-1), getWidth(), getHeight()/getSpellLevels());
-            batch.setColor(Colours.withAlpha(Colours.dark, i*.2f));
-            Draw.fillRectangle(batch, getX(), getY()+(getHeight()/getSpellLevels())*(i-1), getWidth(), getHeight()/getSpellLevels());
+        Draw.fillActor(batch, this, Colours.purple);
+        batch.setColor(Colours.dark);
+        for(int i=0;i<3;i++){
+            Draw.fillRectangle(batch, getX()+SpellCostPanel.WIDTH, getY()+1 + i*(BAR_HEIGHT), getWidth()-SpellCostPanel.WIDTH-1, BAR_HEIGHT-1);
         }
         super.draw(batch, parentAlpha);
     }
@@ -136,8 +135,6 @@ public class SpellHolder extends Group {
         @Override
         public void draw(Batch batch, float parentAlpha) {
             super.draw(batch, parentAlpha);
-            batch.setColor(Colours.withAlpha(Colours.dark, .8f));
-            Draw.fillActor(batch, this);
             batch.setColor(Colours.z_white);
             int between = (int) (getHeight() - Images.magic.getRegionHeight() * cost) / (cost+1);
             int extra = (int) (getHeight() - ((between * (cost+1)) + (cost*Images.magic.getRegionHeight())));
