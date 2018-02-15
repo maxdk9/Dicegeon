@@ -3,7 +3,6 @@ package com.tann.dice.gameplay.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
@@ -15,10 +14,9 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.screens.dungeon.panels.EntityPanel;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Colours;
-import com.tann.dice.util.Sounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +49,7 @@ public abstract class DiceEntity {
         this.entityType = type;
         this.name = type.name;
         this.size = type.size;
-        this.lapel = this.size.lapel;
+        this.lapel = Main.atlas_3d.findRegion(size+"/lapel/lapel");
         setMaxHp(type.hp);
     }
 
@@ -312,15 +310,13 @@ public abstract class DiceEntity {
 
     public enum EntitySize {
 
-        smol(12, Images.lapelSmall), reg(16, Images.lapel0), big(24, Images.lapelBig), huge(32, Images.lapelHuge);
+        smol(12), reg(16), big(24), huge(32);
 
         public final float dieSize;
         public final int pixels;
-        public final TextureRegion lapel;
-        EntitySize(int pixels, TextureRegion lapel) {
+        EntitySize(int pixels) {
             this.pixels = pixels;
             this.dieSize = BASE_SIZE * pixels;
-            this.lapel = lapel;
         }
     }
 

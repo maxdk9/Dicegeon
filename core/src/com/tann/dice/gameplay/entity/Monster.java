@@ -1,11 +1,8 @@
 package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.tann.dice.Images;
-import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.screens.dungeon.panels.EntityPanel;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextureFlasher;
