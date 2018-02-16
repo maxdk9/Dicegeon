@@ -26,7 +26,6 @@ public class EntityPanel extends Group {
     static final int n = 5;
     static NinePatch np = new NinePatch(Images.patch, n,n,n,n);
     public static final float WIDTH = SidePanel.width;
-    int portraitOffset = 6;
     static int borderSize = 4;
     static int gap = 2;
     public EntityPanel(final DiceEntity entity) {
@@ -62,7 +61,10 @@ public class EntityPanel extends Group {
 
     public void layout(){
 
-        int portraitWidth = Images.portrait.getRegionWidth() - portraitOffset-2;
+        int portraitWidth = 0;
+        if(entity.portrait != null){
+            portraitWidth = entity.portrait.getRegionWidth() - entity.portraitOffset-2;
+        }
 
         int height = entity.getDie().get2DSize();
         setSize(WIDTH, height+borderSize*2);
@@ -77,8 +79,8 @@ public class EntityPanel extends Group {
         boolean player = entity.isPlayer();
 
         holder.setY(borderSize);
-        title.setY(getHeight()-borderSize-TannFont.font.getHeight());
-        heartsHolder.setY(title.getY()-gap-heartsHolder.getHeight());
+        title.setY((int)(getHeight()-borderSize-TannFont.font.getHeight()));
+        heartsHolder.setY((int)(title.getY()-gap-heartsHolder.getHeight()));
         buffHolder.setY(borderSize);
         int heartsMiddley = 0;
         if(player){
@@ -93,8 +95,8 @@ public class EntityPanel extends Group {
             heartsMiddley = Tann.between((int) (holder.getX()+holder.getWidth()), (int) getWidth()-portraitWidth);
         }
 
-        title.setX(heartsMiddley-title.getWidth()/2);
-        heartsHolder.setX(heartsMiddley-heartsHolder.getWidth()/2);
+        title.setX((int)(heartsMiddley-title.getWidth()/2));
+        heartsHolder.setX((int)(heartsMiddley-heartsHolder.getWidth()/2));
 
     }
 
@@ -145,11 +147,12 @@ public class EntityPanel extends Group {
         int npWiggle = 1;
         np.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
 
-        if(entity.isPlayer()) {
-            batch.draw(Images.portrait, getX()-portraitOffset, getY());
-        }
-        else{
-            Draw.drawScaled(batch, Images.portrait, getX()+getWidth()+portraitOffset, getY(), -1, 1);
+        if(entity.portrait != null) {
+            if (entity.isPlayer()) {
+                batch.draw(entity.portrait, getX() - entity.portraitOffset, getY() + 1);
+            } else {
+                Draw.drawScaled(batch, entity.portrait, getX() + getWidth() + entity.portraitOffset, getY()+1, -1, 1);
+            }
         }
 
         if(possibleTarget || targeted) {

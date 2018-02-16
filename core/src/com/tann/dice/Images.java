@@ -37,6 +37,5 @@ public class Images {
 
     public static final TextureRegion patch = Main.atlas.findRegion("patch/test");
 
-    public static final TextureRegion portrait = Main.atlas.findRegion("portrait/goblin");
 
 }

@@ -148,10 +148,10 @@ public class DungeonScreen extends Screen {
         level ++;
         switch(level){
             case 1:
-                setup(MonsterType.monsterList(MonsterType.dragon, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
+                setup(MonsterType.monsterList(MonsterType.dragon, MonsterType.bird, MonsterType.goblin, MonsterType.goblin));
                 break;
             case 2:
-                setup(MonsterType.monsterList(MonsterType.archer, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.serpent));
+                setup(MonsterType.monsterList(MonsterType.archer, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.bird));
                 break;
 //            case 3:
 //                monsters.add(new Monster(Monster.MonsterType.Serpent));
@@ -209,7 +209,7 @@ public class DungeonScreen extends Screen {
 
     public void resetHeroes(){
         List<Hero> heroes = new ArrayList<>();
-        Hero f1 = HeroType.bard.buildHero();
+        Hero f1 = HeroType.fighter.buildHero();
         f1.setColour(Colours.orange);
         heroes.add(f1);
         Hero f2 = HeroType.fighter.buildHero();

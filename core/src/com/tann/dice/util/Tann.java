@@ -1,9 +1,13 @@
 package com.tann.dice.util;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
@@ -58,5 +62,15 @@ public class Tann {
             if(listOne.contains(o)) return true;
         }
         return false;
+    }
+
+    public static List<TextureAtlas.AtlasRegion> getRegionsStartingWith(String prefix){
+        List<AtlasRegion> results = new ArrayList<>();
+        for(TextureAtlas.AtlasRegion ar:Main.atlas.getRegions()){
+            if(ar.name.startsWith(prefix)){
+                results.add(ar);
+            }
+        }
+        return results;
     }
 }

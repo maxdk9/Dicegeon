@@ -27,6 +27,7 @@ public class DicetopLauncher {
 		config.height=800;
 		config.samples=10;
 		config.title="Dicegeon";
+		config.resizable = false;
         config.addIcon("misc/icon.png", Files.FileType.Internal);
         new LwjglApplication(new Main(), config);
 	}

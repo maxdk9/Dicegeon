@@ -2,6 +2,8 @@ package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
@@ -17,6 +19,7 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Colours;
+import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +46,20 @@ public abstract class DiceEntity {
     EntitySize size;
     public boolean locked; // only used for monster
     public EntityType entityType;
-
+    public AtlasRegion portrait;
+    public int portraitOffset;
 
     public DiceEntity(EntityType type) {
         this.entityType = type;
         this.name = type.name;
+
         this.size = type.size;
         this.lapel = Main.atlas_3d.findRegion(size+"/lapel/lapel");
+        List<AtlasRegion> portraits = Tann.getRegionsStartingWith("portrait/"+name);
+        if(portraits.size()>0){
+            portrait = Tann.getRandom(portraits);
+            portraitOffset = Integer.valueOf(portrait.name.split("-")[1])+0;
+        }
         setMaxHp(type.hp);
     }
 
