@@ -78,7 +78,7 @@ public class Die implements Targetable{
     private static final int ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
     private static Material MATERIAL;
     private float timeInAir;
-
+    private Runnable moveRunnable;
     public void update(float delta){
         switch(state){
             case Stopped:
@@ -105,6 +105,11 @@ public class Die implements Targetable{
                 physical.transform.setToTranslation(thisFrame);
                 physical.transform.rotate(startQuat.cpy().slerp(targetQuat, interp));
                 physical.body.setWorldTransform(physical.transform);
+                if(dist == 1){
+                    if(moveRunnable != null){
+                        moveRunnable.run();
+                    }
+                }
                 break;
             case Locked:
                 break;
@@ -343,6 +348,11 @@ public class Die implements Targetable{
         undamp();
     }
 
+    public void moveTo(Vector2 position, Runnable runnable){
+        this.moveRunnable = runnable;
+        moveTo(position.x, position.y);
+    }
+
     private void moveTo(float screenX, float screenY){
         setState(Locking);
         float factor = BulletStuff.srcWidth/Main.width;
@@ -351,10 +361,6 @@ public class Die implements Targetable{
                 -BulletStuff.height - physical.dimensions.y/2,
                 (Main.height-screenY)*factor-BulletStuff.heightFactor/2-physical.dimensions.y/2),
             d6Quats[lockedSide]);
-    }
-
-    public void moveTo(Vector2 position){
-        moveTo(position.x, position.y);
     }
 
     private void moveTo(Vector3 position, Quaternion rotation){

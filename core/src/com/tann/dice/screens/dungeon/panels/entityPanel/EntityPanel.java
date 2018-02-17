@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -28,8 +29,10 @@ public class EntityPanel extends Group {
     public static final float WIDTH = SidePanel.width;
     static int borderSize = 4;
     static int gap = 2;
+    boolean huge;
     public EntityPanel(final DiceEntity entity) {
         this.entity = entity;
+        huge = entity.getSize() == DiceEntity.EntitySize.huge;
         profile = entity.getProfile();
         layout();
 
@@ -66,15 +69,24 @@ public class EntityPanel extends Group {
             portraitWidth = entity.portrait.getRegionWidth() - entity.portraitOffset-2;
         }
 
-        int height = entity.getDie().get2DSize();
-        setSize(WIDTH, height+borderSize*2);
-        TextWriter title = new TextWriter(entity.getName());
-        addActor(title);
         HeartsHolder heartsHolder = new HeartsHolder(entity);
         addActor(heartsHolder);
+        TextWriter title = new TextWriter(entity.getName());
+        addActor(title);
+
+
+        setWidth(WIDTH);
+        if(huge){
+            setHeight(entity.getDie().get2DSize()+gap*2+4+title.getHeight()+heartsHolder.getHeight()+borderSize*2);
+        }
+        else{
+            setHeight(entity.getDie().get2DSize()+borderSize*2);
+        }
+
+
         BuffHolder buffHolder = new BuffHolder(entity, (int) getHeight());
         addActor(buffHolder);
-        holder = new DieHolder(entity.getDie().get2DSize(), entity.getColour());
+        holder = new DieHolder(entity);
         addActor(holder);
         boolean player = entity.isPlayer();
 
@@ -111,13 +123,12 @@ public class EntityPanel extends Group {
     }
 
     public DieHolder holder;
-
     public void slide(boolean targetable){
         int slideAmount = 14;
         addAction(Actions.moveTo(startX + (targetable ? -slideAmount : 0), getY(), .3f, Interpolation.pow2Out));
         if(holdsDie){
             float addX = getX() - (startX + (targetable ? -slideAmount : 0));
-            entity.getDie().moveTo(getDieHolderLocation().add(-addX,0));
+            entity.getDie().moveTo(getDieHolderLocation().add(-addX,0), null);
         }
     }
 
@@ -130,18 +141,10 @@ public class EntityPanel extends Group {
     public void draw(Batch batch, float parentAlpha) {
 
         batch.setColor(Colours.dark);
-        if(entity.isPlayer()) {
-            Draw.fillRectangle(batch, getX(), getY(), holder.getX(), getHeight());
-            Draw.fillRectangle(batch, holder.getX() + holder.getWidth(), getY(), borderSize, getHeight());
-            Draw.fillRectangle(batch, holder.getX(), getY(), holder.getWidth(), borderSize);
-            Draw.fillRectangle(batch, holder.getX(), getY() + holder.getY() + holder.getHeight(), holder.getWidth(), borderSize);
-        }
-        else{
-            Draw.fillRectangle(batch, getX(), getY(), holder.getX(), getHeight());
-            Draw.fillRectangle(batch, getX()+holder.getX() + holder.getWidth(), getY(), getWidth()-holder.getX()-holder.getWidth(), getHeight());
-            Draw.fillRectangle(batch, getX(), getY(), getWidth(), holder.getY());
-            Draw.fillRectangle(batch, getX(), getY()+holder.getY()+holder.getHeight(), getWidth(), holder.getY());
-        }
+        Draw.fillRectangle(batch, getX(), getY(), holder.getX(), getHeight());
+        Draw.fillRectangle(batch, getX(), getY(), getWidth(), holder.getY());
+        Draw.fillRectangle(batch, getX()+holder.getX()+holder.getWidth(), getY(), getWidth()-holder.getX()-holder.getWidth(), getHeight());
+        Draw.fillRectangle(batch, getX(), getY()+holder.getY()+holder.getHeight(), getWidth(), getHeight()-holder.getY()-holder.getHeight());
 
         batch.setColor(Colours.z_white);
         int npWiggle = 1;
@@ -181,7 +184,12 @@ public class EntityPanel extends Group {
 
     public void lockDie(){
         holdsDie = true;
-        entity.getDie().moveTo(getDieHolderLocation());
+        entity.getDie().moveTo(getDieHolderLocation(), new Runnable() {
+            @Override
+            public void run() {
+                BulletStuff.instances.remove(entity.getDie().physical);
+            }
+        });
     }
 
     public void unlockDie(){

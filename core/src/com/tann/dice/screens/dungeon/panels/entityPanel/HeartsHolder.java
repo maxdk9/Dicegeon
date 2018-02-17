@@ -15,10 +15,17 @@ public class HeartsHolder extends Actor{
     private static final int heartWidth = Images.heart.getRegionWidth();
     private static final int heartHeight = Images.heart.getRegionHeight();
     private static final int heartGap = 1;
+    int heartsPerRow = 5;
+    boolean huge;
     public HeartsHolder(DiceEntity e) {
         this.entity =e;
+        huge = e.getSize() == DiceEntity.EntitySize.huge;
+        if(huge){
+            heartsPerRow = 10;
+        }
         this.profile = e.getProfile();
-        setSize(heartWidth*5 + heartGap*4, ((e.getMaxHp()+4)/5)*(heartHeight+heartGap)-heartGap);
+
+        setSize(heartWidth*heartsPerRow + heartGap*4, ((e.getMaxHp()+(heartsPerRow-1))/heartsPerRow)*(heartHeight+heartGap)-heartGap);
     }
 
     @Override
@@ -26,7 +33,6 @@ public class HeartsHolder extends Actor{
 
 
 
-        int heartsPerRow = 5;
         int heartGap = 1;
         float heartSize = Images.heart.getRegionHeight();
         int y = (int) (getY()+getHeight());
