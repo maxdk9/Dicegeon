@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.effect;
 
 import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.buff.BuffDot;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
 import java.util.ArrayList;
@@ -89,16 +90,26 @@ public class DamageProfile {
         reset();
     }
 
-    private List<Buff> allBuffs = new ArrayList<>();
+    private List<Buff> tmp = new ArrayList<>();
+
+
     public int getIncomingDamage(){
-        allBuffs.clear();
-        allBuffs.addAll(incomingBuffs);
-        allBuffs.addAll(target.getBuffs());
         int damage = incomingDamage;
-        for(Buff b:allBuffs){
+        for(Buff b:target.getBuffs()){
             damage = b.alterIncomingDamage(damage);
         }
         return damage;
+    }
+
+    public int getIncomingPoisonDamage(){
+        int total = 0;
+        for(Buff b:target.getBuffs()){
+            if(b instanceof BuffDot){
+                BuffDot dot = (BuffDot) b;
+                total += Math.max(0, dot.damage);
+            }
+        }
+        return total;
     }
 
     public boolean isGoingToDie(){
@@ -113,11 +124,17 @@ public class DamageProfile {
         return Math.min(target.getMaxHp(), target.getHp() + heals);
     }
 
-    public int totalIncoming() {
+    public int unblockedRegularIncoming() {
         return Math.max(0, getIncomingDamage() - blockedDamage);
     }
 
-    public int getOverkill() {
-        return getIncomingDamage()  - Math.min(target.getMaxHp(), target.getHp() + heals) - blockedDamage;
+    public int unblockedTotalIncoming() {
+        return unblockedRegularIncoming()+getIncomingPoisonDamage();
+    }
+
+    public int getOverkill(boolean poison) {
+        int regularOverkill = unblockedRegularIncoming()  - Math.min(target.getMaxHp(), target.getHp() + heals);
+        if(!poison) return regularOverkill;
+        else return getIncomingPoisonDamage() + Math.min(0, regularOverkill);
     }
 }

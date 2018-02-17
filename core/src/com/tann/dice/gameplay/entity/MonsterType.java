@@ -21,7 +21,7 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType bird = new MonsterType().name("Awk").hp(10).size(DiceEntity.EntitySize.big)
         .sides(Side.big_claw2, Side.big_claw2, Side.big_peck3, Side.big_peck3, Side.big_peck5, Side.big_peck5);
     public static final MonsterType dragon = new MonsterType().name("Lizard").hp(30).size(EntitySize.huge)
-        .sides(Side.huge_flame2, Side.huge_flame2, Side.huge_flame2, Side.huge_flame2, Side.huge_flame2, Side.huge_flame2);
+        .sides(Side.huge_flame2, Side.huge_flame2, Side.huge_posionChomp2, Side.huge_posionChomp2, Side.huge_posionChomp3, Side.huge_posionChomp3);
 
     public Monster buildMonster(){
         Monster m = new Monster(this);

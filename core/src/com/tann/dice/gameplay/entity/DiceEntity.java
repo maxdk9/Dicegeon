@@ -317,7 +317,7 @@ public abstract class DiceEntity {
 
     static final float BASE_SIZE = 5.69f/Gdx.graphics.getHeight()*Main.scale;
 
-    public abstract float getPixelSize();
+    public abstract int getPixelSize();
 
     public enum EntitySize {
 

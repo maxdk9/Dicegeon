@@ -84,7 +84,7 @@ public class EntityPanel extends Group {
         }
 
 
-        BuffHolder buffHolder = new BuffHolder(entity, (int) getHeight());
+        BuffHolder buffHolder = new BuffHolder(entity, entity.getPixelSize());
         addActor(buffHolder);
         holder = new DieHolder(entity);
         addActor(holder);
@@ -99,12 +99,14 @@ public class EntityPanel extends Group {
             // playah!
             holder.setX(getWidth()-borderSize-holder.getWidth());
             heartsMiddley = Tann.between(portraitWidth, (int) (getWidth()-borderSize-holder.getWidth()));
+            buffHolder.setX(holder.getX()-buffHolder.getWidth()-gap);
 
         }
         else{
             // monstah!
             holder.setX(borderSize);
             heartsMiddley = Tann.between((int) (holder.getX()+holder.getWidth()), (int) getWidth()-portraitWidth);
+            buffHolder.setX(holder.getX()+holder.getWidth()+gap);
         }
 
         title.setX((int)(heartsMiddley-title.getWidth()/2));

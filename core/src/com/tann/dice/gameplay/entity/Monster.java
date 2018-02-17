@@ -20,7 +20,7 @@ public class Monster extends DiceEntity {
 
 
     @Override
-    public float getPixelSize() {
+    public int getPixelSize() {
         return size.pixels;
     }
 

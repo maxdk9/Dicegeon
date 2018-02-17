@@ -2,7 +2,6 @@ package com.tann.dice.screens.dungeon.panels.entityPanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.DamageProfile;
@@ -48,8 +47,11 @@ public class HeartsHolder extends Group{
             }
             else {
                 tr = Images.heart;
-                if(i>=profile.getTopHealth()-profile.totalIncoming()){
+                if(i>=profile.getTopHealth()-profile.unblockedRegularIncoming()){
                     batch.setColor(Colours.yellow);
+                }
+                else if(i>=profile.getTopHealth()-profile.unblockedRegularIncoming()-profile.getIncomingPoisonDamage()){
+                    batch.setColor(Colours.purple);
                 }
                 else{
                     batch.setColor(Colours.red);
@@ -58,10 +60,21 @@ public class HeartsHolder extends Group{
             batch.draw(tr, x, y);
             x += heartSize + heartGap;
         }
-        int overkill = profile.getOverkill();
-        if(overkill>0 && !entity.isDead()){
-            batch.setColor(Colours.yellow);
-            TannFont.font.drawString(batch, "+"+overkill, (int)(getX()+getWidth()+2), (int) (getY()+getHeight()*.5f-TannFont.font.getHeight()/2-2), false);
+        if(!entity.isDead()) {
+            int overkill = profile.getOverkill(false);
+            int poisonOverkill = profile.getOverkill(true);
+            int overkillY = (int) (getY() + getHeight() / 2 - TannFont.font.getHeight() / 2);
+            if (overkill > 0){
+                batch.setColor(Colours.yellow);
+                TannFont.font.drawString(batch, "+" + overkill, (int) (getX() + getWidth() + 2), overkillY, false);
+            }
+            if (poisonOverkill > 0){
+                batch.setColor(Colours.purple);
+                if(overkill>0){
+                    overkillY -= TannFont.font.getLineHeight();
+                }
+                TannFont.font.drawString(batch, "+" + poisonOverkill, (int) (getX() + getWidth() + 2), overkillY, false);
+            }
         }
         super.draw(batch, parentAlpha);
     }

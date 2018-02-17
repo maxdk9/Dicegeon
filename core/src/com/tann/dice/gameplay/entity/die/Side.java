@@ -119,6 +119,10 @@ public class Side {
     public static final Side huge_flame = new Side().size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
     public static final Side huge_flame2 = huge_flame.withValue(2);
 
+    public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().buff(new BuffDot(-1, 1)));
+    public static final Side huge_posionChomp2 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(2), new Eff().buff(new BuffDot(-1, 2)));
+    public static final Side huge_posionChomp3 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(3), new Eff().buff(new BuffDot(-1, 3)));
+
 
     private Side withValue(int value) {
         Side copy = copy();

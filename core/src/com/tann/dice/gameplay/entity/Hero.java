@@ -43,7 +43,7 @@ public class Hero extends DiceEntity {
     }
 
     @Override
-    public float getPixelSize() {
+    public int getPixelSize() {
         return 16;
     }
 
