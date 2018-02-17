@@ -3,7 +3,6 @@ package com.tann.dice.gameplay.entity.die;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.buff.BuffDot;
@@ -51,6 +50,8 @@ public class Side {
         return this;
     }
 
+    // REGULAR
+
     public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing());
 
     public static final Side shield1 = new Side().image("shield").effect(new Eff().shield(1).friendlySingle());
@@ -88,10 +89,6 @@ public class Side {
     public static final Side wardingchord2 = wardingchord.withValue(2);
     public static final Side reroll = new Side().image("reroll").effect(new Eff().reroll(0).onRoll());
 
-    public static final Side smol_arrow2 = new Side().size(smol).image("arrow").effect(new Eff().damage(2).ranged());
-
-    public static final Side axe = new Side().size(big).image("axe").effect(new Eff().damage(2).enemyAndAdjacents());
-
     public static final Side potionregen = new Side().image("potionOfRegen").effect(new Eff().buff(new BuffDot(-1, -1)).friendlySingle().justValue(1));
 
     public static final Side flameWard = new Side().image("flameWard").effect(new Eff().buff(new ReturnDamage(1, 2)).friendlySingle().justValue(2));
@@ -99,14 +96,28 @@ public class Side {
     public static final Side magic1NextTurn = new Side().image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
     public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
 
-//    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
+    //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
 
-    public static final Side flame = new Side().size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
-    public static final Side flame2 = flame.withValue(2);
-//    public static final Side cleave2 = new Side(Images.get("cleave2"), new Eff().damage(2).enemyGroup());
-//    public static final Side cleave3 = new Side(Images.get("cleave3"), new Eff().damage(3).enemyGroup());
-//
-//    public static final Side reroll = new Side(Images.get("reroll"), new Eff().reroll(1).onRoll());
+    // SMOLE
+
+    public static final Side smol_arrow = new Side().size(smol).image("arrow").effect(new Eff().damage(1).ranged());
+    public static final Side smol_arrow2 = smol_arrow.withValue(2);
+    public static final Side smol_arrow3 = smol_arrow.withValue(3);
+
+    // BIG
+
+    public static final Side big_claw = new Side().size(big).image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side big_claw2 = big_claw.withValue(2);
+
+    public static final Side big_peck = new Side().size(big).image("big_peck").effect(new Eff().damage(1));
+    public static final Side big_peck3 = big_peck.withValue(3);
+    public static final Side big_peck4 = big_peck.withValue(4);
+    public static final Side big_peck5 = big_peck.withValue(5);
+
+    // HUGE
+
+    public static final Side huge_flame = new Side().size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
+    public static final Side huge_flame2 = huge_flame.withValue(2);
 
 
     private Side withValue(int value) {
@@ -116,7 +127,7 @@ public class Side {
         }
         return copy;
     }
-//
+
 	public Side copy(){
 		Eff[] newEffects = new Eff[effects.length];
 		for(int i=0;i<effects.length;i++){
@@ -134,7 +145,7 @@ public class Side {
     }
 
     public void draw(Batch batch, float x, float y, int scale, Color colour) {
-	    int sz = Side.sizeToPips.get(size)[0].getRegionWidth();
+	    int sz = size.pixels;
 
 	    if(colour != null){
 	        batch.setColor(colour);

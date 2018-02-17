@@ -62,7 +62,7 @@ public class EntityPanel extends Group {
     }
 
     public void layout(){
-
+        clearChildren();
         int portraitWidth = 0;
         if(entity.portrait != null){
             portraitWidth = entity.portrait.getRegionWidth() - entity.portraitOffset-2;
@@ -122,13 +122,14 @@ public class EntityPanel extends Group {
     }
 
     public DieHolder holder;
-    public void slide(boolean targetable){
+
+    public float getPreferredX() {
         int slideAmount = 14;
-        addAction(Actions.moveTo(startX + (targetable ? -slideAmount : 0), getY(), .3f, Interpolation.pow2Out));
-        if(holdsDie){
-            float addX = getX() - (startX + (targetable ? -slideAmount : 0));
-            entity.getDie().moveTo(getDieHolderLocation().add(-addX,0), null);
+        int deadAmount = (int) (getWidth() + 8);
+        if(entity.isDead()){
+            return entity.isPlayer()?-deadAmount:deadAmount;
         }
+        return startX + (entity.slidOut?-slideAmount:0);
     }
 
     @Override
@@ -140,10 +141,15 @@ public class EntityPanel extends Group {
     public void draw(Batch batch, float parentAlpha) {
 
         batch.setColor(Colours.dark);
-        Draw.fillRectangle(batch, getX(), getY(), holder.getX(), getHeight());
-        Draw.fillRectangle(batch, getX(), getY(), getWidth(), holder.getY());
-        Draw.fillRectangle(batch, getX()+holder.getX()+holder.getWidth(), getY(), getWidth()-holder.getX()-holder.getWidth(), getHeight());
-        Draw.fillRectangle(batch, getX(), getY()+holder.getY()+holder.getHeight(), getWidth(), getHeight()-holder.getY()-holder.getHeight());
+        if(entity.isDead()){
+            Draw.fillActor(batch, this);
+        }
+        else {
+            Draw.fillRectangle(batch, getX(), getY(), holder.getX(), getHeight());
+            Draw.fillRectangle(batch, getX(), getY(), getWidth(), holder.getY());
+            Draw.fillRectangle(batch, getX() + holder.getX() + holder.getWidth(), getY(), getWidth() - holder.getX() - holder.getWidth(), getHeight());
+            Draw.fillRectangle(batch, getX(), getY() + holder.getY() + holder.getHeight(), getWidth(), getHeight() - holder.getY() - holder.getHeight());
+        }
 
         batch.setColor(Colours.z_white);
         int npWiggle = 1;
@@ -234,7 +240,5 @@ public class EntityPanel extends Group {
 //            addActor(sa);
         }
     }
-
-
 
 }

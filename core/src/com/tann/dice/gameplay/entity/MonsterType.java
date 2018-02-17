@@ -17,11 +17,11 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType goblin = new MonsterType().name("Goblin").hp(5)
             .sides(Side.sword2, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1);
     public static final MonsterType archer = new MonsterType().name("Archer").hp(3).size(DiceEntity.EntitySize.smol)
-            .sides(Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2);
-    public static final MonsterType bird = new MonsterType().name("Awk").hp(7).size(DiceEntity.EntitySize.big)
-        .sides(Side.axe, Side.axe, Side.axe, Side.axe, Side.axe, Side.axe);
+            .sides(Side.smol_arrow3, Side.smol_arrow3, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2);
+    public static final MonsterType bird = new MonsterType().name("Awk").hp(10).size(DiceEntity.EntitySize.big)
+        .sides(Side.big_claw2, Side.big_claw2, Side.big_peck3, Side.big_peck3, Side.big_peck5, Side.big_peck5);
     public static final MonsterType dragon = new MonsterType().name("Lizard").hp(30).size(EntitySize.huge)
-        .sides(Side.flame2, Side.flame2, Side.flame2, Side.flame2, Side.flame2, Side.flame2);
+        .sides(Side.huge_flame2, Side.huge_flame2, Side.huge_flame2, Side.huge_flame2, Side.huge_flame2, Side.huge_flame2);
 
     public Monster buildMonster(){
         Monster m = new Monster(this);

@@ -50,7 +50,7 @@ public class DungeonScreen extends Screen {
     public static final float BOTTOM_BUTTON_WIDTH = 78;
     public static final float BUTT_GAP = 2;
     public SidePanel friendly;
-    private SidePanel enemy;
+    public SidePanel enemy;
     public SpellHolder spellHolder;
 
     private DungeonScreen() {
@@ -140,7 +140,7 @@ public class DungeonScreen extends Screen {
 //        confirmButton.setText(s);
     }
 
-    public int level=0;
+    public int level=1;
 
     public void nextLevel() {
         spellButt.removeAllHovers();
@@ -148,17 +148,15 @@ public class DungeonScreen extends Screen {
         level ++;
         switch(level){
             case 1:
-                setup(MonsterType.monsterList(MonsterType.dragon, MonsterType.bird, MonsterType.goblin, MonsterType.goblin));
+                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
                 break;
             case 2:
-                setup(MonsterType.monsterList(MonsterType.archer, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.bird));
+                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.goblin));
                 break;
-//            case 3:
-//                monsters.add(new Monster(Monster.MonsterType.Serpent));
-//                monsters.add(new Monster(Monster.MonsterType.Serpent));
-//                monsters.add(new Monster(Monster.MonsterType.Serpent));
-//                break;
-//            case 4:
+            case 3:
+                setup(MonsterType.monsterList(MonsterType.bird, MonsterType.archer, MonsterType.bird));
+                break;
+            case 4:
 //                monsters.add(new Monster(Monster.MonsterType.Ogre));
 //                monsters.add(new Monster(Monster.MonsterType.Ogre));
 //                monsters.add(new Monster(Monster.MonsterType.Ogre));
@@ -649,5 +647,10 @@ public class DungeonScreen extends Screen {
     @Override
     public void act(float delta) {
         super.act(delta);
+    }
+
+    public void layoutSidePanels() {
+        enemy.layout(true);
+        friendly.layout(true);
     }
 }

@@ -32,11 +32,8 @@ public class DiePanel extends InfoPanel implements OnPop {
         });
         layout();
     }
-    private static final int SIDE_SIZE = 16;
     private static final int gap = 3;
-    public static final int WIDTH = (SIDE_SIZE-1) * 4 + 1 + gap*2 +gap*2; //plus10 noo
     public static final int TEXT_GAP = 3, TEXT_SIZE = TEXT_GAP*2+TannFont.font.getHeight();
-    public static final int HEIGHT = (SIDE_SIZE-1) * 3 +  TEXT_SIZE + gap*2;
     public void layout(){
         clearChildren();
         Side[] sides = entity.getSides();
@@ -44,7 +41,7 @@ public class DiePanel extends InfoPanel implements OnPop {
 
         TextWriter name = new TextWriter(entity.name+"  ("+entity.getMaxHp()+"[h][red][heart][h][light])");
         addActor(name);
-        setSize(WIDTH, HEIGHT);
+        setSize(entity.getPixelSize()*4 + gap*2, entity.getPixelSize()*3 + gap*3 + name.getHeight());
         name.setPosition((int)(getWidth()/2 - name.getWidth()/2), getHeight()-TEXT_GAP-TannFont.font.getHeight());
 
         int startX = (int) (getWidth()/2 - panelSize*4/2);

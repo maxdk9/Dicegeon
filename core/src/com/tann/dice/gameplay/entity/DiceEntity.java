@@ -168,6 +168,8 @@ public abstract class DiceEntity {
         if(!isPlayer()){
             Room.get().updateSlids(true);
         }
+        getDie().flatDraw = false;
+        DungeonScreen.get().layoutSidePanels();
     }
 
     public void removeEffectsIfDead(){
@@ -268,7 +270,7 @@ public abstract class DiceEntity {
 
     public void slide(boolean slid) {
         slidOut = slid;
-        getEntityPanel().slide(slid);
+        DungeonScreen.get().layoutSidePanels();
     }
 
     private DiePanel panel;

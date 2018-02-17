@@ -61,7 +61,7 @@ public class Main extends ApplicationAdapter {
 	public void create() {
 		if(printCalls) System.out.println("create");
 
-		SCREEN_WIDTH = Gdx.graphics.getWidth();
+        SCREEN_WIDTH = Gdx.graphics.getWidth();
 		SCREEN_HEIGHT = Gdx.graphics.getHeight();
 		scale = SCREEN_HEIGHT / 180;
 		width = SCREEN_WIDTH / scale;
