@@ -92,6 +92,9 @@ public class DieShader implements Shader{
 	public void render(Renderable renderable) {
 		
 		Die d = (Die)renderable.userData;
+		if(d.flatDraw){
+		    return;
+        }
 		program.setUniformf(glow, d.getGlow());
 		program.setUniformi(side, d.getSide());
 		setTexLocs(d.getTexLocs());

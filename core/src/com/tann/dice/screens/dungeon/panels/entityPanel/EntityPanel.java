@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -187,7 +186,7 @@ public class EntityPanel extends Group {
         entity.getDie().moveTo(getDieHolderLocation(), new Runnable() {
             @Override
             public void run() {
-                BulletStuff.instances.remove(entity.getDie().physical);
+                entity.getDie().flatDraw = true;
             }
         });
     }

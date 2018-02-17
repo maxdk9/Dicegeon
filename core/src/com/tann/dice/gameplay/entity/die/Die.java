@@ -79,6 +79,7 @@ public class Die implements Targetable{
     private static Material MATERIAL;
     private float timeInAir;
     private Runnable moveRunnable;
+    public boolean flatDraw = false;
     public void update(float delta){
         switch(state){
             case Stopped:
@@ -153,6 +154,7 @@ public class Die implements Targetable{
 
     public void roll() {
         if (getState()!=DieState.Stopped) return;
+        flatDraw = false;
         this.lockedSide=-1;
         setState(Rolling);
         undamp();
@@ -344,26 +346,28 @@ public class Die implements Targetable{
     private void returnToPlay() {
         setState(Unlocking);
         Vector3 best = getBestSpot();
-        moveTo(best, originalRotation);
+        moveTo(best, originalRotation, null);
+        flatDraw = false;
         undamp();
     }
 
     public void moveTo(Vector2 position, Runnable runnable){
         this.moveRunnable = runnable;
-        moveTo(position.x, position.y);
+        moveTo(position.x, position.y, runnable);
     }
 
-    private void moveTo(float screenX, float screenY){
+    private void moveTo(float screenX, float screenY, Runnable runnable){
         setState(Locking);
         float factor = BulletStuff.srcWidth/Main.width;
         moveTo(new Vector3(
                 screenX*factor-BulletStuff.srcWidth/2+physical.dimensions.y/2,
                 -BulletStuff.height - physical.dimensions.y/2,
                 (Main.height-screenY)*factor-BulletStuff.heightFactor/2-physical.dimensions.y/2),
-            d6Quats[lockedSide]);
+            d6Quats[lockedSide], runnable);
     }
 
-    private void moveTo(Vector3 position, Quaternion rotation){
+    private void moveTo(Vector3 position, Quaternion rotation, Runnable runnable){
+        this.moveRunnable = runnable;
         dist=0;
         startPos = physical.transform.getTranslation(startPos);
         targetPos = position;
@@ -566,6 +570,7 @@ public class Die implements Targetable{
     @Override
     public boolean use() {
         removeFromScreen();
+        flatDraw = false;
         entity.getEntityPanel().useDie();
         used= true;
         return true;
