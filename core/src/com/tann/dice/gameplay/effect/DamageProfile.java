@@ -72,7 +72,6 @@ public class DamageProfile {
         for(Eff e:effs){
             add(e,false);
         }
-        target.getEntityPanel().layout();
     }
 
     public void action(){
@@ -88,7 +87,6 @@ public class DamageProfile {
             target.kill();
         }
         reset();
-        target.getEntityPanel().layout();
     }
 
     private List<Buff> allBuffs = new ArrayList<>();

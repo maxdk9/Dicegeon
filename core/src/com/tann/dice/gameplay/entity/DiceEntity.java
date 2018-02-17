@@ -121,7 +121,6 @@ public abstract class DiceEntity {
     public void hit(Eff e, boolean instant) {
         getProfile().addEffect(e);
         if (instant || !isPlayer()) getProfile().action();
-        getEntityPanel().layout();
         if(!isPlayer() && profile.isGoingToDie()){
             getDie().removeFromScreen();
         }

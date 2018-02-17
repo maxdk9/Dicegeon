@@ -77,7 +77,6 @@ public class EntityGroup {
         for(int i=all.size()-1;i>=0;i--){
             DiceEntity de = all.get(i);
             de.upkeep();
-            de.getEntityPanel().layout();
         }
     }
 

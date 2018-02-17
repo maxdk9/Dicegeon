@@ -140,7 +140,7 @@ public class DungeonScreen extends Screen {
 //        confirmButton.setText(s);
     }
 
-    public int level=1;
+    public int level=0;
 
     public void nextLevel() {
         spellButt.removeAllHovers();
@@ -148,7 +148,7 @@ public class DungeonScreen extends Screen {
         level ++;
         switch(level){
             case 1:
-                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
+                setup(MonsterType.monsterList(MonsterType.dragon, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
                 break;
             case 2:
                 setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.goblin));

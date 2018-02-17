@@ -22,6 +22,7 @@ public class EntityPanel extends Group {
     public DiceEntity entity;
     boolean holdsDie;
     DamageProfile profile;
+    HeartsHolder heartsHolder;
     float startX;
     static final int n = 5;
     static NinePatch np = new NinePatch(Images.patch, n,n,n,n);
@@ -68,7 +69,7 @@ public class EntityPanel extends Group {
             portraitWidth = entity.portrait.getRegionWidth() - entity.portraitOffset-2;
         }
 
-        HeartsHolder heartsHolder = new HeartsHolder(entity);
+        heartsHolder = new HeartsHolder(entity);
         addActor(heartsHolder);
         TextWriter title = new TextWriter(entity.getName());
         addActor(title);
@@ -108,7 +109,6 @@ public class EntityPanel extends Group {
 
         title.setX((int)(heartsMiddley-title.getWidth()/2));
         heartsHolder.setX((int)(heartsMiddley-heartsHolder.getWidth()/2));
-
     }
 
 
@@ -214,14 +214,12 @@ public class EntityPanel extends Group {
         batch.setColor(Colours.dark);
         Draw.fillRectangle(batch, loc.x+middle, loc.y+middle, (holder.getWidth()-middle*2), (holder.getHeight()-middle*2));
 
-
-        int holderX = (int) (holder.getX() + getX() + getParent().getX()) ;
-        int holderY = (int) (holder.getY() + getY() + getParent().getY()) ;
+        Vector2 local = Tann.getLocalCoordinates(holder);
         if(entity.isDead()){
             batch.setColor(Colours.dark);
-            Draw.fillRectangle(batch, holderX, holderY, 16, 16);
+            Draw.fillRectangle(batch, local.x, local.y, entity.getPixelSize(), entity.getPixelSize());
             batch.setColor(Colours.purple);
-            batch.draw(Images.skull, holderX, holderY);
+            batch.draw(Images.skull, local.x, local.y);
         }
         else if (entity.getProfile().isGoingToDie() && entity.isPlayer()) {
 //            batch.setColor(Colours.grey);
@@ -230,15 +228,7 @@ public class EntityPanel extends Group {
     }
 
     public void addDamageFlib(int amount) {
-        int gap = 4;
-        for (int i = 0; i < amount; i++) {
-            int heartIndex = i + (entity.getMaxHp() - entity.getHp());
-//            int x = (int) (heartStartXX - SwipeyActor.dx / 2 - heartIndex * gap - 3);
-//            int y = (int) (heartCenterY - (-SwipeyActor.dy / 2));
-//            SwipeyActor sa = new SwipeyActor();
-//            sa.setPosition(x, y);
-//            addActor(sa);
-        }
+        heartsHolder.addDamageFlibs(amount);
     }
 
 }
