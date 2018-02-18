@@ -146,6 +146,7 @@ public class DungeonScreen extends Screen {
         spellButt.removeAllHovers();
         Explanel.get().remove();
         level ++;
+        Party.get().rejig();
         switch(level){
             case 1:
                 setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
@@ -169,7 +170,6 @@ public class DungeonScreen extends Screen {
                 Main.popPhase();
                 return;
         }
-        Party.get().rejig();
         spellHolder.setup(Party.get().getSpells());
         spellButt.setSpellHolder(spellHolder);
         for(DiceEntity de:Party.get().getActiveEntities()){
