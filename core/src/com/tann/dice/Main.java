@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -31,7 +30,7 @@ public class Main extends ApplicationAdapter {
     public static int scale;
     public static int SCREEN_WIDTH, SCREEN_HEIGHT;
 	public static int width, height;
-    public static String version = "0.1.2";
+    public static String version = "0.2.0";
     public static String versionName = "v"+version;
 	SpriteBatch batch;
 	SpriteBatch bufferDrawer;
@@ -145,7 +144,7 @@ public class Main extends ApplicationAdapter {
         stage.getViewport().apply();
         batch.begin();
         ((DungeonScreen) currentScreen).drawBackground(batch);
-        drawFPS();
+        drawFPSAndVersion();
         batch.end();
         fb.end();
         fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
@@ -228,9 +227,10 @@ public class Main extends ApplicationAdapter {
         TannFont.font.drawString(batch, versionName, 0, 5, false);
 	}
 
-    private void drawFPS() {
+    private void drawFPSAndVersion() {
         batch.setColor(Colours.blue);
-        TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond()+"fps", width/2, TannFont.font.getHeight()/2, Align.center);
+        TannFont.font.drawString(batch, versionName, width/2-25, 1);
+        TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond()+"fps", width/2+5, 1);
     }
 
 	public static float w(float factor) {
