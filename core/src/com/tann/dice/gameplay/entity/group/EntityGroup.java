@@ -32,6 +32,7 @@ public class EntityGroup {
     }
 
     public List<DiceEntity> getActiveEntities() {
+        if(activeEntities==null) return new ArrayList<>();
         return activeEntities;
     }
 

@@ -18,6 +18,11 @@ public class TextButton extends Group{
         setSize(width, height);
     }
 
+    public TextButton(String text, int gap) {
+        setText(text);
+        setSize(TannFont.font.getWidth(text)+gap*2, TannFont.font.getHeight()+gap*2);
+    }
+
     public void setText(String text){
         this.text = text;
     }
@@ -49,10 +54,11 @@ public class TextButton extends Group{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        int BORDER = (int)(Main.h(.4f));
         super.draw(batch, parentAlpha);
+        int BORDER = 2;
         Draw.fillActor(batch, this, background, Colours.purple, BORDER);
-        font.drawString(batch, text, (int)(getX()), (int) getY());
+        batch.setColor(Colours.light);
+        font.drawString(batch, text, (int)(getX()+getWidth()/2-font.getWidth(text)/2), (int) (getY()+getHeight()/2-font.getHeight()/2));
     }
 
 }

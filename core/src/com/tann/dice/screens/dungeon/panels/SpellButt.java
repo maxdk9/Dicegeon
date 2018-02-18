@@ -61,7 +61,6 @@ public class SpellButt extends Group {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-//        Draw.fillActor(batch, this);
         batch.setColor(Colours.z_white);
         batch.draw(Images.magicButt, getX(), getY());
     }

@@ -20,9 +20,10 @@ public class DamageProfile {
         this.target = entity;
     }
 
-    private void reset() {
+    public void reset() {
         resetValues();
         effs.clear();
+        incomingBuffs.clear();
     }
 
     private void resetValues() {

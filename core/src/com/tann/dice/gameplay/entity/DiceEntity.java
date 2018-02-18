@@ -103,6 +103,7 @@ public abstract class DiceEntity {
         if(targets != null){
             targets.clear();
         }
+        profile.reset();
         resetPanels();
     }
 

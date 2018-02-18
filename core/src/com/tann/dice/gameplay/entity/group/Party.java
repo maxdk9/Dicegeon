@@ -44,6 +44,9 @@ public class Party extends EntityGroup{
         super.reset();
         nextTurnEffects.clear();
         resetMagic();
+        for(DiceEntity entity:getEntities()){
+            entity.reset();
+        }
     }
 
     public void resetMagic(){

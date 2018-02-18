@@ -148,7 +148,7 @@ public class DungeonScreen extends Screen {
         level ++;
         switch(level){
             case 1:
-                setup(MonsterType.monsterList(MonsterType.dragon, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
+                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
                 break;
             case 2:
                 setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.goblin));
@@ -157,16 +157,11 @@ public class DungeonScreen extends Screen {
                 setup(MonsterType.monsterList(MonsterType.bird, MonsterType.archer, MonsterType.bird));
                 break;
             case 4:
-//                monsters.add(new Monster(Monster.MonsterType.Ogre));
-//                monsters.add(new Monster(Monster.MonsterType.Ogre));
-//                monsters.add(new Monster(Monster.MonsterType.Ogre));
-//                break;
-//            case 5:
-//                monsters.add(new Monster(Monster.MonsterType.Dragon));
-//                monsters.add(new Monster(Monster.MonsterType.Goblin));
-//                monsters.add(new Monster(Monster.MonsterType.Goblin));
-//                monsters.add(new Monster(Monster.MonsterType.Archer));
-//                break;
+                setup(MonsterType.monsterList(MonsterType.bird, MonsterType.archer, MonsterType.bird));
+                break;
+            case 5:
+                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.dragon, MonsterType.goblin));
+                break;
             case 6:
                 Main.clearPhases();
                 Main.pushPhase(new NothingPhase());
@@ -207,21 +202,23 @@ public class DungeonScreen extends Screen {
 
     public void resetHeroes(){
         List<Hero> heroes = new ArrayList<>();
+
+        Hero m = HeroType.apprentice.buildHero();
+        m.setColour(Colours.blue);
+        heroes.add(m);
+        Hero h = HeroType.herbalist.buildHero();
+        h.setColour(Colours.red);
+        heroes.add(h);
+        Hero d = HeroType.defender.buildHero();
+        d.setColour(Colours.grey);
+        heroes.add(d);
         Hero f1 = HeroType.fighter.buildHero();
         f1.setColour(Colours.orange);
         heroes.add(f1);
         Hero f2 = HeroType.fighter.buildHero();
         f2.setColour(Colours.yellow);
         heroes.add(f2);
-        Hero d = HeroType.defender.buildHero();
-        d.setColour(Colours.grey);
-        heroes.add(d);
-        Hero h = HeroType.herbalist.buildHero();
-        h.setColour(Colours.red);
-        heroes.add(h);
-        Hero m = HeroType.apprentice.buildHero();
-        m.setColour(Colours.blue);
-        heroes.add(m);
+
         friendly.setEntities(heroes);
         Party.get().setEntities(heroes);
     }

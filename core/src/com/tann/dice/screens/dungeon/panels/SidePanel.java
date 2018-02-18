@@ -61,6 +61,7 @@ public class SidePanel extends Group {
   public void setEntities(List<? extends DiceEntity> entities){
     this.entities.clear();
     this.entities.addAll(entities);
+    clearChildren();
     for(DiceEntity de:entities){
         addActor(de.getEntityPanel());
     }
