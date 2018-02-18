@@ -99,6 +99,7 @@ public abstract class DiceEntity {
         setHp(maxHp);
         dead= false;
         targeted = null;
+        getDie().flatDraw = false;
         buffs.clear();
         if(targets != null){
             targets.clear();

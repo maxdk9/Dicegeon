@@ -109,7 +109,7 @@ public class Side {
     public static final Side big_claw = new Side().size(big).image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side big_claw2 = big_claw.withValue(2);
 
-    public static final Side big_peck = new Side().size(big).image("big_peck").effect(new Eff().damage(1));
+    public static final Side big_peck = new Side().size(big).image("peck").effect(new Eff().damage(1));
     public static final Side big_peck3 = big_peck.withValue(3);
     public static final Side big_peck4 = big_peck.withValue(4);
     public static final Side big_peck5 = big_peck.withValue(5);
