@@ -29,6 +29,14 @@ public class SpellHolder extends Group {
     public static int GAP = 2;
 
     public SpellHolder() {
+        // just block for dice underneath
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                event.handle();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
     }
 
     public void setup(List<Spell> spells) {
