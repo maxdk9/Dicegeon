@@ -164,9 +164,8 @@ public class DungeonScreen extends Screen {
                 break;
             case 6:
                 Main.clearPhases();
-                Main.pushPhase(new NothingPhase());
                 Main.pushPhase(new VictoryPhase());
-                Main.popPhase();
+                Main.kickstartPhase(VictoryPhase.class);
                 return;
         }
         Party.get().rejig();
@@ -176,12 +175,11 @@ public class DungeonScreen extends Screen {
             de.reset();
         }
         Main.clearPhases();
-        Main.pushPhase(new NothingPhase());
         if(level>1){
             Main.pushPhase(new LevelUpPhase());
         }
         Main.pushPhase(new EnemyRollingPhase());
-        Main.popPhase();
+        Main.kickstartPhase();
     }
 
     public void restart() {
@@ -493,9 +491,8 @@ public class DungeonScreen extends Screen {
         }
         else if(checkDead(Party.get().getActiveEntities(), false)){
             Main.clearPhases();
-            Main.pushPhase(new NothingPhase());
             Main.pushPhase(new LossPhase());
-            Main.popPhase();
+            Main.kickstartPhase(LossPhase.class);
             return true;
         }
         return false;

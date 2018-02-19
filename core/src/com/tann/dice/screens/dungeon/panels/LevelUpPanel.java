@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.entity.EntityType;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.HeroType;
 import com.tann.dice.gameplay.phase.LevelUpPhase;
@@ -13,7 +12,6 @@ import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 import com.tann.dice.util.TextWriter;
-
 import java.util.List;
 
 public class LevelUpPanel extends Group{
