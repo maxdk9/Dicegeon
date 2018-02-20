@@ -153,7 +153,7 @@ public class DungeonScreen extends Screen {
         Party.get().rejig();
         switch(level){
             case 1:
-                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
+                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
                 break;
             case 2:
                 setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.goblin));
@@ -319,6 +319,9 @@ public class DungeonScreen extends Screen {
     public void postDraw(Batch batch) {
         batch.setColor(Colours.light);
         TannFont.font.drawString(batch, levelString,Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
+        if(false){
+            Draw.fillEllipse(batch, (float) (getWidth()/2+Math.sin(Main.ticks*5)*getWidth()/2), 50, 20, 20);
+        }
     }
 
     @Override

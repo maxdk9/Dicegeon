@@ -14,39 +14,37 @@ public class MyContactListener extends ContactListener {
 	
 	public MyContactListener() {
 	}
-	static List<Integer> collisions = new ArrayList<>();
-	long second;
+	static int collisions = 0;
+    static long second;
 
 	@Override
 	public void onContactProcessed(btManifoldPoint cp, btCollisionObject colObj0, btCollisionObject colObj1) {
-
+        long newSecond =  (System.currentTimeMillis()/600);
+        if(second!= newSecond){
+            second=newSecond;
+            collisions=0;
+        }
+        if(collisions>=2){
+            return;
+        }
         boolean wall = colObj0.getCollisionFlags()==1||colObj1.getCollisionFlags()==1;
 		Integer five = 5;
 		boolean ground =
 				five.equals(colObj0.userData) || five.equals(colObj1.userData);
 		if(wall && !ground) return;
-//		if(wall) return;
-//		long newSecond =  (System.currentTimeMillis()/1000);
-//		if(second!= newSecond){
-//			second=newSecond;
-//			collisions.clear();
-//		}
-//		Integer code = colObj0.hashCode()*colObj1.hashCode();
-//
-//        if(collisions.contains(code))return;
-//        collisions.add(code);
 		float magnitude = Math.abs(cp.getDistance());
-		float mult = .05f;
-		float floorMult = 0.2f;
+		float mult = .2f;
+		float floorMult = 2f;
         if(magnitude>=0.02){
-			if(wall){
-				Sounds.playSound(Sounds.clocks, magnitude*floorMult, 1.f+(float)Math.random()*.8f);
-			}
+            collisions++;
+            System.out.println("playing sound");
+            if(wall){
+                Sounds.playSound(Sounds.clocks, magnitude*mult*floorMult, 1.f+(float)Math.random()*.8f);
+            }
 			else{
-			    float volume = Math.min(.5f,Math.abs(magnitude*mult));
+                float volume = Math.min(.5f,Math.abs(magnitude*mult));
                 Sounds.playSound(Sounds.clacks, volume, (float)(.8f+Math.random()*.2f));
-			}
-			
+            }
 		}
 	}
 	
