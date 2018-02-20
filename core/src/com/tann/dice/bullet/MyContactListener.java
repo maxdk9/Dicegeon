@@ -19,12 +19,12 @@ public class MyContactListener extends ContactListener {
 
 	@Override
 	public void onContactProcessed(btManifoldPoint cp, btCollisionObject colObj0, btCollisionObject colObj1) {
-        long newSecond =  (System.currentTimeMillis()/600);
+        long newSecond =  (System.currentTimeMillis()/300);
         if(second!= newSecond){
             second=newSecond;
             collisions=0;
         }
-        if(collisions>=2){
+        if(collisions>=4){
             return;
         }
         boolean wall = colObj0.getCollisionFlags()==1||colObj1.getCollisionFlags()==1;
@@ -37,7 +37,6 @@ public class MyContactListener extends ContactListener {
 		float floorMult = 2f;
         if(magnitude>=0.02){
             collisions++;
-            System.out.println("playing sound");
             if(wall){
                 Sounds.playSound(Sounds.clocks, magnitude*mult*floorMult, 1.f+(float)Math.random()*.8f);
             }

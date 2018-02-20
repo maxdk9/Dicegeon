@@ -50,7 +50,7 @@ public class Sounds {
     }
 
     private static String[] makeSounds(String path, int amount){
-        return makeSounds(path,amount,".wav");
+        return makeSounds(path,amount,".ogg");
     }
 
     private static String[] makeSounds(String path, int amount, String extension){
@@ -126,7 +126,7 @@ public class Sounds {
 	public static void playSound(String string, float volume, float pitch) {
 		Sound s = soundMap.get(string);
 		if(s==null){
-			s=get(string, Sound.class);
+            s=get(string, Sound.class);
 			soundMap.put(string, s);
 		}
 		s.play(Slider.SFX.getValue()*2*volume, pitch, 0);

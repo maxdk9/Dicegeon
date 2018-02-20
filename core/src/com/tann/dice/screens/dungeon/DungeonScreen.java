@@ -153,7 +153,7 @@ public class DungeonScreen extends Screen {
         Party.get().rejig();
         switch(level){
             case 1:
-                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
+                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
                 break;
             case 2:
                 setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.goblin));
