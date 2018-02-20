@@ -47,7 +47,7 @@ public class HeartsHolder extends Group{
             }
             else {
                 tr = Images.heart;
-                if(i>=profile.getTopHealth()-profile.unblockedRegularIncoming()){
+                if (i >= profile.getTopHealth() - profile.unblockedRegularIncoming()) {
                     batch.setColor(Colours.yellow);
                 }
                 else if(i>=profile.getTopHealth()-profile.unblockedRegularIncoming()-profile.getIncomingPoisonDamage()){

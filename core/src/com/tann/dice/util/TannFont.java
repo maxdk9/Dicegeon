@@ -53,8 +53,8 @@ public class TannFont {
     }
 
     public void drawString(Batch batch, String text, int x, int y, boolean fixedWidth){
-        //will probably want to cache this
-        for(char c:text.toCharArray()){
+        for(int i=0;i<text.length();i++){
+            char c = text.charAt(i);
             TextureRegion t= glyphs.get(c);
             Draw.draw(batch, t, x, y);
             if(fixedWidth) x+= getDefaultWidth()+1;

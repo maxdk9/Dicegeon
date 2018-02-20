@@ -141,11 +141,15 @@ public class DungeonScreen extends Screen {
     }
 
     public int level=0;
+    String levelString = "";
+
+
 
     public void nextLevel() {
         spellButt.removeAllHovers();
         Explanel.get().remove();
         level ++;
+        setupLevelString();
         Party.get().rejig();
         switch(level){
             case 1:
@@ -182,8 +186,13 @@ public class DungeonScreen extends Screen {
         Main.kickstartPhase();
     }
 
+    private void setupLevelString() {
+        levelString = "Level "+level+"/5";
+    }
+
     public void restart() {
         level = 0;
+        setupLevelString();
         resetHeroes();
         nextLevel();
     }
@@ -309,7 +318,7 @@ public class DungeonScreen extends Screen {
     @Override
     public void postDraw(Batch batch) {
         batch.setColor(Colours.light);
-        TannFont.font.drawString(batch, "Level "+level+"/5",Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
+        TannFont.font.drawString(batch, levelString,Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
     }
 
     @Override

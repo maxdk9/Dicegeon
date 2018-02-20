@@ -133,6 +133,9 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+	    if(Gdx.graphics.getDeltaTime()>63/1000f && Main.ticks>2){
+	        gcPauses++;
+        }
 		update(Gdx.graphics.getDeltaTime());
 
         int sc = Main.scale;
@@ -227,10 +230,12 @@ public class Main extends ApplicationAdapter {
         TannFont.font.drawString(batch, versionName, 0, 5, false);
 	}
 
+	int gcPauses = 0;
+
     private void drawFPSAndVersion() {
         batch.setColor(Colours.blue);
         TannFont.font.drawString(batch, versionName, width/2-25, 1);
-        TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond()+"fps", width/2+5, 1);
+        TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond()+"fps "+gcPauses, width/2+5, 1);
     }
 
 	public static float w(float factor) {

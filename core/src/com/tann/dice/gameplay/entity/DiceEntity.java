@@ -201,7 +201,7 @@ public abstract class DiceEntity {
     public List<Buff> getBuffs(){
         tempBuffs.clear();
         tempBuffs.addAll(buffs);
-        tempBuffs.addAll(getProfile().incomingBuffs);
+        tempBuffs.addAll(getProfile().getIncomingBuffs());
         return tempBuffs;
     }
 

@@ -4,6 +4,8 @@ import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
 
+import java.util.List;
+
 public class Eff {
 
     public enum TargetingType{
@@ -160,7 +162,9 @@ public class Eff {
     public int getValue() {
         int actualValue = value;
         if(source != null) {
-            for(Buff b:source.getBuffs()){
+            List<Buff> buffs = source.getBuffs();
+            for(int i=0;i<buffs.size();i++){
+                Buff b = buffs.get(i);
                 actualValue = b.alterOutgoingDamage(type, actualValue);
             }
         }

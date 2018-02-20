@@ -3,16 +3,11 @@ package com.tann.dice.gameplay.effect;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.buff.BuffDot;
 import com.tann.dice.gameplay.entity.DiceEntity;
-
+import static com.tann.dice.gameplay.effect.Eff.EffectType.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DamageProfile {
-    private int incomingDamage;
-    private int blockedDamage;
-    private int heals;
-    boolean execute;
-    public List<Buff> incomingBuffs = new ArrayList<>();
     DiceEntity target;
     public List<Eff> effs = new ArrayList<>();
 
@@ -21,48 +16,107 @@ public class DamageProfile {
     }
 
     public void reset() {
-        resetValues();
         effs.clear();
-        incomingBuffs.clear();
+        somethingChanged();
     }
 
-    private void resetValues() {
-        incomingBuffs.clear();
-        incomingDamage = 0;
-        blockedDamage = 0;
-        heals = 0;
+    public void somethingChanged(){
+        incomingPoison = null;
+        incomingDamage = null;
+        buffs = null;
+        execute = null;
+        blockedDamage = null;
+        heals = null;
     }
+
 
     public void addEffect(Eff e){
-        add(e, true);
+        effs.add(e);
+        somethingChanged();
     }
 
-    private void add(Eff e, boolean log){
-        if(log) effs.add(e);
-        switch (e.type) {
-            case Nothing:
-            case Magic:
-                break;
-            case Damage:
-                incomingDamage += e.getValue();
-                break;
-            case Shield:
-                blockedDamage += e.getValue();
-                break;
-            case Heal:
-                heals += e.getValue();
-                break;
-            case Buff:
-                Buff b = e.buff.copy();
-                b.target = target;
-                incomingBuffs.add(b);
-                break;
-            case Execute:
-                if(target.getHp() == e.getValue()){
-                    execute = true;
+    private Integer incomingDamage = null;
+    public int getIncomingDamage(){
+        if(incomingDamage == null){
+            incomingDamage = 0;
+            for(Eff e:effs){
+                if(e.type == Damage){
+                    incomingDamage+= e.getValue();
                 }
-                break;
+            }
+            for(Buff b:target.getBuffs()){
+                incomingDamage = b.alterIncomingDamage(incomingDamage);
+            }
         }
+        return incomingDamage;
+    }
+
+    private List<Buff> buffs = null;
+    public List<Buff> getIncomingBuffs(){
+        if(buffs == null){
+            buffs = new ArrayList<>();
+            for(Eff e:effs){
+                if(e.type==Buff){
+                    buffs.add(e.buff);
+                }
+            }
+        }
+        return buffs;
+    }
+
+    private Integer incomingPoison;
+    public int getIncomingPoisonDamage(){
+        if(incomingPoison == null){
+            incomingPoison = 0;
+            for(Buff b:target.getBuffs()){
+                if(b instanceof BuffDot){
+                    BuffDot dot = (BuffDot) b;
+                    incomingPoison += Math.max(0, dot.damage);
+                }
+            }
+        }
+        return incomingPoison;
+    }
+
+
+    private Integer blockedDamage;
+    public int getBlockedDamage(){
+        if(blockedDamage == null){
+            blockedDamage = 0;
+            for (Eff e:effs){
+                if(e.type == Shield){
+                    blockedDamage += e.getValue();
+                }
+            }
+        }
+        return blockedDamage;
+    }
+
+    private Integer heals;
+    public int getHeals(){
+        if(heals == null){
+            heals = 0;
+            for (Eff e:effs){
+                if(e.type == Heal){
+                    heals += e.getValue();
+                }
+            }
+        }
+        return heals;
+    }
+
+    Boolean execute;
+    public boolean getExecute(){
+        if(execute == null){
+            execute = false;
+            for (Eff e:effs){
+                if(e.type == Execute && target.getHp() == e.getValue()){
+                    execute = true;
+                    break;
+                }
+            }
+        }
+        return execute;
     }
 
     public void removeEff(Eff remove){
@@ -70,63 +124,38 @@ public class DamageProfile {
             return;
         }
         effs.remove(remove);
-        resetValues();
-        for(Eff e:effs){
-            add(e,false);
-        }
+        somethingChanged();
     }
 
     public void action(){
-        target.heal(heals);
-        target.damage(Math.max(0, getIncomingDamage() - blockedDamage));
+        target.heal(getHeals());
+        target.damage(Math.max(0, getIncomingDamage() - getBlockedDamage()));
         for(Eff e:effs){
             target.attackedBy(e.source);
         }
-        for(Buff b: incomingBuffs){
+        for(Buff b: getIncomingBuffs()){
             target.addBuff(b);
         }
-        if(execute){
+        if(getExecute()){
             target.kill();
         }
         reset();
     }
 
-    private List<Buff> tmp = new ArrayList<>();
-
-
-    public int getIncomingDamage(){
-        int damage = incomingDamage;
-        for(Buff b:target.getBuffs()){
-            damage = b.alterIncomingDamage(damage);
-        }
-        return damage;
-    }
-
-    public int getIncomingPoisonDamage(){
-        int total = 0;
-        for(Buff b:target.getBuffs()){
-            if(b instanceof BuffDot){
-                BuffDot dot = (BuffDot) b;
-                total += Math.max(0, dot.damage);
-            }
-        }
-        return total;
-    }
-
     public boolean isGoingToDie(){
-        return getEffectiveHp() <= 0 || execute;
+        return getEffectiveHp() <= 0 || getExecute();
     }
 
     public int getEffectiveHp() {
-        return getTopHealth() + blockedDamage - getIncomingDamage();
+        return getTopHealth() + getBlockedDamage() - getIncomingDamage();
     }
 
     public int getTopHealth() {
-        return Math.min(target.getMaxHp(), target.getHp() + heals);
+        return Math.min(target.getMaxHp(), target.getHp() + getHeals());
     }
 
     public int unblockedRegularIncoming() {
-        return Math.max(0, getIncomingDamage() - blockedDamage);
+        return Math.max(0, getIncomingDamage() - getBlockedDamage());
     }
 
     public int unblockedTotalIncoming() {
@@ -134,7 +163,7 @@ public class DamageProfile {
     }
 
     public int getOverkill(boolean poison) {
-        int regularOverkill = unblockedRegularIncoming()  - Math.min(target.getMaxHp(), target.getHp() + heals);
+        int regularOverkill = unblockedRegularIncoming()  - Math.min(target.getMaxHp(), target.getHp() + getHeals());
         if(!poison) return regularOverkill;
         else return getIncomingPoisonDamage() + Math.min(0, regularOverkill);
     }

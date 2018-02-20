@@ -26,22 +26,24 @@ public class MyContactListener extends ContactListener {
 				five.equals(colObj0.userData) || five.equals(colObj1.userData);
 		if(wall && !ground) return;
 //		if(wall) return;
-		long newSecond =  (System.currentTimeMillis()/1000);
-		if(second!= newSecond){
-			second=newSecond;
-			collisions.clear();
-		}
-		Integer code = colObj0.hashCode()*colObj1.hashCode();
-
-        if(collisions.contains(code))return;
-        collisions.add(code);
+//		long newSecond =  (System.currentTimeMillis()/1000);
+//		if(second!= newSecond){
+//			second=newSecond;
+//			collisions.clear();
+//		}
+//		Integer code = colObj0.hashCode()*colObj1.hashCode();
+//
+//        if(collisions.contains(code))return;
+//        collisions.add(code);
 		float magnitude = Math.abs(cp.getDistance());
+		float mult = .05f;
+		float floorMult = 0.2f;
         if(magnitude>=0.02){
 			if(wall){
-				Sounds.playSound(Sounds.clocks, .2f, 1.f+(float)Math.random()*.8f);
+				Sounds.playSound(Sounds.clocks, magnitude*floorMult, 1.f+(float)Math.random()*.8f);
 			}
 			else{
-			    float volume = Math.min(.5f,Math.abs(magnitude*.3f));
+			    float volume = Math.min(.5f,Math.abs(magnitude*mult));
                 Sounds.playSound(Sounds.clacks, volume, (float)(.8f+Math.random()*.2f));
 			}
 			
