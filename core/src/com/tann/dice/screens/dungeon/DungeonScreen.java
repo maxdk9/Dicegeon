@@ -1,10 +1,12 @@
 package com.tann.dice.screens.dungeon;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -658,5 +660,40 @@ public class DungeonScreen extends Screen {
     public void layoutSidePanels() {
         enemy.layout(true);
         friendly.layout(true);
+    }
+
+    public void showExceptionPopup(final String ex) {
+        Group a = new Group(){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                Draw.fillActor(batch, this, Colours.dark, Colours.light, 1);
+                super.draw(batch, parentAlpha);
+            }
+        };
+        TextWriter tw = new TextWriter("Crashed last time![n]Copy log to clipboard?[n](for emailing to tann@tann.space)");
+        TextButton yes = new TextButton("Yes", 5);
+        yes.setRunnable(new Runnable() {
+            @Override
+            public void run() {
+                Gdx.app.getClipboard().setContents(ex);
+                pop();
+            }
+        });
+        TextButton no = new TextButton("No", 5);
+        no.setRunnable(new Runnable() {
+            @Override
+            public void run() {
+                pop();
+            }
+        });
+        a.setSize(130, 38);
+        tw.setPosition(a.getWidth()/2-tw.getWidth()/2, a.getHeight()-tw.getHeight()-2);
+        a.addActor(tw);
+        a.addActor(yes);
+        yes.setPosition(a.getWidth()/3-yes.getWidth()/2, 2);
+        a.addActor(no);
+        no.setPosition(a.getWidth()/3*2-yes.getWidth()/2, 2);
+        a.setPosition(getWidth()/2-a.getWidth()/2, getHeight()/2-a.getHeight()/2);
+        push(a);
     }
 }

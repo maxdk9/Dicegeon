@@ -58,7 +58,7 @@ public class TextButton extends Group{
         int BORDER = 2;
         Draw.fillActor(batch, this, background, Colours.purple, BORDER);
         batch.setColor(Colours.light);
-        font.drawString(batch, text, (int)(getX()+getWidth()/2-font.getWidth(text)/2), (int) (getY()+getHeight()/2-font.getHeight()/2));
+        font.drawString(batch, text, (int)(getX()+getWidth()/2f-font.getWidth(text)/2f), (int) (getY()+getHeight()/2-font.getHeight()/2));
     }
 
 }

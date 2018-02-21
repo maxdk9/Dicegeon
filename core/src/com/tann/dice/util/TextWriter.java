@@ -94,6 +94,7 @@ public class TextWriter extends Group {
                 boolean image = true;
                 switch(s){
                     case "h": x += font.getSpaceWidth()/2; image = false;
+                    case "n": nextLine(); image = false;
                 }
                 Color c = colorMap.get(s);
                 if(c!=null){
@@ -142,3 +143,4 @@ public class TextWriter extends Group {
         super.draw(batch, parentAlpha);
     }
 }
+
