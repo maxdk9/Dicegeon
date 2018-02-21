@@ -47,6 +47,7 @@ public class TextWriter extends Group {
     public static void setup(){
         textureMap.put("heart", Images.heart);
         colorMap.put("red", Colours.red);
+        colorMap.put("purple", Colours.purple);
         colorMap.put("blue", Colours.blue);
         colorMap.put("dark", Colours.dark);
         colorMap.put("light", Colours.light);
@@ -93,7 +94,7 @@ public class TextWriter extends Group {
                 // image or colour
                 boolean image = true;
                 switch(s){
-                    case "h": x += font.getSpaceWidth()/2; image = false;
+                    case "h": x += font.getSpaceWidth()/2; image = false; break;
                     case "n": nextLine(); image = false;
                 }
                 Color c = colorMap.get(s);
@@ -137,8 +138,7 @@ public class TextWriter extends Group {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if(borderCol != null){
-            batch.setColor(borderCol);
-            Draw.fillActor(batch, this);
+            Draw.fillActor(batch, this, Colours.dark, borderCol, 1);
         }
         super.draw(batch, parentAlpha);
     }

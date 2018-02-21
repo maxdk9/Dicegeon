@@ -47,41 +47,36 @@ public class Eff {
         String result = "";
         switch(type){
             case Nothing:
-                return "Nothing!";
+                result = "Nothing!"; break;
             case Damage:
                 switch(targetingType){
-                    case EnemySingle:
-                        return value +" damage to an enemy";
-                    case EnemySingleRanged:
-                        return value +" damage to ANY enemy";
-                    case EnemyGroup:
-                        return value +" damage to ALL enemies";
-                    case EnemyAndAdjacents:
-                        return value +" damage an enemy and both adjacent enemies";
+                    case EnemySingle: result = value +" damage to an enemy"; break;
+                    case EnemySingleRanged: result = value +" damage to ANY enemy"; break;
+                    case EnemyGroup: result = value +" damage to ALL enemies"; break;
+                    case EnemyAndAdjacents: result = value +" damage an enemy and both adjacent enemies"; break;
+                    default: result = "ahh help damage"; break;
                 }
-                return "ahh help damage";
+                break;
             case Shield:
+                result = "Block "+value+" incoming damage ([yellow][heart][light]) from ";
                 switch(targetingType){
-                    case FriendlySingle:
-                        return "Block "+value+" incoming damage from anyone";
-                    case FriendlyGroup:
-                        return "Block "+value+" incoming damage from everyone";
-                    case Self:
-                        return "Block "+value+" incoming damage from yourself";
+                    case FriendlySingle: result += "anyone"; break;
+                    case FriendlyGroup: result += "everyone"; break;
+                    case Self: result += "yourself"; break;
+                    default: result += " ????"; break;
                 }
-                return "ahh help shield";
-            case Magic:
-                return "Gain "+value+" magic to spend on spells this turn.";
-            case Heal:
-                return "Restore "+value+" health to a damaged character";
-            case Execute:
-                return "Kills target if they are on exactly "+value+" hp";
-            case Reroll:
-                return "When you roll this, gain +1 reroll this turn";
-            case Buff:
-                return buff.toNiceString();
+                break;
+            case Magic: result = "Gain "+value+" magic to spend on spells this turn"; break;
+            case Heal: result = "Restore "+value+" health to a damaged character"; break;
+            case Execute: result = "Kills target if they are on exactly "+value+" hp"; break;
+            case Reroll: result = "When you roll this, gain +1 reroll this turn"; break;
+            case Buff: result = buff.toNiceString(); break;
+            default: result = "uhoh unknown "+type;
         }
-        return "yeowch?? "+type;
+        if(nextTurn){
+            result += " next turn";
+        }
+        return result;
     }
 
     public Eff nothing() { return type(EffectType.Nothing, 0).targetType(Eff.TargetingType.DoesNothing); }

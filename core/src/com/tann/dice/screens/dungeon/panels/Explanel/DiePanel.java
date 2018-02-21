@@ -79,6 +79,7 @@ public class DiePanel extends InfoPanel implements OnPop {
                 exp.setup(s, false, ent.getColour());
                 DungeonScreen.get().push(exp);
                 exp.setPosition(exp.getNiceX(false), exp.getNiceY());
+                event.handle();
                 event.stop();
                 return super.touchDown(event, x, y, pointer, button);
             }

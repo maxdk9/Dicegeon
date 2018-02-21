@@ -17,7 +17,7 @@ public class BuffDot extends Buff{
     @Override
     public String toNiceString() {
         if(damage>0){
-            return damage + " damage per turn to an enemy";
+            return damage + " poison damage ([purple][heart][light]) per turn to an enemy";
         }
         else{
             return -damage + " healing per turn to a friendly";
