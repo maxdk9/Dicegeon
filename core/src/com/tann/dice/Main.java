@@ -87,7 +87,7 @@ public class Main extends ApplicationAdapter {
     Draw.setup();
     TextWriter.setup();
     logTime("setup");
-    stage = new Stage(new FitViewport(Main.width, Main.height));
+    stage = new TannStage(new FitViewport(Main.width, Main.height));
     orthoCam = (OrthographicCamera) stage.getCamera();
     batch = new SpriteBatch();
     bufferDrawer = new SpriteBatch();
@@ -149,7 +149,8 @@ public class Main extends ApplicationAdapter {
     fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
 
     String ex = Prefs.getString("lastException", "");
-    if(ex != ""){
+    System.out.println(ex);
+    if(!ex.equals("")){
       DungeonScreen.get().showExceptionPopup(ex);
       Prefs.setString("lastException", "");
     }
@@ -203,15 +204,19 @@ public class Main extends ApplicationAdapter {
 
     }
 
-    catch (Exception e){
+    catch (RuntimeException e){
+      logException(e);
+    }
+
+  }
+
+  public static void logException(RuntimeException e){
       String message = e.getMessage()+"\n";
       for(StackTraceElement ste:e.getStackTrace()){
-        message += ste.toString()+"\n";
+          message += ste.toString()+"\n";
       }
       Prefs.setString("lastException", message);
       throw e;
-    }
-
   }
 
   public void update(float delta) {

@@ -687,13 +687,13 @@ public class DungeonScreen extends Screen {
             }
         });
         a.setSize(130, 38);
-        tw.setPosition(a.getWidth()/2-tw.getWidth()/2, a.getHeight()-tw.getHeight()-2);
+        tw.setPosition((int)(a.getWidth()/2-tw.getWidth()/2), (int)(a.getHeight()-tw.getHeight()-2));
         a.addActor(tw);
         a.addActor(yes);
-        yes.setPosition(a.getWidth()/3-yes.getWidth()/2, 2);
+        yes.setPosition((int)(a.getWidth()/3-yes.getWidth()/2), 2);
         a.addActor(no);
-        no.setPosition(a.getWidth()/3*2-yes.getWidth()/2, 2);
-        a.setPosition(getWidth()/2-a.getWidth()/2, getHeight()/2-a.getHeight()/2);
+        no.setPosition((int)(a.getWidth()/3*2-yes.getWidth()/2), 2);
+        a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
         push(a);
     }
 }
