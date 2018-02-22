@@ -58,16 +58,16 @@ public class Eff {
                 }
                 break;
             case Shield:
-                result = "Block "+value+" incoming damage ([yellow][heart][light]) from ";
+                result = "Block "+value+" incoming damage ([yellow][heart][light]) to ";
                 switch(targetingType){
-                    case FriendlySingle: result += "anyone"; break;
+                    case FriendlySingle: result += "one hero"; break;
                     case FriendlyGroup: result += "everyone"; break;
                     case Self: result += "yourself"; break;
-                    default: result += " ????"; break;
+                    default: result += "????"; break;
                 }
                 break;
             case Magic: result = "Gain "+value+" magic to spend on spells this turn"; break;
-            case Heal: result = "Restore "+value+" health to a damaged character"; break;
+            case Heal: result = "Restore "+value+" missing health ([purple][heartEmpty][light]) to a damaged character"; break;
             case Execute: result = "Kills target if they are on exactly "+value+" hp"; break;
             case Reroll: result = "When you roll this, gain +1 reroll this turn"; break;
             case Buff: result = buff.toNiceString(); break;

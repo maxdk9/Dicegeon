@@ -64,9 +64,8 @@ public class Explanel extends InfoPanel {
         this.effects = effects;
         this.image = image;
         this.cost = cost;
-        //TextWriter tw = new TextWriter(description, 50);
-        setWidth(100);
-        int textW = 85;
+        setWidth(110);
+        int textW = 100;
         int border = 1;
         int gap = 4;
 
