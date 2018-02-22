@@ -205,9 +205,7 @@ public class BulletStuff {
 
 
 	public static void update(float delta){
-        float physicsDelta = Math.min(1f / 30f, delta);
-        physicsDelta = 1/60f;
-		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f);
+		dynamicsWorld.stepSimulation(delta, 5, 1/60f);
 		for(Die d:dice){
 			d.update(delta);
 		}
