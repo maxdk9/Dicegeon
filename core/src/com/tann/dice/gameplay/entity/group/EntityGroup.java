@@ -101,6 +101,7 @@ public class EntityGroup {
                 }
                 break;
             case FriendlySingle:
+            case AllTargeters:
                 targetsTmp.addAll(friends);
                 break;
             case EnemyGroup:
@@ -141,6 +142,9 @@ public class EntityGroup {
                 break;
             case RandomEnemy:
                 result.add(Tann.getRandom(enemies));
+                break;
+            case AllTargeters:
+                result.addAll(target.getAllTargeters());
                 break;
             case Untargeted:
                 break;

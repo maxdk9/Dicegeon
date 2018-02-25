@@ -11,22 +11,13 @@ public class Eff {
     public enum TargetingType{
         EnemySingle, EnemySingleRanged, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy,
         FriendlySingle, FriendlyGroup, EnemyAndAdjacents,
-        Self, OnRoll, Untargeted, DoesNothing
+        Self, OnRoll, Untargeted, AllTargeters, DoesNothing
     }
 
     public TargetingType targetingType = TargetingType.EnemySingle;
 
     public enum EffectType{
-        Nothing, Damage, Shield, Magic, Heal, Buff, Execute, Reroll
-
-
-        ;
-
-        //objectives
-
-        EffectType(){
-        }
-
+        Nothing, Damage, Shield, Magic, Heal, Buff, Execute, Reroll, Spike;
 	}
 	
 
@@ -71,6 +62,7 @@ public class Eff {
             case Execute: result = "Kills target if they are on exactly "+value+" hp"; break;
             case Reroll: result = "When you roll this, gain +1 reroll this turn"; break;
             case Buff: result = buff.toNiceString(); break;
+            case Spike: result = "Deal "+value+" damage to each enemy targeting chosen hero"; break;
             default: result = "uhoh unknown "+type;
         }
         if(nextTurn){
@@ -87,8 +79,10 @@ public class Eff {
     public Eff execute(int amount) { return type(EffectType.Execute, amount); }
     public Eff reroll(int amount) { return type(EffectType.Reroll, amount); }
 
+
     public Eff buff(Buff buff){this.buff = buff; return type(EffectType.Buff); }
 
+    public Eff allTargeters() { return targetType(TargetingType.AllTargeters); }
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);}

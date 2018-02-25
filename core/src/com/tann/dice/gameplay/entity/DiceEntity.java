@@ -321,6 +321,17 @@ public abstract class DiceEntity {
 
     public abstract int getPixelSize();
 
+    public List<DiceEntity> getAllTargeters() {
+        List<DiceEntity> results = new ArrayList<>();
+        for(Eff e: getProfile().effs){
+            DiceEntity source = e.source;
+            if(source!=null && source.isPlayer()!=isPlayer()){
+                results.add(source);
+            }
+        }
+        return results;
+    }
+
     public enum EntitySize {
 
         smol(12), reg(16), big(24), huge(32);

@@ -91,7 +91,7 @@ public class Side {
 
     public static final Side potionregen = new Side().image("potionOfRegen").effect(new Eff().buff(new BuffDot(-1, -1)).friendlySingle().justValue(1));
 
-    public static final Side flameWard = new Side().image("flameWard").effect(new Eff().buff(new ReturnDamage(1, 2)).friendlySingle().justValue(2));
+    public static final Side flameWard = new Side().image("flameWard").effect(new Eff().damage(2).allTargeters());
 
     public static final Side magic1NextTurn = new Side().image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
     public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
