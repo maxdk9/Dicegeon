@@ -128,7 +128,9 @@ public class Eff {
         e.type = type;
         e.value = value;
         e.source = source;
-        e.buff = buff;
+        if(buff!=null){
+            e.buff = buff.copy();
+        }
         e.buffDuration = buffDuration;
         e.nextTurn = nextTurn;
         return e;

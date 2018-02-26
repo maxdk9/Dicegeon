@@ -36,7 +36,7 @@ public class Monster extends DiceEntity {
                 for(DiceEntity de:targets){
                     de.hit(die.getActualSide().effects, false);
                     EntityPanel panel = de.getEntityPanel();
-                    TextureFlasher tf = new TextureFlasher(getDie().sides.get(0).tr);
+                    TextureFlasher tf = new TextureFlasher(getDie().sides.get(die.getSide()).tr);
                     DungeonScreen.get().addActor(tf);
                     panel.addActor(tf);
                     int x = (int) (panel.getWidth()*.3f);

@@ -139,7 +139,7 @@ public class DungeonScreen extends Screen {
     public void resetHeroes(){
         List<Hero> heroes = new ArrayList<>();
 
-        Hero m = HeroType.pyro.buildHero();
+        Hero m = HeroType.rogue.buildHero();
         m.setColour(Colours.blue);
         heroes.add(m);
         Hero h = HeroType.herbalist.buildHero();

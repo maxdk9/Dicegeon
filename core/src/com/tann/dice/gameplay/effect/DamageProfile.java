@@ -57,7 +57,9 @@ public class DamageProfile {
             buffs = new ArrayList<>();
             for(Eff e:effs){
                 if(e.type==Buff){
-                    buffs.add(e.buff);
+                    Buff buff = e.buff.copy();
+                    buff.target = target;
+                    buffs.add(buff);
                 }
             }
         }
