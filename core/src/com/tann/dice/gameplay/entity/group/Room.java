@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Tann;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room extends EntityGroup {
@@ -16,28 +17,50 @@ public class Room extends EntityGroup {
 
     public void updateSlids(boolean keepSlids) {
         List<DiceEntity> active = getActiveEntities();
-        if(active.size() == 0){
+        int numberToSlide = (active.size() - 1) / 3 + 1;
+
+        List<DiceEntity> alreadySlid = new ArrayList<>();
+        List<DiceEntity> notAlreadySlid = new ArrayList<>();
+
+        for (DiceEntity m : active) {
+            if (m.slidOut) alreadySlid.add(m);
+            else notAlreadySlid.add(m);
+        }
+
+        if (alreadySlid.size() == 1 && active.size() == 1) {
             return;
         }
-        int amountShouldSlide = (active.size() -1)/3+1;
-        if(!keepSlids){
-            for(DiceEntity m: Tann.pickNRandomElements(active, Math.max(amountShouldSlide, 0))){
-                m.slide(true);
+        if (active.size() == 0) {
+            return;
+        }
+        if (keepSlids) {
+            int slideDelta = numberToSlide - alreadySlid.size();
+            if (slideDelta > 0) {
+                for (DiceEntity de : Tann.pickNRandomElements(notAlreadySlid, slideDelta)) {
+                    de.slide(true);
+                }
+            } else if (slideDelta < 0) {
+                for (DiceEntity de : Tann.pickNRandomElements(alreadySlid, -slideDelta)) {
+                    de.slide(false);
+                }
             }
         }
-        else{
-            int amountSlid = 0;
-            for(DiceEntity m: active){
-                if(m.slidOut) amountSlid ++;
+        else {
+            List<DiceEntity> toSlide = new ArrayList<>();
+            List<DiceEntity> toUnSlide = alreadySlid;
+            if (notAlreadySlid.size() >= numberToSlide) {
+                toSlide = Tann.pickNRandomElements(notAlreadySlid, Math.max(numberToSlide, 0));
+            } else {
+                toSlide.addAll(notAlreadySlid);
+                toSlide.addAll(Tann.pickNRandomElements(alreadySlid, numberToSlide - toSlide.size()));
             }
-            int amountToSlide =amountShouldSlide-amountSlid;
-            for(int i=0;i<amountToSlide;i++){
-                for(DiceEntity m: Tann.pickNRandomElements(active, Math.max(amountShouldSlide, 0))){
-                    if(!m.slidOut) {
-                        m.slide(true);
-                        break;
-                    }
-                }
+            toUnSlide.removeAll(toSlide);
+
+            for (DiceEntity de : toSlide) {
+                de.slide(true);
+            }
+            for (DiceEntity de : toUnSlide) {
+                de.slide(false);
             }
         }
     }

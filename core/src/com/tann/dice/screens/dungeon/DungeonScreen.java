@@ -259,9 +259,6 @@ public class DungeonScreen extends Screen {
     }
 
     public void enemyCombat(){
-        for(DiceEntity m:Room.get().getActiveEntities()){
-            m.slide(false);
-        }
         Room.get().updateSlids(false);
         List<DiceEntity> monsters = Room.get().getActiveEntities();
         float timer = 0;
@@ -317,9 +314,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void keyPress(int keycode) {
-        if(keycode == Input.Keys.B) {
-            spellButt.addSpellHover(7);
-        }
+        Room.get().updateSlids(false);
     }
 
     @Override
