@@ -52,10 +52,10 @@ public class EntityGroup {
             entity.getDie().addToScreen();
             entity.getDie().resetForRoll();
         }
-        roll();
+        roll(true);
     }
 
-    public void roll(){
+    public void roll(boolean firstRoll){
         for(DiceEntity entity:getActiveEntities()){
             entity.getDie().roll();
         }
@@ -96,6 +96,7 @@ public class EntityGroup {
                 }
                 break;
             case EnemySingleRanged:
+            case EnemyAndAdjacentsRanged:
                 for(DiceEntity de:enemies){
                     targetsTmp.add(de);
                 }
@@ -129,6 +130,7 @@ public class EntityGroup {
                 result.add(eff.source);
                 break;
             case EnemyAndAdjacents:
+            case EnemyAndAdjacentsRanged:
                 result.addAll(target.getAdjacents(true));
                 break;
             case EnemyOnlyAdjacents:

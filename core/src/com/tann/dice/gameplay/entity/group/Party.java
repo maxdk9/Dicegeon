@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Party extends EntityGroup{
 
-    private static final int BASE_ROLLS = 3;
+    private static final int BASE_ROLLS = 2;
 
     private int gold; // wow I wonder if this will ever do anything! I hope so
     private int rolls = BASE_ROLLS;
@@ -101,15 +101,15 @@ public class Party extends EntityGroup{
     }
 
     @Override
-    public void roll() {
+    public void roll(boolean firstRoll) {
         if(!Main.getPhase().canRoll()) return;
         for(DiceEntity de:getActiveEntities()){
             if(de.getDie().getState() == Die.DieState.Rolling || de.getDie().getState() == Die.DieState.Unlocking){
                 return;
             }
         }
-        rolls --;
-        super.roll();
+        if(!firstRoll) rolls --;
+        super.roll(firstRoll);
     }
 
     public void actionEffects(){

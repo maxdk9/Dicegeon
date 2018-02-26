@@ -47,7 +47,7 @@ public class Room extends EntityGroup {
         }
         else {
             List<DiceEntity> toSlide = new ArrayList<>();
-            List<DiceEntity> toUnSlide = alreadySlid;
+            List<DiceEntity> toUnSlide = new ArrayList<>(alreadySlid);
             if (notAlreadySlid.size() >= numberToSlide) {
                 toSlide = Tann.pickNRandomElements(notAlreadySlid, Math.max(numberToSlide, 0));
             } else {

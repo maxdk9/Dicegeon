@@ -11,7 +11,7 @@ public class Eff {
     public enum TargetingType{
         EnemySingle, EnemySingleRanged, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy,
         FriendlySingle, FriendlyGroup, EnemyAndAdjacents,
-        Self, OnRoll, Untargeted, AllTargeters, DoesNothing
+        Self, OnRoll, Untargeted, AllTargeters, EnemyAndAdjacentsRanged, DoesNothing
     }
 
     public TargetingType targetingType = TargetingType.EnemySingle;
@@ -35,7 +35,7 @@ public class Eff {
     }
 
     public String toString(){
-        String result = "";
+        String result;
         switch(type){
             case Nothing:
                 result = "Nothing!"; break;
@@ -45,6 +45,8 @@ public class Eff {
                     case EnemySingleRanged: result = value +" damage to ANY enemy"; break;
                     case EnemyGroup: result = value +" damage to ALL enemies"; break;
                     case EnemyAndAdjacents: result = value +" damage an enemy and both adjacent enemies"; break;
+                    case EnemyAndAdjacentsRanged: result = value +" damage ANY enemy and both adjacent enemies"; break;
+                    case AllTargeters: result = value+" damage to all enemies who have targeted the hero of your choice"; break;
                     default: result = "ahh help damage"; break;
                 }
                 break;
@@ -89,6 +91,7 @@ public class Eff {
     public Eff enemyGroup() { return targetType(TargetingType.EnemyGroup);}
     public Eff untargeted() { return targetType(TargetingType.Untargeted);}
     public Eff enemyAndAdjacents() { return targetType(TargetingType.EnemyAndAdjacents);}
+    public Eff enemyAndAdjacentsRanged() { return targetType(TargetingType.EnemyAndAdjacentsRanged);}
     public Eff ranged() { return targetType(TargetingType.EnemySingleRanged);}
     public Eff self() { return targetType(TargetingType.Self);}
     public Eff onRoll() { return targetType(TargetingType.OnRoll);}

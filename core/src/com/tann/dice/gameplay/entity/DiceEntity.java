@@ -96,7 +96,7 @@ public abstract class DiceEntity {
     }
 
     public void reset(){
-        setHp(maxHp);
+        setHp(dead?maxHp/2:maxHp);
         dead= false;
         targeted = null;
         getDie().flatDraw = false;

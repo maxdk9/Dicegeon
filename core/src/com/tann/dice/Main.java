@@ -55,10 +55,15 @@ public class Main extends ApplicationAdapter {
     Normal, Paused
   }
 
+
+
+
   public Main() {
   }
 
   //Callbacks
+
+
 
   @Override
   public void create() {

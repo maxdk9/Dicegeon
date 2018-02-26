@@ -73,7 +73,7 @@ public class DungeonScreen extends Screen {
                     @Override
                     public void run() {
                         if(Party.get().getRolls()>0){
-                            Party.get().roll();
+                            Party.get().roll(false);
                             spellButt.hide();
                         }
                     }
@@ -127,7 +127,6 @@ public class DungeonScreen extends Screen {
     String levelString = "";
 
     public void setup(List<Monster> monsters){
-        Party.get().reset();
         Room.get().reset();
         Room.get().setEntities(monsters);
         spellButt.hide();
@@ -139,7 +138,7 @@ public class DungeonScreen extends Screen {
     public void resetHeroes(){
         List<Hero> heroes = new ArrayList<>();
 
-        Hero m = HeroType.rogue.buildHero();
+        Hero m = HeroType.pyro.buildHero();
         m.setColour(Colours.blue);
         heroes.add(m);
         Hero h = HeroType.herbalist.buildHero();
@@ -189,9 +188,7 @@ public class DungeonScreen extends Screen {
         }
         spellHolder.setup(Party.get().getSpells());
         spellButt.setSpellHolder(spellHolder);
-        for(DiceEntity de:Party.get().getActiveEntities()){
-            de.reset();
-        }
+        Party.get().reset();
         Main.clearPhases();
         if(level>1){
             Main.pushPhase(new LevelUpPhase());
