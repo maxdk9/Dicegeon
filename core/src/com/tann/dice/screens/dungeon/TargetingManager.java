@@ -130,7 +130,7 @@ public class TargetingManager {
 
 
     Eff.TargetingType type = t.getEffects()[0].targetingType;
-    List<DiceEntity> valids = EntityGroup.getValidTargets(type, true);
+    List<DiceEntity> valids = EntityGroup.getValidTargets(type, t.getEffects(), true);
     boolean contains = valids.contains(entity);
     if(!contains && !(entity==null && valids.isEmpty())){
       return false;
@@ -192,7 +192,7 @@ public class TargetingManager {
     Targetable t = TargetingManager.get().getSelectedTargetable();
     if(t == null || t.getEffects().length == 0) return;
     Eff.TargetingType tType = t.getEffects()[0].targetingType;
-    for(DiceEntity de: EntityGroup.getValidTargets(tType, true)){
+    for(DiceEntity de: EntityGroup.getValidTargets(tType, t.getEffects(),  true)){
       de.getEntityPanel().setPossibleTarget(true);
     }
   }

@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.entity.group;
 
+import com.tann.dice.gameplay.effect.Eff.TargetingType;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -82,7 +83,7 @@ public class EntityGroup {
     }
 
     private static List<DiceEntity> targetsTmp = new ArrayList<>();
-    public static List<DiceEntity> getValidTargets(Eff.TargetingType type, boolean player){
+    public static List<DiceEntity> getValidTargets(TargetingType type, Eff[] effects, boolean player){
         targetsTmp.clear();
         List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
         List<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
@@ -102,8 +103,14 @@ public class EntityGroup {
                 }
                 break;
             case FriendlySingle:
-            case AllTargeters:
                 targetsTmp.addAll(friends);
+                break;
+            case AllTargeters:
+                for(DiceEntity de:friends){
+                    if(de.getAllTargeters().size()>0){
+                        targetsTmp.add(de);
+                    }
+                }
                 break;
             case EnemyGroup:
             case FriendlyGroup:
@@ -112,6 +119,35 @@ public class EntityGroup {
             case Untargeted:
                 break;
         }
+
+        for(int i=targetsTmp.size()-1;i>=0;i--) {
+            DiceEntity de = targetsTmp.get(i);
+            boolean good = true;
+            for (Eff e : effects) {
+                switch (e.type) {
+                    case Nothing:
+                    case Damage:
+                    case Magic:
+                    case Buff:
+                    case Reroll:
+                        break;
+                    case Shield:
+                        good = de.getProfile().getIncomingDamage()>0;
+                        break;
+                    case Heal:
+                        good = de.getHp()<de.getMaxHp();
+                        break;
+                    case Execute:
+                        good = de.getHp()==de.getMaxHp()-e.getValue();
+                        break;
+                }
+                if(!good){
+                    targetsTmp.remove(de);
+                    break;
+                }
+            }
+        }
+
         return targetsTmp;
     }
 

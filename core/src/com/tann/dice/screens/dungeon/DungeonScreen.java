@@ -14,7 +14,6 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.HeroType;
@@ -377,7 +376,7 @@ public class DungeonScreen extends Screen {
     public List<DiceEntity> getRandomTargetForEnemy(Side side) {
         Eff e = side.effects[0];
         DiceEntity target = null;
-        List<DiceEntity> validTargets = EntityGroup.getValidTargets(e.targetingType, false);
+        List<DiceEntity> validTargets = EntityGroup.getValidTargets(e.targetingType, side.effects, false);
         if(validTargets.size()> 0){
             target = Tann.getRandom(validTargets);
         }
