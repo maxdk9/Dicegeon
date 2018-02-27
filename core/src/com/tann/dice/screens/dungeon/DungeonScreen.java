@@ -334,9 +334,10 @@ public class DungeonScreen extends Screen {
         for (DiceEntity de : Party.get().getActiveEntities()) {
             Die d = de.getDie();
             Eff first = d.getActualSide().effects[0];
-            if (!d.getUsed() || (first.isTargeted() && EntityGroup.getValidTargets(d).size()>0) || first.needsUsing()) {
-                return false;
-            }
+            if (d.getUsed()) continue;
+            if (!first.needsUsing()) continue;
+            if (!first.isTargeted()) return false;
+            if (EntityGroup.getValidTargets(d).size()>0) return false;
         }
         return true;
     }

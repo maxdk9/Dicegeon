@@ -5,4 +5,5 @@ public interface Targetable {
     boolean use();
     void deselect();
     void select();
+    boolean isUsable();
 }

@@ -82,6 +82,11 @@ public class Spell implements Targetable{
         selected = true;
     }
 
+    @Override
+    public boolean isUsable() {
+        return canCast();
+    }
+
     public boolean canCast() {
         return Party.get().getAvaliableMagic() >= cost;
     }

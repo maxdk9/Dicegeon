@@ -585,4 +585,9 @@ public class Die implements Targetable{
     public void select() {
         entity.setShaderState(DieShader.DieShaderState.Selected);
     }
+
+    @Override
+    public boolean isUsable() {
+        return true;
+    }
 }

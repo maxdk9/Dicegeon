@@ -116,8 +116,11 @@ public class TargetingManager {
             return;
         }
 
-        showTargetingHighlights();
-        Explanel.get().setup(t, true);
+        boolean usable = t.isUsable();
+        if(usable) {
+            showTargetingHighlights();
+        }
+        Explanel.get().setup(t, usable);
         DungeonScreen.get().positionExplanel();
     }
 
