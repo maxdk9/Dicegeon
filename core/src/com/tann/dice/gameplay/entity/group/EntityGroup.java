@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.entity.group;
 
 import com.tann.dice.gameplay.effect.Eff.TargetingType;
+import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -83,6 +84,11 @@ public class EntityGroup {
     }
 
     private static List<DiceEntity> targetsTmp = new ArrayList<>();
+
+    public static List<DiceEntity> getValidTargets(Targetable t){
+        return getValidTargets(t.getEffects()[0].targetingType, t.getEffects(), true);
+    }
+
     public static List<DiceEntity> getValidTargets(TargetingType type, Eff[] effects, boolean player){
         targetsTmp.clear();
         List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();

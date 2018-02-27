@@ -21,7 +21,6 @@ import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
-import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
@@ -43,7 +42,6 @@ import com.tann.dice.util.Draw;
 import com.tann.dice.util.InputBlocker;
 import com.tann.dice.util.OnPop;
 import com.tann.dice.util.Screen;
-import com.tann.dice.util.Tann;
 import com.tann.dice.util.TannFont;
 import com.tann.dice.util.TextButton;
 import com.tann.dice.util.TextWriter;
@@ -151,7 +149,7 @@ public class DungeonScreen extends Screen {
     public void resetHeroes(){
         List<Hero> heroes = new ArrayList<>();
 
-        Hero m = HeroType.pyro.buildHero();
+        Hero m = HeroType.apprentice.buildHero();
         m.setColour(Colours.blue);
         heroes.add(m);
         Hero h = HeroType.herbalist.buildHero();
@@ -163,7 +161,7 @@ public class DungeonScreen extends Screen {
         Hero f1 = HeroType.fighter.buildHero();
         f1.setColour(Colours.orange);
         heroes.add(f1);
-        Hero f2 = HeroType.rogue.buildHero();
+        Hero f2 = HeroType.fighter.buildHero();
         f2.setColour(Colours.yellow);
         heroes.add(f2);
 
@@ -263,7 +261,7 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    private void showDialog(String s) {
+    public void showDialog(String s) {
         TextWriter tw = new TextWriter(s, Integer.MAX_VALUE, Colours.purple, 2);
         push(tw, true, true, true, false, false);
     }
@@ -324,7 +322,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void keyPress(int keycode) {
-        Room.get().updateSlids(false);
+
     }
 
     @Override
@@ -332,13 +330,11 @@ public class DungeonScreen extends Screen {
 
     }
 
-
-
     private boolean checkAllDiceUsed(){
         for (DiceEntity de : Party.get().getActiveEntities()) {
             Die d = de.getDie();
-            Eff.TargetingType tt = d.getActualSide().effects[0].targetingType;
-            if (!d.getUsed() && tt != Eff.TargetingType.OnRoll && tt != Eff.TargetingType.DoesNothing) {
+            Eff first = d.getActualSide().effects[0];
+            if (!d.getUsed() || (first.isTargeted() && EntityGroup.getValidTargets(d).size()>0) || first.needsUsing()) {
                 return false;
             }
         }
@@ -371,16 +367,6 @@ public class DungeonScreen extends Screen {
             }
         }
         return true;
-    }
-
-    public List<DiceEntity> getRandomTargetForEnemy(Side side) {
-        Eff e = side.effects[0];
-        DiceEntity target = null;
-        List<DiceEntity> validTargets = EntityGroup.getValidTargets(e.targetingType, side.effects, false);
-        if(validTargets.size()> 0){
-            target = Tann.getRandom(validTargets);
-        }
-        return EntityGroup.getActualTargets(e, false, target);
     }
 
     public void positionExplanel() {

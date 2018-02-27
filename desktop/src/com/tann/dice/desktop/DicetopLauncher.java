@@ -22,10 +22,11 @@ public class DicetopLauncher {
         checkPack("../../images_3d", "misc/imagehash3d.txt", true);
         checkPack("../../images", "misc/imagehash2d.txt", false);
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.vSyncEnabled=true;
+		config.foregroundFPS = 60;
+        config.backgroundFPS = 60;
 		config.width=1280;
 		config.height=800;
-		config.samples=10;
+		config.samples=1;
 		config.title="Dicegeon";
 		config.resizable = false;
         config.addIcon("misc/icon.png", Files.FileType.Internal);

@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
@@ -32,7 +33,7 @@ public class Monster extends DiceEntity {
             public void run() {
                 getDie().removeFromPhysics();
 
-                targets = DungeonScreen.get().getRandomTargetForEnemy(die.getActualSide());
+                targets = TargetingManager.get().getRandomTargetForEnemy(die.getActualSide());
                 for(DiceEntity de:targets){
                     de.hit(die.getActualSide().effects, false);
                     EntityPanel panel = de.getEntityPanel();

@@ -177,4 +177,59 @@ public class Eff {
         }
     }
 
+    public String getNoTargetsString() {
+        switch(type){
+            case Shield:
+                return "No incoming damage to block";
+            case Heal:
+                return "No damaged heroes to heal";
+        }
+        return "I dunno";
+    }
+
+    public boolean isTargeted() {
+        switch(targetingType){
+            case EnemySingle:
+            case EnemySingleRanged:
+            case FriendlySingle:
+            case EnemyAndAdjacents:
+            case EnemyAndAdjacentsRanged:
+                return true;
+            case EnemyGroup:
+            case EnemyOnlyAdjacents:
+            case RandomEnemy:
+            case FriendlyGroup:
+            case Self:
+            case OnRoll:
+            case Untargeted:
+            case AllTargeters:
+            case DoesNothing:
+                return false;
+            default:
+        }
+        return false;
+    }
+
+    public boolean needsUsing() {
+        switch(targetingType){
+            case EnemySingle:
+            case EnemySingleRanged:
+            case FriendlySingle:
+            case EnemyAndAdjacents:
+            case EnemyAndAdjacentsRanged:
+            case EnemyGroup:
+            case EnemyOnlyAdjacents:
+            case RandomEnemy:
+            case FriendlyGroup:
+            case Self:
+            case Untargeted:
+            case AllTargeters:
+                return true;
+            case OnRoll:
+            case DoesNothing:
+                return false;
+        }
+        return false;
+    }
+
 }

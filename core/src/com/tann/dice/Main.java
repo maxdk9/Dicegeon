@@ -164,7 +164,7 @@ public class Main extends ApplicationAdapter {
   @Override
   public void render() {
     try {
-
+//        if(true) return;
       if (Gdx.graphics.getDeltaTime() > 63 / 1000f && Main.ticks > 2) {
         gcPauses++;
       }
