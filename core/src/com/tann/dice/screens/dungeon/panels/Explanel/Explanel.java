@@ -21,6 +21,7 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.*;
@@ -153,7 +154,7 @@ public class Explanel extends InfoPanel {
                         Button confirmButton = new Button(20, 20, Images.tick, Colours.dark, new Runnable() {
                             @Override
                             public void run() {
-                                DungeonScreen.get().target(null);
+                                TargetingManager.get().target(null);
                             }
                         });
                         confirmButton.setBorder(Colours.dark, Colours.light, 1);

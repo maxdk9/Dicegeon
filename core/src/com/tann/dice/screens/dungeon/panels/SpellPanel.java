@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
@@ -22,7 +23,7 @@ public class SpellPanel extends Actor{
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                DungeonScreen.get().click(spell);
+                TargetingManager.get().click(spell);
                 event.cancel();
                 return true;
             }

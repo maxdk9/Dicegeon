@@ -14,6 +14,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.util.*;
 
@@ -41,7 +42,7 @@ public class EntityPanel extends Group {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (entity.isDead()) return false;
                 boolean dieSide = isClickOnDie(x);
-                DungeonScreen.get().clicked(EntityPanel.this.entity, dieSide && holdsDie);
+                TargetingManager.get().clicked(EntityPanel.this.entity, dieSide && holdsDie);
                 return true;
             }
 

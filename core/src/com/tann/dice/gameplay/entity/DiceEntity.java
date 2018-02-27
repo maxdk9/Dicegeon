@@ -16,6 +16,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Colours;
@@ -175,7 +176,7 @@ public abstract class DiceEntity {
 
     public void removeEffectsIfDead(){
         if(!isPlayer() && die.getActualSide() != null && isDead()) {
-            DungeonScreen.get().cancelEffects(die.getActualSide().effects);
+            TargetingManager.get().cancelEffects(die.getActualSide().effects);
         }
     }
 

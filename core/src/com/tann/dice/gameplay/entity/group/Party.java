@@ -21,7 +21,6 @@ public class Party extends EntityGroup{
     private int rolls = BASE_ROLLS;
     private int maxRolls = BASE_ROLLS;
     private boolean rolled;
-    private Targetable selectedTargetable;
 
     private static Party self;
 
@@ -70,14 +69,6 @@ public class Party extends EntityGroup{
 
     public int getMaxRolls() {
         return maxRolls;
-    }
-
-    public Targetable getSelectedTargetable() {
-        return selectedTargetable;
-    }
-
-    public void setSelectedTargetable(Targetable selectedTargetable) {
-        this.selectedTargetable = selectedTargetable;
     }
 
     public List<Spell> getSpells(){

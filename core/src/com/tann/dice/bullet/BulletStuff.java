@@ -32,6 +32,7 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
+import com.tann.dice.screens.dungeon.TargetingManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -249,7 +250,7 @@ public class BulletStuff {
 	public static boolean click(float x, float y, int button) {
 		Die d = getClickedDie(Gdx.input.getX(), Gdx.input.getY());
 		if (d != null) {
-			DungeonScreen.get().click(d, true);
+			TargetingManager.get().click(d, true);
 			return true;
 		}
 		return false;

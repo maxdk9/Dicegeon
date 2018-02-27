@@ -1,7 +1,6 @@
 package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,26 +13,41 @@ import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
-import com.tann.dice.gameplay.entity.*;
+import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.HeroType;
+import com.tann.dice.gameplay.entity.Monster;
+import com.tann.dice.gameplay.entity.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
-import com.tann.dice.gameplay.phase.*;
+import com.tann.dice.gameplay.phase.EnemyRollingPhase;
+import com.tann.dice.gameplay.phase.LevelUpPhase;
+import com.tann.dice.gameplay.phase.LossPhase;
+import com.tann.dice.gameplay.phase.PlayerRollingPhase;
+import com.tann.dice.gameplay.phase.TargetingPhase;
+import com.tann.dice.gameplay.phase.VictoryPhase;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
-import com.tann.dice.util.*;
-
+import com.tann.dice.util.Button;
+import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
+import com.tann.dice.util.InputBlocker;
+import com.tann.dice.util.OnPop;
+import com.tann.dice.util.Screen;
+import com.tann.dice.util.Tann;
+import com.tann.dice.util.TannFont;
+import com.tann.dice.util.TextButton;
+import com.tann.dice.util.TextWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -319,138 +333,7 @@ public class DungeonScreen extends Screen {
 
     }
 
-    public void cancelEffects(Eff[] effects) {
-        for (DiceEntity de : EntityGroup.getAllActive()) {
-            de.removeEffects(effects);
-        }
-    }
 
-    public void click(Die d, boolean fromPhysics) {
-        if(d.entity instanceof Monster) return;
-        if(d.getSide()==-1) return;
-        if(Main.getPhase().canRoll()){
-            d.toggleLock();
-            return;
-        }
-        if(fromPhysics){
-            return;
-        }
-        Eff first = d.getEffects()[0];
-        switch(first.targetingType){
-            case EnemyGroup:
-                hitMultiple(Room.get().getActiveEntities(), d.getEffects(), false);
-                d.use();
-                break;
-            case FriendlyGroup:
-                hitMultiple(Party.get().getActiveEntities(), d.getEffects(), false);
-                d.use();
-                break;
-            case Self:
-                d.entity.hit(d.getEffects(), false);
-                d.use();
-                break;
-            case RandomEnemy:
-                Tann.getRandom(Room.get().getActiveEntities()).hit(d.getEffects(), false);
-                d.use();
-                break;
-            case Untargeted:
-                for(Eff e:d.getEffects()){
-                    e.untargetedUse(false);
-                }
-                d.use();
-                break;
-            default:
-                targetableClick(d);
-                break;
-        }
-        if(!checkEnd()){
-            confirmDice(false);
-        }
-    }
-
-    private void hitMultiple(List<DiceEntity> entities, Eff[] effects, boolean instant){
-        for(int i=entities.size()-1;i>=0;i--){
-            entities.get(i).hit(effects, instant);
-        }
-    }
-
-    public void click(Spell spell){
-        targetableClick(spell);
-    }
-
-    private void targetableClick(Targetable t){
-        if(!Main.getPhase().canTarget()){
-            Explanel.get().setup(t, false);
-            positionExplanel();
-            push(Explanel.get(), false, true, true, false, false);
-            return;
-        }
-        for(DiceEntity de:Party.get().getActiveEntities()){
-            de.setShaderState(DieShader.DieShaderState.Nothing);
-        }
-        if(Party.get().getSelectedTargetable() == t){
-            deselectTargetable();
-            return;
-        }
-        deselectTargetable();
-        Party.get().setSelectedTargetable(t);
-        t.select();
-        showTargetingHighlights();
-        Explanel.get().setup(t, true);
-        positionExplanel();
-    }
-
-    private void deselectTargetable(){
-        clearTargetingHighlights();
-        if(Party.get().getSelectedTargetable() != null) {
-            Party.get().getSelectedTargetable().deselect();
-            Explanel.get().remove();
-            Party.get().setSelectedTargetable(null);
-        }
-    }
-
-    static List<DiceEntity> tmp = new ArrayList<>();
-
-    public boolean target(DiceEntity entity) {
-        Targetable t = Party.get().getSelectedTargetable();
-        if(!Main.getPhase().canTarget()) return false;
-        if(t == null) return false;
-        if(t.getEffects() == null) return false;
-        if(t.getEffects().length==0) return false;
-
-
-        Eff.TargetingType type = t.getEffects()[0].targetingType;
-        List<DiceEntity> valids = EntityGroup.getValidTargets(type, true);
-        boolean contains = valids.contains(entity);
-        if(!contains && !(entity==null && valids.isEmpty())){
-            return false;
-        }
-
-        boolean containsDamage = false;
-        if(t.use()){
-            for(Eff e:t.getEffects()){
-                hitEntities(EntityGroup.getActualTargets(e, true, entity), e);
-                if(e.type == Eff.EffectType.Damage){
-                    containsDamage = true;
-                }
-            }
-        }
-        if(containsDamage){
-            Sounds.playSound(Sounds.fwips, 4, 1);
-        }
-        deselectTargetable();
-        if(!checkEnd()) {
-            confirmDice(false);
-        }
-
-        if(Party.get().getAvaliableMagic() == 0){
-            DungeonScreen.get().spellButt.hide();
-        }
-
-        Room.get().removeDeadEffects();
-
-        return true;
-    }
 
     private boolean checkAllDiceUsed(){
         for (DiceEntity de : Party.get().getActiveEntities()) {
@@ -461,12 +344,6 @@ public class DungeonScreen extends Screen {
             }
         }
         return true;
-    }
-
-    private void hitEntities(List<DiceEntity> entities, Eff e){
-        for(int i=0;i<entities.size();i++){
-            entities.get(i).hit(e, false);
-        }
     }
 
     public boolean checkEnd() {
@@ -507,32 +384,9 @@ public class DungeonScreen extends Screen {
         return EntityGroup.getActualTargets(e, false, target);
     }
 
-    private void positionExplanel() {
+    public void positionExplanel() {
         Explanel.get().setPosition(Explanel.get().getNiceX(true), Explanel.get().getNiceY());
         addActor(Explanel.get());
-    }
-
-    public void closeSpellHolder() {
-        if(Party.get().getSelectedTargetable() instanceof Spell){
-            deselectTargetable();
-        }
-    }
-
-    public void clearTargetingHighlights(){
-        for(DiceEntity de: EntityGroup.getAllActive()){
-            de.getEntityPanel().setPossibleTarget(false);
-        }
-    }
-
-
-
-    public void showTargetingHighlights(){
-        Targetable t = Party.get().getSelectedTargetable();
-        if(t == null || t.getEffects().length == 0) return;
-        Eff.TargetingType tType = t.getEffects()[0].targetingType;
-        for(DiceEntity de: EntityGroup.getValidTargets(tType, true)){
-            de.getEntityPanel().setPossibleTarget(true);
-        }
     }
 
     public void removeLeftoverDice() {
@@ -543,23 +397,7 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    public void clicked(DiceEntity entity, boolean dieSide) {
-        if (Party.get().getActiveEntities() != null) {
-            if (target(entity)) return;
-        }
-
-        if (entity.isPlayer()) {
-            if (dieSide) {
-                DungeonScreen.get().click(entity.getDie(), false);
-            } else {
-                showDiePanel(entity);
-            }
-        } else {
-            showDiePanel(entity);
-        }
-    }
-
-    private void showDiePanel(DiceEntity entity){
+    public void showDiePanel(DiceEntity entity){
         DiePanel pan = entity.getDiePanel();
         push(pan);
         pan.setPosition(pan.getNiceX(false), pan.getNiceY());
@@ -601,7 +439,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void pop(){
-        deselectTargetable();
+        TargetingManager.get().deselectTargetable();
         if(modalStack.size()==0) return;
         Actor a =modalStack.remove(modalStack.size()-1);
         a.remove();
@@ -669,7 +507,7 @@ public class DungeonScreen extends Screen {
     }
 
     private void bottomClick() {
-        deselectTargetable();
+        TargetingManager.get().deselectTargetable();
     }
 
     public void slideRollButton(boolean in){
@@ -682,5 +520,11 @@ public class DungeonScreen extends Screen {
 
     public void setConfirmText(String s) {
 //        confirmButton.setText(s);
+    }
+
+    public void checkDoneTargeting() {
+        if(!checkEnd()){
+            confirmDice(false);
+        }
     }
 }
