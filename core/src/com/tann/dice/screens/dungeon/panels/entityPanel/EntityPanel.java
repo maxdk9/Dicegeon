@@ -18,6 +18,8 @@ import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.util.*;
 
+import java.util.List;
+
 public class EntityPanel extends Group {
 
     public DiceEntity entity;
@@ -41,7 +43,7 @@ public class EntityPanel extends Group {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (entity.isDead()) return false;
-                intensity = 1;
+                setArrowIntenity(1, 0);
                 boolean dieSide = isClickOnDie(x);
                 TargetingManager.get().clicked(EntityPanel.this.entity, dieSide && holdsDie);
                 return true;
@@ -139,7 +141,7 @@ public class EntityPanel extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
-        intensity = Math.max(0, intensity-delta/fadeSeconds);
+        intensity = Math.max(0, intensity-delta*fadeSpeed);
     }
 
     @Override
@@ -232,14 +234,25 @@ public class EntityPanel extends Group {
         }
 
 
-        if(holdsDie && entity.getTarget()!=null){
-            batch.setColor(Colours.withAlpha(Colours.orange, intensity));
-            for(DiceEntity de: entity.getTarget()){
-                EntityPanel ep = de.getEntityPanel();
-                Vector2 me = Tann.getLocalCoordinates(this).cpy();
-                Vector2 them = Tann.getLocalCoordinates(ep);
+        drawArrows(batch);
+    }
+
+    private void drawArrows(Batch batch) {
+        if(!entity.isPlayer() && !holdsDie) return;
+        List<DiceEntity> targs = entity.isPlayer()?entity.getAllTargeters():entity.getTarget();
+        if(targs == null || targs.size()==0) return;
+        batch.setColor(Colours.withAlpha(Colours.orange, intensity));
+        for(DiceEntity de:targs){
+            EntityPanel ep = de.getEntityPanel();
+            Vector2 me = Tann.getLocalCoordinates(this).cpy();
+            Vector2 them = Tann.getLocalCoordinates(ep);
+            if(entity.isPlayer()){
+                Draw.drawArrow(batch, them.x, them.y+ep.getHeight()/2, me.x+getWidth(), me.y+getHeight()/2, 2);
+            }
+            else{
                 Draw.drawArrow(batch, me.x, me.y+getHeight()/2, them.x+ep.getWidth(), them.y+ep.getHeight()/2, 2);
             }
+
         }
     }
 
@@ -247,9 +260,10 @@ public class EntityPanel extends Group {
         heartsHolder.addDamageFlibs(amount);
     }
 
-    float fadeSeconds = 1.5f;
-    float intensity;
-    public void setArrowIntenity(float intensity) {
+    float fadeSpeed = 0;
+    private float intensity;
+    public void setArrowIntenity(float intensity, float fadeSpeed) {
         this.intensity = intensity;
+        this.fadeSpeed = fadeSpeed;
     }
 }

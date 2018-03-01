@@ -63,7 +63,7 @@ public class Monster extends DiceEntity {
             panel.flash();
         }
         EntityPanel ep = getDie().entity.getEntityPanel();
-        ep.setArrowIntenity(1);
+        ep.setArrowIntenity(1, .75f);
     }
 
     public Color getColour() {

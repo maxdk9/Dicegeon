@@ -199,6 +199,7 @@ public class EntityGroup {
     public static void clearTargetedHighlights() {
         for(DiceEntity de : getAllActive()){
             de.getEntityPanel().setTargeted(false);
+            de.getEntityPanel().setArrowIntenity(0, 1);
         }
     }
 

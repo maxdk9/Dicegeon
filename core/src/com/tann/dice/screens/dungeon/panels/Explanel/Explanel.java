@@ -19,6 +19,7 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
@@ -29,7 +30,7 @@ import com.tann.dice.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Explanel extends InfoPanel {
+public class Explanel extends InfoPanel implements OnPop {
     String name;
     String description;
     Eff[] effects;
@@ -186,4 +187,8 @@ public class Explanel extends InfoPanel {
         Explanel.get().addAction(Actions.moveTo(Explanel.get().getNiceX(true), Explanel.get().getY(), .3f, Interpolation.pow2Out));
     }
 
+    @Override
+    public void onPop() {
+        EntityGroup.clearTargetedHighlights();
+    }
 }

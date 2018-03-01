@@ -128,7 +128,9 @@ public class TargetingManager {
         clearTargetingHighlights();
         if (TargetingManager.get().getSelectedTargetable() != null) {
             TargetingManager.get().getSelectedTargetable().deselect();
-            Explanel.get().remove();
+            if(Explanel.get().remove()){
+                Explanel.get().onPop();
+            }
             TargetingManager.get().setSelectedTargetable(null);
         }
     }
