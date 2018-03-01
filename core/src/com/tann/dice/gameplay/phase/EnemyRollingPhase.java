@@ -19,7 +19,7 @@ public class EnemyRollingPhase extends Phase {
 
     @Override
     public long getSwitchingDelay() {
-        return 400;
+        return 1000;
     }
 
     @Override

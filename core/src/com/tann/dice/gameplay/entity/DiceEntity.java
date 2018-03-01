@@ -113,7 +113,7 @@ public abstract class DiceEntity {
         this.hp = amount;
     }
 
-    public abstract void locked();
+    public abstract void stopped();
 
     public void hit(Eff[] effects, boolean instant) {
         for (Eff e : effects) {
@@ -331,6 +331,9 @@ public abstract class DiceEntity {
             }
         }
         return results;
+    }
+
+    public void locked() {
     }
 
     public enum EntitySize {

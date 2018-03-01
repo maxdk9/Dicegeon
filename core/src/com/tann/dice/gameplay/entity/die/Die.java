@@ -141,9 +141,10 @@ public class Die implements Targetable{
                 damp();
                 this.lockedSide=getSide();
                 glow = 1;
-                entity.locked();
+                entity.stopped();
                 break;
             case Locked:
+                entity.locked();
                 break;
             case Locking:
                 break;

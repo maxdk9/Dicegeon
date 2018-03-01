@@ -229,7 +229,7 @@ public class Main extends ApplicationAdapter {
     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
       delta *= .1f;
     }
-    if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+    if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
       delta *= 3;
     }
     BulletStuff.update(delta);

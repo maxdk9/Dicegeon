@@ -270,11 +270,12 @@ public class DungeonScreen extends Screen {
         Room.get().updateSlids(false);
         List<DiceEntity> monsters = Room.get().getActiveEntities();
         float timer = 0;
-        float timerAdd = .1f;
+        float timerAdd = .05f;
         for (final DiceEntity de : monsters) {
             final Monster m = (Monster) de;
             if(m.isDead()) continue;
             m.locked=false;
+            timer += timerAdd;
             addAction(Actions.delay(timer, Actions.run(
                     new Runnable() {
                         @Override

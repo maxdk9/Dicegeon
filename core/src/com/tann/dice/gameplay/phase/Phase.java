@@ -19,6 +19,7 @@ public abstract class Phase {
                 switchStart = System.currentTimeMillis();
             }
             if(System.currentTimeMillis() - switchStart >= getSwitchingDelay()) {
+                switchStart = -1;
                 Main.popPhase();
             }
         }

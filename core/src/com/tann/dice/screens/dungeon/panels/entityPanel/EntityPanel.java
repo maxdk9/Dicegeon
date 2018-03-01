@@ -41,6 +41,7 @@ public class EntityPanel extends Group {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (entity.isDead()) return false;
+                intensity = 1;
                 boolean dieSide = isClickOnDie(x);
                 TargetingManager.get().clicked(EntityPanel.this.entity, dieSide && holdsDie);
                 return true;
@@ -138,6 +139,7 @@ public class EntityPanel extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
+        intensity = Math.max(0, intensity-delta/fadeSeconds);
     }
 
     @Override
@@ -228,10 +230,26 @@ public class EntityPanel extends Group {
 //            batch.setColor(Colours.grey);
 //            batch.draw(Images.skull, holderX, holderY);
         }
+
+
+        if(holdsDie && entity.getTarget()!=null){
+            batch.setColor(Colours.withAlpha(Colours.orange, intensity));
+            for(DiceEntity de: entity.getTarget()){
+                EntityPanel ep = de.getEntityPanel();
+                Vector2 me = Tann.getLocalCoordinates(this).cpy();
+                Vector2 them = Tann.getLocalCoordinates(ep);
+                Draw.drawArrow(batch, me.x, me.y+getHeight()/2, them.x+ep.getWidth(), them.y+ep.getHeight()/2, 2);
+            }
+        }
     }
 
     public void addDamageFlib(int amount) {
         heartsHolder.addDamageFlibs(amount);
     }
 
+    float fadeSeconds = 1.5f;
+    float intensity;
+    public void setArrowIntenity(float intensity) {
+        this.intensity = intensity;
+    }
 }

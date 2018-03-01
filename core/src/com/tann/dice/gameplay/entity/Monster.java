@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
@@ -25,33 +26,44 @@ public class Monster extends DiceEntity {
         return size.pixels;
     }
 
-    @Override
-    public void locked() {
 
+    static long nextLockTime = 0;
+    static final long lockDelay = 500;
+    static final long firstLockDelay = 250;
+    @Override
+    public void stopped() {
+        long now = System.currentTimeMillis();
+        if(now>nextLockTime){
+            nextLockTime = now+firstLockDelay;
+        }
         Tann.delay(new Runnable() {
             @Override
             public void run() {
                 getDie().removeFromPhysics();
-
-                targets = TargetingManager.get().getRandomTargetForEnemy(die.getActualSide());
-                for(DiceEntity de:targets){
-                    de.hit(die.getActualSide().effects, false);
-                    EntityPanel panel = de.getEntityPanel();
-                    TextureFlasher tf = new TextureFlasher(getDie().sides.get(die.getSide()).tr);
-                    DungeonScreen.get().addActor(tf);
-                    panel.addActor(tf);
-                    int x = (int) (panel.getWidth()*.3f);
-                    int y = (int) (panel.getHeight()/2-tf.getHeight()/2 - 2);
-                    tf.setPosition(x, y);
-                    panel.flash();
-                }
                 EntityPanel ep = getDie().entity.getEntityPanel();
                 ep.lockDie();
                 locked = true;
             }
-        }, .3f);
+        }, (nextLockTime-now)/1000f);
+        nextLockTime += lockDelay;
+    }
 
 
+
+    @Override
+    public void locked() {
+        targets = TargetingManager.get().getRandomTargetForEnemy(die.getActualSide());
+        for(DiceEntity de:targets){
+            de.hit(die.getActualSide().effects, false);
+            EntityPanel panel = de.getEntityPanel();
+            TextureFlasher tf = new TextureFlasher(getDie().sides.get(die.getSide()).tr);
+            DungeonScreen.get().addActor(tf);
+            Vector2 holder = panel.getDieHolderLocation();
+            tf.setPosition(holder.x, holder.y);
+            panel.flash();
+        }
+        EntityPanel ep = getDie().entity.getEntityPanel();
+        ep.setArrowIntenity(1);
     }
 
     public Color getColour() {

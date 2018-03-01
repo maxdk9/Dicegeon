@@ -48,7 +48,7 @@ public class Hero extends DiceEntity {
     }
 
     @Override
-    public void locked() {
+    public void stopped() {
         Eff[] effs = die.getActualSide().effects;
         if(effs[0].targetingType == Eff.TargetingType.OnRoll){
             for(Eff e:effs){
