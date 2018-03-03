@@ -270,7 +270,7 @@ public class DungeonScreen extends Screen {
         Room.get().updateSlids(false);
         List<DiceEntity> monsters = Room.get().getActiveEntities();
         float timer = 0;
-        float timerAdd = .05f;
+        float timerAdd = .00f;
         for (final DiceEntity de : monsters) {
             final Monster m = (Monster) de;
             if(m.isDead()) continue;
@@ -393,6 +393,7 @@ public class DungeonScreen extends Screen {
                 de.getEntityPanel().setTargeted(true);
             }
         }
+        entity.getEntityPanel().setArrowIntenity(1, 0);
     }
 
     public void push(final Actor a, boolean center, boolean listener, boolean blockerListen, final boolean remove, final boolean endPhase){
@@ -430,6 +431,7 @@ public class DungeonScreen extends Screen {
         if(modalStack.size()==0) return;
         Actor a =modalStack.remove(modalStack.size()-1);
         a.remove();
+        EntityGroup.clearTargetedHighlights();
         if(a instanceof OnPop){
             ((OnPop) a).onPop();
         }

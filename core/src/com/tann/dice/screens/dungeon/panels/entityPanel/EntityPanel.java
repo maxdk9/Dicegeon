@@ -43,7 +43,6 @@ public class EntityPanel extends Group {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (entity.isDead()) return false;
-                setArrowIntenity(1, 0);
                 boolean dieSide = isClickOnDie(x);
                 TargetingManager.get().clicked(EntityPanel.this.entity, dieSide && holdsDie);
                 return true;
@@ -123,7 +122,7 @@ public class EntityPanel extends Group {
     }
 
     public boolean isClickOnDie(float x){
-        float threshold = .5f;
+        float threshold = .65f;
         return x/getWidth()>threshold == entity.isPlayer();
     }
 
@@ -247,10 +246,10 @@ public class EntityPanel extends Group {
             Vector2 me = Tann.getLocalCoordinates(this).cpy();
             Vector2 them = Tann.getLocalCoordinates(ep);
             if(entity.isPlayer()){
-                Draw.drawArrow(batch, them.x, them.y+ep.getHeight()/2, me.x+getWidth(), me.y+getHeight()/2, 2);
+                Draw.drawLine(batch, them.x, them.y+ep.getHeight()/2, me.x+getWidth(), me.y+getHeight()/2, 2);
             }
             else{
-                Draw.drawArrow(batch, me.x, me.y+getHeight()/2, them.x+ep.getWidth(), them.y+ep.getHeight()/2, 2);
+                Draw.drawLine(batch, me.x, me.y+getHeight()/2, them.x+ep.getWidth(), them.y+ep.getHeight()/2, 2);
             }
 
         }
