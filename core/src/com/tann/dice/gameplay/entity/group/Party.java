@@ -8,6 +8,7 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.ArrayList;
@@ -54,6 +55,20 @@ public class Party extends EntityGroup{
 
     public int getAvaliableMagic() {
         return magic;
+    }
+
+    public int getTotalTotalTotalAvailableMagic() {
+        if(!(Main.getPhase() instanceof TargetingPhase)) return getAvaliableMagic();
+        int total = 0;
+        for (DiceEntity de : getActiveEntities()) {
+            Die d = de.getDie();
+            Eff first = d.getActualSide().effects[0];
+            if (d.getUsed()) continue;
+            if (first.type == Eff.EffectType.Magic){
+                total += first.getValue();
+            }
+        }
+        return getAvaliableMagic()+total;
     }
 
     public void spendMagic(int cost) {
