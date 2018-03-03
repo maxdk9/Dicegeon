@@ -8,9 +8,11 @@ builds/
 *.war
 *.ear
 hs_err_pid*
+*android-release.apk
 
 *.atlas
 *atlas_image*
+packr/out-win/
 
 ## Robovm
 robovm-build/
