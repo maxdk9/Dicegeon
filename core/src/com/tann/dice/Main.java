@@ -34,7 +34,7 @@ public class Main extends ApplicationAdapter {
   public static int scale;
   public static int SCREEN_WIDTH, SCREEN_HEIGHT;
   public static int width, height;
-  public static String version = "0.2.0";
+  public static String version = "0.2.1";
   public static String versionName = "v" + version;
   SpriteBatch batch;
   SpriteBatch bufferDrawer;
@@ -286,7 +286,7 @@ public class Main extends ApplicationAdapter {
   private void drawFPSAndVersion() {
     batch.setColor(Colours.blue);
     TannFont.font.drawString(batch, versionName, width / 2 - 25, 1);
-    TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps " + gcPauses, width / 2 + 5, 1);
+    TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", width / 2 + 5, 1); // + gcPauses
   }
 
   public static float w(float factor) {

@@ -23,7 +23,7 @@ public class DicetopLauncher {
         checkPack("../../images", "misc/imagehash2d.txt", false);
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.foregroundFPS = 60;
-        config.backgroundFPS = 10;
+        config.backgroundFPS = 20;
 		config.width=1280;
 		config.height=800;
 		config.samples=1;

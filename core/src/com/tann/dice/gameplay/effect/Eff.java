@@ -183,6 +183,8 @@ public class Eff {
                 return "No incoming damage to block";
             case Heal:
                 return "No damaged heroes to heal";
+            case Execute:
+                return "Can only target monsters on exactly "+value+" hp";
         }
         return "I dunno";
     }
