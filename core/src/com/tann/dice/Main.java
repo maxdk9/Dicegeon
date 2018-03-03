@@ -215,7 +215,7 @@ public class Main extends ApplicationAdapter {
   }
 
   public static void logException(RuntimeException e){
-      String message = e.getMessage()+"\n";
+      String message = versionName + "\n" + e.getMessage() + "\n";
       for(StackTraceElement ste:e.getStackTrace()){
           message += ste.toString()+"\n";
       }
