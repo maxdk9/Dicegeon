@@ -133,15 +133,18 @@ public class Die implements Targetable{
     }
 
     private void setState(DieState state) {
+        DieState previousState = this.state;
         this.state=state;
         switch(state){
             case Rolling:
                 break;
             case Stopped:
                 damp();
-                this.lockedSide=getSide();
-                glow = 1;
-                entity.stopped();
+                if(previousState == Rolling) {
+                    entity.stopped();
+                    this.lockedSide = getSide();
+                    glow = 1;
+                }
                 break;
             case Locked:
                 entity.locked();
@@ -152,6 +155,7 @@ public class Die implements Targetable{
                 break;
         }
     }
+
 
     public void roll() {
         if (getState()!=DieState.Stopped) return;
