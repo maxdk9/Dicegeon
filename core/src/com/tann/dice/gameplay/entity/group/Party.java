@@ -7,9 +7,11 @@ import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.HeroType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.util.Colours;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,34 @@ public class Party extends EntityGroup{
     public static Party get() {
         if (self == null) self = new Party();
         return self;
+    }
+
+    public void fullyReset(){
+        super.reset();
+        clearEntities();
+        addHeroes();
+    }
+
+    public void addHeroes(){
+        List<DiceEntity> tmp = new ArrayList<>();
+        Hero h = HeroType.apprentice.buildHero();
+        h.setColour(Colours.blue);
+        tmp.add(h);
+        activeEntities.add(h);
+        h = HeroType.herbalist.buildHero();
+        h.setColour(Colours.red);
+        tmp.add(h);
+        h = HeroType.defender.buildHero();
+        h.setColour(Colours.grey);
+        tmp.add(h);
+        h = HeroType.fighter.buildHero();
+        h.setColour(Colours.orange);
+        tmp.add(h);
+        h = HeroType.fighter.buildHero();
+        h.setColour(Colours.yellow);
+        tmp.add(h);
+        setEntities(tmp);
+        DungeonScreen.get().friendly.setEntities(activeEntities);
     }
 
     private int magic = 0;

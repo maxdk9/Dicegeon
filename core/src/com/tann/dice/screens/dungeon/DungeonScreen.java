@@ -132,6 +132,8 @@ public class DungeonScreen extends Screen {
         addActor(spellButt);
         float gap = 12;
         spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
+        Party.get().fullyReset();
+        nextLevel();
     }
 
     public int level=0;
@@ -144,29 +146,6 @@ public class DungeonScreen extends Screen {
         BulletStuff.reset();
         BulletStuff.refresh(EntityGroup.getAllActive());
         enemy.setEntities(monsters);
-    }
-
-    public void resetHeroes(){
-        List<Hero> heroes = new ArrayList<>();
-
-        Hero m = HeroType.apprentice.buildHero();
-        m.setColour(Colours.blue);
-        heroes.add(m);
-        Hero h = HeroType.herbalist.buildHero();
-        h.setColour(Colours.red);
-        heroes.add(h);
-        Hero d = HeroType.defender.buildHero();
-        d.setColour(Colours.grey);
-        heroes.add(d);
-        Hero f1 = HeroType.fighter.buildHero();
-        f1.setColour(Colours.orange);
-        heroes.add(f1);
-        Hero f2 = HeroType.fighter.buildHero();
-        f2.setColour(Colours.yellow);
-        heroes.add(f2);
-
-        friendly.setEntities(heroes);
-        Party.get().setEntities(heroes);
     }
 
     public void nextLevel() {
@@ -215,7 +194,7 @@ public class DungeonScreen extends Screen {
     public void restart() {
         level = 0;
         setupLevelString();
-        resetHeroes();
+        Party.get().fullyReset();
         nextLevel();
     }
 

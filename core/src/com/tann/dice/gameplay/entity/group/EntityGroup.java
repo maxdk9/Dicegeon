@@ -5,14 +5,17 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.HeroType;
+import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntityGroup {
-    private List<DiceEntity> entities;
-    protected List<DiceEntity> activeEntities;
+    List<DiceEntity> entities = new ArrayList<>();
+    protected List<DiceEntity> activeEntities = new ArrayList<>();
     private List<Buff> buffs;
 
     public void die(DiceEntity de){
@@ -34,15 +37,10 @@ public class EntityGroup {
     }
 
     public List<DiceEntity> getActiveEntities() {
-        if(activeEntities==null) return new ArrayList<>();
         return activeEntities;
     }
 
     public void setEntities(List<? extends DiceEntity> intialEntities) {
-        if(entities == null){
-            entities = new ArrayList<>();
-            activeEntities = new ArrayList<>();
-        }
         entities.clear();
         activeEntities.clear();
         entities.addAll(intialEntities);
@@ -55,6 +53,11 @@ public class EntityGroup {
             entity.getDie().resetForRoll();
         }
         roll(true);
+    }
+
+    protected void clearEntities() {
+        entities.clear();
+        activeEntities.clear();
     }
 
     public void roll(boolean firstRoll){

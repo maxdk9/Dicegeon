@@ -59,7 +59,7 @@ public class Eff {
                     default: result += "????"; break;
                 }
                 break;
-            case Magic: result = "Gain "+value+" magic to spend on spells this turn"; break;
+            case Magic: result = "Gain "+value+" magic to spend on spells"; break;
             case Heal: result = "Restore "+value+" missing health ([purple][heartEmpty][light]) to a damaged character"; break;
             case Execute: result = "Kills target if they are on exactly "+value+" hp"; break;
             case Reroll: result = "When you roll this, gain +1 reroll this turn"; break;

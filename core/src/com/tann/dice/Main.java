@@ -148,8 +148,7 @@ public class Main extends ApplicationAdapter {
     BulletStuff.init();
     logTime("bullet");
     setScreen(DungeonScreen.get());
-    DungeonScreen.get().resetHeroes();
-    DungeonScreen.get().nextLevel();
+
     logTime("screen");
     fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
 
