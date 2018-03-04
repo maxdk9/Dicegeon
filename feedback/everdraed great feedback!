@@ -1,0 +1,97 @@
+Everdraed - Yesterday at 4:06 PM
+whoa, that's awesome!
+megane - Yesterday at 4:17 PM
+those goblin faces
+:ok_hand:
+tann - Yesterday at 4:20 PM
+Hey thanks. I have a friend whose art is so great and loves drawing monsters, hopefully portraits for everything eventually!
+Everdraed - Yesterday at 4:30 PM
+just beat it, super good stuff!  the biggest issue I had was initial information display (though ya do a good job with having info available in general), that's a really cool combat system
+I could see that being the core gameplay of a super strong roguelike-ish adventure game
+the big thing I didn't understand for a bit was what let me target enemies, ie them being forward
+if there was an additional aspect to the way they were presented, like enemies in the back were slightly greyed out or just their border was, that would be a little more immediately obvious to me
+I think there's a lot of room for positional concepts though, if ya wanted to push into it.  right now ya have forward (targetable by normal attacks) and adjacent, you could probably go farther with that where enemies get rearranged, pushed forward or backward, etc
+darkest dungeon does that (that's a huuuge part of its combat) so maybe not as intense as they do it where it really makes or breaks everything, but there's room to push into with that
+there's a few moments of 'oh I just got locked in', like when ya select the final dice of your roll and it moves forward
+you can also do ineffective moves I think, pretty sure I tried to block poison and it just let me without a warning / enough info that made me go 'oh whoops'
+something you might want to think about is giving a means for the player to reroll the enemy's dice
+I had situations where there was no way to prevent a death by the final boss, but with rerolls I could have shot for another move of his that hit more peepz but did less single target damage
+then like an enemy wizard being able to do the same thing creates a neat 'oh crap' moment possibility
+where they notice ya have a good set of rolls and just reroll on ya
+tann - Yesterday at 4:40 PM
+Thanks for taking the time, you're feedback is always the best.
+All great points, I have some plans about where to go with it and you've guessed all the best ones lol. I'm really glad you like the core stuff.
+Now I love the idea of the evil dice-lich who rerolls all your best rolls at the start of each round.
+Everdraed - Yesterday at 4:41 PM
+haha well great work on the game, it's a really nice evolution from the village which has a lot of nice, more easily accessible ways to progress and expand
+yeah that being a Big Deal boss ability is really cool to me
+another concept is that, since the dice have physics, some sort of action abililty like ya throw a bomb that will reroll all dice in that area + damage nearby enemies
+might get messy so maybe not, but I could imagine stuff like that being rare abilities / consumables that are super strong or situational
+the mental image of the player like, targeting a single enemy's dice to reroll it and the enemy going 'no fairs!!' is pretty good
+or a thief going 'hey that's cheating.... Nice.'
+tann - Yesterday at 4:47 PM
+That's such a cute idea. I could have it like a last-resort thing somehow.
+Everdraed - Yesterday at 4:48 PM
+yeah, it's an interesting gamble since ya could almost always make things worse, and if ya do the enemies could taunt ya / thank you
+depending on where you'd want to go with it, ie roguelike with a lot of replayability, something like that might be a core class ability that then gets embellished through a playthrough
+there's a lot of possible complexity with what ya have, so I think stuff like taverns to pick up new heroes (you could probably allow permadeath of some sort where rehiring lowbies is expected) is really viable
+tann - Yesterday at 4:51 PM
+Yeah I do like the idea of a roguelike with dungeons and permadeath! There's still a lot to figure out about where I'm going with it but I think there's a lot of design space with the combat and metagame stuff.
+Everdraed - Yesterday at 4:56 PM
+definitely exciting, I think ya have a real fertile base here, and it felt really immediately engaging with the efficiency questions / choices it was presenting
+StealthyMoose - Yesterday at 4:59 PM
+complete newcomer here, things that have confused me so far:
+- having to assign attacks (the checkbox telling me to use all my dice while all the dice were "allocated" led to confused clicking around)
+- not having the lines up all of the time, I figured out the yellow = threatened HP but it took me a sec, and I didn't feel like I knew what was going on
+- "single click actions" - I would've liked to drag the action to another character/"I just put that die there, why did it vanish"
+- some kind of indicator of the turn sequence & that an action will complete a phase (roll/reroll/assign action->target actions->execute)
+StealthyMoose - Yesterday at 5:00 PM
+(I very much like it though)
+tann - Yesterday at 5:00 PM
+All that stuff is really useful thanks. Turn sequence indicator is a great idea!
+(thanks!)
+StealthyMoose - Yesterday at 5:01 PM
+it was somewhat unintuitive to me that magic has to be spent when rolled - I was assuming I could bank magic
+once I got the flow down, this is rad
+the boss literally having giant dice is A+
+Everdraed - Yesterday at 5:11 PM
+yeah magic definitely threw me off
+haha you could totally play with enemies having non six siders too
+a giant d100 rolling on da board
+tann - Yesterday at 5:12 PM
+It has a jackpot instant kill side watch out!
+StealthyMoose - Yesterday at 5:15 PM
+I'll miss that guy
+
+tann - Yesterday at 5:15 PM
+rip lol
+birds ganging up on him
+StealthyMoose - Yesterday at 5:19 PM
+very neat - I made it to lvl 4
+Giggs - Yesterday at 5:56 PM
+I can't think of anything Moose and Everdraed haven't said but I agree with what they said. This is really cool. I fucking love dice.
+tann - Yesterday at 5:59 PM
+Yeahh whoo dice! Thanks for taking the time to check it out.
+Coming to a device near you in probably like 2020 because I have a job: "untitled dice game"!
+StealthyMoose - Yesterday at 6:05 PM
+other things since I'm noodling on it - I like front/back row (Disciples is one of my fav games), I'd like indicators for who is gonna do what (imo an arrow for what they're gonna do if they're gonna change position on either the left or right of their card, and then if an attack will kill a unit the position-change arrows show up when you're declaring the attack - maybe not have enemies auto-fill in the middle of your turn)
+there's a lot of cool tactical feelin stuff you can do with just the concept of "front row"/"back row"
+tann - Yesterday at 6:07 PM
+Yeah totally. I want to flesh out the row mechanic a bunch if I'm gonna keep it in.
+JamesRossi - Yesterday at 6:07 PM
+I forgot to test this a while back, I'm a jerk, I'll have to give this a go, the art looks fantastic and I'm ready to roll dice
+tann - Yesterday at 6:08 PM
+Hey it's cool. I'm glad you're checking it out now after the first wave of usability improvements. Poor @jo struggled through the earlier version and helped me out a ton.
+JamesRossi - Yesterday at 6:08 PM
+I like helping fix jank though =[
+tann - Yesterday at 6:08 PM
+plenty of that left haha
+JamesRossi - Yesterday at 6:08 PM
+Yessss
+StealthyMoose - Yesterday at 6:11 PM
+oh this is personal taste but I'd like it if the dice rolling was more violent? if that makes sense?
+the head-picture I have is like one of those little dinner trays & shaking then spilling a cup of dice on it
+I'm not sure how well that jives with actual dice physics
+tann - Yesterday at 6:13 PM
+Yeah I'm definitely gonna fiddle with dice physics some more.
+I like how it is right now but I want to spend like a whole day testing out various tweaks.

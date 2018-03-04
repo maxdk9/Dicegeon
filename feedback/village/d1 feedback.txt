@@ -1,0 +1,455 @@
+<Mo_Steel> once i figured out what was going on
+<tann> Cool thanks Mo_Steel! Haven't got a tutorial yet. They're annoying to make with this sort of game hah.
+<Mo_Steel> yeah, youd want to maybe do something with pop up windows and a guaranteed set of rolls
+<Mo_Steel> i could see playing this on a pad as a nice time spender though
+<tann> Yeah I've definitely been thinking smartphones with the interface so far.
+<tann> Though it doesn't scale screensizes yet
+* nielsm (~jiifurusu@synIRC-5A5DFECC.cpe.webspeed.dk) has joined
+<Mo_Steel> other things that could be neat: if events were forecasted a bit
+<Mo_Steel> just had a flood take food, might be neat to have a timeline bar showing "event soon"
+<Mo_Steel> so you can play defensively or gamble
+<tann> Yeah that's a good idea. Maybe I'm spamming events too much at the moment. There's an event every turn.
+<tann> Also kill me -> http://i.imgur.com/7GLUsFj.png
+<Mo_Steel> a gorilla just ook'd at me and took all my food and now the cloud9 logo is higher
+* crab_avatar has quit (Quit: My MacBook has gone to sleep. ZZZzzz…)
+<tann> Mo_Steel: That's your ~~~FATE~~~
+<Mo_Steel> pfft, that icon isnt even my REAL dad
+<tann> It represent your favour with the gods! (how bad events will be)
+<Mo_Steel> oooooh, level up
+<tann> You can get buildings/dice that change it and most events mess with it.
+<Mo_Steel> I WIN
+<Mo_Steel> NOICE
+<tann> noice
+<Mo_Steel> hmm, i cant select dice on the red rock
+<Mo_Steel> there we go
+<Mo_Steel> that was weird
+<tann> Ah I think I know what that is. Thanks.
+<tann> Leftover inputblocker from winning I bet.
+<Mo_Steel> if i had to guess, it thought the building menu was open still
+<Mo_Steel> once i opened and closed it i could click
+<tann> You're mostly right!
+<Mo_Steel> i found a magic gem from a shooting star?
+<Mo_Steel> am i a god now?
+<tann> Soon!
+<Mo_Steel> is this turning frog fractions??
+<tann> (I need to add event turn constrains so that event can only happen after turn 4 or so)
+<tann> I hope not!!
+<Mo_Steel> 13 crisom gems
+<Mo_Steel> :|
+<tann> omg that's a bad typo haha
+<tann> thanks
+<tann> uh i mean that's what the gems are called!!!
+<Mo_Steel> of course o/
+<Mo_Steel> ran out of food
+<Mo_Steel> ungrateful swine, i have 25 wood
+<Mo_Steel> are you above eating wood?!
+<tann> Whoah, did all the buildings cost food also? :D
+<Mo_Steel> yes :(
+<tann> Yeah I need to be careful about that. I guess you can get stuck.
+<tann> Mo_Steel: I've been thinking about what you said about events. What about small events every turn and every 4 turns something big happens that's very dependent on your fate.
+<tann> So if you're at fate -3 and next turn is a big event you know shit is about to go down.
+* TomR__ is now known as TomR
+* ChanServ sets mode +a on #SAGameDev TomR
+* ChanServ gives channel operator status to TomR
+* JonTerp (~JonTerp@synIRC-CF834696.dyn.grandenetworks.net) has joined
+* ChanServ sets mode +a on #SAGameDev JonTerp
+* ChanServ gives channel operator status to JonTerp
+<Mo_Steel> hmm
+<Mo_Steel> otherwise, you could change the format of events
+<Mo_Steel> maybe have it modify a single die or a couple dice
+<tann> Oh yeah I'm going to have lots of more interesting events
+<Mo_Steel> "chance of rotten food" adds a -1 food to a die
+<tann> Like all dice collect +1 food this turn (if they collect food)
+<tann> Ooh, alterations to dice from events is cool.
+<Mo_Steel> that way you can still try to roll to avoid it
+<Mo_Steel> or "monkeys are around, they'll steal a random die at the end of this day"
+<tann> Drought (-1 food from dice this turn) could affect the actual dice rather than be a status effect.
+<Mo_Steel> "incoming driftwood" = dice have +1 wood on each wood panel, but -1 fate on each wood panel
+<tann> Every time you reroll, monkeys go up to a die showing they'll take it!
+<Mo_Steel> just little things that give the player some small amount of ability to try and impact it
+<Mo_Steel> you get that little jolt of success when you pull it off right away too
+<tann> Yeah! I want to find a way to put a tiny extra mechanic in that allows you to use your judgement. Like spending morale on rerolling your event?
+* Takanago has quit (Broken pipe)
+<Mo_Steel> you could let the player choose from a couple events
+<tann> Oh there are some of those ish
+<tann> event happens, choose an outcome.
+<Mo_Steel> yeah
+<tann> I think more of those would be a good idea
+<Mo_Steel> is there a way to tell how close a given die is to levelling up?
+<tann> right click
+<tann> (needs to be better)
+<Mo_Steel> 12 gems, ran out of food :<
+<tann> As there are only 3 levels, I thought I'd make them a bit tricky! : P
+<tann> close!
+<Mo_Steel> could also have the respective villagers make comments
+<Mo_Steel> harold: "woo, i got a ton of fish today!"
+<tann> sarah: "fuck off harold"
+<Mo_Steel> lol
+<tann> I like the idea hah :D
+<Mo_Steel> ohhhh i see now; the event doesnt actually trigger until the end of the day
+<Mo_Steel> 3 food, i need 9
+<Mo_Steel> :|
+<tann> What do you need 9 food for? Did I screw up the upkeep?
+<Mo_Steel> oh nvm
+<Mo_Steel> thats how much i can store
+<Mo_Steel> im dumb
+<tann> Ohh haha
+<tann> Maybe I need to work on communicating this stuff better
+<Mo_Steel> building options: 3 crates
+<Mo_Steel> *puts gun in mouth*
+<tann> I want something that's risky and you can make a big gamble if you think it's worth it or you are about to lose.
+<tann> Like spending morale on extra rerolls? But a better idea than that :P
+<Mo_Steel> what about a different trade off
+<Mo_Steel> double the dice values, but no rerolls
+<Mo_Steel> or an extra die from the gods, but no rerolls
+<tann> I was thinking about morale having effects like that. Depending on the island.
+<tann> 3 morale -> +1 reroll. 6 morale -> a monkey joins your dice, he's a bit shit though. 9 morale -> +1 reroll
+<tann> etc
+<tann> Just having that much morale gives you the passive bonus
+<Mo_Steel> "everyone is starving, you can eat one of your villagers but the die is gone forever"
+<Mo_Steel> or tear down structures for wood
+<Mo_Steel> etc.
+<tann> Yeah! I want that to be a choice in events too. "sacrifice Boris"
+<Mo_Steel> "whos laughing now sarah!" > : )
+<tann> :D
+<Mo_Steel> anyone i like it, its a neat concept you could do a lot with
+<Mo_Steel> even possible to do stuff like have multiple villages
+<tann> Thanks very much for your feedback and time
+<Mo_Steel> trade between them, roll each once / day, etc.
+<tann> Interesting, I hadn't thought of that.
+<tann> I was thinking of having unlockable loadouts to take to islands and stuff.
+<tann> If you get stuck on an island, you can explore elsewhere and you might find a useful perk for it.
+<Mo_Steel> really depends on how complex you want to make it
+<Mo_Steel> it sortof gives me a darkest dungeon feeling to be honest?
+<Mo_Steel> like that seems a weird comparison
+<Mo_Steel> but thats also a game with a lot of randomness built in
+<Mo_Steel> that makes for good storytelling
+<tann> Yeah I can see that.
+<tann> I feel like working on some consistent lore for the islands as a whole would be a worthwhile investment.
+<Mo_Steel> like when you manage to clutch out a narrow survival in that game and only one party member survives
+<tann> Can weave it into what you're doing on the islands and the events/buildings/classes
+<Mo_Steel> for sure
+<Mo_Steel> send your seasoned veteran survivalists to DEATH ISLAND
+<Mo_Steel> with their already leveled up dice
+<tann> :D
+<tann> I really like the idea of that but I don't want to encourage farming at all.
+<tann> Always a tricky balance to strike.
+<Mo_Steel> yeah, its totally fine to just have each island be its own mission independent of the rest too
+<Mo_Steel> just options
+<Mo_Steel> hmmm
+<tann> Good to have options! I like the idea of carrying on the legacy of your dice so I want to fit it in somehow.
+<Mo_Steel> what about modifying the size of the dice
+<Mo_Steel> so maybe one day instead of a d6 you have a d10
+<tann> Yeah, that's something I want to do. People like getting bigger dice!
+<tann> Though more sides doesn't actually mean better, just more variance which may or may not be good for gameplay...
+<Mo_Steel> right
+<tann> It'll feel very appealing though
+<Mo_Steel> could be a level up option instead of changing the sides
+<Mo_Steel> other things that are obviously much later in than this mechanics stage
+<Mo_Steel> like having buildings visible on screen when you build them
+<Mo_Steel> etc.
+<tann> I think if I get bigger dice working I'll make it so all level 2 villagers are d8s etc
+<Mo_Steel> ahh
+<tann> I think people will struggle to evaluate a d6 vs a d8.
+<Mo_Steel> need soime seagulls and steel drums
+<tann> Haha I looked into steel drums actually, maybe I'll give them another look.
+<tann> What did you think of the sounds btw?
+<Mo_Steel> i liked them, the waves were nice and fit the mood, and the sfx was unintrusive
+<Mo_Steel> it can get a bit confusing whats locked and what isnt
+<Mo_Steel> dice wise
+<tann> The initial demo ages ago was the other way around. Click-to-keep.
+<Mo_Steel> putting a big red refresh icon over the ones you select to re-roll would be an option
+<tann> Some people said it should be the other way
+<tann> Hmm ok! That's doable.
+<Mo_Steel> i can see if either way, as long as it clear
+<Mo_Steel> alright, lunch time
+<Mo_Steel> then soon e3
+<tann> Are you there? Or watching?
+<Mo_Steel> just gonna watch giant bombs coverage
+<tann> Cool, I might join you if I ever get this jvm packer to work : D
+<Mo_Steel> heh
+* Shoehead has quit (Quit: Leaving)
+* Xomnom (~Xom@4F89C55E.CBF87CB9.70A4E0F4.IP) has joined
+* Kalias (~Kalias@synIRC-173583F5.karoo.kcom.com) has joined
+* crab_avatar (~textual@synIRC-74C609D8.pool.invitel.hu) has joined
+<crab_avatar> tann: heyo, did you figure out the jvm packer thing?
+<tann> still working on it
+<crab_avatar> had to restart the jdk download D:
+<crab_avatar> says 3 hours now.
+<crab_avatar> sigh
+<tann> haha that's crazy
+<tann> http://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html did you get it from here?
+<tann> Downloads in 50 seconds for me! Do you live in Swaziland?
+<Mo_Steel> ISS
+<crab_avatar> ya, trying to grab the mac installer
+* tawny (t@wny.has.a.hostmask.now) has joined
+* Coldrice (~coldrice@synIRC-8CD3DED9.hsd1.wa.comcast.net) has joined
+<Coldrice> whats up
+<Luciddream> Heya coldrice
+<Coldrice> Hows it hanging luciddream
+<Luciddream> Right now I'm mostly wasting time waiting for the EA E3 press conference to start in an hour or so
+<Coldrice> for some reason I wasn't paying attention to e3
+<Luciddream> It sneaks up on me every year
+<Coldrice> ok I got like one week to make a playable build for game dudes
+<SexualRickshaw> I'm hoping for a repeat of weed3
+<Mo_Steel> https://www.youtube.com/watch?v=XZY8UA1KpjY
+<turdbot> Mo_Steel: Best of Giant Bomb 100 - WEED3 - length 14m58s - 1394↑25↓ - 93,163 views - Giant Bomb on 2016.06.27
+<crab_avatar> tann: awesome progress so far!! i feel like keeping mental track of which villager does what and which level they are and how many brains they've rolled since the last level might be important to play well, but i lose track of the colors fast. im wondering how it would feel if you had portraits for each villager and you  rolled their dice next to them
+<Mo_Steel> https://www.giantbomb.com/chat/\
+<Mo_Steel> bah
+<Mo_Steel> https://www.giantbomb.com/chat/
+<tann> Yeah that's something I need to work on crab_avatar
+<tann> Right click the dice for now :P
+<crab_avatar> right
+<crab_avatar> loving the sounds btw
+<tann> Thanks :D
+<crab_avatar> the level up one is delightful
+<tann> First time messing with instrument samples instead of blips and blorps
+<tann> How do you mean portraits btw? Roll each die in its own little zone?
+<crab_avatar> yeah exactly
+<tann> I think I like them all jumbling together but the xp definitely needs to be more-visible.
+<crab_avatar> i like how throwing em feels but yeah
+<crab_avatar> ohh maybe you could have the portraits and xp pop up next to the die after every turn
+<crab_avatar> laying them out so none of them cover anything could get tricky tho
+<tann> Maybe something on each face showing xp?
+<tann> (x) (x) ( ) 
+<crab_avatar> sure
+<tann> That could look too busy maybe but it's pretty important. I'll have to think about it.
+<tann> This jvm packer is kicking my ass
+<tann> im gonna give up for a bit
+<tann> Anyone know of a way of getting errors when you run an exe? Like you can run a jar on commandline
+<Mo_Steel> afraid not
+* shengii (~definitel@synIRC-F4BB1E22.hsd1.wa.comcast.net) has joined
+* Samael has quit (Input/output error)
+<Mo_Steel> giantbomb live now
+<Luciddream> Hm. I hope that new bioware IP shows up at the EA thing
+<Luciddream> new bioware IP and a non-battlefront star wars game is about the best I can hope for from EA
+<Luciddream> realistically it'll probably be nothing but racing and pele
+* HelixFox (~HelixFox@DF6D2A93:14FAAA96:B326F7C5:IP) has joined
+<crab_avatar> tann: i can't put my finger on it but something you changed from the old old prototype (pre-islands) decreased the "just one more game" factor for me. maybe it was higher variance so i had a higher chance for a quick loss or something?
+<tann> I ruined it!! :P
+<tann> What was it back then hmm.. you had to do something and you could do it sooner and it told you how many turns you did it in.
+<tann> Maybe the scenario was better
+* Coldrice has quit (Quit: Coldrice)
+<tann> I'll have to play the old one a bit and see what I think.
+<Crayon> Need 4 Fast and the Furious
+<Mo_Steel> more burnout pls
+* mokkan (~mokkan@D9594ECA:F83C07B7:78047993:IP) has joined
+<tann> Yoo I finally kicked the ass of jvm packing! http://tann.space/games/village/
+<tann> If anyone's around to playtest a little dice strategy game I'd love to hear your thoughtses!
+<Scaevolus> 45MB
+<Scaevolus> what
+<crab_avatar> that or 200mb for the jdk soooo 
+<tann> Scaevolus, sorry there's like some music and 3d physics libraries. I think they're most of it.
+<Scaevolus> oh it's different versions of libbullet
+<tann> Oh is it platform specific? Ugh I hate bullet more and more each day.
+<Scaevolus> well it has all the different platforms
+<Scaevolus> you have bullet for the dice physics right?
+<Scaevolus> time to write a physics engine :V
+<tann> How big are them all together?
+<tann> Haha no thanks, I'll deal with 45mb :D
+<Scaevolus> ~20MB
+<tann> I'm sad to lose out on that advantage of libgdx though. Most of my games are <2mb
+<Scaevolus> tann: when you roll a dice near the top of your screen, it kind of gets stuck and doesn't change sides
+<tann> Huh, is it broken or does it just take time? I've never seen it before.
+<tann> Oh I think I get you. There's an invisible box and maybe I should... make it slope at the edges so you don't get duff rolls.
+<Luciddream> Dangit, we only got like 12 seconds of the new bioware IP :I
+<Luciddream> that racing game with the burnout crashes looks good though
+<Mo_Steel> need for speed revengeance
+<Scaevolus> tann: yeah maybe just make it run for a while and 
+<Scaevolus> make sure that the rolls are approximately random
+<tann> I don't really care if they're not random.
+<tann> But I don't want people to feel like their roll didn't work.
+<Scaevolus> yeah, it just went up and then fell down without turning at all
+<Drakkar> just have a giant hand flick it
+<Drakkar> if it gets stuck on the edge
+<Drakkar> and doesn't roll
+<tann> Haha
+<Neofelis> Need for Speed 2: The Speedening of Needening.
+* Attrition (~Killfrenz@synIRC-F2ED79B9.hsd1.md.comcast.net) has joined
+* Killfrenzy has quit (Broken pipe)
+* Char (~textual@back.once.again.for.the.renegade.master) has joined
+* Noyemi (~chatzilla@729566C:3A30CAAA:8BC1F5A4:IP) has joined
+<Noyemi> hello fambs
+* Drakkar has quit (Broken pipe)
+* Drakkar (help@I.am.generating.the.monkey) has joined
+* nicolas is now known as dispo_
+* fathix has quit (Quit: ZNC 1.6.3+deb1 - http://znc.in)
+* nielsm has quit (Ping timeout: 182 seconds)
+* SailorDave has quit (Connection reset by peer)
+* Elentor has quit (Ping timeout: 185 seconds)
+* krillininthename (krillinint@synIRC-4C73B6A0.rdl2.qld.optusnet.com.au) has joined
+<krillininthename> gday folks
+<Xibanya> hola
+<krillininthename> que tal
+<Mo_Steel> donde esta?
+<krillininthename> donde estamos todos when u think about it
+<Mo_Steel> deep
+<krillininthename> hmmm i barely know garageband but im thinking of picking up logic 
+* fathix (~fathix@synIRC-E6B516A1.tu.ok.cox.net) has joined
+<krillininthename> ugh $320 AUD maybe not
+<krillininthename> what the fuck, 200USD is only 265AUD as well, jeez
+<crab_avatar> i like Renoise
+<crab_avatar> tracker style DAW, really well thought out imho
+<crab_avatar> cheap too
+<crab_avatar> admittedly more convenient for bleep bloops vs live instrumental stuff
+<krillininthename> yeah i haven't done any live instrument stuff except like, one time as a test
+<crab_avatar> how's Cowboy Be Bug coming along?
+* JonTerp has quit (Quit: Leaving.)
+<krillininthename> slowly, i have enemies now
+<crab_avatar> that name will be $1000 thank u
+<krillininthename> but i did like barely any work yesterday
+<krillininthename> hahahaha 
+<krillininthename> i did a thing a while ago where i generated random western movie names using a markov and a list of 500 or so westerns
+<crab_avatar> hahah yeah i saw that
+<crab_avatar> gold
+<krillininthename> ended up with some cool titles, but i decided on 'plagas o plomos'
+<crab_avatar> nice
+<crab_avatar> i spent 6 hours trying to refactor a thing in my game and long story short i reverted to the last commit
+<tann> Good job on taking advantage of git : D
+<crab_avatar> i'd be so fucked without it
+* FuegoFish has quit (NickServ (GHOST command used by SleepingFish))
+* FuegoFish (~fuego@synIRC-EF629594.cable.virginm.net) has joined
+<tann> I was just looking back at my commits on village game and there's so many stupid jokes in it
+<Everdraed> played and beat each of those scenarios tann, it's real good!
+<tann> Wow thanks Everdraed!
+<krillininthename> fusion saves a single binary file for each project, so it won't play too nice with git
+<krillininthename> i literally just file > save as > filename009 or filename 2017-06-11 0832
+<Everdraed> one thing that would be nice is having the actual faces value written on upgrade, instead of the lump sum of them added together
+<Everdraed> it felt like I couldn't actually see all the faces for the rotating dice
+<tann> That's a good point, I should separate them out.
+<tann> I was thinking it's nice to see the total of the die and get a glance of what's on it but I think easier to just see all the sides statically.
+<Everdraed> yeah honestly I'd just set it up so you can see each 6 faces with the exact icons they use since they're very easily parseable
+<Everdraed> that way they're all the same format
+<tann> One thing crab_avatar brought up that I'm not super sure how to fix: it would be nice to be able to see die XP easier.
+<tann> Have you got any ideas on what would look good for that?
+<Everdraed> I'd say it might be worthwhile to look at the building... building and think about reducing it's randomness somewhat or give it structure, maybe like a path tree with light random elements?  getting totally random buildings available that you can't rerandomize without purchasing is sort of a pain, and you probably don't ever want to have duplicates since that's essentially eating an option 
+<Everdraed> with no positive aspect
+<tann> Pips on the dice, infopanels on hover? I guess hover wouldn't work since I'm aiming for mobile.
+<Everdraed> so it's kind of hard to discern dice at a glance, no clue what their roles were unless I moused over
+* Keelin has quit (Quit: )
+<tann> Yeah that's a problem too. I tried making the borders change when you level up but I made them and I just know they're levelled up if they don't have the basic border.
+<Everdraed> I'm not sure what the ideal fix for that would be, I almost want to say all dice constantly have a small icon hovering above them that shows their roll + with like, a 3 sectioned circle that fills up on exp
+<Everdraed> role
+<tann> hah :D
+<tann> Yeah I'll try something like that.
+<tann> Good point on the buildings too, I'd been meaning to work on them a bit.
+<Everdraed> it might be too distracting but honestly, not a whole lot of things going on in your field space so with that number of dice could be fine?
+<tann> Gotta be careful about them overlapping eachother but I think it's doable.
+<Everdraed> knowing at a glance whether a person will level up if kept on a brain, what their role is so if it's worth rerolling when they only have one food or two food without needing a hover would be ideal
+<tann> Yeah definitely
+<tann> And I bet you'll learn what the roles have on their sides if they are labelled too.
+* Samael (~Israfel@9BFFE155.AE5CC925.B33770AA.IP) has joined
+<Everdraed> yeah it'll be easier to keep in memory
+<Everdraed> I liked the ruby scenario, it was neat seeing the digger roles
+* Coldrice (~coldrice@synIRC-8CD3DED9.hsd1.wa.comcast.net) has joined
+<Everdraed> it'd be neat to see specialty roles with like, super power faces
+<Everdraed> where it's kind of like exp, you need to land on the super power face 3 times to get its effect
+<tann> Ooh that's a cool idea
+<Everdraed> or maybe just twice would be more likely useable
+<tann> I want to have.. buffer dice too. Like a "leader" who has a side that boosts wood from all dice this turn and another that boosts food.
+<Everdraed> oh that's cool
+<tann> So what you roll on that switches up your strategy and you might take a turn to fill up on food.
+<Everdraed> I really liked the event that has a choice, I'd suggest maybe pursuing choiced events as much as possible
+* HelixFox has quit (Connection reset by peer)
+<Everdraed> because the totally static random ones are sort of low engagement
+<tann> Yeah, that was a late addition and it feels good so I'm gonna use it a lot.
+<Everdraed> mmm
+<Everdraed> I think if you have events be modified by the faith stat, that opens up some interesting strategies
+<Everdraed> ie you can make a risky choice, which becomes more or less risky depending on faith
+<Everdraed> at 0 it's 50/50 at -1 40/60  1 60/40 etc
+<tann> Hm! I hadn't thought of chance-based events, that's interesting.
+<Everdraed> something that might be cool is giving specific dice and their rolls opportunities to prove themselves, like a random event that asks you to pick a die, roll it, and depending on what face (maybe it only cares about wood, or only food) it has different event outcomes
+<tann> With a spotlight :D
+<Everdraed> haha yeah
+<tann> I've also been thinking about having each turn be a "week" and each week has a minor event but at the end of the "month" there is a big event.
+<Everdraed> and those same events (or others) could modify a die, so maybe replace any x with your choice of baseline resource, or add +1 to any resource face
+<tann> Yeah that's something that'll be really nice. Gotta think about how it interacts with levelling up but it'll be really cool.
+* Forer has quit (Connection reset by peer)
+<tann> Ooh I just thought that you could spend fate on rerolls in the spotlight moments!
+<Everdraed> yeah I like being able to actively use resources for stuff like that
+<Everdraed> right now it feels like early exp is direly important
+<Everdraed> when there's no slow but automatic exp gain you pretty much want to get 3 brains for every villager as fast as possible
+* nicolas (santa@claus.is.not.real) has joined
+<tann> Yeah maybe xp is a bit too necessary. I usually don't level up everyone though, I'll skip out people still at 0/3 by turn 8ish. They're still good for food!
+* dispo_ has quit (Ping timeout: 187 seconds)
+* Samael has quit (Input/output error)
+<Everdraed> maybe a teacher role that has a slot that has gold brain icons, which are given to the lowest exp die
+<tann> double gold-brains!
+<Everdraed> haha yeah
+<tann> I need to have brains on events too, could have event-brains given to the newest dice.
+<Everdraed> yeah was going to say exp on events would help mediate the goodness / need to go brains early
+<Everdraed> it'd also give a reason to not always choose the 'best' die for an event, since it's free exp if you don't care about the result so much
+<tann> I don't follow you.
+<tann> How are you imagining choosing dice for events?
+<Everdraed> an event pops up after / totally disconnected from any turn 'A fortunate source of fertilizer allows for a single harvest of great gains, choose a villager/s and reap the rewards'  [player chooses any die, or two or three]  die/s is rolled, and visible food icons are multiplied by 2.  Each involved die gets 1 or 2 bonus exp for being part of the event
+<tann> Oh ok!
+<Everdraed> spend a faith to reroll those chosen dice
+<tann> I get you now, rewards you for having a variety of die-types too.
+<Everdraed> could be kind of clever about icons and how events utilize them 'You realize that a particular species of monkey on the island have delicious brains, send two or three villagers into the jungle to collect them' for each brain rolled, get +1 morale
+<Everdraed> or brains being needed for cleverness-required events
+<tann> Oh dang I like that!
+<tann> I might have it so the more-involved events like that happen every 4 turns.
+<tann> One of your villagers get trapped in a cave! Roll food or starve before anyone can rescue them. (+2 xp for rolling food)
+<tann> Good time to use someone who hasn't got any xp
+<Drakkar> there's a snake in  your boots!!!
+* crab_avatar has quit (Quit: My MacBook has gone to sleep. ZZZzzz…)
+* sistergodiva (~snrn@synIRC-3ADBE6DA.tbcn.telia.com) has joined
+<sistergodiva> evening
+<tann> hiya
+<sistergodiva> What up?
+<tann> Released a dice game thing, got some great notes from playtesters here!
+<sistergodiva> Oh, the dice-game is done? Or at least playable? :D
+<tann> I'm happy enough with it that I want to continue work on it and get it working on mobile. I may need to pay an artist though :P
+<tann> Sure, give it a shot! http://tann.space/games/village/
+<sistergodiva> Cool!
+<sistergodiva> I am playing with map generation :P
+<tann> neato!
+<sistergodiva> Trying to find fun ways to make different maps and combining prefabs, digging and cellular automata
+<tann> That stuff's so fun, I may end up going into it a bit with dice game somehow haha
+<sistergodiva> Gotta say
+<sistergodiva> I love it so far
+<sistergodiva> Just wanted to say that before I continue playing if you where to go offline, tann :D
+<tann> Oh hey thanks!
+<sistergodiva> From what I notice, there is just a few ui-thing I would change
+<sistergodiva> Like, maybe put the income next to the upkeep?
+<sistergodiva> maybe with a sum even
+<tann> Good idea! I'm gonna be changing that whole thing though as I add more effects like [+8 food in 3 turns]
+<tann> So I'm still trying to figure out where best to fit everything. UI is hard but having them close is not really something I've thought about yet.
+<tann> Going to be working to get it looking good on mobile next.
+<sistergodiva> Gotta say it feel pretty fucking solid
+<sistergodiva> A few times my die got stacked, but it solved it
+<tann> my patented stack-solve algorithm! I think I need to make it trigger earlier.
+<sistergodiva> The re-rolling wasn't instantly intuitive, I mean, it just takes a second to get it. But I would probably have all dice unlocked and put a little lock on them if you press them and lock them
+<sistergodiva> Nothing wrong with how it works now though
+<tann> Yeah I'm gonna review that once I get it on mobile I think. I can't figure out which I like better at the moment.
+<sistergodiva> NOICE
+<sistergodiva> Oh, new ambience on the new island
+<sistergodiva> Oh, I just found rightclick
+<tann> Hah yeah, Gem and Outset island have similar ambience but the stormy one is all rainy.
+<tann> Yeah, need to make a better thing for that really.
+* Samael (~Israfel@9BFFE155.AE5CC925.B33770AA.IP) has joined
+<sistergodiva> tann, failed the gem one
+<sistergodiva> Great stuff dude
+<sistergodiva> Amazed over how polished it is
+<tann> Thanks for playing sistergodiva!
+<tann> Haha it's not polished it's ugly! :P
+<tann> Thanks for you kind words!
+<sistergodiva> Trying to figure something out, but I forget the terms for it
+<sistergodiva> I have different maps you can go into from the worldmap
+<sistergodiva> I could either have a interface that is implemented by the different maptypes
+<tann> This is libgdx?
+<sistergodiva> Or something like a enum MapType, which I would pass into the constructor
+<sistergodiva> Yeha
+<tann> I like having abstract class Map but I think that's a bit non-standard :P
+<tann> All the specific maps extend Map and most methods are on the Map class, except you can set up specific overrides/content stuff on the derived classes.
+<sistergodiva> That kinda helps with stuff like rendering which is just going to be the same implementation on every class if I go interface
+<sistergodiva> Also, since different maps are going to have different objectives and stuff, abstract would leave enough room to tweak a lot if needed
+<sistergodiva> Without having to define absolutly everything
+<tann> I don't like interfaces for this sort of thing because you're gonna want a lot of variables and complete methods in the Map class.
+<tann> All the maps do something extremely similar
+<sistergodiva> Yeah, all tile-management and rendering
+<sistergodiva> Just because I have an interview on monday for a summer job I start getting into this game again
+<tann> Hah, always the way
+<tann> Best of luck with the interview, I think I need to sleep now.
+<tann> And thanks again for playing

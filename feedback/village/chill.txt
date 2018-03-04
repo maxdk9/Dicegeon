@@ -1,0 +1,47 @@
+tann: The only chill games I can think of are like... simulation/open world games. Sim city, factorio etc. Just do your thing.
+[11:38 AM] Everdraed: chill would probably be 'can't lose, but you can try to do things most efficiently / get a high score'
+[11:38 AM] tann: Maybe longer-form missions with gentler difficulty would be more chill.
+[11:38 AM] Everdraed: so that might be a sandbox mode?
+[11:38 AM] Everdraed: where bad things happen but you don't really lose, you can always build back
+[11:38 AM] tann: I could have like a "build as successful a village you can in 80 turns"
+[11:38 AM] Everdraed: and then scaling some concepts so it isn't so much long term resource drain but short term periods of drain?
+[11:39 AM] Everdraed: yeah that could be a good mode, or have like '20, 40, 80' turns as options
+[11:39 AM] Everdraed: and unique high scores for each
+[11:39 AM] tann: Plenty of time to test stuff out and maybe a few goals during that to unlock stuff.
+[11:40 AM] tann: Oh cool that could probably tie in with a nice unlock system that encourages you to sometimes go back to easier levels and do them hyper-well to get the top tier reward from it?
+[11:40 AM] Everdraed: yeah that sounds cool!  what are you thinking about for rewards / unlocks?
+[11:40 AM] tann: Different loadouts -> start with a baby die that grows up || start with a builder etc
+[11:41 AM] tann: And.. gotta think about the rest haha.
+[11:41 AM] Everdraed: oh nice, that sounds like a cool way to open up build variety
+[11:41 AM] Everdraed: did you ever play sproggiwood?
+[11:41 AM] tann: Yeah that game's cool
+[11:41 AM] Everdraed: it had the same sort of challenge of 'chillifying a non-traditionally chill genre'
+[11:42 AM] tann: Good point, I should go and play it again to see how that does it.
+[11:42 AM] Everdraed: might be good to revisit it and look at how it handles unlocks, levels
+[11:42 AM] Everdraed: yeah
+[11:42 AM] tann: I always thought nethack was pretty chill though : P
+[11:42 AM] Everdraed: well I guess it can be, I guess I don't consider roguelikes and the likelihood to lose progress super chill but it depends on your experience and playstyle I suppose haha
+[11:43 AM] Everdraed: sproggiwood disabling the capacity to lose a lot of time / progress with a sad death by making it piecemeal missions steps it more firmly toward chill
+[11:43 AM] tann: I find them chill up until I'm super far and never got this far before and then it's exciting.
+[11:43 AM] tann: Yeah the piecemeal steps make iit more chill
+[11:43 AM] TheCheshireCat: Roguelikes can feel chill just because of the turn-based nature.
+[11:43 AM] Everdraed: honestly I think dice game is kinda chill intrinisically
+[11:44 AM] tann: That's probably a lot of it @TheCheshireCat
+[11:44 AM] Everdraed: being able to take it at your own pace does a lot
+[11:44 AM] TheCheshireCat: You might be in some tense siutations, but you're never pressured to make a decision. You have as much time as you want to consider all your options.
+[11:44 AM] tann: That's good to hear @Everdraed . I was just thinking about what to do with missions and it was all... can you survive this island????
+[11:45 AM] Everdraed: one thing to think about is having failure somehow make next time easier, if that's with exp / starting builds being progressed by some sort of xp concept and even failing will get you a juicy bit
+[11:46 AM] Everdraed: so you can play 'stock' for greatest / divergent challenge, but there's this persistent 'start stronger' concept you're building naturally that helps mediate some more intense later content and gives failure an opportunity to still grow stronger
+[11:46 AM] Everdraed: that could tie into rewards / unlocks
+[11:46 AM] tann: Oh yeah I definitely want to do that. I was thinking getting to certain checkpoints left the next expedition with more stuff for that specific mission.
+[11:46 AM] Everdraed: ohhh, that's real good
+[11:46 AM] Everdraed: though definitely give a way to play 'no helping hand' mode
+[11:47 AM] TheCheshireCat: Having some sense of permanent progression also helps give the game more continuity which can help extend replayablility, too.
+[11:47 AM] Everdraed: 'do you want to settle in the same spot and have a chance to find previous groups remnants?  or go to a fresh area?'
+[11:47 AM] TheCheshireCat: Like one of the reasons I've played a lot more Payday 2 than I have Left 4 Dead is the former has progression mechanics so you feel encouraged to do each level more than just once to have done it.
+[11:48 AM] Everdraed: progression + unlocks definitely are a big deal
+[11:48 AM] Everdraed: sproggiwood has a nice amount of stuff to unlock that makes returning to previous levels with new gear / classes fun
+[11:48 AM] tann: Yeah true. I think I should design the game around being able to complete each mission without the checkpoints and that'll mean it has a nice dynamic optional difficulty level.
+[11:49 AM] Everdraed: also you beating a level with each class is uniquely recorded, so completionism makes you want to go back to older levels each time you unlock a new class
+[11:50 AM] TheCheshireCat: Having that kind of thing is also interesting because unlocking new classes lets you approach older levels with new strategies, possibly breaking/short-circuiting them in a way that wasn't possible the first time around. Although I'm not sure how you could apply that to the dice game.
+[11:54 AM] tann: Thanks for all the helpful ideas and words all!

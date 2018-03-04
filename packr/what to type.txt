@@ -1,1 +1,1 @@
- java -jar packr.jar --platform windows64 --jdk openjdk82.zip --executable village --classpath village.jar --mainclass tann.village.desktop.VillageDesktop --vmargs Xmx1G --minimizejre soft --output out-win
+java -jar packr.jar --platform windows64 --jdk openjdk82.zip --executable DiceDungeon --classpath dicegeon.jar --mainclass com.tann.dice.desktop.DicetopLauncher --vmargs Xmx1G --minimizejre soft --output out-win

@@ -1,0 +1,102 @@
+[7:41 PM] tann: Yo, turn-based game about collecting resources.
+[7:42 PM] tann: What do you think these buildings do based on the words?
+[7:42 PM] Xibanya: nooo not agricola!!! :vv:
+[7:42 PM] tann: YEAH BABY get me some fences and and
+[7:42 PM] Xibanya: nooooooooooooooooooooo
+[7:42 PM] tann: I also hate agricola : P
+[7:43 PM] tann: Well, I dislike it a bit. There are worse games, I just think it takes ages to set up, goes on for too long and often your turn is a bit depressing.
+[7:43 PM] Xibanya: it's like the monopoly of hardcore board game enthusiasts
+[7:43 PM] Xibanya: nobody actually has fun except the person winning
+[7:43 PM] TomR: reclaim resources, let you trade over water/build boats, grow plants
+[7:43 PM] EntranceJew: @tann at first i thought it made 1 wood over 10 turns but then eight leafs in five turns confused me
+[7:43 PM] TomR: what do I win?
+[7:44 PM] SupSuper: i'm guessing that is supposed to be a generic "food" icon rather than a "plant" icon
+[7:44 PM] Xibanya: you win everybody starved
+[7:44 PM] TomR: I only looked at the titles
+[7:44 PM] tann: Oh yeah the titles don't matter.
+[7:44 PM] TomR: other junk is meaningless
+[7:44 PM] tann: Ok cool! Good to know it is unclear : D
+[7:44 PM] TomR: based on the words!
+[7:44 PM] TomR: words!
+[7:44 PM] SupSuper: i guess the real question is what's the difference between "/" and "in"(edited)
+[7:45 PM] Xibanya: is that per turn?
+[7:45 PM] Xibanya: as in hourglass means turn?
+[7:45 PM] SupSuper: so one is gradual and one is a lump sum?
+[7:45 PM] tann: Ooh I just thought of an idea to make it clearer.
+[7:45 PM] TomR: can you mouse over and it tells you WTF?
+[7:46 PM] tann: mobile game : ((edited)
+[7:47 PM] TomR: I went back and looked at it again and I think I know what's going on
+[7:47 PM] tann: And anyway I want the iconography to be clear
+[7:47 PM] tann: http://i.imgur.com/XfXFWnB.png
+
+[7:47 PM] EntranceJew: now i'm even more confused
+[7:48 PM] SupSuper: fwiw, "salvage hut" is the last name i'd give to "something that produces wood"
+[7:48 PM] Xibanya: what's with the (10) vs 5?
+[7:48 PM] TomR: you get +1 for 10 turns
+[7:48 PM] TomR: right?
+[7:48 PM] Xibanya: why in parenthesis when the other numbers are not?
+[7:48 PM] tann: Yeah!
+[7:48 PM] Xibanya: OH
+[7:48 PM] Xibanya: I GET IT NOW
+[7:48 PM] Xibanya: :downs:
+[7:49 PM] TomR: why does it have a picture of king jazz bot on the cards though?
+[7:49 PM] dupersaurus: I think you should keep the number on the same side of the hourglass
+[7:49 PM] tann: Thanks all for typing the things you thought it was.
+I want two different effects-> waiting for a payout and getting some resources per turn for a set number of turns.
+[7:49 PM] EntranceJew: it doesn't make sense to me to construct a building that only generates over a brief period of time
+[7:50 PM] TomR: nothing lasts forever
+[7:50 PM] EntranceJew: those sailors go ham on that dock
+[7:50 PM] tann: 10 turns is a long time!
+[7:50 PM] TomR: how long are turns?
+[7:50 PM] Xibanya: all these buildings will be lost in time
+like tears in rain
+[7:50 PM] TomR: like a bunch of years?
+[7:50 PM] tann: a turn is like... a month?
+[7:50 PM] tann: Or a week? Or something
+[7:51 PM] tann: A decent-length game is about 20-25 turns.
+[7:51 PM] Xibanya: waiting a quarter to half of the game on something doesn't seem that fun imo :frowning:
+[7:52 PM] Xibanya: puts a huge advantage on those who can act quickly/get good stuff quickly by luck
+[7:52 PM] Xibanya: this is why I refuse to play Catan anymore
+[7:52 PM] SupSuper: as far as iconography goes, i'd try to estabilish a common language and spell things out first before hoping people will immediately get your reduced syntax
+[7:52 PM] SupSuper: like early magic cards
+[7:53 PM] tann: Ah yeah. In new magic sets they give the commons reminder text for new mechanics.
+[7:53 PM] tann: Maybe I can do something similar.
+[7:53 PM] tann: @Xibanya Uhoh you might not like this game then because it's a dice game :smile:
+[7:53 PM] SupSuper: "+8food after 5 turns" and "+1food/turn for 10 turns" is much more immediate, if you wanna compact that come up with icons for stuff that are explained somewhere
+[7:53 PM] Xibanya: I mean I'm fine with luck but if the game is say 20 turns but it's clear who the winner is 5-10 turns in,
+[7:53 PM] Xibanya: I won't want to keep playing
+[7:54 PM] Xibanya: I used to play a fuckload of board games....so many neglected this aspect......ugh.............
+[7:54 PM] TomR: I'd want to play this game so I can see what's going on
+[7:54 PM] TomR: before I make judgements
+[7:54 PM] Xibanya: true, I'm being tough, don't take it like I'm super down on you
+[7:54 PM] tann: Yeah I guess I'm happy that people worked it out without much context.
+[7:55 PM] tann: @Xibanya I'm a huge boardgames nerd and I totally agree with most of your points.
+[7:55 PM] SupSuper: anyways the icons for "food" and "turn" are pretty apparent (although your "food" icon is kinda too planty)
+[7:55 PM] EntranceJew: i think if the cards themselves had an icon for duration and an icon for rate, even if it meant a lot of cards had (duration) (infinity) it would stand out more. but weren't there multiple options for each card?
+[7:55 PM] SupSuper: but i think you need to work out a clear separation between "fixed amount after X turns" and "X per turn for X turns"
+[7:55 PM] TomR: yeah that makes sense too
+[7:55 PM] TomR: if the game goes by fast at all it could be easy to miss
+[7:56 PM] tann: @SupSuper you mean they look too similar?
+[7:56 PM] SupSuper: yeah it's too context-based
+[7:57 PM] SupSuper: maybe clearly split the two things, like:
+"Gain: 5 food
+Delay: 5 turns"
+and:
+"Gain: 1food/turn
+Duration: 10 turns"
+[7:58 PM] tann: http://i.imgur.com/vF75McV.png
+
+[7:59 PM] tann: The reason I want it to be concise is that I want a log of all your active effects at the bottom.
+[7:59 PM] Xibanya: hehe the icon styles look super board-game-y in the best way
+[7:59 PM] TomR: that makes sense enough
+[7:59 PM] SupSuper: well i'd still split them up, it's like "immediate" effects and "upkeep" effects you know?
+[8:00 PM] chipacabra: possible suggestion: have a distinct iconography difference between "income" and "lump sum". Maybe only use the + symbol when it's an income per turn, and if it's a lump sum just have a picture of 8 icons (or a big 5 icon and 3 littles, or whatever looks nice)
+[8:00 PM] SupSuper: one is in effect, one is waiting for a turn to happen
+[8:00 PM] SupSuper: +1food/turn (expires in 10 turns)
++8food (takes effect in 5 turns)
+[8:00 PM] TomR: if it's touch control make a drawer that you pull up
+[8:00 PM] TomR: show the most relevant stuff on top
+[8:01 PM] tann: Yeah I guess I don't need to worry about it being concise if I make it a drawer.
+[8:01 PM] TomR: I need a 3D printer that makes burritos
+[8:02 PM] TomR: maybe put a thing that shows the next effect, plus a number to show that more effects are coming
+[8:02 PM] TomR: maybe in dot form
