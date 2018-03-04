@@ -9,7 +9,6 @@ import com.tann.dice.gameplay.entity.HeroType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.util.Colours;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class Party extends EntityGroup{
 
     public void addHeroes(){
         HeroType[] types = new HeroType[]{
-                apprentice, herbalist, defender, fighter, fighterOrange
+                apprentice, herbalist, defender, paladin, paladin
         };
         List<DiceEntity> tmp = new ArrayList<>();
         for(HeroType type: types){

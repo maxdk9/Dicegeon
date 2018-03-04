@@ -131,24 +131,28 @@ public class EntityGroup {
 
         for(int i=targetsTmp.size()-1;i>=0;i--) {
             DiceEntity de = targetsTmp.get(i);
-            boolean good = true;
-            Eff e = effects[0];
-            switch (e.type) {
-                case Nothing:
-                case Damage:
-                case Magic:
-                case Buff:
-                case Reroll:
-                    break;
-                case Shield:
-                    good = de.getProfile().getIncomingDamage()>0;
-                    break;
-                case Heal:
-                    good = de.getHp()<de.getMaxHp();
-                    break;
-                case Execute:
-                    good = de.getHp()==e.getValue();
-                    break;
+            boolean good = false;
+            for(Eff e:effects) {
+                switch (e.type) {
+                    case Nothing:
+                    case Magic:
+                    case Buff:
+                        break;
+                    case Damage:
+                    case Reroll:
+                        good = true;
+                        break;
+                    case Shield:
+                        good = de.getProfile().unblockedRegularIncoming() > 0;
+                        break;
+                    case Heal:
+                        good = de.getHp() < de.getMaxHp();
+                        break;
+                    case Execute:
+                        good = de.getHp() == e.getValue();
+                        break;
+                }
+                if(good) break;
             }
             if(!good){
                 targetsTmp.remove(de);
