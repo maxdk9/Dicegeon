@@ -1,10 +1,8 @@
 package com.tann.dice.gameplay.entity.group;
 
-import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
-import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.HeroType;
@@ -15,6 +13,8 @@ import com.tann.dice.util.Colours;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.tann.dice.gameplay.entity.HeroType.*;
 
 public class Party extends EntityGroup{
 
@@ -40,23 +40,13 @@ public class Party extends EntityGroup{
     }
 
     public void addHeroes(){
+        HeroType[] types = new HeroType[]{
+                apprentice, herbalist, defender, fighter, fighterOrange
+        };
         List<DiceEntity> tmp = new ArrayList<>();
-        Hero h = HeroType.apprentice.buildHero();
-        h.setColour(Colours.blue);
-        tmp.add(h);
-        activeEntities.add(h);
-        h = HeroType.herbalist.buildHero();
-        h.setColour(Colours.red);
-        tmp.add(h);
-        h = HeroType.defender.buildHero();
-        h.setColour(Colours.grey);
-        tmp.add(h);
-        h = HeroType.fighter.buildHero();
-        h.setColour(Colours.orange);
-        tmp.add(h);
-        h = HeroType.fighter.buildHero();
-        h.setColour(Colours.yellow);
-        tmp.add(h);
+        for(HeroType type: types){
+            tmp.add(type.buildHero());
+        }
         setEntities(tmp);
         DungeonScreen.get().friendly.setEntities(activeEntities);
     }

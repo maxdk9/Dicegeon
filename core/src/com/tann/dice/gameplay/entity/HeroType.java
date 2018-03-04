@@ -1,7 +1,9 @@
 package com.tann.dice.gameplay.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import static com.tann.dice.gameplay.entity.EntityType.LevelUpClass.*;
 
 public class HeroType extends EntityType<HeroType> {
 
+    Color colour;
     Spell[] spells = new Spell[0];
     public static final List<HeroType> ALL_HEROES = new ArrayList<>();
 
@@ -23,15 +26,22 @@ public class HeroType extends EntityType<HeroType> {
         return this;
     }
 
+    private HeroType colour(Color colour){
+        this.colour = colour;
+        return this;
+    }
+
     public static final HeroType fighter = new HeroType().name("Fighter").hp(5).levelsUpInto(fighter1)
-            .sides(Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.shield1, Side.nothing);
+            .sides(Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.shield1, Side.nothing).colour(Colours.yellow);
+    public static final HeroType fighterOrange = new HeroType().name("Fighter").hp(5).levelsUpInto(fighter1)
+            .sides(Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.shield1, Side.nothing).colour(Colours.orange);
     public static final HeroType defender = new HeroType().name("Defender").hp(5).levelsUpInto(defender1)
-            .sides(Side.shield2, Side.shield2, Side.shield1, Side.sword1, Side.sword1, Side.nothing);
+            .sides(Side.shield2, Side.shield2, Side.shield1, Side.sword1, Side.sword1, Side.nothing).colour(Colours.grey);
     public static final HeroType apprentice = new HeroType().name("Apprentice").hp(4).levelsUpInto(magic1)
-            .sides(Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing, Side.nothing)
+            .sides(Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing, Side.nothing).colour(Colours.blue)
             .spells(Spell.fireWave);
     public static final HeroType herbalist = new HeroType().name("Herbalist").hp(4).levelsUpInto(healer1)
-            .sides(Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing)
+            .sides(Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing).colour(Colours.red)
             .spells(Spell.healAll);
 
     public static final HeroType rogue = new HeroType().name("Rogue").hp(6).tag(fighter1)

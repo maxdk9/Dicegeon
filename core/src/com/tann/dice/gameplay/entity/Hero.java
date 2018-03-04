@@ -17,6 +17,9 @@ public class Hero extends DiceEntity {
     List<Spell> spells;
     public Hero(HeroType type) {
         super(type);
+        if(type.colour!=null){
+            setColour(type.colour);
+        }
         this.spells = Arrays.asList(type.spells);
     }
 
