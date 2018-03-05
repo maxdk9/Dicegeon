@@ -2,7 +2,6 @@ package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Main;
@@ -15,6 +14,7 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
+import com.tann.dice.gameplay.entity.type.EntityType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
@@ -46,7 +46,7 @@ public abstract class DiceEntity {
     public String name;
     EntitySize size;
     public boolean locked; // only used for monster
-    public EntityType entityType;
+    public com.tann.dice.gameplay.entity.type.EntityType entityType;
     public AtlasRegion portrait;
     public int portraitOffset;
 

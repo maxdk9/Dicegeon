@@ -16,9 +16,9 @@ import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.HeroType;
+import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.entity.Monster;
-import com.tann.dice.gameplay.entity.MonsterType;
+import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
@@ -159,7 +159,7 @@ public class DungeonScreen extends Screen {
                 setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
                 break;
             case 2:
-                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.goblin));
+                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin));
                 break;
             case 3:
                 setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.bird, MonsterType.archer, MonsterType.goblin));

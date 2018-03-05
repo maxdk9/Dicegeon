@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.HeroType;
+import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.phase.LevelUpPhase;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Button;

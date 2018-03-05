@@ -1,21 +1,18 @@
 package com.tann.dice.gameplay.entity;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
-import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Hero extends DiceEntity {
 
     List<Spell> spells;
-    public Hero(HeroType type) {
+    public Hero(com.tann.dice.gameplay.entity.type.HeroType type) {
         super(type);
         if(type.colour!=null){
             setColour(type.colour);
@@ -28,7 +25,7 @@ public class Hero extends DiceEntity {
         return true;
     }
 
-    public void levelUpTo(HeroType type) {
+    public void levelUpTo(com.tann.dice.gameplay.entity.type.HeroType type) {
         this.entityType = type;
         this.name = type.name;
         setMaxHp(type.hp);
@@ -64,7 +61,7 @@ public class Hero extends DiceEntity {
         return spells;
     }
 
-    public HeroType getHeroType() {
+    public com.tann.dice.gameplay.entity.type.HeroType getHeroType() {
         return (HeroType) entityType;
     }
 }

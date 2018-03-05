@@ -1,8 +1,6 @@
 package com.tann.dice.gameplay.phase;
 
-import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.HeroType;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Tann;

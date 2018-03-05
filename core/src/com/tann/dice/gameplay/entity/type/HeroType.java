@@ -1,7 +1,8 @@
-package com.tann.dice.gameplay.entity;
+package com.tann.dice.gameplay.entity.type;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
@@ -9,12 +10,12 @@ import com.tann.dice.util.Tann;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tann.dice.gameplay.entity.EntityType.LevelUpClass.*;
+import static com.tann.dice.gameplay.entity.type.EntityType.LevelUpClass.*;
 
 public class HeroType extends EntityType<HeroType> {
 
-    Color colour;
-    Spell[] spells = new Spell[0];
+    public Color colour;
+    public Spell[] spells = new Spell[0];
     public static final List<HeroType> ALL_HEROES = new ArrayList<>();
 
     private HeroType() {

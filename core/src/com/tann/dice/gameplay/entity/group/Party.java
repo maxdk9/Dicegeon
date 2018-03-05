@@ -5,7 +5,7 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.HeroType;
+import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -13,7 +13,7 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tann.dice.gameplay.entity.HeroType.*;
+import static com.tann.dice.gameplay.entity.type.HeroType.*;
 
 public class Party extends EntityGroup{
 

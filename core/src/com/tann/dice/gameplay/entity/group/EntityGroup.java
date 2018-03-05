@@ -5,9 +5,6 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.HeroType;
-import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;

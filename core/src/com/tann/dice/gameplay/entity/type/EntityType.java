@@ -1,5 +1,7 @@
-package com.tann.dice.gameplay.entity;
+package com.tann.dice.gameplay.entity.type;
 
+import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 import com.tann.dice.gameplay.entity.die.Side;
 
 public class EntityType <t>{
@@ -8,12 +10,12 @@ public class EntityType <t>{
         fighter1, defender1, magic1, healer1,
     }
 
-    String name;
-    int hp;
-    Side[] sides;
-    LevelUpClass[] tags = new LevelUpClass[0];
-    LevelUpClass[] levelsUpInto = new LevelUpClass[0];
-    DiceEntity.EntitySize size = DiceEntity.EntitySize.reg;
+    public String name;
+    public int hp;
+    public Side[] sides;
+    public LevelUpClass[] tags = new LevelUpClass[0];
+    public LevelUpClass[] levelsUpInto = new LevelUpClass[0];
+    public EntitySize size = DiceEntity.EntitySize.reg;
 
     public t hp(int amount){
         this.hp = amount;

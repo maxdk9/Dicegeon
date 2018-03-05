@@ -1,6 +1,8 @@
-package com.tann.dice.gameplay.entity;
+package com.tann.dice.gameplay.entity.type;
 
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
+import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Side;
 
 import java.util.ArrayList;
