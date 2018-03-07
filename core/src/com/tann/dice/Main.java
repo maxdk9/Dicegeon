@@ -67,6 +67,7 @@ public class Main extends ApplicationAdapter {
 
   @Override
   public void create() {
+
     if (printCalls) {
       System.out.println("create");
     }
@@ -235,6 +236,7 @@ public class Main extends ApplicationAdapter {
     stage.act(delta);
     Sounds.tickFaders(delta);
     ticks += delta;
+    TannFont.bonusSin=0;
   }
 
   @Override

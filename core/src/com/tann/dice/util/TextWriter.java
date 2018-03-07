@@ -65,6 +65,7 @@ public class TextWriter extends Group {
         int max = 0;
         x = 0;
         y = 0;
+        boolean wiggle=false, sin=false;
         for(String s:split){
             if(s.isEmpty()){
                 index++;
@@ -78,7 +79,7 @@ public class TextWriter extends Group {
                 }
                 for(int i=0;i<words.length;i++){
                     String word = words[i];
-                    TextBox tb = new TextBox(word);
+                    TextBox tb = new TextBox(word, wiggle, sin);
                     tb.setTextColour(currentColour);
                     addActor(tb);
                     if(x + tb.getWidth()>getWidth()){
@@ -94,10 +95,13 @@ public class TextWriter extends Group {
             }
             else{
                 // image or colour
-                boolean image = true;
+                boolean image = false;
                 switch(s){
-                    case "h": x += font.getSpaceWidth()/2; image = false; break;
-                    case "n": nextLine(); image = false;
+                    case "h": x += font.getSpaceWidth()/2; break;
+                    case "n": nextLine(); break;
+                    case "wiggle": wiggle=!wiggle; break;
+                    case "sin": sin=!sin; break;
+                    default: image = true;
                 }
                 Color c = colorMap.get(s);
                 if(c!=null){

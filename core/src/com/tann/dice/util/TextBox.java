@@ -15,8 +15,15 @@ public class TextBox extends BasicLay{
 	String text;
 	TannFont font = TannFont.font;
 	Color textCol = Colours.light;
-    public TextBox(String text){
+	boolean wiggle, sin;
+	public TextBox(String text){
+		this(text, false, false);
+	}
+
+	public TextBox(String text, boolean wiggle, boolean sin){
 		this.text=text;
+		this.wiggle = wiggle;
+		this.sin = sin;
 		setup(text);
 	}
 
@@ -32,7 +39,7 @@ public class TextBox extends BasicLay{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(textCol);
-        font.drawString(batch, text, (int)(getX()), (int) getY(), false);
+		font.drawString(batch, text, (int)(getX()), (int) getY(), false, wiggle, sin);
 		super.draw(batch, parentAlpha);
 	}
 	

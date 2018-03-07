@@ -52,11 +52,28 @@ public class TannFont {
         drawString(batch, text, x, y, false);
     }
 
+
     public void drawString(Batch batch, String text, int x, int y, boolean fixedWidth){
+        drawString(batch, text, x, y, fixedWidth, false, false);
+    }
+
+    public static float bonusSin=0;
+    private static final float freq = 6.5f, amp=2, letterAdd=.10f;
+
+    public void drawString(Batch batch, String text, int x, int y, boolean fixedWidth, boolean wiggle, boolean sin){
         for(int i=0;i<text.length();i++){
             char c = text.charAt(i);
             TextureRegion t= glyphs.get(c);
-            Draw.draw(batch, t, x, y);
+            int plusX=0, plusY=0;
+            if(wiggle){
+                plusX = (int)(Math.random()*2)-1;
+                plusY = (int)(Math.random()*2)-1;
+            }
+            if(sin){
+                plusY = (int)(Math.sin((Main.ticks+bonusSin)*freq)*amp);
+                bonusSin += letterAdd;
+            }
+            Draw.draw(batch, t, x+plusX, y+plusY);
             if(fixedWidth) x+= getDefaultWidth()+1;
             else x+=t.getRegionWidth()+1;
         }
