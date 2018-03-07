@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.effect;
 
 import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
 
@@ -155,10 +156,10 @@ public class Eff {
     public int getValue() {
         int actualValue = value;
         if(source != null) {
-            List<Buff> buffs = source.getBuffs();
-            for(int i=0;i<buffs.size();i++){
-                Buff b = buffs.get(i);
-                actualValue = b.alterOutgoingDamage(type, actualValue);
+            List<Trigger> triggers = source.getActiveTriggers();
+            for(int i=0;i<triggers.size();i++){
+                Trigger t = triggers.get(i);
+                actualValue = t.alterOutgoingEffect(type, actualValue);
             }
         }
         return actualValue;

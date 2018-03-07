@@ -3,14 +3,15 @@ package com.tann.dice.gameplay.entity.die;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.effect.buff.BuffDot;
-import com.tann.dice.gameplay.effect.buff.ReturnDamage;
-import com.tann.dice.gameplay.effect.buff.Stealth;
 import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize.*;
 import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 
+import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.trigger.types.DamageImmunityTrigger;
+import com.tann.dice.gameplay.effect.trigger.types.EndOfTurnSelfTrigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -82,14 +83,17 @@ public class Side {
 
     public static final Side execute3 = new Side().image("execute").effect(new Eff().execute(3).ranged());
 
-    public static final Side poison1 = new Side().image("poison").effect(new Eff().justValue(1).buff(new BuffDot(-1, 1)));
-    public static final Side vanish = new Side().image("vanish").effect(new Eff().buff(new Stealth(1)).self());
+    public static final Side poison1 = new Side().image("poison").effect(new Eff().justValue(1).
+            buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(1)))));
+    public static final Side vanish = new Side().image("vanish").effect(new Eff().self().
+            buff(new Buff(1, Images.stealth, new DamageImmunityTrigger())));
 
     public static final Side wardingchord = new Side().image("wardingChord").effect(new Eff().shield(1).friendlyGroup());
     public static final Side wardingchord2 = wardingchord.withValue(2);
     public static final Side reroll = new Side().image("reroll").effect(new Eff().reroll(0).onRoll());
 
-    public static final Side potionregen = new Side().image("potionOfRegen").effect(new Eff().buff(new BuffDot(-1, -1)).friendlySingle().justValue(1));
+    public static final Side potionregen = new Side().image("potionOfRegen").effect(new Eff()
+            .buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().heal(1)))).friendlySingle().justValue(1));
 
     public static final Side flameWard = new Side().image("flameWard").effect(new Eff().damage(2).allTargeters());
 
@@ -119,9 +123,12 @@ public class Side {
     public static final Side huge_flame = new Side().size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
     public static final Side huge_flame2 = huge_flame.withValue(2);
 
-    public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().buff(new BuffDot(-1, 1)));
-    public static final Side huge_posionChomp2 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(2), new Eff().buff(new BuffDot(-1, 2)));
-    public static final Side huge_posionChomp3 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(3), new Eff().buff(new BuffDot(-1, 3)));
+    public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
+            buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(1)))));
+    public static final Side huge_posionChomp2 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(2), new Eff().
+            buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(2)))));
+    public static final Side huge_posionChomp3 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(3), new Eff().
+            buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(3)))));
 
 
     private Side withValue(int value) {

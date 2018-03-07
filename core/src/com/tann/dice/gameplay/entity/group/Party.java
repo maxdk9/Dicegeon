@@ -41,7 +41,7 @@ public class Party extends EntityGroup{
 
     public void addHeroes(){
         HeroType[] types = new HeroType[]{
-                apprentice, herbalist, defender, fighter, fighterOrange
+                apprentice, herbalist, defender, rogue, rogue
         };
         List<DiceEntity> tmp = new ArrayList<>();
         for(HeroType type: types){

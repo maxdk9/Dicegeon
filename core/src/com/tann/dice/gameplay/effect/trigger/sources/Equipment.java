@@ -54,4 +54,7 @@ public class Equipment {
     batch.setColor(Colours.z_white);
     Draw.drawScaled(batch, image, (int)x, (int)y, scale, scale);
   }
+
+
+
 }

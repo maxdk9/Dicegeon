@@ -1,7 +1,7 @@
 package com.tann.dice.gameplay.effect;
 
 import com.tann.dice.gameplay.effect.buff.Buff;
-import com.tann.dice.gameplay.effect.buff.BuffDot;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import static com.tann.dice.gameplay.effect.Eff.EffectType.*;
 import java.util.ArrayList;
@@ -44,8 +44,8 @@ public class DamageProfile {
                     incomingDamage+= e.getValue();
                 }
             }
-            for(Buff b:target.getBuffs()){
-                incomingDamage = b.alterIncomingDamage(incomingDamage);
+            for(Trigger t:target.getActiveTriggers()){
+                incomingDamage = t.alterIncomingDamage(incomingDamage);
             }
         }
         return incomingDamage;
@@ -70,11 +70,8 @@ public class DamageProfile {
     public int getIncomingPoisonDamage(){
         if(incomingPoison == null){
             incomingPoison = 0;
-            for(Buff b:target.getBuffs()){
-                if(b instanceof BuffDot){
-                    BuffDot dot = (BuffDot) b;
-                    incomingPoison += Math.max(0, dot.damage);
-                }
+            for(Trigger t:target.getActiveTriggers()){
+                incomingPoison += t.getIncomingPoisonDamage();;
             }
         }
         return incomingPoison;

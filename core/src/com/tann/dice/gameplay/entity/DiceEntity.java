@@ -213,14 +213,15 @@ public abstract class DiceEntity {
         if (targeted == diceEntity) targeted = null;
     }
 
+    public void addBuff(Buff buff) {
+        buffs.add(buff);
+        somethingChanged();
+    }
+
     public void hit(Side side, boolean instant) {
         for (Eff e : side.effects) {
             hit(e, instant);
         }
-    }
-
-    public void addBuff(Buff buff) {
-        buffs.add(buff);
     }
 
     public void removeBuff(Buff buff) {
@@ -335,14 +336,18 @@ public abstract class DiceEntity {
     }
 
     public void upkeep() {
+        for(int i=getActiveTriggers().size()-1;i>=0;i--){
+            Trigger t = getActiveTriggers().get(i);
+            t.endOfTurn(this);
+        }
         for(int i=buffs.size()-1; i>=0; i--){
-            buffs.get(i).inturnal();
+            buffs.get(i).turn();
         }
     }
 
     public void attackedBy(DiceEntity entity) {
-        for(Buff b:getBuffs()){
-            b.attackedBy(entity);
+        for(Trigger t:getActiveTriggers()){
+            t.attackedBy(entity);
         }
     }
 

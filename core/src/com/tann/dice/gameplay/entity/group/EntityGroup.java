@@ -133,8 +133,8 @@ public class EntityGroup {
                 switch (e.type) {
                     case Nothing:
                     case Magic:
-                    case Buff:
                         break;
+                    case Buff:
                     case Damage:
                     case Reroll:
                         good = true;

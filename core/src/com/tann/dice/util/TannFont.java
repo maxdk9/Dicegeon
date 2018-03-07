@@ -11,6 +11,7 @@ import com.tann.dice.Main;
 public class TannFont {
     public static TannFont font = new TannFont(Main.atlas.findRegion("font/font"));
     HashMap<Character, TextureRegion> glyphs = new HashMap<Character, TextureRegion>();
+    private static final int kerningGap = 1;
     //this is not really ideal, I could make it dynamically-detect heights but I think I'll only ever be using one font
     int[] heights= new int[]{5,5,5};
     public TannFont(TextureRegion font) {
@@ -74,8 +75,8 @@ public class TannFont {
                 bonusSin += letterAdd;
             }
             Draw.draw(batch, t, x+plusX, y+plusY);
-            if(fixedWidth) x+= getDefaultWidth()+1;
-            else x+=t.getRegionWidth()+1;
+            if(fixedWidth) x+= getDefaultWidth()+kerningGap;
+            else x+=t.getRegionWidth()+kerningGap;
         }
     }
 
