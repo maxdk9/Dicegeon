@@ -2,31 +2,29 @@ package com.tann.dice.screens.dungeon.panels.Explanel;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
-import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
-import com.tann.dice.screens.dungeon.panels.SidePanel;
-import com.tann.dice.screens.dungeon.panels.SpellHolder;
-import com.tann.dice.util.*;
-
+import com.tann.dice.util.Button;
+import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
+import com.tann.dice.util.OnPop;
+import com.tann.dice.util.TextWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +32,12 @@ public class Explanel extends InfoPanel implements OnPop {
     String name;
     String description;
     Eff[] effects;
-    TextureRegion image;
     Integer cost;
     boolean usable;
     boolean enoughMagic;
     Spell spell;
     Side side;
+    Equipment equipment;
     Color colour;
 
     private static Explanel self;
@@ -59,12 +57,11 @@ public class Explanel extends InfoPanel implements OnPop {
         });
     }
 
-    private void setup(String name, String description, final Eff[] effects, TextureRegion image, final Integer cost) {
+    private void setup(String name, String description, final Eff[] effects, final Integer cost) {
         clearChildren();
         this.name = name;
         this.description = description;
         this.effects = effects;
-        this.image = image;
         this.cost = cost;
         setWidth(110);
         int textW = 100;
@@ -104,11 +101,25 @@ public class Explanel extends InfoPanel implements OnPop {
                 if(side != null){
                     side.draw(batch, getX(), getY(), 2, colour);
                 }
+                if(equipment != null){
+                    equipment.draw(batch, getX(), getY(), 2);
+                }
                 super.draw(batch, parentAlpha);
             }
         };
         actors.add(imageActor);
-        int size = ((spell != null) ? Images.spellBorder.getRegionHeight() : side.tr.getRegionHeight()) * 2;
+
+        int size = -1;
+
+        if(spell != null){
+            size = Images.spellBorder.getRegionHeight() * 2;
+        }
+        else if(side!=null){
+            size = side.tr.getRegionHeight() * 2;
+        }
+        else{
+            size = Images.spellBorder.getRegionHeight() * 2;
+        }
         imageActor.setSize(size, size);
 
         actors.add(new TextWriter(description, textW, Colours.purple, 2));
@@ -133,6 +144,14 @@ public class Explanel extends InfoPanel implements OnPop {
         }
     }
 
+    public void setup(Equipment equipment){
+        reset();
+        this.colour = Colours.grey;
+        this.usable = false;
+        this.equipment = equipment;
+        setup(equipment.name, equipment.description, null, null);
+    }
+
     private void reset() {
         this.spell = null;
         this.side = null;
@@ -144,7 +163,7 @@ public class Explanel extends InfoPanel implements OnPop {
         this.usable = usable;
         this.spell = spell;
         this.enoughMagic = spell.canCast();
-        setup(spell.name, spell.description, spell.effects, spell.image, spell.cost);
+        setup(spell.name, spell.description, spell.effects, spell.cost);
         if(usable) {
             switch (spell.effects[0].targetingType) {
                 case EnemyGroup:
@@ -184,7 +203,7 @@ public class Explanel extends InfoPanel implements OnPop {
         this.colour = colour;
         this.usable = usable;
         this.side = side;
-        setup(null, Eff.describe(side.effects), side.effects, side.tr, null);
+        setup(null, Eff.describe(side.effects), side.effects, null);
     }
 
 

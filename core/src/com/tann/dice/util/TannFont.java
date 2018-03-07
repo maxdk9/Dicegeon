@@ -58,7 +58,7 @@ public class TannFont {
     }
 
     public static float bonusSin=0;
-    private static final float freq = 6.5f, amp=2, letterAdd=.10f;
+    private static final float freq = 6.5f, amp=2, letterAdd=.08f;
 
     public void drawString(Batch batch, String text, int x, int y, boolean fixedWidth, boolean wiggle, boolean sin){
         for(int i=0;i<text.length();i++){

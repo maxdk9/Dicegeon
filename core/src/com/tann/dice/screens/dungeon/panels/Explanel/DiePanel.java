@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.DieSidePanel;
+import com.tann.dice.screens.dungeon.panels.EquipmentPanel;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
 import com.tann.dice.util.*;
 
@@ -65,6 +67,12 @@ public class DiePanel extends InfoPanel implements OnPop {
                 Spell s = spellList.get(i);
                 SpellPanel panel = new SpellPanel(s, false);
                 panel.setPosition(startX + panelSize * (2+i) +1, gap + panelSize*2 +1);
+                addActor(panel);
+            }
+            for(int i=0;i<h.equipment.size();i++){
+                Equipment e = h.equipment.get(i);
+                EquipmentPanel panel = new EquipmentPanel(e);
+                panel.setPosition(startX+1, gap + panelSize*2*i+1);
                 addActor(panel);
             }
         }

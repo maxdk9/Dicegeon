@@ -134,9 +134,6 @@ public class DungeonScreen extends Screen {
         spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
         Party.get().fullyReset();
         nextLevel();
-        TextWriter tw = new TextWriter("How could a [yellow][sin]part of me[sin][light] be so [red][wiggle]creepy[red][wiggle]?", 9999, Colours.dark, 3);
-        tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(getHeight()/2-tw.getHeight()/2));
-        addActor(tw);
 
     }
 

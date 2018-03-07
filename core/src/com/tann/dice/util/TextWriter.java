@@ -55,6 +55,7 @@ public class TextWriter extends Group {
         colorMap.put("light", Colours.light);
         colorMap.put("yellow", Colours.yellow);
         colorMap.put("orange", Colours.orange);
+        colorMap.put("grey", Colours.grey);
     }
 
 

@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity.group;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.type.HeroType;
@@ -40,14 +41,16 @@ public class Party extends EntityGroup{
 
     public void addHeroes(){
         HeroType[] types = new HeroType[]{
-                apprentice, herbalist, defender, fighter, bard
+                apprentice, herbalist, defender, fighter, fighterOrange
         };
         List<DiceEntity> tmp = new ArrayList<>();
         for(HeroType type: types){
             tmp.add(type.buildHero());
         }
+        tmp.get(4).addEquipment(Equipment.leatherVest);
         setEntities(tmp);
         DungeonScreen.get().friendly.setEntities(activeEntities);
+
     }
 
     private int magic = 0;

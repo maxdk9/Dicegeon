@@ -10,6 +10,8 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
@@ -31,7 +33,7 @@ public abstract class DiceEntity {
     protected Die die;
     // gameplay vars
     protected Side[] sides;
-    protected int maxHp;
+    protected int baseMaxHp;
     protected int hp;
     protected boolean dead;
     protected List<DiceEntity> targets;
@@ -42,13 +44,13 @@ public abstract class DiceEntity {
     protected TextureRegion lapel;
     private EntityPanel ep;
     // temp junky variables
-    private static int ixix;
     public String name;
     EntitySize size;
     public boolean locked; // only used for monster
     public com.tann.dice.gameplay.entity.type.EntityType entityType;
     public AtlasRegion portrait;
     public int portraitOffset;
+    public ArrayList<Equipment> equipment = new ArrayList<>();
 
     public DiceEntity(EntityType type) {
         this.entityType = type;
@@ -75,8 +77,8 @@ public abstract class DiceEntity {
 
     // gameplay junk
     public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
-        this.hp = maxHp;
+        this.baseMaxHp = maxHp;
+        this.hp = getMaxHp();
     }
 
     protected void resetPanels() {
@@ -84,8 +86,32 @@ public abstract class DiceEntity {
         getDiePanel().layout();
     }
 
+    private Integer calculatedMaxHp;
+    private ArrayList<Trigger> activeTriggers;
+
+    public void somethingChanged(){
+        calculatedMaxHp = null;
+        activeTriggers = null;
+    }
+
     public int getMaxHp() {
-        return maxHp;
+        if(calculatedMaxHp == null){
+            calculatedMaxHp = baseMaxHp;
+            for(Trigger t:getActiveTriggers()){
+                calculatedMaxHp = t.affectMaxHp(calculatedMaxHp);
+            }
+        }
+        return calculatedMaxHp;
+    }
+
+    public List<Trigger> getActiveTriggers(){
+        if(activeTriggers == null) {
+            activeTriggers = new ArrayList<>();
+            for (Equipment e : equipment) {
+                activeTriggers.addAll(e.getTriggers());
+            }
+        }
+        return activeTriggers;
     }
 
     public int getHp() {
@@ -93,11 +119,13 @@ public abstract class DiceEntity {
     }
 
     public void heal(int amount) {
-        this.hp = Math.min(maxHp, getHp() + amount);
+        this.hp = Math.min(getMaxHp(), getHp() + amount);
     }
 
+
+
     public void reset(){
-        setHp(dead?maxHp/2:maxHp);
+        setHp(dead? getMaxHp() /2: getMaxHp());
         dead= false;
         targeted = null;
         getDie().flatDraw = false;
@@ -107,6 +135,7 @@ public abstract class DiceEntity {
         }
         profile.reset();
         resetPanels();
+        somethingChanged();
     }
 
     private void setHp(int amount){
@@ -334,6 +363,16 @@ public abstract class DiceEntity {
     }
 
     public void locked() {
+    }
+
+    public void addEquipment(Equipment e) {
+        equipment.add(e);
+        somethingChanged();
+    }
+
+    public void resetEquipment(){
+        equipment.clear();
+        somethingChanged();
     }
 
     public enum EntitySize {
