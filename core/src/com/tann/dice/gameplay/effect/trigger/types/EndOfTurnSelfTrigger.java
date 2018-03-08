@@ -14,4 +14,9 @@ public class EndOfTurnSelfTrigger extends Trigger {
     public void endOfTurn(DiceEntity target) {
         target.hit(eff, true);
     }
+
+    @Override
+    public Integer getIncomingPoisonDamage() {
+        return eff.getValue();
+    }
 }

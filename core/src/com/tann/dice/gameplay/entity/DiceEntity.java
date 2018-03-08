@@ -92,6 +92,7 @@ public abstract class DiceEntity {
     public void somethingChanged(){
         calculatedMaxHp = null;
         activeTriggers = null;
+        getProfile().somethingChanged();
     }
 
     public int getMaxHp() {
@@ -109,6 +110,9 @@ public abstract class DiceEntity {
             activeTriggers = new ArrayList<>();
             for (Equipment e : equipment) {
                 activeTriggers.addAll(e.getTriggers());
+            }
+            for (Buff b:getBuffs()){
+                activeTriggers.add(b.trigger);
             }
         }
         return activeTriggers;
@@ -151,6 +155,7 @@ public abstract class DiceEntity {
     }
 
     public void hit(Eff e, boolean instant) {
+        somethingChanged();
         getProfile().addEffect(e);
         if (instant || !isPlayer()) getProfile().action();
         if(!isPlayer() && profile.isGoingToDie()){
@@ -343,6 +348,7 @@ public abstract class DiceEntity {
         for(int i=buffs.size()-1; i>=0; i--){
             buffs.get(i).turn();
         }
+        somethingChanged();
     }
 
     public void attackedBy(DiceEntity entity) {
