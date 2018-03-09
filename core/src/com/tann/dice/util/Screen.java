@@ -34,6 +34,8 @@ public abstract class Screen extends Lay{
 	public abstract void preDraw(Batch batch);
 	public abstract void postDraw(Batch batch);
 
+	public void drawBackground(Batch batch){}
+
 	@Override
 	public void act(float delta) {
 		if(active){

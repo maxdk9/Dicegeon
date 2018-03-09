@@ -1,9 +1,16 @@
 package com.tann.dice;
 
-import com.badlogic.gdx.*;
+import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
+import static com.badlogic.gdx.graphics.GL20.GL_DEPTH_BUFFER_BIT;
+import static com.badlogic.gdx.graphics.GL20.GL_ONE;
+import static com.badlogic.gdx.graphics.GL20.GL_ONE_MINUS_SRC_ALPHA;
+import static com.badlogic.gdx.graphics.GL20.GL_SRC_ALPHA;
 
-import static com.badlogic.gdx.graphics.GL20.*;
-
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,15 +24,19 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Clipboard;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.phase.Phase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.util.*;
+import com.tann.dice.screens.map.MapScreen;
+import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
+import com.tann.dice.util.Prefs;
 import com.tann.dice.util.Screen;
-
+import com.tann.dice.util.Sounds;
+import com.tann.dice.util.TannFont;
+import com.tann.dice.util.TannStage;
+import com.tann.dice.util.TextWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,7 +159,7 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-    setScreen(DungeonScreen.get());
+    setScreen(MapScreen.get());
 
     logTime("screen");
     fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
@@ -177,7 +188,7 @@ public class Main extends ApplicationAdapter {
       Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
       stage.getViewport().apply();
       batch.begin();
-      ((DungeonScreen) currentScreen).drawBackground(batch);
+      currentScreen.drawBackground(batch);
       drawFPSAndVersion();
       batch.end();
       fb.end();
@@ -224,7 +235,7 @@ public class Main extends ApplicationAdapter {
   }
 
   public void update(float delta) {
-    getPhase().checkIfDone();
+//    getPhase().checkIfDone();
 
     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
       delta *= .1f;

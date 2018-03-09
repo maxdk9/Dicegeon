@@ -29,7 +29,10 @@ public class Party extends EntityGroup{
 
 
     public static Party get() {
-        if (self == null) self = new Party();
+        if (self == null) {
+            self = new Party();
+            self.fullyReset();
+        }
         return self;
     }
 

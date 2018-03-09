@@ -134,7 +134,6 @@ public class DungeonScreen extends Screen {
         spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
         Party.get().fullyReset();
         nextLevel();
-
     }
 
     public int level=0;
@@ -199,6 +198,7 @@ public class DungeonScreen extends Screen {
         nextLevel();
     }
 
+    @Override
     public void drawBackground(Batch batch){
         batch.setColor(Colours.dark);
         Draw.fillRectangle(batch, 0, 0, getWidth(), getHeight());
