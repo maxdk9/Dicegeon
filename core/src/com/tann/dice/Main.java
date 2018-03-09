@@ -165,7 +165,6 @@ public class Main extends ApplicationAdapter {
     fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
 
     String ex = Prefs.getString("lastException", "");
-    System.out.println(ex);
     if(!ex.equals("")){
       DungeonScreen.get().showExceptionPopup(ex);
       Prefs.setString("lastException", "");
@@ -235,8 +234,6 @@ public class Main extends ApplicationAdapter {
   }
 
   public void update(float delta) {
-//    getPhase().checkIfDone();
-
     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
       delta *= .1f;
     }
@@ -310,50 +307,6 @@ public class Main extends ApplicationAdapter {
   }
 
   // phase stuff
-
-  private static List<Phase> phaseStack = new ArrayList<>();
-
-  public static Phase getPhase() {
-    return phaseStack.get(0);
-  }
-
-  public static void pushPhase(Phase phase) {
-    phaseStack.add(phaseStack.size(), phase);
-  }
-
-  public static void popPhase() {
-    Phase popped = phaseStack.remove(0);
-    popped.deactivate();
-    if (phaseStack.size() == 0) {
-      System.err.println("popping error, previous phase was " + popped.toString());
-    }
-    getPhase().activate();
-  }
-
-  public static void popPhase(Class clazz) {
-    if (!clazz.isInstance(getPhase())) {
-      System.err.println(
-          "Trying to pop a class of type " + clazz.getSimpleName() + " when the phase is " + getPhase().toString());
-      return;
-    }
-    popPhase();
-  }
-
-  public static void clearPhases() {
-    phaseStack.clear();
-  }
-
-  public static void kickstartPhase(Class clazz) {
-    if (!clazz.isInstance(getPhase())) {
-      System.err.println("Trying to kickstart a class of type  " + clazz.getSimpleName() + " when the phase is " + getPhase().toString());
-      return;
-    }
-    kickstartPhase();
-  }
-
-  public static void kickstartPhase() {
-    getPhase().activate();
-  }
 
   // screen stuff
 

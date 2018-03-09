@@ -6,6 +6,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.PhaseManager;
 
 public class PlayerRollingPhase extends Phase {
     @Override
@@ -18,7 +19,7 @@ public class PlayerRollingPhase extends Phase {
 
     @Override
     public void deactivate() {
-        Main.pushPhase(new TargetingPhase());
+        PhaseManager.get().pushPhase(new TargetingPhase());
     }
 
     @Override

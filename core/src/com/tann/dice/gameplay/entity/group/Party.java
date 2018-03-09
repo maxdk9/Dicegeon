@@ -10,6 +10,7 @@ import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.PhaseManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class Party extends EntityGroup{
 
     public void addHeroes(){
         HeroType[] types = new HeroType[]{
-                apprentice, herbalist, defender, rogue, rogue
+                apprentice, herbalist, defender, fighter, fighterOrange
         };
         List<DiceEntity> tmp = new ArrayList<>();
         for(HeroType type: types){
@@ -83,7 +84,7 @@ public class Party extends EntityGroup{
     }
 
     public int getTotalTotalTotalAvailableMagic() {
-        if(!(Main.getPhase() instanceof TargetingPhase)) return getAvaliableMagic();
+        if(!(PhaseManager.get().getPhase() instanceof TargetingPhase)) return getAvaliableMagic();
         int total = 0;
         for (DiceEntity de : getActiveEntities()) {
             Die d = de.getDie();
@@ -133,7 +134,7 @@ public class Party extends EntityGroup{
 
     @Override
     public void roll(boolean firstRoll) {
-        if(!Main.getPhase().canRoll()) return;
+        if(!PhaseManager.get().getPhase().canRoll()) return;
         for(DiceEntity de:getActiveEntities()){
             if(de.getDie().getState() == Die.DieState.Rolling || de.getDie().getState() == Die.DieState.Unlocking){
                 return;

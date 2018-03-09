@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.phase;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.PhaseManager;
 
 public class TargetingPhase extends Phase {
     @Override
@@ -18,7 +19,7 @@ public class TargetingPhase extends Phase {
         Party.get().resetMagic();
         DungeonScreen.get().removeLeftoverDice();
         DungeonScreen.get().spellButt.hide();
-        Main.pushPhase(new DamagePhase());
+        PhaseManager.get().pushPhase(new DamagePhase());
     }
 
     @Override

@@ -171,20 +171,20 @@ public class DungeonScreen extends Screen {
                 setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.dragon, MonsterType.goblin));
                 break;
             case 6:
-                Main.clearPhases();
-                Main.pushPhase(new VictoryPhase());
-                Main.kickstartPhase(VictoryPhase.class);
+                PhaseManager.get().clearPhases();
+                PhaseManager.get().pushPhase(new VictoryPhase());
+                PhaseManager.get().kickstartPhase(VictoryPhase.class);
                 return;
         }
         spellHolder.setup(Party.get().getSpells());
         spellButt.setSpellHolder(spellHolder);
         Party.get().reset();
-        Main.clearPhases();
+        PhaseManager.get().clearPhases();
         if(level>1){
-            Main.pushPhase(new LevelUpPhase());
+            PhaseManager.get().pushPhase(new LevelUpPhase());
         }
-        Main.pushPhase(new EnemyRollingPhase());
-        Main.kickstartPhase();
+        PhaseManager.get().pushPhase(new EnemyRollingPhase());
+        PhaseManager.get().kickstartPhase();
     }
 
     private void setupLevelString() {
@@ -210,7 +210,7 @@ public class DungeonScreen extends Screen {
     }
 
     private void confirmDice(boolean force) {
-        if(Main.getPhase() instanceof PlayerRollingPhase) {
+        if(PhaseManager.get().getPhase() instanceof PlayerRollingPhase) {
             boolean allGood = true;
             for (DiceEntity h : Party.get().getActiveEntities()) {
                 Die d = h.getDie();
@@ -221,10 +221,10 @@ public class DungeonScreen extends Screen {
                 }
             }
             if (allGood) {
-                Main.popPhase(PlayerRollingPhase.class);
+                PhaseManager.get().popPhase(PlayerRollingPhase.class);
             }
         }
-        else if (Main.getPhase() instanceof TargetingPhase){
+        else if (PhaseManager.get().getPhase() instanceof TargetingPhase){
             if(Party.get().getAvaliableMagic() > 0){
                 if(force) {
                     showDialog("Spend all your magic first!");
@@ -237,7 +237,7 @@ public class DungeonScreen extends Screen {
                 }
                 return;
             }
-            Main.popPhase(TargetingPhase.class);
+            PhaseManager.get().popPhase(TargetingPhase.class);
         }
     }
 
@@ -329,9 +329,9 @@ public class DungeonScreen extends Screen {
             return true;
         }
         else if(checkDead(Party.get().getActiveEntities(), false)){
-            Main.clearPhases();
-            Main.pushPhase(new LossPhase());
-            Main.kickstartPhase(LossPhase.class);
+            PhaseManager.get().clearPhases();
+            PhaseManager.get().pushPhase(new LossPhase());
+            PhaseManager.get().kickstartPhase(LossPhase.class);
             return true;
         }
         return false;
@@ -394,7 +394,7 @@ public class DungeonScreen extends Screen {
                         pop();
                     }
                     if(endPhase) {
-                        Main.popPhase();
+                        PhaseManager.get().popPhase();
                     }
                     return super.touchDown(event, x, y, pointer, button);
                 }
@@ -433,6 +433,7 @@ public class DungeonScreen extends Screen {
     @Override
     public void act(float delta) {
         super.act(delta);
+        PhaseManager.get().getPhase().checkIfDone();
     }
 
     public void layoutSidePanels() {

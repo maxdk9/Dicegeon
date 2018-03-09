@@ -39,7 +39,7 @@ public class TargetingManager {
     public void click(Die d, boolean fromPhysics) {
         if (d.entity instanceof Monster) return;
         if (d.getSide() == -1) return;
-        if (Main.getPhase().canRoll()) {
+        if (PhaseManager.get().getPhase().canRoll()) {
             d.toggleLock();
             return;
         }
@@ -94,7 +94,7 @@ public class TargetingManager {
     }
 
     private void targetableClick(Targetable t) {
-        if (!Main.getPhase().canTarget()) {
+        if (!PhaseManager.get().getPhase().canTarget()) {
             Explanel.get().setup(t, false);
             DungeonScreen.get().positionExplanel();
             DungeonScreen.get().push(Explanel.get(), false, true, true, false, false);
@@ -137,7 +137,7 @@ public class TargetingManager {
 
     public boolean target(DiceEntity entity) {
         Targetable t = getSelectedTargetable();
-        if (!Main.getPhase().canTarget()) return false;
+        if (!PhaseManager.get().getPhase().canTarget()) return false;
         if (t == null) return false;
         if (t.getEffects() == null) return false;
         if (t.getEffects().length == 0) return false;

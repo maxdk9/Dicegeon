@@ -19,6 +19,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
@@ -186,7 +187,7 @@ public class Explanel extends InfoPanel implements OnPop {
             }
         }
 
-        if(Main.getPhase().canTarget() && !enoughMagic){
+        if(PhaseManager.get().getPhase().canTarget() && !enoughMagic){
             String text = "[red]Not enough magic";
             if(Party.get().getTotalTotalTotalAvailableMagic() >= spell.cost){
                 text += "[n][light]Tap your magic dice to gain magic";

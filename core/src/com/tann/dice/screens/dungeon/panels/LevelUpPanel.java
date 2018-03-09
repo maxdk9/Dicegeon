@@ -7,6 +7,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.phase.LevelUpPhase;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
@@ -48,7 +49,7 @@ public class LevelUpPanel extends Group{
           @Override
           public void run() {
               hero.levelUpTo(et);
-              Main.popPhase(LevelUpPhase.class);
+              PhaseManager.get().popPhase(LevelUpPhase.class);
               remove();
           }
         });

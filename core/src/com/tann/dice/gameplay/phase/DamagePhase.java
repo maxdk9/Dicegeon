@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.phase;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 
@@ -15,7 +16,7 @@ public class DamagePhase extends Phase {
                 Sounds.playSound(Sounds.fwips, 4, 1);
                 EntityGroup.activateDamage();
                 if(!DungeonScreen.get().checkEnd()){
-                    Main.popPhase();
+                    PhaseManager.get().popPhase();
                 }
             }
         }, .3f);
@@ -24,6 +25,6 @@ public class DamagePhase extends Phase {
 
     @Override
     public void deactivate() {
-        Main.pushPhase(new EnemyRollingPhase());
+        PhaseManager.get().pushPhase(new EnemyRollingPhase());
     }
 }

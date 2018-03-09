@@ -1,6 +1,6 @@
 package com.tann.dice.gameplay.phase;
 
-import com.tann.dice.Main;
+import com.tann.dice.screens.dungeon.PhaseManager;
 
 public abstract class Phase {
 
@@ -20,7 +20,7 @@ public abstract class Phase {
             }
             if(System.currentTimeMillis() - switchStart >= getSwitchingDelay()) {
                 switchStart = -1;
-                Main.popPhase();
+                PhaseManager.get().popPhase();
             }
         }
     }

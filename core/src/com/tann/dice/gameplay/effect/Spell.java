@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -69,7 +70,7 @@ public class Spell implements Targetable{
     }
 
     private boolean canUse() {
-        return Main.getPhase().canTarget() && cost <= Party.get().getAvaliableMagic();
+        return PhaseManager.get().getPhase().canTarget() && cost <= Party.get().getAvaliableMagic();
     }
 
     @Override
