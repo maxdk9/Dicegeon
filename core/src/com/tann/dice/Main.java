@@ -108,6 +108,7 @@ public class Main extends ApplicationAdapter {
     orthoCam = (OrthographicCamera) stage.getCamera();
     batch = new SpriteBatch();
     bufferDrawer = new SpriteBatch();
+    fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
     InputProcessor diceInput = new InputProcessor() {
 
       public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -159,14 +160,12 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-    setScreen(MapScreen.get());
-
+    setScreen(DungeonScreen.get());
     logTime("screen");
-    fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
 
     String ex = Prefs.getString("lastException", "");
     if(!ex.equals("")){
-      DungeonScreen.get().showExceptionPopup(ex);
+      currentScreen.showExceptionPopup(ex);
       Prefs.setString("lastException", "");
     }
   }

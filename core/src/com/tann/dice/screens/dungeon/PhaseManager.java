@@ -14,6 +14,12 @@ public class PhaseManager {
         return self;
     }
 
+    public static Runnable popPhaseRunnable = new Runnable() {
+        @Override
+        public void run() {
+            get().popPhase();
+        }
+    };
 
     private List<Phase> phaseStack = new ArrayList<>();
 

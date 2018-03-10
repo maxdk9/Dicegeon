@@ -48,14 +48,6 @@ public class Explanel extends InfoPanel implements OnPop {
     }
 
     public Explanel(){
-        addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                DungeonScreen.get().pop();
-                event.cancel();
-                return true;
-            }
-        });
     }
 
     private void setup(String name, String description, final Eff[] effects, final Integer cost) {

@@ -20,9 +20,8 @@ public class EquipmentPanel extends Actor {
     addListener(new InputListener(){
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        System.out.println("hi");
         Explanel.get().setup(equipment);
-        DungeonScreen.get().push(Explanel.get(), true, false, true, false, false);
+        DungeonScreen.get().push(Explanel.get());
         event.cancel();
         return true;
       }

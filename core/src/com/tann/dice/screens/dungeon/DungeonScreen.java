@@ -243,7 +243,7 @@ public class DungeonScreen extends Screen {
 
     public void showDialog(String s) {
         TextWriter tw = new TextWriter(s, Integer.MAX_VALUE, Colours.purple, 2);
-        push(tw, true, true, true, false, false);
+        DungeonScreen.get().push(tw, true, true, true, PhaseManager.popPhaseRunnable);
     }
 
     public void enemyCombat(){
@@ -376,54 +376,6 @@ public class DungeonScreen extends Screen {
         entity.getEntityPanel().setArrowIntenity(1, 0);
     }
 
-    public void push(final Actor a, boolean center, boolean listener, boolean blockerListen, final boolean remove, final boolean endPhase){
-        addActor(InputBlocker.get());
-        InputBlocker.get().toFront();
-        InputBlocker.get().setActiveClicker(blockerListen);
-        modalStack.add(a);
-        addActor(a);
-        if(center){
-            a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
-        }
-        if(listener){
-            a.addListener(new InputListener(){
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if(remove) {
-                        a.remove();
-                        pop();
-                    }
-                    if(endPhase) {
-                        PhaseManager.get().popPhase();
-                    }
-                    return super.touchDown(event, x, y, pointer, button);
-                }
-            });
-        }
-    }
-
-    public void push(Actor a){
-        push(a, false, false, true,  false, false);
-    }
-
-    public void pop(){
-        TargetingManager.get().deselectTargetable();
-        if(modalStack.size()==0) return;
-        Actor a =modalStack.remove(modalStack.size()-1);
-        a.remove();
-        EntityGroup.clearTargetedHighlights();
-        if(a instanceof OnPop){
-            ((OnPop) a).onPop();
-        }
-        InputBlocker.get().remove();
-        if(modalStack.size()>0){
-            addActor(InputBlocker.get());
-            modalStack.get(modalStack.size()-1).toFront();
-        }
-    }
-
-    List<Actor> modalStack = new ArrayList<>();
-
     public void showLevelupPanel(Hero hero, List<HeroType> options) {
         LevelUpPanel lup = new LevelUpPanel(hero, options);
         lup.setPosition(getWidth()/2, getHeight()/2f, Align.center);
@@ -439,41 +391,6 @@ public class DungeonScreen extends Screen {
     public void layoutSidePanels() {
         enemy.layout(true);
         friendly.layout(true);
-    }
-
-    public void showExceptionPopup(final String ex) {
-        Group a = new Group(){
-            @Override
-            public void draw(Batch batch, float parentAlpha) {
-                Draw.fillActor(batch, this, Colours.dark, Colours.light, 1);
-                super.draw(batch, parentAlpha);
-            }
-        };
-        TextWriter tw = new TextWriter("Crashed last time![n]Copy log to clipboard?[n](for emailing to tann@tann.space)");
-        TextButton yes = new TextButton("Yes", 5);
-        yes.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                Gdx.app.getClipboard().setContents(ex);
-                pop();
-            }
-        });
-        TextButton no = new TextButton("No", 5);
-        no.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                pop();
-            }
-        });
-        a.setSize(130, 38);
-        tw.setPosition((int)(a.getWidth()/2-tw.getWidth()/2), (int)(a.getHeight()-tw.getHeight()-2));
-        a.addActor(tw);
-        a.addActor(yes);
-        yes.setPosition((int)(a.getWidth()/3-yes.getWidth()/2), 2);
-        a.addActor(no);
-        no.setPosition((int)(a.getWidth()/3*2-yes.getWidth()/2), 2);
-        a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
-        push(a);
     }
 
     private void bottomClick() {

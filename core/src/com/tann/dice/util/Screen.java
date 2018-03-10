@@ -2,12 +2,21 @@ package com.tann.dice.util;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
 import com.tann.dice.Main.MainState;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.gameplay.entity.group.EntityGroup;
+import com.tann.dice.screens.dungeon.PhaseManager;
+import com.tann.dice.screens.dungeon.TargetingManager;
 
 public abstract class Screen extends Lay{
 	//screenshake stuff//
@@ -85,4 +94,94 @@ public abstract class Screen extends Lay{
 	}
 
 	public void removeFromScreen(){}
+
+
+	private InputListener selfPopListener = new InputListener(){
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				pop();
+				event.cancel();
+				event.stop();
+				event.handle();
+				return super.touchDown(event, x, y, pointer, button);
+			}
+	};
+
+	Runnable extraOnPop;
+	public void push(final Actor a, boolean center, boolean blockerPops, boolean selfPops, Runnable onPop){
+		addActor(InputBlocker.get());
+		InputBlocker.get().toFront();
+		InputBlocker.get().setActiveClicker(blockerPops);
+		modalStack.add(a);
+		addActor(a);
+		this.extraOnPop = onPop;
+
+		if(center){
+			a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
+		}
+		if(selfPops){
+			a.addListener(selfPopListener);
+		}
+	}
+
+	List<Actor> modalStack = new ArrayList<>();
+
+	public void push(Actor a){
+		push(a, true, true, true, null);
+	}
+
+	public void pop(){
+		TargetingManager.get().deselectTargetable();
+		if(modalStack.size()==0) return;
+		Actor a =modalStack.remove(modalStack.size()-1);
+		a.remove();
+		EntityGroup.clearTargetedHighlights();
+		if(a instanceof OnPop){
+			((OnPop) a).onPop();
+		}
+		if(extraOnPop != null){
+			extraOnPop.run();
+		}
+		InputBlocker.get().remove();
+		if(modalStack.size()>0){
+			addActor(InputBlocker.get());
+			modalStack.get(modalStack.size()-1).toFront();
+		}
+	}
+
+	public void showExceptionPopup(final String ex) {
+		Group a = new Group(){
+			@Override
+			public void draw(Batch batch, float parentAlpha) {
+				Draw.fillActor(batch, this, Colours.dark, Colours.light, 1);
+				super.draw(batch, parentAlpha);
+			}
+		};
+		TextWriter tw = new TextWriter("Crashed last time![n]Copy log to clipboard?[n](for emailing to tann@tann.space)");
+		TextButton yes = new TextButton("Yes", 5);
+		yes.setRunnable(new Runnable() {
+			@Override
+			public void run() {
+				Gdx.app.getClipboard().setContents(ex);
+				pop();
+			}
+		});
+		TextButton no = new TextButton("No", 5);
+		no.setRunnable(new Runnable() {
+			@Override
+			public void run() {
+				pop();
+			}
+		});
+		a.setSize(130, 38);
+		tw.setPosition((int)(a.getWidth()/2-tw.getWidth()/2), (int)(a.getHeight()-tw.getHeight()-2));
+		a.addActor(tw);
+		a.addActor(yes);
+		yes.setPosition((int)(a.getWidth()/3-yes.getWidth()/2), 2);
+		a.addActor(no);
+		no.setPosition((int)(a.getWidth()/3*2-yes.getWidth()/2), 2);
+		a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
+		push(a);
+	}
+
 }
