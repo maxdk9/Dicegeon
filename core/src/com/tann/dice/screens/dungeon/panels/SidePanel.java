@@ -26,7 +26,6 @@ public class SidePanel extends Group {
   }
 
   public void layout(boolean slide){
-
       List<EntityPanel> alive = new ArrayList<>();
       List<EntityPanel> dead = new ArrayList<>();
       for(DiceEntity de:entities){
@@ -59,9 +58,9 @@ public class SidePanel extends Group {
 
 
   public void setEntities(List<? extends DiceEntity> entities){
+    clearChildren();
     this.entities.clear();
     this.entities.addAll(entities);
-    clearChildren();
     for(DiceEntity de:entities){
         addActor(de.getEntityPanel());
     }

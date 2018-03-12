@@ -96,7 +96,7 @@ public class TargetingManager {
     private void targetableClick(Targetable t) {
         if (!PhaseManager.get().getPhase().canTarget()) {
             Explanel.get().setup(t, false);
-            DungeonScreen.get().push(Explanel.get());
+            Main.getCurrentScrren().push(Explanel.get());
             return;
         }
         for (DiceEntity de : Party.get().getActiveEntities()) {

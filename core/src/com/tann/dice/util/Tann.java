@@ -5,11 +5,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.generalPanels.PartyManagementPanel;
+import com.tann.dice.screens.map.MapScreen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,5 +75,9 @@ public class Tann {
             }
         }
         return results;
+    }
+
+    public static void center(Group child, Group parent) {
+        child.setPosition((int)(parent.getWidth()/2-child.getWidth()/2), (int)(parent.getHeight()/2-child.getHeight()/2));
     }
 }

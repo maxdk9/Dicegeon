@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.effect.trigger.types.DamageImmunityTrigger;
 import com.tann.dice.gameplay.effect.trigger.types.MaxHPTrigger;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -14,7 +15,10 @@ import java.util.List;
 public class Equipment {
 
   public static final Equipment leatherVest = new Equipment().name("leather vest").description("[grey]A [sin]lovely[sin] leather vest[n][light]+1 max hp")
-      .image("leatherVest").trigger(new MaxHPTrigger(1));
+          .image("leatherVest").trigger(new MaxHPTrigger(1));
+
+  public static final Equipment heartPendant = new Equipment().name("heart pendant").description("[grey]A ruby carved into a heart[n][light]+1 healing from all sources")
+          .image("heartPendant").trigger(new DamageImmunityTrigger());
 
   public String name;
   public String description;
@@ -55,6 +59,12 @@ public class Equipment {
     Draw.drawScaled(batch, image, (int)x, (int)y, scale, scale);
   }
 
+  public Equipment copy(){
+    Equipment copy = new Equipment().name(name).description(description);
+    copy.image = image;
+    copy.triggers = triggers;
+    return copy;
+  }
 
 
 }

@@ -149,6 +149,7 @@ public class Explanel extends InfoPanel implements OnPop {
         this.spell = null;
         this.side = null;
         this.effects = null;
+        this.equipment = null;
     }
 
     private void setup(Spell spell, boolean usable){

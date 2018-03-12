@@ -203,6 +203,10 @@ public class Draw {
 		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
 	}
 
+	public static void borderActor(Batch batch, Actor a) {
+		Draw.drawRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight(), 1);
+	}
+
 	public static void fillActor(Batch batch, Actor a, Color bg, Color border, float borderSize) {
 		batch.setColor(border);
 		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());

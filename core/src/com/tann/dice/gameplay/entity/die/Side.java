@@ -53,17 +53,18 @@ public class Side {
 
     // REGULAR
 
+    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(6).enemyGroup());
+    public static final Side sword2 = sword1.withValue(2);
+    public static final Side sword3 = sword1.withValue(3);
+    public static final Side sword4 = sword1.withValue(4);
+    public static final Side sword5 = sword1.withValue(5);
+
+
     public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing());
 
     public static final Side shield1 = new Side().image("shield").effect(new Eff().shield(1).friendlySingle());
     public static final Side shield2 = shield1.withValue(2);
     public static final Side shield3 = shield1.withValue(3);
-
-    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(1));
-    public static final Side sword2 = sword1.withValue(2);
-    public static final Side sword3 = sword1.withValue(3);
-    public static final Side sword4 = sword1.withValue(4);
-    public static final Side sword5 = sword1.withValue(5);
 
     public static final Side magic1 = new Side().image("magic").effect(new Eff().magic(1).untargeted());
     public static final Side magic2 = magic1.withValue(2);

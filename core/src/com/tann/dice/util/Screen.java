@@ -1,22 +1,18 @@
 package com.tann.dice.util;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
-import com.tann.dice.Main.MainState;
-import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
-import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Screen extends Lay{
 	//screenshake stuff//

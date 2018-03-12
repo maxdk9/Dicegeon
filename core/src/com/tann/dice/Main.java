@@ -1,16 +1,6 @@
 package com.tann.dice;
 
-import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
-import static com.badlogic.gdx.graphics.GL20.GL_DEPTH_BUFFER_BIT;
-import static com.badlogic.gdx.graphics.GL20.GL_ONE;
-import static com.badlogic.gdx.graphics.GL20.GL_ONE_MINUS_SRC_ALPHA;
-import static com.badlogic.gdx.graphics.GL20.GL_SRC_ALPHA;
-
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,19 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.phase.Phase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.map.MapScreen;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.Prefs;
+import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
-import com.tann.dice.util.Sounds;
-import com.tann.dice.util.TannFont;
-import com.tann.dice.util.TannStage;
-import com.tann.dice.util.TextWriter;
-import java.util.ArrayList;
-import java.util.List;
+
+import static com.badlogic.gdx.graphics.GL20.*;
 
 public class Main extends ApplicationAdapter {
 
@@ -61,6 +44,10 @@ public class Main extends ApplicationAdapter {
   public static float ticks;
 
   FrameBuffer fb;
+
+  public static Screen getCurrentScrren() {
+    return self.currentScreen;
+  }
 
   public enum MainState {
     Normal, Paused

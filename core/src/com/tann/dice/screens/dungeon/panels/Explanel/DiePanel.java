@@ -1,20 +1,19 @@
 package com.tann.dice.screens.dungeon.panels.Explanel;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.DieSidePanel;
 import com.tann.dice.screens.dungeon.panels.EquipmentPanel;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
+import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
 import java.util.List;
@@ -22,13 +21,20 @@ import java.util.List;
 public class DiePanel extends InfoPanel implements OnPop {
     public DiceEntity entity;
     public Explanel spellPanel;
-    public DiePanel(DiceEntity entity) {
+    public DiePanel(final DiceEntity entity) {
         this.entity = entity;
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                DungeonScreen.get().pop();
+                Equipment e = PartyManagementPanel.get().getSelectedEquipment();
+                if(e!=null){
+                    PartyManagementPanel.get().equip(entity);
+                }
+                else {
+                    Main.getCurrentScrren().pop();
+                }
                 event.cancel();
+
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -69,9 +75,13 @@ public class DiePanel extends InfoPanel implements OnPop {
                 panel.setPosition(startX + panelSize * (2+i) +1, gap + panelSize*2 +1);
                 addActor(panel);
             }
-            for(int i=0;i<h.equipment.size();i++){
-                Equipment e = h.equipment.get(i);
-                EquipmentPanel panel = new EquipmentPanel(e);
+            for(int i=0;i< entity.equipmentMaxSize;i++){
+                Equipment e = null;
+                if(h.equipment.size()>i){
+                    e = h.equipment.get(i);
+                }
+
+                EquipmentPanel panel = new EquipmentPanel(e, false);
                 panel.setPosition(startX+1, gap + panelSize*2*i+1);
                 addActor(panel);
             }
@@ -83,9 +93,12 @@ public class DiePanel extends InfoPanel implements OnPop {
         dsp.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(PartyManagementPanel.get().getSelectedEquipment()!=null){
+                    return false;
+                }
                 Explanel exp = Explanel.get();
                 exp.setup(s, false, ent.getColour());
-                DungeonScreen.get().push(exp);
+                Main.getCurrentScrren().push(exp);
                 exp.setPosition(exp.getNiceX(false), exp.getNiceY());
                 event.handle();
                 event.stop();
@@ -107,5 +120,9 @@ public class DiePanel extends InfoPanel implements OnPop {
     @Override
     public void onPop() {
         EntityGroup.clearTargetedHighlights();
+    }
+
+    public void somethingChanged() {
+        layout();
     }
 }

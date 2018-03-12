@@ -1,16 +1,16 @@
 package com.tann.dice.gameplay.entity.group;
 
-import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
+import com.tann.dice.screens.generalPanels.InventoryPanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,7 @@ public class Party extends EntityGroup{
 
     private static final int BASE_ROLLS = 2;
 
+    private List<Equipment> equipment = new ArrayList<>();
     private int gold; // wow I wonder if this will ever do anything! I hope so
     private int rolls = BASE_ROLLS;
     private int maxRolls = BASE_ROLLS;
@@ -41,6 +42,13 @@ public class Party extends EntityGroup{
         super.reset();
         clearEntities();
         addHeroes();
+        equipment.clear();
+        for(int i=0;i<3;i++){
+            addEquipment(Equipment.leatherVest.copy());
+        }
+        for(int i=0;i<3;i++){
+            addEquipment(Equipment.heartPendant.copy());
+        }
     }
 
     public void addHeroes(){
@@ -51,7 +59,6 @@ public class Party extends EntityGroup{
         for(HeroType type: types){
             tmp.add(type.buildHero());
         }
-        tmp.get(4).addEquipment(Equipment.leatherVest);
         setEntities(tmp);
         DungeonScreen.get().friendly.setEntities(activeEntities);
 
@@ -184,5 +191,42 @@ public class Party extends EntityGroup{
 
     public void clearNextTurnEffects(){
         nextTurnEffects.clear();
+    }
+
+    public List<Equipment> getEquipment() {
+        return equipment;
+    }
+
+    public void addEquipment(Equipment e) {
+        if(equipment.contains(e)){
+            System.err.println("uhoh, already contains "+e);
+            return;
+        }
+        equipment.add(e);
+        InventoryPanel.get().reset();
+    }
+
+    public void removeEquipment(Equipment e){
+        if(!equipment.contains(e)){
+            return;
+        }
+        equipment.remove(e);
+        InventoryPanel.get().reset();
+    }
+
+    public void unequip(Equipment selectedEquipment) {
+        DiceEntity equippee = getEquippee(selectedEquipment);
+        if(equippee!=null){
+            equippee.removeEquipment(selectedEquipment);
+        }
+    }
+
+    public DiceEntity getEquippee(Equipment e){
+        for(DiceEntity de:entities) {
+            if (de.equipment.contains(e)) {
+                return de;
+            }
+        }
+        return null;
     }
 }

@@ -51,6 +51,7 @@ public abstract class DiceEntity {
     public AtlasRegion portrait;
     public int portraitOffset;
     public ArrayList<Equipment> equipment = new ArrayList<>();
+    public int equipmentMaxSize = 1;
 
     public DiceEntity(EntityType type) {
         this.entityType = type;
@@ -93,6 +94,7 @@ public abstract class DiceEntity {
         calculatedMaxHp = null;
         activeTriggers = null;
         getProfile().somethingChanged();
+        getDiePanel().somethingChanged();
     }
 
     public int getMaxHp() {
@@ -357,9 +359,6 @@ public abstract class DiceEntity {
         }
     }
 
-
-    static final float BASE_SIZE = 5.69f/Gdx.graphics.getHeight()*Main.scale;
-
     public abstract int getPixelSize();
 
     public List<DiceEntity> getAllTargeters() {
@@ -377,7 +376,27 @@ public abstract class DiceEntity {
     }
 
     public void addEquipment(Equipment e) {
+        DiceEntity previousOwner = Party.get().getEquippee(e);
+        if(previousOwner!=null) {
+            previousOwner.removeEquipment(e);
+        }
+        if(equipment.size()>= equipmentMaxSize){
+            Equipment replaced = equipment.get(0);
+            removeEquipment(replaced);
+            if(previousOwner!=null){
+                previousOwner.addEquipment(replaced);
+            }
+            else {
+                Party.get().addEquipment(replaced);
+            }
+
+        }
         equipment.add(e);
+        somethingChanged();
+    }
+
+    public void removeEquipment(Equipment e) {
+        equipment.remove(e);
         somethingChanged();
     }
 
@@ -386,6 +405,7 @@ public abstract class DiceEntity {
         somethingChanged();
     }
 
+    private static final float BASE_SIZE = 5.69f/Gdx.graphics.getHeight()*Main.scale;
     public enum EntitySize {
 
         smol(12), reg(16), big(24), huge(32);

@@ -27,7 +27,7 @@ public class InputBlocker extends Actor{
                 @Override
                 public void run() {
                     if(blockerListen) {
-                        DungeonScreen.get().pop();
+                        Main.getCurrentScrren().pop();
                     }
 
                 }

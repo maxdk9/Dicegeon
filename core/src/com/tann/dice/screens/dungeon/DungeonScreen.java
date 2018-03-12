@@ -132,7 +132,6 @@ public class DungeonScreen extends Screen {
         addActor(spellButt);
         float gap = 12;
         spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
-        Party.get().fullyReset();
         nextLevel();
     }
 
@@ -201,9 +200,9 @@ public class DungeonScreen extends Screen {
     @Override
     public void drawBackground(Batch batch){
         batch.setColor(Colours.dark);
-        Draw.fillRectangle(batch, 0, 0, getWidth(), getHeight());
+        Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
         batch.setColor(Colours.z_white);
-        batch.draw(Images.background, 0,0);
+        batch.draw(Images.background, getX(),getY());
         for(DiceEntity de: EntityGroup.getAllActive()){
             de.getEntityPanel().drawBackground(batch);
         }
