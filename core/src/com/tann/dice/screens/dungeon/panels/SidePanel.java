@@ -8,9 +8,6 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.Layoo;
-import org.w3c.dom.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

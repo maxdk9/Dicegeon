@@ -147,7 +147,7 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-    setScreen(DungeonScreen.get());
+    setScreen(MapScreen.get());
     logTime("screen");
 
     String ex = Prefs.getString("lastException", "");

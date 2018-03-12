@@ -37,6 +37,10 @@ public class Tann {
         return result;
     }
 
+    public static <T> T getRandom(T[] array){
+        return array[(int) (Math.random()*array.length)];
+    }
+
     public static <T> T getRandom(List<T> list){
         return list.get((int)(Math.random()*list.size()));
     }
