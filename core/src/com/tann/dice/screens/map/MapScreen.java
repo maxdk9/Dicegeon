@@ -27,19 +27,19 @@ public class MapScreen extends Screen {
   }
 
   private void init() {
-    TextButton manag = new TextButton("Open Management thingy", 3);
-    manag.setRunnable(new Runnable() {
-      @Override
-      public void run() {
-        addActor(InputBlocker.get());
-        InputBlocker.get().toFront();
-        InputBlocker.get().setActiveClicker(false);
-        PartyManagementPanel p = PartyManagementPanel.get();
-        addActor(p);
-        p.setPosition((int)(getWidth()/2-p.getWidth()/2), 5);
-      }
-    });
-    addActor(manag);
+//    TextButton manag = new TextButton("Open Management thingy", 3);
+//    manag.setRunnable(new Runnable() {
+//      @Override
+//      public void run() {
+//        addActor(InputBlocker.get());
+//        InputBlocker.get().toFront();
+//        InputBlocker.get().setActiveClicker(false);
+//        PartyManagementPanel p = PartyManagementPanel.get();
+//        addActor(p);
+//        p.setPosition((int)(getWidth()/2-p.getWidth()/2), 5);
+//      }
+//    });
+//    addActor(manag);
 
     TextButton fite = new TextButton("go fighting", 3);
     fite.setRunnable(new Runnable() {

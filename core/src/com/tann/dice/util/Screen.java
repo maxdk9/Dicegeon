@@ -104,23 +104,24 @@ public abstract class Screen extends Lay{
 	};
 
 	Runnable extraOnPop;
-	public void push(final Actor a, boolean center, boolean blockerPops, boolean selfPops, Runnable onPop){
-		addActor(InputBlocker.get());
-		InputBlocker.get().toFront();
-		InputBlocker.get().setActiveClicker(blockerPops);
-		modalStack.add(a);
-		addActor(a);
+	public void push(final Actor actor, boolean center, boolean blockerPops, boolean selfPops, Runnable onPop){
+		InputBlocker ipb = new InputBlocker();
+		Pair<Actor, InputBlocker> pair = new Pair<>(actor, ipb);
+		addActor(ipb);
+		ipb.setActiveClicker(blockerPops);
+		modalStack.add(pair);
+		addActor(actor);
 		this.extraOnPop = onPop;
 
 		if(center){
-			a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
+			Tann.center(actor, this);
 		}
 		if(selfPops){
-			a.addListener(selfPopListener);
+			actor.addListener(selfPopListener);
 		}
 	}
 
-	List<Actor> modalStack = new ArrayList<>();
+	List<Pair<Actor, InputBlocker>> modalStack = new ArrayList<>();
 
 	public void push(Actor a){
 		push(a, true, true, true, null);
@@ -129,19 +130,20 @@ public abstract class Screen extends Lay{
 	public void pop(){
 		TargetingManager.get().deselectTargetable();
 		if(modalStack.size()==0) return;
-		Actor a =modalStack.remove(modalStack.size()-1);
-		a.remove();
+		Pair<Actor, InputBlocker> popped = modalStack.remove(modalStack.size()-1);
+		popped.a.remove();
+		popped.b.remove();
 		EntityGroup.clearTargetedHighlights();
-		if(a instanceof OnPop){
-			((OnPop) a).onPop();
+		if(popped.a instanceof OnPop){
+			((OnPop) popped.a).onPop();
 		}
 		if(extraOnPop != null){
 			extraOnPop.run();
 		}
-		InputBlocker.get().remove();
 		if(modalStack.size()>0){
-			addActor(InputBlocker.get());
-			modalStack.get(modalStack.size()-1).toFront();
+			Pair<Actor, InputBlocker> next = modalStack.get(modalStack.size()-1);
+			next.b.toFront();
+			next.a.toFront();
 		}
 	}
 

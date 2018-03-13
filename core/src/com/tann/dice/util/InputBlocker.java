@@ -8,20 +8,21 @@ import com.tann.dice.Main;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 public class InputBlocker extends Actor{
-    private static InputBlocker self;
-    public static InputBlocker get(){
-        if(self == null){
-            self = new InputBlocker();
-        }
-        return self;
-    }
+//    private static InputBlocker self;
+//    public static InputBlocker get(){
+//        return new InputBlocker();
+////        if(self == null){
+////            self = new InputBlocker();
+////        }
+////        return self;
+//    }
 
     Runnable r;
     public void setAction(Runnable r){
         this.r=r;
     }
 
-    private InputBlocker(){
+    public InputBlocker(){
         setAction(
             new Runnable() {
                 @Override

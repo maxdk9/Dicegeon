@@ -81,7 +81,7 @@ public class Tann {
         return results;
     }
 
-    public static void center(Group child, Group parent) {
+    public static void center(Actor child, Group parent) {
         child.setPosition((int)(parent.getWidth()/2-child.getWidth()/2), (int)(parent.getHeight()/2-child.getHeight()/2));
     }
 }

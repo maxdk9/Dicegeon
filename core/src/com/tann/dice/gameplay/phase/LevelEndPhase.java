@@ -17,7 +17,7 @@ public class LevelEndPhase extends Phase {
         heroesToLevelUp.add(Party.get().getActiveEntities().get(1));
         heroesToLevelUp.add(Party.get().getActiveEntities().get(2));
         heroesToLevelUp.add(Party.get().getActiveEntities().get(3));
-        DungeonScreen.get().push(new LevelEndPanel(gainedEquipment, heroesToLevelUp));
+        DungeonScreen.get().push(new LevelEndPanel(gainedEquipment, heroesToLevelUp), true, false, false, null);
     }
 
     @Override
