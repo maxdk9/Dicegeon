@@ -9,7 +9,6 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
-import com.tann.dice.screens.dungeon.panels.EquipmentPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Colours;
@@ -22,7 +21,7 @@ public class PartyManagementPanel extends Group {
   public static PartyManagementPanel get() {
     if(self == null){
       self = new PartyManagementPanel();
-      self.init();
+      self.refresh();
     }
     return self;
   }
@@ -37,7 +36,7 @@ public class PartyManagementPanel extends Group {
     });
   }
 
-  private void init(){
+  public void refresh(){
     int gap = 2;
     DiePanel example = Party.get().getEntities().get(0).getDiePanel();
 
@@ -61,6 +60,12 @@ public class PartyManagementPanel extends Group {
 
     TextButton done = new TextButton("Done", 4);
     addActor(done);
+    done.setRunnable(new Runnable() {
+      @Override
+      public void run() {
+        Main.getCurrentScrren().pop();
+      }
+    });
     done.setPosition((int)(getWidth()-gap-done.getWidth()), (int)(getHeight()-gap-done.getHeight()));
 
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.TargetingManager;
+import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,16 +92,12 @@ public abstract class Screen extends Lay{
 
 	public void removeFromScreen(){}
 
-
-	private InputListener selfPopListener = new InputListener(){
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				pop();
-				event.cancel();
-				event.stop();
-				event.handle();
-				return super.touchDown(event, x, y, pointer, button);
-			}
+	final InputListener SELF_POP = new InputListener(){
+		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			pop(event.getListenerActor());
+			return true;
+		}
 	};
 
 	Runnable extraOnPop;
@@ -117,7 +114,7 @@ public abstract class Screen extends Lay{
 			Tann.center(actor, this);
 		}
 		if(selfPops){
-			actor.addListener(selfPopListener);
+			actor.addListener(SELF_POP);
 		}
 	}
 
@@ -129,9 +126,13 @@ public abstract class Screen extends Lay{
 
 	public void pop(){
 		TargetingManager.get().deselectTargetable();
-		if(modalStack.size()==0) return;
+		if(modalStack.size()==0){
+			System.err.println("Trying to pop with nothing to pop");
+			return;
+		}
 		Pair<Actor, InputBlocker> popped = modalStack.remove(modalStack.size()-1);
 		popped.a.remove();
+		popped.a.removeListener(SELF_POP);
 		popped.b.remove();
 		EntityGroup.clearTargetedHighlights();
 		if(popped.a instanceof OnPop){
@@ -145,6 +146,19 @@ public abstract class Screen extends Lay{
 			next.b.toFront();
 			next.a.toFront();
 		}
+	}
+
+	public void pop(Actor a) {
+		if(modalStack.size()==0){
+			System.err.println("Trying to pop with nothing to pop");
+			return;
+		}
+		Pair p = modalStack.get(modalStack.size()-1);
+		if(p.a!=a){
+			System.err.println("Popping wrong panel. Expected "+a.getClass().getSimpleName()+", found "+p.a.getClass().getSimpleName());
+			return;
+		}
+		pop();
 	}
 
 	public void showExceptionPopup(final String ex) {

@@ -20,7 +20,6 @@ import java.util.List;
 
 public class DiePanel extends InfoPanel implements OnPop {
     public DiceEntity entity;
-    public Explanel spellPanel;
     public DiePanel(final DiceEntity entity) {
         this.entity = entity;
         addListener(new InputListener(){
@@ -30,18 +29,16 @@ public class DiePanel extends InfoPanel implements OnPop {
                 if(e!=null){
                     PartyManagementPanel.get().equip(entity);
                 }
-                else {
-                    Main.getCurrentScrren().pop();
-                }
                 event.cancel();
-
-                return super.touchDown(event, x, y, pointer, button);
+                event.stop();
+                event.handle();
+                return true;
             }
         });
         layout();
     }
     private static final int gap = 3;
-    public static final int TEXT_GAP = 3, TEXT_SIZE = TEXT_GAP*2+TannFont.font.getHeight();
+    public static final int TEXT_GAP = 3;
     public void layout(){
         clearChildren();
         Side[] sides = entity.getSides();

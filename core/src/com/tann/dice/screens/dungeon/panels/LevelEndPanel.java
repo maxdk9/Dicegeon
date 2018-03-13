@@ -5,10 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 import com.tann.dice.util.Pixl;
@@ -16,7 +14,6 @@ import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextButton;
 import com.tann.dice.util.TextWriter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LevelEndPanel extends Group {
@@ -56,12 +53,12 @@ public class LevelEndPanel extends Group {
         p.actor(cont);
         p.row(3);
         p.pix();
-        System.out.println("adding runnables");
         org.setRunnable(new Runnable() {
             @Override
             public void run() {
                 PartyManagementPanel p = PartyManagementPanel.get();
-                Main.getCurrentScrren().push(p);
+                p.refresh();
+                Main.getCurrentScrren().push(p, false, true, false, null);
                 p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
             }
         });
@@ -69,7 +66,6 @@ public class LevelEndPanel extends Group {
         cont.setRunnable(new Runnable() {
             @Override
             public void run() {
-                System.out.println("ha");
                 PhaseManager.get().popPhase();
             }
         });
