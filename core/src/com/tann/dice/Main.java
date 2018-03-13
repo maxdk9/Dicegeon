@@ -157,8 +157,12 @@ public class Main extends ApplicationAdapter {
     }
   }
 
+
+
+  long renderTime;
   @Override
   public void render() {
+    long renderStart = System.currentTimeMillis();
     try {
       if (Gdx.graphics.getDeltaTime() > 63 / 1000f && Main.ticks > 2) {
         gcPauses++;
@@ -202,16 +206,14 @@ public class Main extends ApplicationAdapter {
       bufferDrawer.end();
       Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT);
 
-    }
-
-    catch (RuntimeException e){
+    } catch (RuntimeException e){
       logException(e);
     }
-
+    renderTime = (System.currentTimeMillis() - renderStart);
   }
 
   public static void logException(RuntimeException e){
-      String message = versionName + "\n" + e.getMessage() + "\n";
+      String message = versionName + "\n" + e.getClass()+": "+e.getMessage() + "\n";
       for(StackTraceElement ste:e.getStackTrace()){
           message += ste.toString()+"\n";
       }
@@ -219,7 +221,9 @@ public class Main extends ApplicationAdapter {
       throw e;
   }
 
+
   public void update(float delta) {
+
     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
       delta *= .1f;
     }
@@ -243,8 +247,6 @@ public class Main extends ApplicationAdapter {
 
   @Override
   public void resize(int width, int height) {
-//		Main.width = width;
-//		Main.height = height;
     stage.getViewport().update(width, height);
     BulletStuff.resize();
     if (currentScreen != null) {
@@ -282,6 +284,7 @@ public class Main extends ApplicationAdapter {
     batch.setColor(Colours.blue);
     TannFont.font.drawString(batch, versionName, width / 2 - 25, 1);
     TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", width / 2 + 5, 1); // + gcPauses
+    TannFont.font.drawString(batch, renderTime+"ms", width / 2 + 27, 1); // + gcPauses
   }
 
   public static float w(float factor) {
