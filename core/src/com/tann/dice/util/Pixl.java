@@ -9,11 +9,17 @@ import java.util.List;
 public class Pixl {
     Group g;
     int baseGap;
+    int bonusWidth;
     List<Row> rows = new ArrayList<>();
     Row currentRow;
     public Pixl(Group g, int baseGap) {
+        this(g, baseGap, 0);
+    }
+
+    public Pixl(Group g, int baseGap, int bonusWidth) {
         this.g = g;
         this.baseGap = baseGap;
+        this.bonusWidth = bonusWidth;
         currentRow = new Row(baseGap);
     }
 
@@ -22,6 +28,10 @@ public class Pixl {
     }
 
     public void row(int gap){
+        if(currentRow.elementList.size()==0){
+            currentRow.aboveRowGap = gap;
+            return;
+        }
         currentRow.finish();
         rows.add(currentRow);
         currentRow = new Row(gap);
@@ -36,16 +46,19 @@ public class Pixl {
     }
 
     public void pix(){
-        row();
-        row();
+        if(!currentRow.elementList.isEmpty()){
+            row();
+        }
+        currentRow.finish();
+        rows.add(currentRow);
         int maxWidth = 0;
         int totalHeight = 0;
         for(Row r:rows){
             totalHeight += r.getHeight();
-            maxWidth = Math.max(r.getWidth(), maxWidth);
+            maxWidth = Math.max(r.getWidth()+bonusWidth, maxWidth);
         }
         g.setSize(maxWidth, totalHeight);
-        int currentY = (int) g.getHeight()+1;
+        int currentY = (int) g.getHeight();
         for(Row r:rows){
             currentY -= r.aboveRowGap;
             int usedWidth =0;
@@ -59,10 +72,11 @@ public class Pixl {
             }
             int currentX = (int) ((g.getWidth()-usedWidth)/2);
             int rowHeight = r.getHeight();
+            int rowHeightExcludingAboveGap = rowHeight-r.aboveRowGap;
             for(Element e:r.elementList){
                 if(e.a!=null){
                     g.addActor(e.a);
-                    e.a.setPosition(currentX, (int)(currentY-rowHeight/2f-e.a.getHeight()/2f));
+                    e.a.setPosition(currentX, (int)(currentY-rowHeightExcludingAboveGap/2f-e.a.getHeight()/2f));
                     currentX += e.a.getWidth();
                 }
                 else{
