@@ -24,6 +24,7 @@ import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
 
+import com.tann.dice.util.TextWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -406,7 +407,12 @@ public abstract class DiceEntity {
     }
 
     private static final float BASE_SIZE = 5.69f/Gdx.graphics.getHeight()*Main.scale;
-    public enum EntitySize {
+
+  public String getColourTag() {
+      return TextWriter.getColourTagForColour(getColour());
+  }
+
+  public enum EntitySize {
 
         smol(12), reg(16), big(24), huge(32);
 

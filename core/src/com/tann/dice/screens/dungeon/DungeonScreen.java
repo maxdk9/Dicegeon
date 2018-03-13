@@ -25,6 +25,7 @@ import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
+import com.tann.dice.gameplay.phase.LevelEndPhase;
 import com.tann.dice.gameplay.phase.LevelUpPhase;
 import com.tann.dice.gameplay.phase.LossPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
@@ -180,7 +181,7 @@ public class DungeonScreen extends Screen {
         Party.get().reset();
         PhaseManager.get().clearPhases();
         if(level>1){
-            PhaseManager.get().pushPhase(new LevelUpPhase());
+            PhaseManager.get().pushPhase(new LevelEndPhase());
         }
         PhaseManager.get().pushPhase(new EnemyRollingPhase());
         PhaseManager.get().kickstartPhase();

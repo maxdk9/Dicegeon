@@ -12,6 +12,7 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class TextWriter extends Group {
     String[] split;
@@ -56,6 +57,15 @@ public class TextWriter extends Group {
         colorMap.put("yellow", Colours.yellow);
         colorMap.put("orange", Colours.orange);
         colorMap.put("grey", Colours.grey);
+    }
+
+    public static String getColourTagForColour(Color c){
+        for(Entry<String, Color> entry :colorMap.entrySet()){
+            if(entry.getValue().equals(c)){
+                return "["+entry.getKey()+"]";
+            }
+        }
+        return "";
     }
 
 

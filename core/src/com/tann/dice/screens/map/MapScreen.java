@@ -5,9 +5,15 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
+import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.panels.LevelEndPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapScreen extends Screen {
 
@@ -45,29 +51,12 @@ public class MapScreen extends Screen {
     addActor(fite);
     fite.setY(50);
 
-    final Group g = new Group(){
-      @Override
-      public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.purple);
-        super.draw(batch, parentAlpha);
-      }
-    };
-    g.setPosition(100, 100);
-    Pixl p = new Pixl(g, 2);
-    p.actor(new TextWriter("hi"));
-    p.actor(new ImageActor(Images.flameWard));
-    p.actor(new TextWriter("hello"));
-    p.actor(new ImageActor(Images.flameWard));
-    p.actor(new TextWriter("howdy"));
-    p.row();
-    p.actor(new ImageActor(Images.roll));
-    p.actor(new ImageActor(Images.roll));
-    p.actor(new ImageActor(Images.roll));
-    p.row();
-    p.actor(new TextWriter("amazing"));
-    p.pix();
-
-    addActor(g);
+    List<Equipment> gainedEquipment = new ArrayList<>();
+    gainedEquipment.add(Equipment.leatherVest.copy());
+    gainedEquipment.add(Equipment.heartPendant.copy());
+    List<DiceEntity> heroesToLevelUp = new ArrayList<>();
+    heroesToLevelUp.add(Party.get().getActiveEntities().get(4));
+    push(new LevelEndPanel(gainedEquipment, heroesToLevelUp));
   }
 
 

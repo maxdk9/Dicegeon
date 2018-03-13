@@ -4,7 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.util.Button;
+import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
+import com.tann.dice.util.Pixl;
 import com.tann.dice.util.Tann;
+import com.tann.dice.util.TextButton;
 import com.tann.dice.util.TextWriter;
 
 import java.util.ArrayList;
@@ -13,7 +18,7 @@ import java.util.List;
 public class LevelEndPanel extends Group {
 
     private static final String[] congrats = new String[]{
-            "Nice!", "Congrats", "You did it!", "Congration", "Hot stuff", "Wowzers", "Spledid", "You believed in yourself!", "I knew you could do it", "They never stood a chance",
+            "Nice!", "Congrats", "You did it!", "Congration", "Hot stuff", "Wowzers", "Splendid", "I knew you could do it", "They never stood a chance",
             "Imbressive"};
 
     List<Equipment> gainedEquipment;
@@ -26,24 +31,32 @@ public class LevelEndPanel extends Group {
     }
 
     public void layout(){
-        TextWriter title = new TextWriter("[sin]"+ Tann.getRandom(congrats)+"[sin]");
-        TextWriter gained = null;
-        List<EquipmentPanel> panels = new ArrayList<>();
-        if(gainedEquipment.size()>0){
-            gained = new TextWriter("You got: ");
-            for(Equipment e:gainedEquipment){
-                panels.add(new EquipmentPanel(e, false));
-            }
+        Pixl p = new Pixl(this, 2, 4);
+        p.row(4);
+        p.actor(new TextWriter("[orange]"+ Tann.getRandom(congrats)));
+        p.row(4);
+        for(Equipment e:gainedEquipment){
+            p.actor(new TextWriter("You got: "));
+            p.gap(4);
+            p.actor(new EquipmentPanel(e, false));
+            p.row();
         }
-        List<TextWriter> levelled = new ArrayList<>();
         for(DiceEntity de: toLevelup){
-            levelled.add(new TextWriter(de.getName()+" levelled up!"));
+            p.actor(new TextWriter(de.getColourTag()+de.getName()+" [light]levelled up!"));
+            p.row();
         }
-
+        p.row(4);
+        TextButton org = new TextButton("Organise", 2);
+        TextButton cont = new TextButton("Continue", 2);
+        p.actor(org);
+        p.actor(cont);
+        p.row(3);
+        p.pix();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
         super.draw(batch, parentAlpha);
     }
 }
