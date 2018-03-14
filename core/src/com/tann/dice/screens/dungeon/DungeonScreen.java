@@ -176,9 +176,9 @@ public class DungeonScreen extends Screen {
                 PhaseManager.get().kickstartPhase(VictoryPhase.class);
                 return;
         }
-        spellHolder.setup(Party.get().getSpells());
         spellButt.setSpellHolder(spellHolder);
         Party.get().reset();
+        spellHolder.setup(Party.get().getSpells());
         PhaseManager.get().clearPhases();
         if(level>1){
             PhaseManager.get().pushPhase(new LevelEndPhase());

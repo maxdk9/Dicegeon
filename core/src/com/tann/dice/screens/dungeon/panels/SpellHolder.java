@@ -86,22 +86,22 @@ public class SpellHolder extends Group {
         clearChildren();
         WIDTH = Images.spellBorderBig.getRegionWidth()*getMaxSpells() + GAP*(getMaxSpells()+2) + SpellCostPanel.WIDTH;
         setSize(WIDTH, BAR_HEIGHT*getSpellLevels()+1);
-//        Layoo l = new Layoo(this);
-//        l.row(1);
-//        for(int i=1;i<=getMaxSpellLevel();i++){
-//            List<Spell> spells = spellMap.get(i);
-//            SpellCostPanel scp = new SpellCostPanel(i);
-//            l.actor(scp);
-//            l.gap(1);
-//            if(spells != null) {
-//                for (Spell s : spells) {
-//                    l.actor(s.getPanel());
-//                    l.gap(1);
-//                }
-//            }
-//            l.row(1);
-//        }
-//        l.layoo();
+        Layoo l = new Layoo(this);
+        l.row(1);
+        for(int i=1;i<=getMaxSpellLevel();i++){
+            List<Spell> spells = spellMap.get(i);
+            SpellCostPanel scp = new SpellCostPanel(i);
+            l.actor(scp);
+            l.gap(1);
+            if(spells != null) {
+                for (Spell s : spells) {
+                    l.actor(s.getPanel());
+                    l.gap(1);
+                }
+            }
+            l.row(1);
+        }
+        l.layoo();
     }
 
     public float getX(boolean out){
