@@ -41,7 +41,7 @@ public class DamageProfile {
             incomingDamage = 0;
             for(Eff e:effs){
                 if(e.type == Damage){
-                    incomingDamage+= e.getValue();
+                    incomingDamage+= e.getValue(target);
                 }
             }
             for(Trigger t:target.getActiveTriggers()){
@@ -84,7 +84,7 @@ public class DamageProfile {
             blockedDamage = 0;
             for (Eff e:effs){
                 if(e.type == Shield){
-                    blockedDamage += e.getValue();
+                    blockedDamage += e.getValue(target);
                 }
             }
         }
@@ -97,7 +97,7 @@ public class DamageProfile {
             heals = 0;
             for (Eff e:effs){
                 if(e.type == Heal){
-                    heals += e.getValue();
+                    heals += e.getValue(target);
                 }
             }
         }
@@ -109,7 +109,7 @@ public class DamageProfile {
         if(execute == null){
             execute = false;
             for (Eff e:effs){
-                if(e.type == Execute && target.getHp() == e.getValue()){
+                if(e.type == Execute && target.getHp() == e.getValue(target)){
                     execute = true;
                     break;
                 }

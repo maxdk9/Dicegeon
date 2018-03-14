@@ -20,14 +20,14 @@ public class Eff {
     public enum EffectType{
         Nothing, Damage, Shield, Magic, Heal, Buff, Execute, Reroll
 	}
-	
 
-	public EffectType type;
+
+    public EffectType type;
     public Buff buff;
     public int buffDuration;
-	private int value;
-	public DiceEntity source;
-	boolean nextTurn;
+    private int value;
+    public DiceEntity source;
+    boolean nextTurn;
 
     public Eff(){}
 
@@ -161,6 +161,16 @@ public class Eff {
                 Trigger t = triggers.get(i);
                 actualValue = t.alterOutgoingEffect(type, actualValue);
             }
+        }
+        return actualValue;
+    }
+
+    public int getValue(DiceEntity target) {
+        int actualValue = getValue();
+        List<Trigger> triggers = target.getActiveTriggers();
+        for(int i=0;i<triggers.size();i++){
+            Trigger t = triggers.get(i);
+            actualValue = t.alterIncomingEffect(type, actualValue);
         }
         return actualValue;
     }

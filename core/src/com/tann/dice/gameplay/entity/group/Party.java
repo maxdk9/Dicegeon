@@ -43,12 +43,12 @@ public class Party extends EntityGroup{
         clearEntities();
         addHeroes();
         equipment.clear();
-        for(int i=0;i<3;i++){
-            addEquipment(Equipment.leatherVest.copy());
-        }
-        for(int i=0;i<3;i++){
-            addEquipment(Equipment.heartPendant.copy());
-        }
+//        for(int i=0;i<3;i++){
+//            addEquipment(Equipment.leatherVest.copy());
+//        }
+//        for(int i=0;i<3;i++){
+//            addEquipment(Equipment.heartPendant.copy());
+//        }
     }
 
     public void addHeroes(){
@@ -60,6 +60,9 @@ public class Party extends EntityGroup{
             tmp.add(type.buildHero());
         }
         setEntities(tmp);
+        for(DiceEntity de: tmp){
+//            de.addEquipment(Equipment.heartPendant.copy());
+        }
         DungeonScreen.get().friendly.setEntities(activeEntities);
 
     }

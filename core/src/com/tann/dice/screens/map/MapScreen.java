@@ -7,6 +7,7 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.LevelEndPanel;
@@ -51,12 +52,6 @@ public class MapScreen extends Screen {
     addActor(fite);
     fite.setY(50);
 
-    List<Equipment> gainedEquipment = new ArrayList<>();
-    gainedEquipment.add(Equipment.leatherVest.copy());
-    gainedEquipment.add(Equipment.heartPendant.copy());
-    List<DiceEntity> heroesToLevelUp = new ArrayList<>();
-    heroesToLevelUp.add(Party.get().getActiveEntities().get(4));
-    push(new LevelEndPanel(gainedEquipment, heroesToLevelUp));
   }
 
 
