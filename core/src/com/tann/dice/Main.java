@@ -16,10 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.map.MapScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
+import java.util.ArrayList;
 
 import static com.badlogic.gdx.graphics.GL20.*;
 
@@ -157,9 +157,6 @@ public class Main extends ApplicationAdapter {
     }
   }
 
-
-
-  long renderTime;
   @Override
   public void render() {
     long renderStart = System.currentTimeMillis();
@@ -209,7 +206,22 @@ public class Main extends ApplicationAdapter {
     } catch (RuntimeException e){
       logException(e);
     }
-    renderTime = (System.currentTimeMillis() - renderStart);
+    logRenderTime(System.currentTimeMillis() - renderStart);
+  }
+
+  private static final int SAMPLE_MAX = 60;
+  private final ArrayList<Long> samples = new ArrayList<>();
+  private long averageRenderTime = 0;
+  private void logRenderTime(long sample) {
+    samples.add(sample);
+    if(samples.size()>SAMPLE_MAX){
+      samples.remove(0);
+    }
+    long total = 0;
+    for(Long l:samples){
+      total += l;
+    }
+    averageRenderTime = total/samples.size();
   }
 
   public static void logException(RuntimeException e){
@@ -284,7 +296,7 @@ public class Main extends ApplicationAdapter {
     batch.setColor(Colours.blue);
     TannFont.font.drawString(batch, versionName, width / 2 - 25, 1);
     TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", width / 2 + 5, 1); // + gcPauses
-    TannFont.font.drawString(batch, renderTime+"ms", width / 2 + 27, 1); // + gcPauses
+    TannFont.font.drawString(batch, averageRenderTime +"ms", width / 2 + 27, 1); // + gcPauses
   }
 
   public static float w(float factor) {
