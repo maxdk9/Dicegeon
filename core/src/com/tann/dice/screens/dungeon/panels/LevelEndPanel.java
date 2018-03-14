@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Colours;
@@ -23,9 +24,9 @@ public class LevelEndPanel extends Group {
             "Imbressive"};
 
     List<Equipment> gainedEquipment;
-    List<DiceEntity> toLevelup;
+    List<Hero> toLevelup;
 
-    public LevelEndPanel(List<Equipment> gainedEquipment, List<DiceEntity> toLevelup) {
+    public LevelEndPanel(List<Equipment> gainedEquipment, List<Hero> toLevelup) {
         this.gainedEquipment = gainedEquipment;
         this.toLevelup = toLevelup;
         layout();

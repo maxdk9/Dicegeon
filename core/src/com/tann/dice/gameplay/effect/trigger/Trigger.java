@@ -23,4 +23,6 @@ public class Trigger {
   public void attackedBy(DiceEntity entity) { }
 
   public int alterOutgoingEffect(EffectType type, int value) { return value; }
+
+  public int alterIncomingEffect(EffectType type, int value) { return value; }
 }
