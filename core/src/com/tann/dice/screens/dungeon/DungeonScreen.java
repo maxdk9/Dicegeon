@@ -1,11 +1,8 @@
 package com.tann.dice.screens.dungeon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -26,7 +23,6 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.phase.EnemyRollingPhase;
 import com.tann.dice.gameplay.phase.LevelEndPhase;
-import com.tann.dice.gameplay.phase.LevelUpPhase;
 import com.tann.dice.gameplay.phase.LossPhase;
 import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.gameplay.phase.TargetingPhase;
@@ -40,13 +36,9 @@ import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
-import com.tann.dice.util.InputBlocker;
-import com.tann.dice.util.OnPop;
 import com.tann.dice.util.Screen;
 import com.tann.dice.util.TannFont;
-import com.tann.dice.util.TextButton;
 import com.tann.dice.util.TextWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DungeonScreen extends Screen {
@@ -377,7 +369,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void showLevelupPanel(Hero hero, List<HeroType> options) {
-        LevelUpPanel lup = new LevelUpPanel(hero, options);
+        LevelUpPanel lup = new LevelUpPanel(hero);
         lup.setPosition(getWidth()/2, getHeight()/2f, Align.center);
         addActor(lup);
     }

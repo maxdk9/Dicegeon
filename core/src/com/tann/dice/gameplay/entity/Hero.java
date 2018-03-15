@@ -12,7 +12,7 @@ import java.util.List;
 public class Hero extends DiceEntity {
 
     List<Spell> spells;
-    public Hero(com.tann.dice.gameplay.entity.type.HeroType type) {
+    public Hero(HeroType type) {
         super(type);
         if(type.colour!=null){
             setColour(type.colour);
@@ -25,16 +25,15 @@ public class Hero extends DiceEntity {
         return true;
     }
 
-    public void levelUpTo(com.tann.dice.gameplay.entity.type.HeroType type) {
+    public void levelUpTo(HeroType type) {
         this.entityType = type;
         this.name = type.name;
         setMaxHp(type.hp);
         setSides(type.sides);
+        somethingChanged();
         this.spells = Arrays.asList(type.spells);
-        resetPanels();
         DungeonScreen.get().spellHolder.setup(Party.get().getSpells());
         DungeonScreen.get().spellHolder.layout();
-        getDiePanel().layout();
     }
 
     @Override
@@ -61,7 +60,7 @@ public class Hero extends DiceEntity {
         return spells;
     }
 
-    public com.tann.dice.gameplay.entity.type.HeroType getHeroType() {
+    public HeroType getHeroType() {
         return (HeroType) entityType;
     }
 }

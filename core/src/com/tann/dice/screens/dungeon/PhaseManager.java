@@ -64,5 +64,4 @@ public class PhaseManager {
     public void kickstartPhase() {
         getPhase().activate();
     }
-
 }

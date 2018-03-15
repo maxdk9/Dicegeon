@@ -77,6 +77,6 @@ public class Equipment {
 
 
   public static Equipment random() {
-    return Tann.getRandom(all);
+    return Tann.getRandom(all).copy();
   }
 }

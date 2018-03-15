@@ -10,26 +10,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelEndPhase extends Phase {
+    LevelEndPanel levelEndPanel;
     @Override
     public void activate() {
         List<Equipment> gainedEquipment = new ArrayList<>();
         List<Hero> heroesToLevelUp = new ArrayList<>();
         if(DungeonScreen.get().level%2==0) {
-            Hero h = null;
             for (int i = 0; i < 1000; i++) {
-                h = (Hero) Tann.getRandom(Party.get().getActiveEntities());
-                if (h.getHeroType().getLevelupOptions().size() > 0)
+                Hero h = (Hero) Tann.getRandom(Party.get().getActiveEntities());
+                if (h.getHeroType().getLevelupOptions().size() > 0){
+                    heroesToLevelUp.add(h);
                     break;
+                }
             }
         }
         else{
             gainedEquipment.add(Equipment.random());
         }
-        DungeonScreen.get().push(new LevelEndPanel(gainedEquipment, heroesToLevelUp), true, false, false, null);
+        for(Equipment e:gainedEquipment){
+            Party.get().addEquipment(e);
+        }
+        levelEndPanel = new LevelEndPanel(gainedEquipment, heroesToLevelUp);
+        DungeonScreen.get().push(levelEndPanel, true, false, false, null);
     }
 
     @Override
     public void deactivate() {
 
+    }
+
+    @Override
+    public void refreshPhase() {
+        levelEndPanel.layout();
     }
 }

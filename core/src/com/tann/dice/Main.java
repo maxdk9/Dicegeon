@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.map.MapScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
@@ -147,7 +148,7 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-    setScreen(MapScreen.get());
+    setScreen(DungeonScreen.get());
     logTime("screen");
 
     String ex = Prefs.getString("lastException", "");

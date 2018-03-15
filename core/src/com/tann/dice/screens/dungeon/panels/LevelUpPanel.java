@@ -12,6 +12,7 @@ import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
+import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class LevelUpPanel extends Group{
     DiePanel basePanel;
     DiePanel[] optionsPanels;
     static final int topHeight = 14, hGap = 10, vGap = 4, tickSize = 20;
-    public LevelUpPanel(final Hero hero, List<HeroType> options) {
+    public LevelUpPanel(final Hero hero) {
     this.hero = hero;
 
     basePanel = new DiePanel(hero);
@@ -34,7 +35,7 @@ public class LevelUpPanel extends Group{
     tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(bottomHeight+topHeight/2-tw.getHeight()/2));
 
 
-
+    List<HeroType> options = Tann.pickNRandomElements(hero.getHeroType().getLevelupOptions(), 2);
     basePanel.setPosition(hGap, (int)(bottomHeight/2-basePanel.getHeight()/2));
     optionsPanels = new DiePanel[options.size()];
     //TODO update this for new EntityType stuff
@@ -49,10 +50,11 @@ public class LevelUpPanel extends Group{
           @Override
           public void run() {
               hero.levelUpTo(et);
-              PhaseManager.get().popPhase(LevelUpPhase.class);
-              remove();
+              Main.getCurrentScrren().pop(LevelUpPanel.this);
+              PhaseManager.get().getPhase().refreshPhase();
           }
         });
+
         tick.setBorder(Colours.dark, Colours.purple, 1);
         tick.setColor(hero.getColour());
         addActor(tick);

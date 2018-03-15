@@ -25,17 +25,19 @@ public class LevelEndPanel extends Group {
 
     List<Equipment> gainedEquipment;
     List<Hero> toLevelup;
-
+    String congrat;
     public LevelEndPanel(List<Equipment> gainedEquipment, List<Hero> toLevelup) {
         this.gainedEquipment = gainedEquipment;
         this.toLevelup = toLevelup;
+        this.congrat = Tann.getRandom(congrats);
         layout();
     }
 
     public void layout(){
+        clearChildren();
         Pixl p = new Pixl(this, 2, 4);
         p.row(4);
-        p.actor(new TextWriter("[orange]"+ Tann.getRandom(congrats)));
+        p.actor(new TextWriter("[orange]"+ congrat));
         p.row(4);
         for(Equipment e:gainedEquipment){
             p.actor(new TextWriter("You got: "));
@@ -49,7 +51,7 @@ public class LevelEndPanel extends Group {
         }
         p.row(4);
         TextButton org = new TextButton("Organise", 2);
-        TextButton cont = new TextButton("Continue", 2);
+        TextButton cont = new TextButton(toLevelup.size()==0?"Continue":"Level up", 2);
         p.actor(org);
         p.actor(cont);
         p.row(3);
@@ -67,7 +69,14 @@ public class LevelEndPanel extends Group {
         cont.setRunnable(new Runnable() {
             @Override
             public void run() {
-                PhaseManager.get().popPhase();
+                if(toLevelup.size()==0) {
+                    PhaseManager.get().popPhase();
+                    Main.getCurrentScrren().pop(LevelEndPanel.this);
+                }
+                else{
+                    LevelUpPanel lup = new LevelUpPanel(toLevelup.remove(0));
+                    Main.getCurrentScrren().push(lup, true, false, false, null);
+                }
             }
         });
     }
