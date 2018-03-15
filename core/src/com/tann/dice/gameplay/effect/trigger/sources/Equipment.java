@@ -19,14 +19,15 @@ public class Equipment {
 
   private static final List<Equipment> all = new ArrayList<>();
 
-  public static final Equipment leatherVest = new Equipment().name("leather vest").description("[grey]A [sin]lovely[sin] leather vest[n][light]+1 max hp")
-          .image("leatherVest").trigger(new MaxHPTrigger(1));
+  public static final Equipment leatherVest = new Equipment().name("Leather Vest")
+          .fluff("A [sin]lovely[sin] leather vest").image("leatherVest").trigger(new MaxHPTrigger(1));
 
-  public static final Equipment heartPendant = new Equipment().name("heart pendant").description("[grey]A ruby carved into a heart[n][light]+1 healing from all sources")
-          .image("heartPendant").trigger(new IncomingEffectTrigger(EffectType.Heal, 1));
+  public static final Equipment heartPendant = new Equipment().name("Heart Pendant")
+          .fluff("A ruby carved into a heart").image("heartPendant").trigger(new IncomingEffectTrigger(EffectType.Heal, 1));
 
   public String name;
-  public String description;
+  private String description;
+  public String fluff;
   public TextureRegion image;
   private List<Trigger> triggers = new ArrayList<>();
 
@@ -39,8 +40,8 @@ public class Equipment {
     return this;
   }
 
-  public Equipment description(String description){
-    this.description = description;
+  public Equipment fluff(String fluff){
+    this.fluff = fluff;
     return this;
   }
 
@@ -69,10 +70,17 @@ public class Equipment {
   }
 
   public Equipment copy(){
-    Equipment copy = new Equipment().name(name).description(description);
+    Equipment copy = new Equipment().name(name).fluff(fluff);
     copy.image = image;
     copy.triggers = triggers;
     return copy;
+  }
+
+  public String getDescription(){
+    if(description == null){
+      return Trigger.describe(triggers);
+    }
+    return description;
   }
 
 

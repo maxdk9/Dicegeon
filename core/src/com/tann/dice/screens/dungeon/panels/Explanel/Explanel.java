@@ -21,25 +21,16 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
-import com.tann.dice.util.Button;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.OnPop;
-import com.tann.dice.util.TextWriter;
+import com.tann.dice.screens.dungeon.panels.DieSidePanel;
+import com.tann.dice.util.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Explanel extends InfoPanel implements OnPop {
-    String name;
-    String description;
-    Eff[] effects;
-    Integer cost;
-    boolean usable;
-    boolean enoughMagic;
-    Spell spell;
-    Side side;
-    Equipment equipment;
-    Color colour;
+
+    private static final int textWidth = 96, panelWidth = 106, topAndBottom=5;
+
 
     private static Explanel self;
     public static Explanel get(){
@@ -47,86 +38,20 @@ public class Explanel extends InfoPanel implements OnPop {
         return self;
     }
 
-    public Explanel(){
+    private Explanel(){
     }
 
-    private void setup(String name, String description, final Eff[] effects, final Integer cost) {
+    private void reset() {
         clearChildren();
-        this.name = name;
-        this.description = description;
-        this.effects = effects;
-        this.cost = cost;
-        setWidth(110);
-        int textW = 100;
-        int border = 1;
-        int gap = 4;
+    }
 
-        List<Actor> actors = new ArrayList<>();
+    private Pixl getPixl(){
+        return new Pixl(this, 3, panelWidth).row(topAndBottom);
+    }
 
-        if(cost!=null){
-            actors.add(new TextWriter(name));
-            final int blipGap = 2;
-            final TextureRegion magicRegion = Images.magicBigger;
-            Actor blips = new Actor(){
-                @Override
-                public void draw(Batch batch, float parentAlpha) {
-                    for(int i=0;i<cost;i++){
-                        batch.setColor(Colours.z_white);
-                        if(Party.get().getAvaliableMagic() <= i){
-                            Draw.setAlpha(batch, .3f);
-                        }
-                        batch.draw(magicRegion, getX() + (magicRegion.getRegionWidth()+blipGap)*i, getY());
-                    }
-
-                    super.draw(batch, parentAlpha);
-                }
-            };
-            blips.setSize(cost*(blipGap+magicRegion.getRegionWidth()) -  blipGap, magicRegion.getRegionHeight());
-            actors.add(blips);
-        }
-
-        Actor imageActor = new Actor(){
-            @Override
-            public void draw(Batch batch, float parentAlpha) {
-                if(spell != null){
-                    spell.draw(batch, getX(), getY(), 2);
-                }
-                if(side != null){
-                    side.draw(batch, getX(), getY(), 2, colour);
-                }
-                if(equipment != null){
-                    equipment.draw(batch, getX(), getY(), 2);
-                }
-                super.draw(batch, parentAlpha);
-            }
-        };
-        actors.add(imageActor);
-
-        int size = -1;
-
-        if(spell != null){
-            size = Images.spellBorder.getRegionHeight() * 2;
-        }
-        else if(side!=null){
-            size = side.tr.getRegionHeight() * 2;
-        }
-        else{
-            size = Images.spellBorder.getRegionHeight() * 2;
-        }
-        imageActor.setSize(size, size);
-
-        actors.add(new TextWriter(description, textW, Colours.purple, 2));
-
-
-        int y = border + gap;
-        for(int i = actors.size()-1;i>=0;i--){
-            Actor a = actors.get(i);
-            addActor(a);
-            a.setPosition((int)(getWidth()/2-a.getWidth()/2), y);
-            y += a.getHeight()+gap;
-        }
-        y += border;
-        setHeight(y+gap);
+    private void finalise(Pixl p) {
+        p.row(topAndBottom);
+        p.pix();
     }
 
     public void setup(Targetable targetable, boolean usable){
@@ -137,27 +62,62 @@ public class Explanel extends InfoPanel implements OnPop {
         }
     }
 
-    public void setup(Equipment equipment){
+    public void setup(final Equipment equipment){
         reset();
-        this.colour = Colours.grey;
-        this.usable = false;
-        this.equipment = equipment;
-        setup(equipment.name, equipment.description, null, null);
+
+        final int scale = 2;
+        Actor equipDraw = new Actor(){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                equipment.draw(batch, getX(), getY(), scale);
+            }
+        };
+        equipDraw.setSize(equipment.image.getRegionWidth()*scale, equipment.image.getRegionHeight()*scale);
+
+        Pixl p = getPixl();
+        p.actor(new TextWriter("[orange]"+equipment.name))
+                .row()
+                .actor(equipDraw)
+                .row()
+                .actor(new TextWriter("[grey]"+equipment.fluff, textWidth))
+                .row()
+                .actor(new TextWriter(equipment.getDescription(), textWidth));
+        finalise(p);
     }
 
-    private void reset() {
-        this.spell = null;
-        this.side = null;
-        this.effects = null;
-        this.equipment = null;
+
+
+    public void setup(Side side, boolean usable, Color colour){
+        reset();
+        Pixl p = getPixl();
+        p.actor(new DieSidePanel(side, colour, 2))
+        .row()
+        .actor(new TextWriter(Eff.describe(side.effects), textWidth));
+        finalise(p);
     }
 
-    private void setup(Spell spell, boolean usable){
+
+    private void setup(final Spell spell, boolean usable){
         reset();
-        this.usable = usable;
-        this.spell = spell;
-        this.enoughMagic = spell.canCast();
-        setup(spell.name, spell.description, spell.effects, spell.cost);
+
+        final int scale = 2;
+        Actor spellDraw = new Actor(){
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                spell.draw(batch, getX(), getY(), scale);
+            }
+        };
+        spellDraw.setSize(spell.image.getRegionWidth()*scale, spell.image.getRegionHeight()*scale);
+
+        Pixl p = getPixl();
+        p.actor(new TextWriter(spell.name))
+        .row()
+        .actor(spellDraw)
+        .row()
+        .actor(new TextWriter(spell.description, textWidth))
+        .pix();
+
+        boolean enoughMagic = Party.get().getAvaliableMagic()<spell.cost;
         if(usable) {
             switch (spell.effects[0].targetingType) {
                 case EnemyGroup:
@@ -180,7 +140,7 @@ public class Explanel extends InfoPanel implements OnPop {
             }
         }
 
-        if(PhaseManager.get().getPhase().canTarget() && !enoughMagic){
+        if(PhaseManager.get().getPhase().canTarget() && enoughMagic){
             String text = "[red]Not enough magic";
             if(Party.get().getTotalTotalTotalAvailableMagic() >= spell.cost){
                 text += "[n][light]Tap your magic dice to gain magic";
@@ -192,23 +152,10 @@ public class Explanel extends InfoPanel implements OnPop {
         }
     }
 
-    public void setup(Side side, boolean usable, Color colour){
-        reset();
-        this.colour = colour;
-        this.usable = usable;
-        this.side = side;
-        setup(null, Eff.describe(side.effects), side.effects, null);
-    }
-
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
         super.draw(batch, parentAlpha);
-    }
-
-    public void slide(){
-        Explanel.get().addAction(Actions.moveTo(Explanel.get().getNiceX(true), Explanel.get().getY(), .3f, Interpolation.pow2Out));
     }
 
     @Override

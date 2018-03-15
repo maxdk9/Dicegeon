@@ -61,7 +61,7 @@ public class Party extends EntityGroup{
         }
         setEntities(tmp);
         for(DiceEntity de: tmp){
-//            de.addEquipment(Equipment.heartPendant.copy());
+            de.addEquipment(Equipment.heartPendant.copy());
         }
         DungeonScreen.get().friendly.setEntities(activeEntities);
 

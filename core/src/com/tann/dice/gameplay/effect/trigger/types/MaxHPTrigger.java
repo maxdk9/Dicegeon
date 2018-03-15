@@ -14,4 +14,11 @@ public class MaxHPTrigger extends Trigger {
   public int affectMaxHp(int hp) {
     return hp + maxHpModifier;
   }
+
+  @Override
+  public String describe() {
+    return "+"+maxHpModifier+" maximum health";
+  }
+
+
 }

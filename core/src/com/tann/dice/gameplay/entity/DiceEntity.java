@@ -66,6 +66,7 @@ public abstract class DiceEntity {
             portraitOffset = Integer.valueOf(portrait.name.split("-")[1])+0;
         }
         setMaxHp(type.hp);
+        fullHeal();
     }
 
     public void init(){
@@ -80,7 +81,10 @@ public abstract class DiceEntity {
     // gameplay junk
     public void setMaxHp(int maxHp) {
         this.baseMaxHp = maxHp;
-        this.hp = getMaxHp();
+    }
+
+    protected void fullHeal() {
+        hp = getMaxHp();
     }
 
     protected void resetPanels() {
@@ -96,6 +100,7 @@ public abstract class DiceEntity {
         activeTriggers = null;
         getProfile().somethingChanged();
         getDiePanel().somethingChanged();
+        getEntityPanel().layout();
     }
 
     public int getMaxHp() {
@@ -158,12 +163,12 @@ public abstract class DiceEntity {
     }
 
     public void hit(Eff e, boolean instant) {
-        somethingChanged();
         getProfile().addEffect(e);
         if (instant || !isPlayer()) getProfile().action();
         if(!isPlayer() && profile.isGoingToDie()){
             getDie().removeFromScreen();
         }
+        somethingChanged();
     }
 
     private DamageProfile profile;

@@ -86,7 +86,7 @@ public class DiePanel extends InfoPanel implements OnPop {
     }
 
     private DieSidePanel setup(final Side s, final DiceEntity ent) {
-        DieSidePanel dsp = new DieSidePanel(entity, s);
+        DieSidePanel dsp = new DieSidePanel(s, entity.getColour(), 1);
         dsp.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

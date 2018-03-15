@@ -42,6 +42,11 @@ public class MapScreen extends Screen {
 //    });
 //    addActor(manag);
 
+//    TextWriter tw = new TextWriter("Hi [red][sin]B[orange]e[yellow]n[green]v[blue]o[purple]l[light]i[grey]o[light],[sin] do you like my" +
+//            "[white][flame][wiggle][orange]COOL FONT[wiggle][white][flame]");
+//    addActor(tw);
+//    tw.setPosition(50,50);
+
     TextButton fite = new TextButton("go fighting", 3);
     fite.setRunnable(new Runnable() {
       @Override
@@ -49,7 +54,7 @@ public class MapScreen extends Screen {
         Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, .3f);
       }
     });
-    addActor(fite);
+//    addActor(fite);
     fite.setY(50);
 
   }

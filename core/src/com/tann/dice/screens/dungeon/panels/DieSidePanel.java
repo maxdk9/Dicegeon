@@ -1,5 +1,6 @@
 package com.tann.dice.screens.dungeon.panels;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -8,19 +9,20 @@ import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
 public class DieSidePanel extends Actor {
-    DiceEntity e;
-    Side s;
+    Side side;
+    Color colour;
+    int scale;
 
-    public DieSidePanel(DiceEntity e, Side s) {
-        this.e = e;
-        this.s = s;
-        setSize(e.getPixelSize(), e.getPixelSize());
+    public DieSidePanel(Side side, Color colour, int scale) {
+        this.side = side;
+        this.colour = colour;
+        this.scale = scale;
+        setSize(side.tr.getRegionWidth()*scale, side.tr.getRegionHeight()*scale);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, e.getColour(), 1);
-        s.draw(batch, getX(), getY(), 1, e.getColour());
+        side.draw(batch, getX(), getY(), scale, colour);
         super.draw(batch, parentAlpha);
     }
 }

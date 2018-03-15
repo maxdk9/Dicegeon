@@ -19,4 +19,9 @@ public class EndOfTurnSelfTrigger extends Trigger {
     public Integer getIncomingPoisonDamage() {
         return eff.getValue();
     }
+
+    @Override
+    public String describe() {
+        return "At the end of each turn, "+eff.toString();
+    }
 }

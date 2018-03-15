@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Images;
+import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.HashMap;

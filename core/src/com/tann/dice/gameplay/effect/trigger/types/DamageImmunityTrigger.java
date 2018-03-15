@@ -7,4 +7,9 @@ public class DamageImmunityTrigger extends Trigger{
     public Integer alterIncomingDamage(Integer incomingDamage) {
         return 0;
     }
+
+    @Override
+    public String describe() {
+        return "Immune to damage";
+    }
 }

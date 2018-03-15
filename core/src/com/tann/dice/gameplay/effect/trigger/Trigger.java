@@ -1,10 +1,11 @@
 package com.tann.dice.gameplay.effect.trigger;
 
-import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffectType;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
-public class Trigger {
+import java.util.List;
+
+public abstract class Trigger {
 
   DiceEntity source, target;
 
@@ -25,4 +26,18 @@ public class Trigger {
   public int alterOutgoingEffect(EffectType type, int value) { return value; }
 
   public int alterIncomingEffect(EffectType type, int value) { return value; }
+
+  protected String noDescription(String extra){
+    return "No description for "+this.getClass().getSimpleName()+" ("+extra+")";
+  }
+
+  public static String describe(List<Trigger> triggers) {
+    String result = "";
+    for(Trigger t:triggers){
+      result += t.describe();
+    }
+    return result;
+  }
+
+  public abstract String describe();
 }

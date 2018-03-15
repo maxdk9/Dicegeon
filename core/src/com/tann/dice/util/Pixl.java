@@ -9,40 +9,44 @@ import java.util.List;
 public class Pixl {
     Group g;
     int baseGap;
-    int bonusWidth;
+    int forceWidth;
     List<Row> rows = new ArrayList<>();
     Row currentRow;
     public Pixl(Group g, int baseGap) {
-        this(g, baseGap, 0);
+        this(g, baseGap, -1);
     }
 
-    public Pixl(Group g, int baseGap, int bonusWidth) {
+    public Pixl(Group g, int baseGap, int forceWidth) {
         this.g = g;
         this.baseGap = baseGap;
-        this.bonusWidth = bonusWidth;
+        this.forceWidth = forceWidth;
         currentRow = new Row(baseGap);
     }
 
-    public void row(){
+    public Pixl row(){
         row(baseGap);
+        return this;
     }
 
-    public void row(int gap){
+    public Pixl row(int gap){
         if(currentRow.elementList.size()==0){
             currentRow.aboveRowGap = gap;
-            return;
+            return this;
         }
         currentRow.finish();
         rows.add(currentRow);
         currentRow = new Row(gap);
+        return this;
     }
 
-    public void gap(int gap){
+    public Pixl gap(int gap){
         currentRow.addGap(gap);
+        return this;
     }
 
-    public void actor(Actor a){
+    public Pixl actor(Actor a){
         currentRow.addActor(a);
+        return this;
     }
 
     public void pix(){
@@ -55,7 +59,10 @@ public class Pixl {
         int totalHeight = 0;
         for(Row r:rows){
             totalHeight += r.getHeight();
-            maxWidth = Math.max(r.getWidth()+bonusWidth, maxWidth);
+            maxWidth = Math.max(r.getWidth(), maxWidth);
+        }
+        if(forceWidth != -1){
+            maxWidth = forceWidth;
         }
         g.setSize(maxWidth, totalHeight);
         int currentY = (int) g.getHeight();

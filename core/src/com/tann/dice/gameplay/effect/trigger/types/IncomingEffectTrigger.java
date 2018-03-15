@@ -20,4 +20,18 @@ public class IncomingEffectTrigger extends Trigger{
     }
     return value;
   }
+
+  @Override
+  public String describe() {
+
+    switch(type){
+      case Shield:
+        return "+"+bonus+" shields from all sources";
+      case Heal:
+        return "+"+bonus+" healing from all sources";
+      default:
+        return noDescription(type.toString());
+    }
+  }
+
 }
