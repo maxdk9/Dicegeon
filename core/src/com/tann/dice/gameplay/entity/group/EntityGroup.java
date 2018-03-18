@@ -142,7 +142,7 @@ public class EntityGroup {
                     case Shield:
                         good = de.getProfile().unblockedRegularIncoming() > 0;
                         break;
-                    case Heal:
+                    case Healing:
                         good = de.getHp() < de.getMaxHp();
                         break;
                     case Execute:

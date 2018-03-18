@@ -21,17 +21,23 @@ public class Equipment {
 
   private static final List<Equipment> all = new ArrayList<>();
 
-  public static final Equipment leatherVest = new Equipment().name("Leather Vest")
-          .fluff("A [sin]lovely[sin] leather vest").image("leatherVest").trigger(new MaxHPTrigger(1));
+  public static final Equipment leatherVest = new Equipment().name("Leather Vest").image("leatherVest")
+          .fluff("A [sin]lovely[sin] leather vest").trigger(new MaxHPTrigger(1));
 
-  public static final Equipment heartPendant = new Equipment().name("Heart Pendant")
-          .fluff("A ruby carved into a heart").image("heartPendant").trigger(new IncomingEffectTrigger(EffType.Heal, 1));
+  public static final Equipment heartPendant = new Equipment().name("Heart Pendant").image("heartPendant")
+          .fluff("A ruby carved into a heart").trigger(new IncomingEffectTrigger(EffType.Healing, 1));
 
-  public static final Equipment glowStone = new Equipment().name("Glow Stone")
-          .fluff("A glowing purple stone").image("glowStone").trigger(new AllSidesBonusTrigger(1));
+  public static final Equipment hiddenDagger = new Equipment().name("Hidden Dagger").image("concealedDagger")
+          .fluff("A concealed dagger").trigger(new SideChangeTrigger(EffType.Empty, Side.sword2));
 
-  public static final Equipment hiddenDagger = new Equipment().name("Hidden Dagger")
-          .fluff("A concealed dagger").image("concealedDagger").trigger(new SideChangeTrigger(EffType.Empty, Side.sword2));
+  public static final Equipment glowStone = new Equipment().name("Glow Stone").image("glowStone")
+          .fluff("A glowing purple stone").trigger(new AllSidesBonusTrigger(1));
+
+  public static final Equipment gauntlet = new Equipment().name("Gauntlet").image("gauntlet")
+          .fluff("A pair of [sin]chunky[sin] gauntlets").trigger(new EffTypeBonus(EffType.Damage, 1));
+
+  public static final Equipment castaRoot = new Equipment().name("Casta Root").image("herb")
+          .fluff("A natural cure-all").trigger(new EffTypeBonus(EffType.Healing, 1));
 
   public String name;
   private String description;
@@ -86,13 +92,21 @@ public class Equipment {
 
   public String getDescription(){
     if(description == null){
-      return Trigger.describe(triggers);
+      description = Trigger.describe(triggers);
     }
     return description;
   }
 
+  public String toString(){
+    return name;
+  }
 
   public static Equipment random() {
     return Tann.getRandom(all).copy();
+  }
+
+  public static Equipment recent() {
+    System.out.println(all.get(all.size()-1));
+    return all.get(all.size()-1).copy();
   }
 }

@@ -26,9 +26,9 @@ public class IncomingEffectTrigger extends Trigger{
 
     switch(type){
       case Shield:
-        return "+"+bonus+" shields from all sources";
-      case Heal:
-        return "+"+bonus+" healing from all sources";
+        return "+"+bonus+" to all incoming shields";
+      case Healing:
+        return "+"+bonus+" to all incoming healing";
       default:
         return noDescription(type.toString());
     }

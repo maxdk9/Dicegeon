@@ -18,7 +18,7 @@ public class Eff {
     public TargetingType targetingType = TargetingType.EnemySingle;
 
     public enum EffType {
-        Empty, Damage, Shield, Magic, Heal, Buff, Execute, Reroll
+        Empty, Damage, Shield, Magic, Healing, Buff, Execute, Reroll
 	}
 
 
@@ -61,7 +61,7 @@ public class Eff {
                 }
                 break;
             case Magic: result = "Gain "+getValue()+" magic to spend on spells"; break;
-            case Heal: result = "Restore "+getValue()+" missing health ([purple][heartEmpty][light]) to a damaged character"; break;
+            case Healing: result = "Restore "+getValue()+" missing health ([purple][heartEmpty][light]) to a damaged character"; break;
             case Execute: result = "Kills target if they are on exactly "+getValue()+" hp"; break;
             case Reroll: result = "When you roll this, gain +1 reroll this turn"; break;
             case Buff: result = buff.toNiceString(); break;
@@ -77,7 +77,7 @@ public class Eff {
     public Eff damage(int amount) { return type(EffType.Damage, amount); }
     public Eff shield(int amount) { return type(EffType.Shield, amount); }
     public Eff magic(int amount) { return type(EffType.Magic, amount); }
-    public Eff heal(int amount) { return type(EffType.Heal, amount); }
+    public Eff heal(int amount) { return type(EffType.Healing, amount); }
     public Eff execute(int amount) { return type(EffType.Execute, amount); }
     public Eff reroll(int amount) { return type(EffType.Reroll, amount); }
 
@@ -192,7 +192,7 @@ public class Eff {
         switch(type){
             case Shield:
                 return "No incoming damage to block";
-            case Heal:
+            case Healing:
                 return "No damaged heroes to heal";
             case Execute:
                 return "Can only target monsters on exactly "+getValue()+" hp";

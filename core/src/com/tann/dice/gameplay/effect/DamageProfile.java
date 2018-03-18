@@ -96,7 +96,7 @@ public class DamageProfile {
         if(heals == null){
             heals = 0;
             for (Eff e:effs){
-                if(e.type == Heal){
+                if(e.type == Healing){
                     heals += e.getValue(target);
                 }
             }
