@@ -49,7 +49,7 @@ public class Hero extends DiceEntity {
 
     @Override
     public void stopped() {
-        Eff[] effs = die.getActualSide().effects;
+        Eff[] effs = die.getActualSide().getEffects();
         if(effs[0].targetingType == Eff.TargetingType.OnRoll){
             for(Eff e:effs){
                 Party.get().activateRollEffect(e);

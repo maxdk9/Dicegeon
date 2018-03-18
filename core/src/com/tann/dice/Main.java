@@ -21,6 +21,7 @@ import com.tann.dice.screens.map.MapScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
 import java.util.ArrayList;
+import java.util.Map;
 
 import static com.badlogic.gdx.graphics.GL20.*;
 
@@ -148,7 +149,7 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-    setScreen(DungeonScreen.get());
+    setScreen(MapScreen.get());
     logTime("screen");
 
     String ex = Prefs.getString("lastException", "");

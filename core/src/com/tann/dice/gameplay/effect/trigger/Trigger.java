@@ -1,7 +1,8 @@
 package com.tann.dice.gameplay.effect.trigger;
 
-import com.tann.dice.gameplay.effect.Eff.EffectType;
+import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.die.Side;
 
 import java.util.List;
 
@@ -11,10 +12,6 @@ public abstract class Trigger {
 
   public int affectMaxHp(int hp){return hp;}
 
-  public int getSideBonus(EffectType type){
-    return 0;
-  }
-
   public void endOfTurn(DiceEntity target){}
 
   public Integer alterIncomingDamage(Integer incomingDamage) { return incomingDamage; }
@@ -23,9 +20,9 @@ public abstract class Trigger {
 
   public void attackedBy(DiceEntity entity) { }
 
-  public int alterOutgoingEffect(EffectType type, int value) { return value; }
+  public int alterOutgoingEffect(EffType type, int value) { return value; }
 
-  public int alterIncomingEffect(EffectType type, int value) { return value; }
+  public int alterIncomingEffect(EffType type, int value) { return value; }
 
   protected String noDescription(String extra){
     return "No description for "+this.getClass().getSimpleName()+" ("+extra+")";
@@ -40,4 +37,6 @@ public abstract class Trigger {
   }
 
   public abstract String describe();
+
+  public void affectSide(Side side) { }
 }

@@ -21,6 +21,7 @@ public class PartyManagementPanel extends Group {
   public static PartyManagementPanel get() {
     if(self == null){
       self = new PartyManagementPanel();
+      self.refresh();
     }
     return self;
   }

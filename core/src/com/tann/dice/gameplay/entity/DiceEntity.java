@@ -74,7 +74,7 @@ public abstract class DiceEntity {
     }
 
     protected void setSides(Side[] sides) {
-        this.sides = sides;
+        this.sides = Side.copy(sides);
         getDie().setup();
     }
 
@@ -98,6 +98,9 @@ public abstract class DiceEntity {
     public void somethingChanged(){
         calculatedMaxHp = null;
         activeTriggers = null;
+        for(Side s:sides){
+            s.useTriggers(getActiveTriggers());
+        }
         getProfile().somethingChanged();
         getDiePanel().somethingChanged();
         getEntityPanel().layout();
@@ -218,7 +221,7 @@ public abstract class DiceEntity {
 
     public void removeEffectsIfDead(){
         if(!isPlayer() && die.getActualSide() != null && isDead()) {
-            TargetingManager.get().cancelEffects(die.getActualSide().effects);
+            TargetingManager.get().cancelEffects(die.getActualSide().getEffects());
         }
     }
 
@@ -232,7 +235,7 @@ public abstract class DiceEntity {
     }
 
     public void hit(Side side, boolean instant) {
-        for (Eff e : side.effects) {
+        for (Eff e : side.getEffects()) {
             hit(e, instant);
         }
     }

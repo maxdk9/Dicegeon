@@ -43,9 +43,9 @@ public class Party extends EntityGroup{
         clearEntities();
         addHeroes();
         equipment.clear();
-//        for(int i=0;i<3;i++){
-//            addEquipment(Equipment.leatherVest.copy());
-//        }
+        for(int i=0;i<8;i++){
+            addEquipment(Equipment.random());
+        }
 //        for(int i=0;i<3;i++){
 //            addEquipment(Equipment.heartPendant.copy());
 //        }
@@ -60,9 +60,6 @@ public class Party extends EntityGroup{
             tmp.add(type.buildHero());
         }
         setEntities(tmp);
-        for(DiceEntity de: tmp){
-            de.addEquipment(Equipment.heartPendant.copy());
-        }
         DungeonScreen.get().friendly.setEntities(activeEntities);
 
     }
@@ -98,9 +95,9 @@ public class Party extends EntityGroup{
         int total = 0;
         for (DiceEntity de : getActiveEntities()) {
             Die d = de.getDie();
-            Eff first = d.getActualSide().effects[0];
+            Eff first = d.getActualSide().getEffects()[0];
             if (d.getUsed()) continue;
-            if (first.type == Eff.EffectType.Magic){
+            if (first.type == Eff.EffType.Magic){
                 total += first.getValue();
             }
         }

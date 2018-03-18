@@ -17,7 +17,7 @@ public class DieSidePanel extends Actor {
         this.side = side;
         this.colour = colour;
         this.scale = scale;
-        setSize(side.tr.getRegionWidth()*scale, side.tr.getRegionHeight()*scale);
+        setSize(side.getTexture().getRegionWidth()*scale, side.getTexture().getRegionHeight()*scale);
     }
 
     @Override

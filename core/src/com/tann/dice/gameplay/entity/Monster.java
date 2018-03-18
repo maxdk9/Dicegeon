@@ -56,9 +56,9 @@ public class Monster extends DiceEntity {
     public void locked() {
         targets = TargetingManager.get().getRandomTargetForEnemy(die.getActualSide());
         for(DiceEntity de:targets){
-            de.hit(die.getActualSide().effects, false);
+            de.hit(die.getActualSide().getEffects(), false);
             EntityPanel panel = de.getEntityPanel();
-            TextureRegion tr = getDie().sides.get(die.getSide()).tr;
+            TextureRegion tr = getDie().sides.get(die.getSide()).getTexture();
             TextureFlasher tf = new TextureFlasher(tr);
             DungeonScreen.get().addActor(tf);
             Vector2 holder = panel.getDieHolderLocation();

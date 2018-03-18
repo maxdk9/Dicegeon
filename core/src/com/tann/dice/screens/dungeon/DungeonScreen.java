@@ -306,7 +306,7 @@ public class DungeonScreen extends Screen {
     private boolean checkAllDiceUsed(){
         for (DiceEntity de : Party.get().getActiveEntities()) {
             Die d = de.getDie();
-            Eff first = d.getActualSide().effects[0];
+            Eff first = d.getActualSide().getEffects()[0];
             if (d.getUsed()) continue;
             if (!first.needsUsing()) continue;
             if (!first.isTargeted()) return false;

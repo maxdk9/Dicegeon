@@ -17,12 +17,12 @@ public class Eff {
 
     public TargetingType targetingType = TargetingType.EnemySingle;
 
-    public enum EffectType{
+    public enum EffType {
         Nothing, Damage, Shield, Magic, Heal, Buff, Execute, Reroll
 	}
 
 
-    public EffectType type;
+    public EffType type;
     public Buff buff;
     public int buffDuration;
     private int value;
@@ -42,17 +42,17 @@ public class Eff {
                 result = "Nothing!"; break;
             case Damage:
                 switch(targetingType){
-                    case EnemySingle: result = value +" damage to an enemy"; break;
-                    case EnemySingleRanged: result = value +" damage to ANY enemy"; break;
-                    case EnemyGroup: result = value +" damage to ALL enemies"; break;
-                    case EnemyAndAdjacents: result = value +" damage an enemy and both adjacent enemies"; break;
-                    case EnemyAndAdjacentsRanged: result = value +" damage ANY enemy and both adjacent enemies"; break;
-                    case AllTargeters: result = value+" damage to all enemies who have targeted the hero of your choice"; break;
+                    case EnemySingle: result = getValue() +" damage to an enemy"; break;
+                    case EnemySingleRanged: result = getValue() +" damage to ANY enemy"; break;
+                    case EnemyGroup: result = getValue() +" damage to ALL enemies"; break;
+                    case EnemyAndAdjacents: result = getValue() +" damage an enemy and both adjacent enemies"; break;
+                    case EnemyAndAdjacentsRanged: result = getValue() +" damage ANY enemy and both adjacent enemies"; break;
+                    case AllTargeters: result = getValue()+" damage to all enemies who have targeted the hero of your choice"; break;
                     default: result = "ahh help damage"; break;
                 }
                 break;
             case Shield:
-                result = "Block "+value+" incoming damage ([yellow][heart][light]) to ";
+                result = "Block "+getValue()+" incoming damage ([yellow][heart][light]) to ";
                 switch(targetingType){
                     case FriendlySingle: result += "one hero"; break;
                     case FriendlyGroup: result += "everyone"; break;
@@ -60,9 +60,9 @@ public class Eff {
                     default: result += "????"; break;
                 }
                 break;
-            case Magic: result = "Gain "+value+" magic to spend on spells"; break;
-            case Heal: result = "Restore "+value+" missing health ([purple][heartEmpty][light]) to a damaged character"; break;
-            case Execute: result = "Kills target if they are on exactly "+value+" hp"; break;
+            case Magic: result = "Gain "+getValue()+" magic to spend on spells"; break;
+            case Heal: result = "Restore "+getValue()+" missing health ([purple][heartEmpty][light]) to a damaged character"; break;
+            case Execute: result = "Kills target if they are on exactly "+getValue()+" hp"; break;
             case Reroll: result = "When you roll this, gain +1 reroll this turn"; break;
             case Buff: result = buff.toNiceString(); break;
             default: result = "uhoh unknown "+type;
@@ -73,16 +73,16 @@ public class Eff {
         return result;
     }
 
-    public Eff nothing() { return type(EffectType.Nothing, 0).targetType(Eff.TargetingType.DoesNothing); }
-    public Eff damage(int amount) { return type(EffectType.Damage, amount); }
-    public Eff shield(int amount) { return type(EffectType.Shield, amount); }
-    public Eff magic(int amount) { return type(EffectType.Magic, amount); }
-    public Eff heal(int amount) { return type(EffectType.Heal, amount); }
-    public Eff execute(int amount) { return type(EffectType.Execute, amount); }
-    public Eff reroll(int amount) { return type(EffectType.Reroll, amount); }
+    public Eff nothing() { return type(EffType.Nothing, 0).targetType(Eff.TargetingType.DoesNothing); }
+    public Eff damage(int amount) { return type(EffType.Damage, amount); }
+    public Eff shield(int amount) { return type(EffType.Shield, amount); }
+    public Eff magic(int amount) { return type(EffType.Magic, amount); }
+    public Eff heal(int amount) { return type(EffType.Heal, amount); }
+    public Eff execute(int amount) { return type(EffType.Execute, amount); }
+    public Eff reroll(int amount) { return type(EffType.Reroll, amount); }
 
 
-    public Eff buff(Buff buff){this.buff = buff; return type(EffectType.Buff); }
+    public Eff buff(Buff buff){this.buff = buff; return type(EffType.Buff); }
 
     public Eff allTargeters() { return targetType(TargetingType.AllTargeters); }
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
@@ -108,7 +108,7 @@ public class Eff {
         return this;
     }
 
-    private Eff type(EffectType type, int amount){
+    private Eff type(EffType type, int amount){
         if(this.type!=null){
             System.err.println(this+": trying to overwrite type: "+this.type+" to "+type);
         }
@@ -117,7 +117,7 @@ public class Eff {
         return this;
     }
 
-    private Eff type(EffectType type){
+    private Eff type(EffType type){
         if(this.type!=null){
             System.err.println(this+": trying to overwrite type: "+this.type+" to "+type);
         }
@@ -154,7 +154,7 @@ public class Eff {
     }
 
     public int getValue() {
-        int actualValue = value;
+        int actualValue = value; // + bonusFromSide;
         if(source != null) {
             List<Trigger> triggers = source.getActiveTriggers();
             for(int i=0;i<triggers.size();i++){
@@ -182,7 +182,7 @@ public class Eff {
                     Party.get().addNextTurnEffect(this);
                 }
                 else{
-                    Party.get().addMagic(value);
+                    Party.get().addMagic(getValue());
                 }
                 break;
         }
@@ -195,7 +195,7 @@ public class Eff {
             case Heal:
                 return "No damaged heroes to heal";
             case Execute:
-                return "Can only target monsters on exactly "+value+" hp";
+                return "Can only target monsters on exactly "+getValue()+" hp";
         }
         return "I dunno";
     }

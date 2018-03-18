@@ -28,24 +28,18 @@ public class MapScreen extends Screen {
   }
 
   private void init() {
-//    TextButton manag = new TextButton("Open Management thingy", 3);
-//    manag.setRunnable(new Runnable() {
-//      @Override
-//      public void run() {
-//        addActor(InputBlocker.get());
-//        InputBlocker.get().toFront();
-//        InputBlocker.get().setActiveClicker(false);
-//        PartyManagementPanel p = PartyManagementPanel.get();
-//        addActor(p);
-//        p.setPosition((int)(getWidth()/2-p.getWidth()/2), 5);
-//      }
-//    });
-//    addActor(manag);
+    TextButton manag = new TextButton("Open Management thingy", 3);
+    manag.setRunnable(new Runnable() {
+      @Override
+      public void run() {
+        System.out.println("hi");
+        PartyManagementPanel p = PartyManagementPanel.get();
+        addActor(p);
+        p.setPosition((int)(getWidth()/2-p.getWidth()/2), 5);
+      }
+    });
+    addActor(manag);
 
-//    TextWriter tw = new TextWriter("Hi [red][sin]B[orange]e[yellow]n[green]v[blue]o[purple]l[light]i[grey]o[light],[sin] do you like my" +
-//            "[white][flame][wiggle][orange]COOL FONT[wiggle][white][flame]");
-//    addActor(tw);
-//    tw.setPosition(50,50);
 
     TextButton fite = new TextButton("go fighting", 3);
     fite.setRunnable(new Runnable() {

@@ -10,6 +10,7 @@ import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize.*;
 import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 
 import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.types.DamageImmunityTrigger;
 import com.tann.dice.gameplay.effect.trigger.types.EndOfTurnSelfTrigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -17,11 +18,14 @@ import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Side {
 
-    public TextureRegion tr;
+    private TextureRegion tr;
 	public Eff[] effects;
+
+	private TextureRegion calculatedTexture;
 	DiceEntity.EntitySize size = reg;
 
     public static final HashMap<EntitySize, TextureRegion[]> sizeToPips = new HashMap<>();
@@ -152,6 +156,36 @@ public class Side {
 		return copy;
 	}
 
+    public static Side[] copy(Side[] sides) {
+	    Side[] result = new Side[sides.length];
+        for(int i=0;i<sides.length;i++){
+            result[i] = sides[i].copy();
+        }
+	    return result;
+    }
+
+    private Eff[] calculatedEffects;
+    public Eff[] getEffects(){
+	    return calculatedEffects;
+    }
+
+	public void useTriggers(List<Trigger> triggers){
+        calculatedTexture = tr;
+        calculatedEffects = new Eff[effects.length];
+        for(int i=0;i<calculatedEffects.length;i++){
+            calculatedEffects[i] = effects[i].copy();
+        }
+	    for(Trigger t:triggers){
+	        t.affectSide(this);
+        }
+    }
+
+    public void changeTo(Side other){
+	    this.calculatedTexture = other.tr;
+	    this.calculatedEffects = other.effects;
+    }
+
+
     public void draw(Batch batch, float x, float y) {
         draw(batch, x, y, 1, null);
     }
@@ -164,7 +198,18 @@ public class Side {
 	        Draw.drawRectangle(batch, x, y, sz * scale, sz*scale, scale);
         }
         batch.setColor(Colours.z_white);
-        Draw.drawScaled(batch, tr, (int)x, (int)y, scale, scale);
-        Draw.drawScaled(batch, Side.sizeToPips.get(size)[effects[0].getValue()], (int)x, (int)y, scale, scale);
+        Draw.drawScaled(batch, getTexture(), (int)x, (int)y, scale, scale);
+        Draw.drawScaled(batch, Side.sizeToPips.get(size)[getEffects()[0].getValue()], (int)x, (int)y, scale, scale);
+    }
+
+    public TextureRegion getTexture() {
+        if(calculatedTexture == null){
+            calculatedTexture = tr;
+        }
+        return calculatedTexture;
+    }
+
+    public String toString(){
+        return Eff.describe(effects);
     }
 }

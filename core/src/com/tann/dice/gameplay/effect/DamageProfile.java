@@ -3,7 +3,7 @@ package com.tann.dice.gameplay.effect;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import static com.tann.dice.gameplay.effect.Eff.EffectType.*;
+import static com.tann.dice.gameplay.effect.Eff.EffType.*;
 import java.util.ArrayList;
 import java.util.List;
 

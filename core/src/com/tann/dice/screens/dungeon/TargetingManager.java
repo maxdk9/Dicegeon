@@ -153,7 +153,7 @@ public class TargetingManager {
         if (t.use()) {
             for (Eff e : t.getEffects()) {
                 hitEntities(EntityGroup.getActualTargets(e, true, entity), e);
-                if (e.type == Eff.EffectType.Damage) {
+                if (e.type == Eff.EffType.Damage) {
                     containsDamage = true;
                 }
             }
@@ -214,9 +214,9 @@ public class TargetingManager {
     }
 
     public List<DiceEntity> getRandomTargetForEnemy(Side side) {
-        Eff e = side.effects[0];
+        Eff e = side.getEffects()[0];
         DiceEntity target = null;
-        List<DiceEntity> validTargets = EntityGroup.getValidTargets(e.targetingType, side.effects, false);
+        List<DiceEntity> validTargets = EntityGroup.getValidTargets(e.targetingType, side.getEffects(), false);
         if (validTargets.size() > 0) {
             target = Tann.getRandom(validTargets);
         }

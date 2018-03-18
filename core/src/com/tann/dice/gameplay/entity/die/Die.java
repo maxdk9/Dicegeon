@@ -300,16 +300,16 @@ public class Die implements Targetable{
         if(texLocs != null) return texLocs;
         texLocs = new float[26];
 
-        float width = sides.get(0).tr.getTexture().getWidth();
-        float height = sides.get(0).tr.getTexture().getHeight();
+        float width = sides.get(0).getTexture().getTexture().getWidth();
+        float height = sides.get(0).getTexture().getTexture().getHeight();
         for(int i=0;i<sides.size();i++){
             Side s = sides.get(i);
-            TextureRegion face = s.tr;
+            TextureRegion face = s.getTexture();
             texLocs[4*i] = face.getRegionX()/width;
             texLocs[4*i+1] = face.getRegionY()/height;
-            TextureRegion pips = Side.sizeToPips.get(entity.getSize())[s.effects[0].getValue()];
+            TextureRegion pips = Side.sizeToPips.get(entity.getSize())[s.getEffects()[0].getValue()];
             if(pips == null){
-                System.out.println("no pip texture: "+entity.getSize()+":"+s.effects[0].getValue());
+                System.out.println("no pip texture: "+entity.getSize()+":"+s.getEffects()[0].getValue());
             }
             texLocs[4*i+2] = pips.getRegionX()/width;
             texLocs[4*i+3] = pips.getRegionY()/height;
@@ -497,7 +497,7 @@ public class Die implements Targetable{
         mb.node().id = "dieIndex";
 
         if(MATERIAL==null){
-            MATERIAL =new Material(TextureAttribute.createDiffuse(sides.get(0).tr.getTexture()));
+            MATERIAL =new Material(TextureAttribute.createDiffuse(sides.get(0).getTexture().getTexture()));
         }
 
         MeshPartBuilder mpb = mb.part("dieIndex", GL20.GL_TRIANGLES, ATTRIBUTES, MATERIAL);
@@ -508,7 +508,7 @@ public class Die implements Targetable{
         for(int i=0;i<6;i++){
             normalX=i;
             Side side = sides.get(i);
-            TextureRegion base = side.tr;
+            TextureRegion base = side.getTexture();
             mpb.setColor(getFloat(base), 0, inner, dieIndex /5f+0.1f);
             switch(i){
                 case 0: mpb.rect(-DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, -1); break;
@@ -569,7 +569,7 @@ public class Die implements Targetable{
     @Override
     public Eff[] getEffects() {
         if(getActualSide() == null) return null;
-        return getActualSide().effects;
+        return getActualSide().getEffects();
     }
 
     @Override

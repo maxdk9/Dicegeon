@@ -4,11 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.effect.Eff.EffectType;
+import com.tann.dice.gameplay.effect.Eff;
+import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
-import com.tann.dice.gameplay.effect.trigger.types.DamageImmunityTrigger;
+import com.tann.dice.gameplay.effect.trigger.types.AllSidesBonusTrigger;
 import com.tann.dice.gameplay.effect.trigger.types.IncomingEffectTrigger;
 import com.tann.dice.gameplay.effect.trigger.types.MaxHPTrigger;
+import com.tann.dice.gameplay.effect.trigger.types.SideChangeTrigger;
+import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 import com.tann.dice.util.Tann;
@@ -23,7 +26,13 @@ public class Equipment {
           .fluff("A [sin]lovely[sin] leather vest").image("leatherVest").trigger(new MaxHPTrigger(1));
 
   public static final Equipment heartPendant = new Equipment().name("Heart Pendant")
-          .fluff("A ruby carved into a heart").image("heartPendant").trigger(new IncomingEffectTrigger(EffectType.Heal, 1));
+          .fluff("A ruby carved into a heart").image("heartPendant").trigger(new IncomingEffectTrigger(EffType.Heal, 1));
+
+  public static final Equipment glowStone = new Equipment().name("Glow Stone")
+          .fluff("A glowing purple stone").image("glowStone").trigger(new AllSidesBonusTrigger(1));
+
+  public static final Equipment hiddenDagger = new Equipment().name("Hidden Dagger")
+          .fluff("A concealed dagger").image("concealedDagger").trigger(new SideChangeTrigger(EffType.Nothing, Side.sword2));
 
   public String name;
   private String description;
