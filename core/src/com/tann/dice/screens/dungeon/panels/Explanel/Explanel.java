@@ -30,7 +30,7 @@ import java.util.List;
 
 public class Explanel extends InfoPanel implements OnPop {
 
-    private static final int textWidth = 96, panelWidth = 106, topAndBottom=5;
+    private static final int textWidth = 96, panelWidth = 106, topAndBottom=3;
 
 
     private static Explanel self;
@@ -47,7 +47,7 @@ public class Explanel extends InfoPanel implements OnPop {
     }
 
     private Pixl getPixl(){
-        return new Pixl(this, 3, panelWidth).row(topAndBottom);
+        return new Pixl(this, 2, panelWidth).row(topAndBottom);
     }
 
     private void finalise(Pixl p) {

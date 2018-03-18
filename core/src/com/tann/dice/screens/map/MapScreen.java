@@ -35,7 +35,7 @@ public class MapScreen extends Screen {
         System.out.println("hi");
         PartyManagementPanel p = PartyManagementPanel.get();
         addActor(p);
-        p.setPosition((int)(getWidth()/2-p.getWidth()/2), 5);
+        p.setPosition((int)(getWidth()/2-p.getWidth()/2), 1);
       }
     });
     addActor(manag);
@@ -48,7 +48,7 @@ public class MapScreen extends Screen {
         Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, .3f);
       }
     });
-//    addActor(fite);
+    addActor(fite);
     fite.setY(50);
 
   }

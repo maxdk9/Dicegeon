@@ -23,9 +23,7 @@ import java.util.List;
 public class Side {
 
     private TextureRegion tr;
-	public Eff[] effects;
-
-	private TextureRegion calculatedTexture;
+	private Eff[] effects;
 	DiceEntity.EntitySize size = reg;
 
     public static final HashMap<EntitySize, TextureRegion[]> sizeToPips = new HashMap<>();
@@ -53,6 +51,14 @@ public class Side {
     public Side size(EntitySize size){
         this.size = size;
         return this;
+    }
+
+    private Side withValue(int value) {
+        Side copy = copy();
+        for(Eff e:copy.effects){
+            e.justValue(value);
+        }
+        return copy;
     }
 
     // REGULAR
@@ -136,14 +142,6 @@ public class Side {
             buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(3)))));
 
 
-    private Side withValue(int value) {
-        Side copy = copy();
-        for(Eff e:copy.effects){
-            e.justValue(value);
-        }
-        return copy;
-    }
-
 	public Side copy(){
 		Eff[] newEffects = new Eff[effects.length];
 		for(int i=0;i<effects.length;i++){
@@ -162,11 +160,6 @@ public class Side {
             result[i] = sides[i].copy();
         }
 	    return result;
-    }
-
-    private Eff[] calculatedEffects;
-    public Eff[] getEffects(){
-	    return calculatedEffects;
     }
 
 	public void useTriggers(List<Trigger> triggers){
@@ -202,14 +195,24 @@ public class Side {
         Draw.drawScaled(batch, Side.sizeToPips.get(size)[getEffects()[0].getValue()], (int)x, (int)y, scale, scale);
     }
 
+    private TextureRegion calculatedTexture;
     public TextureRegion getTexture() {
-        if(calculatedTexture == null){
-            calculatedTexture = tr;
-        }
+        if(calculatedTexture == null) return tr;
         return calculatedTexture;
+    }
+
+    private Eff[] calculatedEffects;
+    public Eff[] getEffects(){
+        if(calculatedEffects == null) return effects;
+        return calculatedEffects;
+    }
+
+    public Eff[] getInternalEffects() {
+        return effects;
     }
 
     public String toString(){
         return Eff.describe(effects);
     }
+
 }

@@ -87,7 +87,7 @@ public class PartyManagementPanel extends Group {
     this.selectedEquipment = equipment;
     Explanel.get().setup(equipment);
     addActor(panel);
-    panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()+2);
+    panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()+1);
   }
 
   private void deselectEquipment() {

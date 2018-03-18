@@ -131,7 +131,7 @@ public class EntityGroup {
             boolean good = false;
             for(Eff e:effects) {
                 switch (e.type) {
-                    case Nothing:
+                    case Empty:
                     case Magic:
                         break;
                     case Buff:

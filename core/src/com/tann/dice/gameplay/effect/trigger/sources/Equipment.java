@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.types.AllSidesBonusTrigger;
@@ -32,7 +31,7 @@ public class Equipment {
           .fluff("A glowing purple stone").image("glowStone").trigger(new AllSidesBonusTrigger(1));
 
   public static final Equipment hiddenDagger = new Equipment().name("Hidden Dagger")
-          .fluff("A concealed dagger").image("concealedDagger").trigger(new SideChangeTrigger(EffType.Nothing, Side.sword2));
+          .fluff("A concealed dagger").image("concealedDagger").trigger(new SideChangeTrigger(EffType.Empty, Side.sword2));
 
   public String name;
   private String description;

@@ -18,7 +18,7 @@ public class Eff {
     public TargetingType targetingType = TargetingType.EnemySingle;
 
     public enum EffType {
-        Nothing, Damage, Shield, Magic, Heal, Buff, Execute, Reroll
+        Empty, Damage, Shield, Magic, Heal, Buff, Execute, Reroll
 	}
 
 
@@ -38,7 +38,7 @@ public class Eff {
     public String toString(){
         String result;
         switch(type){
-            case Nothing:
+            case Empty:
                 result = "Nothing!"; break;
             case Damage:
                 switch(targetingType){
@@ -73,7 +73,7 @@ public class Eff {
         return result;
     }
 
-    public Eff nothing() { return type(EffType.Nothing, 0).targetType(Eff.TargetingType.DoesNothing); }
+    public Eff nothing() { return type(EffType.Empty, 0).targetType(Eff.TargetingType.DoesNothing); }
     public Eff damage(int amount) { return type(EffType.Damage, amount); }
     public Eff shield(int amount) { return type(EffType.Shield, amount); }
     public Eff magic(int amount) { return type(EffType.Magic, amount); }
