@@ -12,6 +12,7 @@ import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 import com.tann.dice.util.Tann;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Equipment {
@@ -19,27 +20,27 @@ public class Equipment {
   private static final List<Equipment> all = new ArrayList<>();
 
   static {
-    add(new Equipment().name("Leather Vest").image("leatherVest").level(1)
+    add(new Equipment().name("Leather Vest").image("leatherVest").level(0)
             .fluff("A [sin]lovely[sin] leather vest").trigger(new MaxHPTrigger(1)));
-    add(new Equipment().name("Heart Pendant").image("heartPendant").level(1)
+    add(new Equipment().name("Heart Pendant").image("heartPendant").level(0)
             .fluff("A ruby carved into a heart").trigger(new IncomingEffectTrigger(EffType.Healing, 1)));
     add(new Equipment().name("Hidden Dagger").image("concealedDagger").level(1)
             .fluff("A slim dagger, tucked away").trigger(new SideChangeTrigger(EffType.Empty, Side.sword2)));
-    add(new Equipment().name("Casta Root").image("herb")
+    add(new Equipment().name("Casta Root").image("herb").level(0)
             .fluff("A natural cure-all").trigger(new EffTypeBonus(EffType.Healing, 1)));
 
-    add(new Equipment().name("Reinforced Shield").image("shieldReinforce").level(2)
+    add(new Equipment().name("Reinforced Shield").image("shieldReinforce").level(1)
             .fluff("Extra plating is always good").trigger(new EffTypeBonus(EffType.Shield, 1)));
-    add(new Equipment().name("Gauntlet").image("gauntlet").level(2)
+    add(new Equipment().name("Gauntlet").image("gauntlet").level(1)
             .fluff("A pair of [sin]chunky[sin] gauntlets").trigger(new EffTypeBonus(EffType.Damage, 1)));
-    add(new Equipment().name("Chainmail").image("chainmail").level(2)
+    add(new Equipment().name("Chainmail").image("chainmail").level(1)
             .fluff("It's chainmail!").trigger(new MaxHPTrigger(3)));
-    add(new Equipment().name("Crystal Heart").image("crystalHeart").level(2)
+    add(new Equipment().name("Crystal Heart").image("crystalHeart").level(1)
             .fluff("You feel warmth inside").trigger(new EffTypeBonus(EffType.Magic, 1)));
 
-    add(new Equipment().name("Glow Stone").image("glowStone").level(3)
+    add(new Equipment().name("Glow Stone").image("glowStone").level(2)
             .fluff("A glowing purple stone").trigger(new AllSidesBonusTrigger(1)));
-    add(new Equipment().name("Iron Helmet").image("ironHelmet").level(3)
+    add(new Equipment().name("Iron Helmet").image("ironHelmet").level(2)
             .fluff("A visored metal helmet").trigger(new MaxHPTrigger(6)));
   }
 
@@ -53,6 +54,14 @@ public class Equipment {
 
   public static Equipment random() {
     return Tann.getRandom(all).copy();
+  }
+
+  public static Equipment random(int level) {
+    Collections.shuffle(all);
+    for(Equipment e:all){
+      if(e.level == level) return e;
+    }
+    return null;
   }
 
   public static Equipment recent() {

@@ -39,7 +39,8 @@ import com.tann.dice.util.Draw;
 import com.tann.dice.util.Screen;
 import com.tann.dice.util.TannFont;
 import com.tann.dice.util.TextWriter;
-import java.util.List;
+
+import java.util.*;
 
 public class DungeonScreen extends Screen {
 
@@ -140,35 +141,38 @@ public class DungeonScreen extends Screen {
         enemy.setEntities(monsters);
     }
 
+    static final List<List<MonsterType>> levels = new ArrayList<>();
+    private static void addLevel(MonsterType... monsterTypes){
+        levels.add(Arrays.asList(monsterTypes));
+    }
+    static{
+        addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
+        addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);
+        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.goblin, MonsterType.goblin);
+        addLevel(MonsterType.spikeBat, MonsterType.snake, MonsterType.spikeBat);
+        addLevel(MonsterType.archer, MonsterType.bird, MonsterType.bird, MonsterType.archer);
+        addLevel(MonsterType.bird, MonsterType.bird, MonsterType.bird);
+        addLevel(MonsterType.archer, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.archer);
+        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
+        addLevel(MonsterType.bird, MonsterType.spikeBat, MonsterType.goblin, MonsterType.spikeBat, MonsterType.bird);
+        addLevel(MonsterType.goblin, MonsterType.dragon, MonsterType.goblin);
+    }
+
     public void nextLevel() {
         spellButt.removeAllHovers();
         Explanel.get().remove();
-        level ++;
+        if(level<levels.size()) {
+            setup(MonsterType.monsterList(levels.get(level)));
+            level ++;
+        }
+        else {
+            PhaseManager.get().clearPhases();
+            PhaseManager.get().pushPhase(new VictoryPhase());
+            PhaseManager.get().kickstartPhase(VictoryPhase.class);
+        }
+
         setupLevelString();
         Party.get().rejig();
-        switch(level){
-            case 1:
-//                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin));
-                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.bird, MonsterType.dragon, MonsterType.snake, MonsterType.spikeBat));
-                break;
-            case 2:
-                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin));
-                break;
-            case 3:
-                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.bird, MonsterType.archer, MonsterType.goblin));
-                break;
-            case 4:
-                setup(MonsterType.monsterList(MonsterType.bird, MonsterType.bird, MonsterType.bird));
-                break;
-            case 5:
-                setup(MonsterType.monsterList(MonsterType.goblin, MonsterType.dragon, MonsterType.goblin));
-                break;
-            case 6:
-                PhaseManager.get().clearPhases();
-                PhaseManager.get().pushPhase(new VictoryPhase());
-                PhaseManager.get().kickstartPhase(VictoryPhase.class);
-                return;
-        }
         spellButt.setSpellHolder(spellHolder);
         Party.get().reset();
         spellHolder.setup(Party.get().getSpells());

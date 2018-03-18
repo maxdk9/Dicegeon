@@ -25,7 +25,7 @@ public class LevelEndPhase extends Phase {
             }
         }
         else{
-            gainedEquipment.add(Equipment.random());
+            gainedEquipment.add(Equipment.random(DungeonScreen.get().level/4));
         }
         for(Equipment e:gainedEquipment){
             Party.get().addEquipment(e);

@@ -43,4 +43,12 @@ public class MonsterType extends EntityType<MonsterType>{
         }
         return results;
     }
+
+    public static List<Monster> monsterList(List<MonsterType> monsters){
+        List<Monster> results = new ArrayList<>();
+        for(MonsterType type:monsters){
+            results.add(type.buildMonster());
+        }
+        return results;
+    }
 }
