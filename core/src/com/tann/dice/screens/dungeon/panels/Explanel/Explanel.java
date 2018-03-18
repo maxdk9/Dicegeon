@@ -118,7 +118,7 @@ public class Explanel extends InfoPanel implements OnPop {
         .actor(new TextWriter(spell.description, textWidth))
         .pix();
 
-        boolean enoughMagic = Party.get().getAvaliableMagic()<spell.cost;
+        boolean enoughMagic = Party.get().getAvaliableMagic()>=spell.cost;
         if(usable) {
             switch (spell.effects[0].targetingType) {
                 case EnemyGroup:
@@ -141,7 +141,7 @@ public class Explanel extends InfoPanel implements OnPop {
             }
         }
 
-        if(PhaseManager.get().getPhase().canTarget() && enoughMagic){
+        if(PhaseManager.get().getPhase().canTarget() && !enoughMagic){
             String text = "[red]Not enough magic";
             if(Party.get().getTotalTotalTotalAvailableMagic() >= spell.cost){
                 text += "[n][light]Tap your magic dice to gain magic";
