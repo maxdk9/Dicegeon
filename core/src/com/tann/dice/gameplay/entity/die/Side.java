@@ -113,6 +113,18 @@ public class Side {
 
     //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
 
+    // MONSTER
+
+    // REG
+
+    public static final Side snakePoison1 = new Side().image("snakeBite").effect(new Eff().damage(1), new Eff().
+            buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(1)))));
+    public static final Side snakePoison2 = new Side().image("snakeBite").effect(new Eff().damage(2), new Eff().
+            buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(2)))));
+
+    public static final Side claw = new Side().image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side claw_2 = claw.withValue(2);
+
     // SMOLE
 
     public static final Side smol_arrow = new Side().size(smol).image("arrow").effect(new Eff().damage(1).ranged());
