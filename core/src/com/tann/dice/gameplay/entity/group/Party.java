@@ -47,9 +47,6 @@ public class Party extends EntityGroup{
             addEquipment(Equipment.random());
         }
         addEquipment(Equipment.recent());
-//        for(int i=0;i<3;i++){
-//            addEquipment(Equipment.heartPendant.copy());
-//        }
     }
 
     public void addHeroes(){

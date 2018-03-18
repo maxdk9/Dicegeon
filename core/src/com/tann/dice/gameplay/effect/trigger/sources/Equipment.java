@@ -6,10 +6,7 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
-import com.tann.dice.gameplay.effect.trigger.types.AllSidesBonusTrigger;
-import com.tann.dice.gameplay.effect.trigger.types.IncomingEffectTrigger;
-import com.tann.dice.gameplay.effect.trigger.types.MaxHPTrigger;
-import com.tann.dice.gameplay.effect.trigger.types.SideChangeTrigger;
+import com.tann.dice.gameplay.effect.trigger.types.*;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -21,33 +18,63 @@ public class Equipment {
 
   private static final List<Equipment> all = new ArrayList<>();
 
-  public static final Equipment leatherVest = new Equipment().name("Leather Vest").image("leatherVest")
-          .fluff("A [sin]lovely[sin] leather vest").trigger(new MaxHPTrigger(1));
+  static {
+    add(new Equipment().name("Leather Vest").image("leatherVest").level(1)
+            .fluff("A [sin]lovely[sin] leather vest").trigger(new MaxHPTrigger(1)));
+    add(new Equipment().name("Heart Pendant").image("heartPendant").level(1)
+            .fluff("A ruby carved into a heart").trigger(new IncomingEffectTrigger(EffType.Healing, 1)));
+    add(new Equipment().name("Hidden Dagger").image("concealedDagger").level(1)
+            .fluff("A slim dagger, tucked away").trigger(new SideChangeTrigger(EffType.Empty, Side.sword2)));
+    add(new Equipment().name("Casta Root").image("herb")
+            .fluff("A natural cure-all").trigger(new EffTypeBonus(EffType.Healing, 1)));
 
-  public static final Equipment heartPendant = new Equipment().name("Heart Pendant").image("heartPendant")
-          .fluff("A ruby carved into a heart").trigger(new IncomingEffectTrigger(EffType.Healing, 1));
+    add(new Equipment().name("Reinforced Shield").image("shieldReinforce").level(2)
+            .fluff("Extra plating is always good").trigger(new EffTypeBonus(EffType.Shield, 1)));
+    add(new Equipment().name("Gauntlet").image("gauntlet").level(2)
+            .fluff("A pair of [sin]chunky[sin] gauntlets").trigger(new EffTypeBonus(EffType.Damage, 1)));
+    add(new Equipment().name("Chainmail").image("chainmail").level(2)
+            .fluff("It's chainmail!").trigger(new MaxHPTrigger(3)));
+    add(new Equipment().name("Crystal Heart").image("crystalHeart").level(2)
+            .fluff("You feel warmth inside").trigger(new EffTypeBonus(EffType.Magic, 1)));
 
-  public static final Equipment hiddenDagger = new Equipment().name("Hidden Dagger").image("concealedDagger")
-          .fluff("A concealed dagger").trigger(new SideChangeTrigger(EffType.Empty, Side.sword2));
+    add(new Equipment().name("Glow Stone").image("glowStone").level(3)
+            .fluff("A glowing purple stone").trigger(new AllSidesBonusTrigger(1)));
+    add(new Equipment().name("Iron Helmet").image("ironHelmet").level(3)
+            .fluff("A visored metal helmet").trigger(new MaxHPTrigger(6)));
+  }
 
-  public static final Equipment glowStone = new Equipment().name("Glow Stone").image("glowStone")
-          .fluff("A glowing purple stone").trigger(new AllSidesBonusTrigger(1));
+  private static void add(Equipment add){
+    if(byName(add.name)!=null){
+      System.err.println("Wuhoh, duplicate equipment with name "+add.name);
+      return;
+    }
+    all.add(add);
+  }
 
-  public static final Equipment gauntlet = new Equipment().name("Gauntlet").image("gauntlet")
-          .fluff("A pair of [sin]chunky[sin] gauntlets").trigger(new EffTypeBonus(EffType.Damage, 1));
+  public static Equipment random() {
+    return Tann.getRandom(all).copy();
+  }
 
-  public static final Equipment castaRoot = new Equipment().name("Casta Root").image("herb")
-          .fluff("A natural cure-all").trigger(new EffTypeBonus(EffType.Healing, 1));
+  public static Equipment recent() {
+    return all.get(all.size()-1).copy();
+  }
+
+  public static Equipment byName(String name){
+    for(Equipment e:all){
+      if(e.name.equals(name)){
+        return e.copy();
+      }
+    }
+    return null;
+  }
+
 
   public String name;
   private String description;
+  private int level;
   public String fluff;
   public TextureRegion image;
   private List<Trigger> triggers = new ArrayList<>();
-
-  public Equipment(){
-    all.add(this);
-  }
 
   public Equipment name(String name){
     this.name = name;
@@ -56,6 +83,11 @@ public class Equipment {
 
   public Equipment fluff(String fluff){
     this.fluff = fluff;
+    return this;
+  }
+
+  public Equipment level(int level){
+    this.level = level;
     return this;
   }
 
@@ -101,12 +133,6 @@ public class Equipment {
     return name;
   }
 
-  public static Equipment random() {
-    return Tann.getRandom(all).copy();
-  }
 
-  public static Equipment recent() {
-    System.out.println(all.get(all.size()-1));
-    return all.get(all.size()-1).copy();
-  }
+
 }

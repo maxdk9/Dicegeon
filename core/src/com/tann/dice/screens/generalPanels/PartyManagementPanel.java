@@ -13,9 +13,10 @@ import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
+import com.tann.dice.util.OnPop;
 import com.tann.dice.util.TextButton;
 
-public class PartyManagementPanel extends Group {
+public class PartyManagementPanel extends Group implements OnPop{
 
   private static PartyManagementPanel self;
   public static PartyManagementPanel get() {
@@ -110,4 +111,8 @@ public class PartyManagementPanel extends Group {
   }
 
 
+  @Override
+  public void onPop() {
+    deselectEquipment();
+  }
 }

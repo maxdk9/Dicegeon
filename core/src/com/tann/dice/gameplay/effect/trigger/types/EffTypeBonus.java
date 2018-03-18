@@ -1,4 +1,4 @@
-package com.tann.dice.gameplay.effect.trigger.sources;
+package com.tann.dice.gameplay.effect.trigger.types;
 
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
