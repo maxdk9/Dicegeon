@@ -161,22 +161,22 @@ public class DungeonScreen extends Screen {
     public void nextLevel() {
         spellButt.removeAllHovers();
         Explanel.get().remove();
-        if(level<levels.size()) {
-            setup(MonsterType.monsterList(levels.get(level)));
-            level ++;
-        }
-        else {
-            PhaseManager.get().clearPhases();
-            PhaseManager.get().pushPhase(new VictoryPhase());
-            PhaseManager.get().kickstartPhase(VictoryPhase.class);
-        }
-
         setupLevelString();
         Party.get().rejig();
         spellButt.setSpellHolder(spellHolder);
         Party.get().reset();
         spellHolder.setup(Party.get().getSpells());
         PhaseManager.get().clearPhases();
+
+        if(level<levels.size()) {
+            setup(MonsterType.monsterList(levels.get(level)));
+            level ++;
+        }
+        else {
+            PhaseManager.get().pushPhase(new VictoryPhase());
+            PhaseManager.get().kickstartPhase(VictoryPhase.class);
+        }
+
         if(level>1){
             PhaseManager.get().pushPhase(new LevelEndPhase());
         }
