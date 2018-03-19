@@ -67,10 +67,11 @@ public abstract class DiceEntity {
         }
         setMaxHp(type.hp);
         fullHeal();
+        setSides(entityType.sides);
     }
 
     public void init(){
-        setSides(entityType.sides);
+
     }
 
     protected void setSides(Side[] sides) {

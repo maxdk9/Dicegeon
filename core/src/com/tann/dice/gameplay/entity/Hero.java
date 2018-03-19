@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.entity;
 
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -18,6 +19,7 @@ public class Hero extends DiceEntity {
             setColour(type.colour);
         }
         this.spells = Arrays.asList(type.spells);
+//        addEquipment(Equipment.byName("Glow Stone"));
     }
 
     @Override
