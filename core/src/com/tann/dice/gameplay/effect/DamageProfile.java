@@ -118,12 +118,16 @@ public class DamageProfile {
         return execute;
     }
 
-    public void removeEff(Eff remove){
-        if(!effs.contains(remove)){
-            return;
+    public void removeEffsFromSource(DiceEntity entity) {
+        boolean removed = false;
+        for(int i=effs.size()-1;i>=0;i--){
+            Eff e = effs.get(i);
+            if(e.source == entity){
+                effs.remove(e);
+                removed = true;
+            }
         }
-        effs.remove(remove);
-        somethingChanged();
+        if(removed) somethingChanged();
     }
 
     public void action(){
@@ -166,4 +170,5 @@ public class DamageProfile {
         if(!poison) return regularOverkill;
         else return getIncomingPoisonDamage() + Math.min(0, regularOverkill);
     }
+
 }

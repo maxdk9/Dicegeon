@@ -76,6 +76,11 @@ public abstract class DiceEntity {
 
     protected void setSides(Side[] sides) {
         this.sides = Side.copy(sides);
+        for(Side s:this.sides){
+            for(Eff e:s.getEffects()){
+                e.source=this;
+            }
+        }
         getDie().setup();
     }
 
@@ -217,11 +222,12 @@ public abstract class DiceEntity {
         }
         getDie().flatDraw = false;
         DungeonScreen.get().layoutSidePanels();
+        removeEffectsIfDead();
     }
 
     public void removeEffectsIfDead(){
         if(!isPlayer() && die.getActualSide() != null && isDead()) {
-            TargetingManager.get().cancelEffects(die.getActualSide().getEffects());
+            TargetingManager.get().cancelEffects(this);
         }
     }
 
@@ -341,10 +347,8 @@ public abstract class DiceEntity {
         return tmp;
     }
 
-    public void removeEffects(Eff[] effects) {
-        for(Eff e:effects) {
-            getProfile().removeEff(e);
-        }
+    public void removeEffects(DiceEntity entity) {
+       getProfile().removeEffsFromSource(entity);
     }
 
     public int getEffectiveHp() {
@@ -352,8 +356,8 @@ public abstract class DiceEntity {
     }
 
     public void upkeep() {
-        for(int i=getActiveTriggers().size()-1;i>=0;i--){
-            Trigger t = getActiveTriggers().get(i);
+        List<Trigger> activeTriggers = getActiveTriggers();
+        for(Trigger t:activeTriggers){
             t.endOfTurn(this);
         }
         for(int i=buffs.size()-1; i>=0; i--){

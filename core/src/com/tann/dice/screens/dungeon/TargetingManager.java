@@ -77,9 +77,9 @@ public class TargetingManager {
         DungeonScreen.get().checkDoneTargeting();
     }
 
-    public void cancelEffects(Eff[] effects) {
+    public void cancelEffects(DiceEntity entity) {
         for (DiceEntity de : EntityGroup.getAllActive()) {
-            de.removeEffects(effects);
+            de.removeEffects(entity);
         }
     }
 
@@ -167,9 +167,6 @@ public class TargetingManager {
         if (Party.get().getAvaliableMagic() == 0) {
             DungeonScreen.get().spellButt.hide();
         }
-
-        Room.get().removeDeadEffects();
-
         return true;
     }
 

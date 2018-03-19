@@ -34,6 +34,8 @@ public class Hero extends DiceEntity {
         setSides(type.sides);
         somethingChanged();
         fullHeal();
+        resetPanels();
+
         this.spells = Arrays.asList(type.spells);
         DungeonScreen.get().spellHolder.setup(Party.get().getSpells());
         DungeonScreen.get().spellHolder.layout();

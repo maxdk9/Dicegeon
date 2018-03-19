@@ -40,7 +40,7 @@ public class Die implements Targetable{
     // gameplay stuff
 
 	  public DiceEntity entity;
-    public List<Side> sides = new ArrayList<>(); // to dynamically change sides, just null texLocs
+//    public List<Side> sides = new ArrayList<>(); // to dynamically change sides, just null texLocs
     private DieState state = DieState.Stopped;
     private int lockedSide=-1;
     private float dist = 0;
@@ -231,7 +231,7 @@ public class Die implements Targetable{
     public Side getActualSide(){
         int side = getSide();
         if(side>=0){
-            return sides.get(side);
+            return entity.getSides()[side];
         }
         return null;
     }
@@ -300,10 +300,10 @@ public class Die implements Targetable{
         if(texLocs != null) return texLocs;
         texLocs = new float[26];
 
-        float width = sides.get(0).getTexture().getTexture().getWidth();
-        float height = sides.get(0).getTexture().getTexture().getHeight();
-        for(int i=0;i<sides.size();i++){
-            Side s = sides.get(i);
+        float width = entity.getSides()[0].getTexture().getTexture().getWidth();
+        float height = entity.getSides()[0].getTexture().getTexture().getHeight();
+        for(int i=0;i<entity.getSides().length;i++){
+            Side s = entity.getSides()[i];
             TextureRegion face = s.getTexture();
             texLocs[4*i] = face.getRegionX()/width;
             texLocs[4*i+1] = face.getRegionY()/height;
@@ -478,16 +478,7 @@ public class Die implements Targetable{
     }
 
     public void setup(){
-        sides.clear();
         texLocs = null;
-        for(Side s:entity.getSides()){
-            addSide(s);
-        }
-    }
-
-    public void addSide(Side side){
-        sides.add(side);
-        for(Eff e:side.getInternalEffects()) e.setSource(entity);
     }
 
     public void construct(){
@@ -496,7 +487,7 @@ public class Die implements Targetable{
         mb.node().id = "dieIndex";
 
         if(MATERIAL==null){
-            MATERIAL =new Material(TextureAttribute.createDiffuse(sides.get(0).getTexture().getTexture()));
+            MATERIAL =new Material(TextureAttribute.createDiffuse(entity.getSides()[0].getTexture().getTexture()));
         }
 
         MeshPartBuilder mpb = mb.part("dieIndex", GL20.GL_TRIANGLES, ATTRIBUTES, MATERIAL);
@@ -506,7 +497,7 @@ public class Die implements Targetable{
         float inner = f[(int)(Math.random()*f.length)];
         for(int i=0;i<6;i++){
             normalX=i;
-            Side side = sides.get(i);
+            Side side = entity.getSides()[i];
             TextureRegion base = side.getTexture();
             mpb.setColor(getFloat(base), 0, inner, dieIndex /5f+0.1f);
             switch(i){
