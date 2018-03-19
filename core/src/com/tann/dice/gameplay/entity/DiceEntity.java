@@ -104,7 +104,6 @@ public abstract class DiceEntity {
         }
         getProfile().somethingChanged();
         getDiePanel().somethingChanged();
-        getEntityPanel().layout();
     }
 
     public int getMaxHp() {
