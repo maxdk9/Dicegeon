@@ -48,7 +48,7 @@ public abstract class DiceEntity {
     public String name;
     EntitySize size;
     public boolean locked; // only used for monster
-    public com.tann.dice.gameplay.entity.type.EntityType entityType;
+    public EntityType entityType;
     public AtlasRegion portrait;
     public int portraitOffset;
     public ArrayList<Equipment> equipment = new ArrayList<>();

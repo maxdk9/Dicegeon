@@ -125,7 +125,7 @@ public class SpellHolder extends Group {
     public void draw(Batch batch, float parentAlpha) {
         Draw.fillActor(batch, this, Colours.purple);
         batch.setColor(Colours.dark);
-        for(int i=0;i<3;i++){
+        for(int i=0;i<getMaxSpellLevel();i++){
             Draw.fillRectangle(batch, getX()+SpellCostPanel.WIDTH, getY()+1 + i*(BAR_HEIGHT), getWidth()-SpellCostPanel.WIDTH-1, BAR_HEIGHT-1);
         }
         super.draw(batch, parentAlpha);
