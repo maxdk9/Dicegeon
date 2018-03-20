@@ -145,6 +145,7 @@ public class Side {
 
     public static final Side huge_flame = new Side().size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
     public static final Side huge_flame2 = huge_flame.withValue(2);
+    public static final Side huge_flame3 = huge_flame.withValue(3);
 
     public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
             buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(1)))));

@@ -154,9 +154,9 @@ public class DungeonScreen extends Screen {
         addLevel(MonsterType.archer, MonsterType.bird, MonsterType.bird, MonsterType.archer);
         addLevel(MonsterType.bird, MonsterType.bird, MonsterType.bird);
         addLevel(MonsterType.archer, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.archer);
-        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
+        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
         addLevel(MonsterType.bird, MonsterType.spikeBat, MonsterType.goblin, MonsterType.spikeBat, MonsterType.bird);
-        addLevel(MonsterType.goblin, MonsterType.dragon, MonsterType.goblin);
+        addLevel(MonsterType.bird, MonsterType.dragon, MonsterType.goblin);
     }
 
     public void nextLevel() {
