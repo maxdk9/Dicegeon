@@ -33,6 +33,7 @@ import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
+import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Button;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -67,7 +68,6 @@ public class DungeonScreen extends Screen {
     Button confirmButton;
     public SpellButt spellButt;
     private void init(){
-
         spellHolder = new SpellHolder();
         enemy = new SidePanel(false);
         addActor(enemy);
@@ -127,6 +127,7 @@ public class DungeonScreen extends Screen {
         float gap = 12;
         spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
         nextLevel();
+        PartyManagementPanel.get();
     }
 
     public int level=0;

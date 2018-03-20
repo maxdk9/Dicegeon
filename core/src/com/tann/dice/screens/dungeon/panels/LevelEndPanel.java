@@ -21,7 +21,7 @@ public class LevelEndPanel extends Group {
 
     private static final String[] congrats = new String[]{
             "Nice!", "Congrats", "You did it!", "Congration", "Hot stuff", "Wowzers", "Splendid", "I knew you could do it", "They never stood a chance",
-            "Imbressive"};
+            "Imbressive", "[sin]Dicey[sin]"};
 
     List<Equipment> gainedEquipment;
     List<Hero> toLevelup;
@@ -50,7 +50,7 @@ public class LevelEndPanel extends Group {
             p.row();
         }
         p.row(4);
-        TextButton org = new TextButton("Organise", 2);
+        TextButton org = new TextButton("Inventory", 2);
         TextButton cont = new TextButton(toLevelup.size()==0?"Continue":"Level up", 2);
         p.actor(org);
         p.actor(cont);

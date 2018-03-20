@@ -81,7 +81,7 @@ public abstract class DiceEntity {
                 e.source=this;
             }
         }
-        getDie().setup();
+        getDie().refresh();
     }
 
     // gameplay junk
@@ -109,6 +109,7 @@ public abstract class DiceEntity {
         }
         getProfile().somethingChanged();
         getDiePanel().somethingChanged();
+        getDie().refresh();
     }
 
     public int getMaxHp() {

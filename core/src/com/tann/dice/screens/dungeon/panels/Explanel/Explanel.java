@@ -30,7 +30,7 @@ import java.util.List;
 
 public class Explanel extends InfoPanel implements OnPop {
 
-    private static final int textWidth = 96, panelWidth = 106, topAndBottom=3;
+    private static final int textWidth = 98, panelWidth = 106, topAndBottom=3;
 
 
     private static Explanel self;

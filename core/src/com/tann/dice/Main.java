@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.screens.map.MapScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;

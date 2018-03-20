@@ -24,9 +24,6 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 
 public class Die implements Targetable{
@@ -40,7 +37,6 @@ public class Die implements Targetable{
     // gameplay stuff
 
 	  public DiceEntity entity;
-//    public List<Side> sides = new ArrayList<>(); // to dynamically change sides, just null texLocs
     private DieState state = DieState.Stopped;
     private int lockedSide=-1;
     private float dist = 0;
@@ -473,11 +469,11 @@ public class Die implements Targetable{
     public Die(DiceEntity entity) {
         this.entity=entity;
         DIE_SIZE = entity.getSize().dieSize;
-        setup();
+        refresh();
         construct();
     }
 
-    public void setup(){
+    public void refresh(){
         texLocs = null;
     }
 
