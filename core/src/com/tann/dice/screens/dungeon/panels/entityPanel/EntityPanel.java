@@ -1,9 +1,10 @@
 package com.tann.dice.screens.dungeon.panels.entityPanel;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,7 +14,6 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.SidePanel;
 import com.tann.dice.util.*;
@@ -28,7 +28,8 @@ public class EntityPanel extends Group {
     HeartsHolder heartsHolder;
     float startX;
     static final int n = 5;
-    static NinePatch np = new NinePatch(Images.patch, n,n,n,n);
+    static NinePatch panelBorder = new NinePatch(Images.panelBorder, n,n,n,n);
+    static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
     public static final float WIDTH = SidePanel.width;
     static int borderSize = 4;
     static int gap = 2;
@@ -143,6 +144,10 @@ public class EntityPanel extends Group {
         intensity = Math.max(0, intensity-delta*fadeSpeed);
     }
 
+    float noiseMag;
+    static final float noiseSpeed = 1.5f;
+
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
@@ -157,10 +162,38 @@ public class EntityPanel extends Group {
             Draw.fillRectangle(batch, getX(), getY() + holder.getY() + holder.getHeight(), getWidth(), getHeight() - holder.getY() - holder.getHeight());
         }
 
+
+        boolean goingToDie = entity.getProfile().isGoingToDie();
+        noiseMag += noiseSpeed * Gdx.graphics.getDeltaTime() * (goingToDie?1:-1);
+        noiseMag = Math.max(Math.min(1, noiseMag), 0);
+
+        if(noiseMag > 0){
+            float posFreq = .15f;
+            float timeFreq = .35f;
+            float mag = 3*noiseMag;
+            float h = 4*noiseMag;
+            for (int x = 0; x < getWidth(); x++) {
+                for (int y = 0; y < h + mag; y++) {
+                    double noise = Noise.noise(x * posFreq, y * posFreq, Main.ticks * timeFreq);
+                    double calc = noise * mag + y;
+                    if (calc <= h) {
+                        if (calc > h * .6f) {
+                            batch.setColor(Colours.grey);
+                        } else {
+                            batch.setColor(Colours.purple);
+                        }
+                        Draw.fillRectangle(batch, getX() + x, getY() + y + 1, 1, 1);
+                    }
+                }
+            }
+        }
+
         batch.setColor(Colours.z_white);
         int npWiggle = 1;
-        np.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
-
+        panelBorder.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
+        batch.setColor(entity.getColour());
+        panelBorderColour.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
+        batch.setColor(Colours.z_white);
         if(entity.portrait != null) {
             if (entity.isPlayer()) {
                 batch.draw(entity.portrait, getX() - entity.portraitOffset, getY() + 1);
@@ -168,6 +201,7 @@ public class EntityPanel extends Group {
                 Draw.drawScaled(batch, entity.portrait, getX() + getWidth() + entity.portraitOffset, getY()+1, -1, 1);
             }
         }
+
 
         if(possibleTarget || targeted) {
             batch.setColor(Colours.withAlpha(possibleTarget ? Colours.light : Colours.red, (float) (Math.sin(Main.ticks * 6) * .05f + (targeted?.3f:.1f))));
@@ -231,9 +265,8 @@ public class EntityPanel extends Group {
 //            batch.setColor(Colours.grey);
 //            batch.draw(Images.skull, holderX, holderY);
         }
-
-
         drawArrows(batch);
+
     }
 
     private void drawArrows(Batch batch) {
