@@ -35,8 +35,8 @@ public abstract class DiceEntity {
     // gameplay vars
     protected Side[] sides;
     protected int baseMaxHp;
-    protected int hp;
     protected boolean dead;
+    protected int hp;
     protected List<DiceEntity> targets;
     List<Buff> buffs = new ArrayList<>();
     public DiceEntity targeted;
@@ -90,7 +90,7 @@ public abstract class DiceEntity {
     }
 
     protected void fullHeal() {
-        hp = getMaxHp();
+        hp = dead?getMaxHp()/2:getMaxHp();
     }
 
     protected void resetPanels() {
@@ -146,7 +146,7 @@ public abstract class DiceEntity {
 
 
     public void reset(){
-        setHp(dead? getMaxHp() /2: getMaxHp());
+        fullHeal();
         dead= false;
         targeted = null;
         getDie().flatDraw = false;
@@ -157,10 +157,6 @@ public abstract class DiceEntity {
         profile.reset();
         resetPanels();
         somethingChanged();
-    }
-
-    private void setHp(int amount){
-        this.hp = amount;
     }
 
     public abstract void stopped();

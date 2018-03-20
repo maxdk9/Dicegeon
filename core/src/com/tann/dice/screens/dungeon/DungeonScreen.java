@@ -241,7 +241,7 @@ public class DungeonScreen extends Screen {
 
     public void showDialog(String s) {
         TextWriter tw = new TextWriter(s, Integer.MAX_VALUE, Colours.purple, 2);
-        DungeonScreen.get().push(tw, true, true, true, PhaseManager.popPhaseRunnable);
+        DungeonScreen.get().push(tw, true, true, true, null);
     }
 
     public void enemyCombat(){
