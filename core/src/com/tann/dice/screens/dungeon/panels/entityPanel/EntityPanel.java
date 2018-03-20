@@ -144,49 +144,20 @@ public class EntityPanel extends Group {
         intensity = Math.max(0, intensity-delta*fadeSpeed);
     }
 
-    float noiseMag;
-    static final float noiseSpeed = 1.5f;
-
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
         batch.setColor(Colours.dark);
+        drawCutout(batch);
+        if(entity.getProfile().isGoingToDie()){
+            batch.setColor(Colours.withAlpha(Colours.red, (float) (.2f+Math.sin(Main.ticks*5f)*.2f)));
+            drawCutout(batch);
+        }
         if(entity.isDead()){
             Draw.fillActor(batch, this);
         }
-        else {
-            Draw.fillRectangle(batch, getX(), getY(), holder.getX(), getHeight());
-            Draw.fillRectangle(batch, getX(), getY(), getWidth(), holder.getY());
-            Draw.fillRectangle(batch, getX() + holder.getX() + holder.getWidth(), getY(), getWidth() - holder.getX() - holder.getWidth(), getHeight());
-            Draw.fillRectangle(batch, getX(), getY() + holder.getY() + holder.getHeight(), getWidth(), getHeight() - holder.getY() - holder.getHeight());
-        }
 
 
-        boolean goingToDie = entity.getProfile().isGoingToDie();
-        noiseMag += noiseSpeed * Gdx.graphics.getDeltaTime() * (goingToDie?1:-1);
-        noiseMag = Math.max(Math.min(1, noiseMag), 0);
-
-        if(noiseMag > 0){
-            float posFreq = .15f;
-            float timeFreq = .35f;
-            float mag = 3*noiseMag;
-            float h = 4*noiseMag;
-            for (int x = 0; x < getWidth(); x++) {
-                for (int y = 0; y < h + mag; y++) {
-                    double noise = Noise.noise(x * posFreq, y * posFreq, Main.ticks * timeFreq);
-                    double calc = noise * mag + y;
-                    if (calc <= h) {
-                        if (calc > h * .6f) {
-                            batch.setColor(Colours.grey);
-                        } else {
-                            batch.setColor(Colours.purple);
-                        }
-                        Draw.fillRectangle(batch, getX() + x, getY() + y + 1, 1, 1);
-                    }
-                }
-            }
-        }
 
         batch.setColor(Colours.z_white);
         int npWiggle = 1;
@@ -209,6 +180,35 @@ public class EntityPanel extends Group {
         }
 
         super.draw(batch, parentAlpha);
+    }
+
+    private void drawNoise(Batch batch) {
+        // call this from drawBackground()
+        float posFreq = .15f;
+        float timeFreq = .35f;
+        float mag = 3;
+        float h = 4;
+        for (int x = 0; x < getWidth(); x++) {
+            for (int y = 0; y < h + mag; y++) {
+                double noise = Noise.noise(x * posFreq, y * posFreq, Main.ticks * timeFreq);
+                double calc = noise * mag + y;
+                if (calc <= h) {
+                    if (calc > h * .6f) {
+                        batch.setColor(Colours.grey);
+                    } else {
+                        batch.setColor(Colours.purple);
+                    }
+                    Draw.fillRectangle(batch, getX() + x, getY() + y + 1, 1, 1);
+                }
+            }
+        }
+    }
+
+    private void drawCutout(Batch batch){
+        Draw.fillRectangle(batch, getX(), getY(), holder.getX(), getHeight());
+        Draw.fillRectangle(batch, getX()+holder.getX(), getY(), holder.getWidth(), holder.getY());
+        Draw.fillRectangle(batch, getX() + holder.getX() + holder.getWidth(), getY(), getWidth() - holder.getX() - holder.getWidth(), getHeight());
+        Draw.fillRectangle(batch, getX()+holder.getX(), getY() + holder.getY() + holder.getHeight(), holder.getWidth(), getHeight() - holder.getY() - holder.getHeight());
     }
 
     public void flash() {
