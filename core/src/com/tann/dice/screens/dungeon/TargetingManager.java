@@ -161,7 +161,9 @@ public class TargetingManager {
         if (containsDamage) {
             Sounds.playSound(Sounds.fwips, 4, 1);
         }
-        deselectTargetable();
+        if(!t.repeat()) {
+            deselectTargetable();
+        }
         DungeonScreen.get().checkDoneTargeting();
 
         if (Party.get().getAvaliableMagic() == 0) {

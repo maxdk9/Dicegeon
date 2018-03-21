@@ -581,4 +581,9 @@ public class Die implements Targetable{
     public boolean isUsable() {
         return true;
     }
+
+    @Override
+    public boolean repeat() {
+        return false;
+    }
 }

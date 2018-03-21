@@ -84,10 +84,6 @@ public class Spell implements Targetable{
         return image;
     }
 
-    public boolean isRepeatable() {
-        return repeatable;
-    }
-
     @Override
     public boolean use() {
         deselect();
@@ -120,6 +116,11 @@ public class Spell implements Targetable{
     @Override
     public boolean isUsable() {
         return canCast();
+    }
+
+    @Override
+    public boolean repeat() {
+        return repeatable && Party.get().getAvaliableMagic()>=getCost();
     }
 
     public boolean canCast() {

@@ -31,10 +31,6 @@ public class Eff {
 
     public Eff(){}
 
-    public String getValueString(){
-	     return (value>=0?"":"-")+Math.abs(value);
-    }
-
     public String toString(){
         String result;
         switch(type){

@@ -6,4 +6,5 @@ public interface Targetable {
     void deselect();
     void select();
     boolean isUsable();
+    boolean repeat();
 }
