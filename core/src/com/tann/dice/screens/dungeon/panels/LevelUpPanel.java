@@ -8,11 +8,9 @@ import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
-import com.tann.dice.util.Button;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.Tann;
-import com.tann.dice.util.TextWriter;
+import com.tann.dice.screens.generalPanels.PartyManagementPanel;
+import com.tann.dice.util.*;
+
 import java.util.List;
 
 public class LevelUpPanel extends Group{
@@ -61,6 +59,19 @@ public class LevelUpPanel extends Group{
             (int)(dp.getY() + dp.getHeight()/2 - tick.getHeight()/2));
         optionsPanels[i] = dp;
     }
+
+        TextButton org = new TextButton("Inventory", 2);
+        org.setRunnable(new Runnable() {
+            @Override
+            public void run() {
+                PartyManagementPanel p = PartyManagementPanel.get();
+                p.refresh();
+                Main.getCurrentScrren().push(p, false, true, false, InputBlocker.DARK, null);
+                p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
+            }
+        });
+        addActor(org);
+        org.setPosition(3, 3);
   }
 
   @Override

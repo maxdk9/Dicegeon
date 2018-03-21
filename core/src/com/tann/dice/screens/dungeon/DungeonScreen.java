@@ -276,7 +276,8 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void preDraw(Batch batch) {
-
+        batch.setColor(Colours.light);
+        TannFont.font.drawString(batch, levelString,Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
@@ -286,11 +287,6 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
-        batch.setColor(Colours.light);
-        TannFont.font.drawString(batch, levelString,Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
-        if(false){
-            Draw.fillEllipse(batch, (float) (getWidth()/2+Math.sin(Main.ticks*5)*getWidth()/2), 50, 20, 20);
-        }
     }
 
     @Override

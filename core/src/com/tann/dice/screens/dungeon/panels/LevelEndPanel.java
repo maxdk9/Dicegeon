@@ -76,8 +76,7 @@ public class LevelEndPanel extends Group {
                 }
                 else{
                     LevelUpPanel lup = new LevelUpPanel(toLevelup.remove(0));
-                    //TODO some logic here so you can cancel but have to go back and do it!
-                    Main.getCurrentScrren().push(lup, true, true, false, InputBlocker.DARK, null);
+                    Main.getCurrentScrren().push(lup, true, false, false, InputBlocker.DARK, null);
                 }
             }
         });
