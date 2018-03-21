@@ -61,7 +61,14 @@ public class Eff {
                 }
                 break;
             case Magic: result = "Gain "+getValue()+" magic to spend on spells"; break;
-            case Healing: result = "Restore "+getValue()+" missing health ([purple][heartEmpty][light]) to a damaged character"; break;
+            case Healing:
+                result = "Restore "+getValue()+" missing health ([purple][heartEmpty][light]) to ";
+                switch(targetingType){
+                    case FriendlySingle: result += "a damaged character"; break;
+                    case FriendlyGroup: result += "ALL damaged characters"; break;
+                    default: result += "Need description QAWEDRFUJ";
+                }
+                break;
             case Execute: result = "Kills target if they are on exactly "+getValue()+" hp"; break;
             case Reroll: result = "When you roll this, gain +1 reroll this turn"; break;
             case Buff: result = buff.toNiceString(); break;
@@ -246,3 +253,4 @@ public class Eff {
     }
 
 }
+

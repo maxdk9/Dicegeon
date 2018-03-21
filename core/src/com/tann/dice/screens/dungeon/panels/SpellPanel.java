@@ -38,9 +38,9 @@ public class SpellPanel extends Actor{
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.blue);
         batch.draw(big?Images.spellBorderBig:Images.spellBorder, getX(), getY());
-        int imageSize = spell.image.getRegionHeight();
+        int imageSize = spell.getImage().getRegionHeight();
         batch.setColor(Colours.z_white);
-        batch.draw(spell.image, getX()+getWidth()/2-imageSize/2, getY()+getHeight()/2-imageSize/2);
+        batch.draw(spell.getImage(), getX()+getWidth()/2-imageSize/2, getY()+getHeight()/2-imageSize/2);
         super.draw(batch, parentAlpha);
     }
 }

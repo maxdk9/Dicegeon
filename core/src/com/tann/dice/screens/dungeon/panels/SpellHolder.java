@@ -48,10 +48,10 @@ public class SpellHolder extends Group {
     }
 
     private void addSpell (Spell spell){
-        List<Spell> spells = spellMap.get(spell.cost);
+        List<Spell> spells = spellMap.get(spell.getCost());
         if(spells == null){
             spells = new ArrayList<>();
-            spellMap.put(spell.cost, spells);
+            spellMap.put(spell.getCost(), spells);
         }
         spells.add(spell);
     }

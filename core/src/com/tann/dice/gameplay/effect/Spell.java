@@ -12,33 +12,46 @@ import com.tann.dice.util.Draw;
 
 public class Spell implements Targetable{
 
-    public static final Spell arcaneMissile = new Spell("Arcane Missile", "4 damage to a random enemy", Main.atlas.findRegion("spell/arcaneMissile"), 2, new Eff[]{new Eff().damage(4).randomEnemy()});
-    public static final Spell inferno = new Spell("Inferno", "2 damage to ANY enemy and both adjacents", Main.atlas.findRegion("spell/inferno"), 3, new Eff[]{new Eff().damage(2).enemyAndAdjacentsRanged()});
+    public static final Spell arcaneMissile = new Spell().name("Arcane Missile").image("arcaneMissile").cost(2).effs(new Eff().damage(4).randomEnemy());
+    public static final Spell inferno = new Spell().name("Inferno").image("inferno").cost(3).effs(new Eff().damage(2).enemyAndAdjacentsRanged());
+    public static final Spell stoneSkin = new Spell().name("Stoneskin").image("stoneskin").cost(3).effs(new Eff().shield(1000).friendlySingle());
+    public static final Spell balance = new Spell().name("Balance").image("balance").cost(3).effs(new Eff().heal(1).friendlyGroup(), new Eff().damage(1).enemyGroup());
+    public static final Spell fireWave = new Spell().name("Fire Wave").image("firewave").cost(3).effs(new Eff().damage(1).enemyGroup());
+    public static final Spell healAll = new Spell().name("Mass Heal").image("healall").cost(2).effs(new Eff().heal(1).friendlyGroup());
+    public static final Spell resist = new Spell().name("Resist").image("resist").cost(1).effs(new Eff().shield(1).friendlySingle()).repeatable();
+    public static final Spell dart = new Spell().name("Slice").image("strike").cost(1).effs(new Eff().damage(1)).repeatable();
 
-    public static final Spell stoneSkin = new Spell("Stoneskin", "Block all damage from a friendly target", Main.atlas.findRegion("spell/stoneskin"), 3,
-        new Eff[]{new Eff().shield(1000).friendlySingle()});
-    public static final Spell balance = new Spell("Balance", "Heal 1 to all your characters, deal 1 damage to all enemies", Main.atlas.findRegion("spell/balance"), 3,
-        new Eff[]{new Eff().heal(1).friendlyGroup(), new Eff().damage(1).enemyGroup()});
+    private String name;
+    private String description;
+    private int cost;
+    private TextureRegion image;
+    private Eff[] effects;
+    private boolean selected;
+    private boolean repeatable;
 
-    public static final Spell fireWave = new Spell("Fire Wave", "1 damage to all enemies", Main.atlas.findRegion("spell/firewave"), 3, new Eff[]{new Eff().damage(1).enemyGroup()});
-    public static final Spell healAll = new Spell("Mass Heal", "Heal 1 to all your characters", Main.atlas.findRegion("spell/healall"), 2, new Eff[]{new Eff().heal(1).friendlyGroup()});
-
-    public static final Spell resist = new Spell("Resist", "Block one damage", Main.atlas.findRegion("spell/resist"), 1, new Eff[]{new Eff().shield(1).friendlySingle()});
-    public static final Spell dart = new Spell("Slice", "One damage to a forward enemy", Main.atlas.findRegion("spell/strike"), 1, new Eff[]{new Eff().damage(1)});
-
-    public final String name;
-    public final String description;
-    public final int cost;
-    public final TextureRegion image;
-    public final Eff[] effects;
-    public boolean selected;
-
-    public Spell(String name, String description, TextureRegion image, int cost, Eff[] effects) {
+    public Spell name(String name){
         this.name = name;
-        this.description = description;
-        this.image = image;
-        this.effects = effects;
+        return this;
+    }
+
+    public Spell image(String image){
+        this.image = Main.atlas.findRegion("spell/"+image);
+        return this;
+    }
+
+    public Spell cost(int cost){
         this.cost = cost;
+        return this;
+    }
+
+    public Spell effs(Eff... effs){
+        this.effects = effs;
+        return this;
+    }
+
+    public Spell repeatable(){
+        this.repeatable = true;
+        return this;
     }
 
     private SpellPanel panel;
@@ -52,7 +65,28 @@ public class Spell implements Targetable{
         return effects;
     }
 
+    public String getDescription(){
+        if(description == null){
+            description = Eff.describe(effects);
+        }
+        return description;
+    }
 
+    public String getName(){
+        return name;
+    }
+
+    public int getCost(){
+        return cost;
+    }
+
+    public TextureRegion getImage() {
+        return image;
+    }
+
+    public boolean isRepeatable() {
+        return repeatable;
+    }
 
     @Override
     public boolean use() {

@@ -108,19 +108,19 @@ public class Explanel extends InfoPanel implements OnPop {
                 spell.draw(batch, getX(), getY(), scale);
             }
         };
-        spellDraw.setSize(spell.image.getRegionWidth()*scale, spell.image.getRegionHeight()*scale);
+        spellDraw.setSize(spell.getImage().getRegionWidth()*scale, spell.getImage().getRegionHeight()*scale);
 
         Pixl p = getPixl();
-        p.actor(new TextWriter(spell.name))
+        p.actor(new TextWriter(spell.getName()))
         .row()
         .actor(spellDraw)
         .row()
-        .actor(new TextWriter(spell.description, textWidth))
+        .actor(new TextWriter(spell.getDescription(), textWidth))
         .pix();
 
-        boolean enoughMagic = Party.get().getAvaliableMagic()>=spell.cost;
+        boolean enoughMagic = Party.get().getAvaliableMagic()>=spell.getCost();
         if(usable) {
-            switch (spell.effects[0].targetingType) {
+            switch (spell.getEffects()[0].targetingType) {
                 case EnemyGroup:
                 case FriendlyGroup:
                 case RandomEnemy:
@@ -143,7 +143,7 @@ public class Explanel extends InfoPanel implements OnPop {
 
         if(PhaseManager.get().getPhase().canTarget() && !enoughMagic){
             String text = "[red]Not enough magic";
-            if(Party.get().getTotalTotalTotalAvailableMagic() >= spell.cost){
+            if(Party.get().getTotalTotalTotalAvailableMagic() >= spell.getCost()){
                 text += "[n][light]Tap your magic dice to gain magic";
             }
             TextWriter tw = new TextWriter(text, Integer.MAX_VALUE, Colours.red, 2);
