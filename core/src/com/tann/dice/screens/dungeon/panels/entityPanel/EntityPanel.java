@@ -163,6 +163,9 @@ public class EntityPanel extends Group {
         int npWiggle = 1;
         panelBorder.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
         batch.setColor(entity.getColour());
+        if(possibleTarget){
+            batch.setColor(Colours.light);
+        }
         panelBorderColour.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
         batch.setColor(Colours.z_white);
         if(entity.portrait != null) {
@@ -171,12 +174,6 @@ public class EntityPanel extends Group {
             } else {
                 Draw.drawScaled(batch, entity.portrait, getX() + getWidth() + entity.portraitOffset, getY()+1, -1, 1);
             }
-        }
-
-
-        if(possibleTarget || targeted) {
-            batch.setColor(Colours.withAlpha(possibleTarget ? Colours.light : Colours.red, (float) (Math.sin(Main.ticks * 6) * .05f + (targeted?.3f:.1f))));
-            Draw.fillActor(batch, this);
         }
 
         super.draw(batch, parentAlpha);
@@ -260,10 +257,6 @@ public class EntityPanel extends Group {
             Draw.fillRectangle(batch, local.x, local.y, entity.getPixelSize(), entity.getPixelSize());
             batch.setColor(Colours.purple);
             batch.draw(Images.skull, local.x, local.y);
-        }
-        else if (entity.getProfile().isGoingToDie() && entity.isPlayer()) {
-//            batch.setColor(Colours.grey);
-//            batch.draw(Images.skull, holderX, holderY);
         }
         drawArrows(batch);
 

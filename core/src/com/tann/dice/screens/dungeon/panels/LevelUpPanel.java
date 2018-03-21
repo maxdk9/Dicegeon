@@ -55,7 +55,7 @@ public class LevelUpPanel extends Group{
           }
         });
 
-        tick.setBorder(Colours.dark, Colours.purple, 1);
+        tick.setBorder(Colours.dark, Colours.light, 1);
         tick.setColor(hero.getColour());
         addActor(tick);
         tick.setPosition((int)(dp.getWidth()*2 + hGap * 2.5f),
