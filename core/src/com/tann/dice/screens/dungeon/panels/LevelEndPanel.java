@@ -10,6 +10,7 @@ import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
+import com.tann.dice.util.InputBlocker;
 import com.tann.dice.util.Pixl;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextButton;
@@ -61,7 +62,7 @@ public class LevelEndPanel extends Group {
             public void run() {
                 PartyManagementPanel p = PartyManagementPanel.get();
                 p.refresh();
-                Main.getCurrentScrren().push(p, false, true, false, null);
+                Main.getCurrentScrren().push(p, false, true, false, InputBlocker.DARK, null);
                 p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
             }
         });
@@ -75,7 +76,7 @@ public class LevelEndPanel extends Group {
                 }
                 else{
                     LevelUpPanel lup = new LevelUpPanel(toLevelup.remove(0));
-                    Main.getCurrentScrren().push(lup, true, false, false, null);
+                    Main.getCurrentScrren().push(lup, true, false, false, InputBlocker.DARK, null);
                 }
             }
         });

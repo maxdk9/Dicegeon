@@ -5,6 +5,7 @@ import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.LevelEndPanel;
+import com.tann.dice.util.InputBlocker;
 import com.tann.dice.util.Tann;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class LevelEndPhase extends Phase {
             Party.get().addEquipment(e);
         }
         levelEndPanel = new LevelEndPanel(gainedEquipment, heroesToLevelUp);
-        DungeonScreen.get().push(levelEndPanel, true, false, false, null);
+        DungeonScreen.get().push(levelEndPanel, true, false, false, 0, null);
     }
 
     @Override

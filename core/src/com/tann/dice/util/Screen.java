@@ -101,8 +101,19 @@ public abstract class Screen extends Lay{
 	};
 
 	Runnable extraOnPop;
-	public void push(final Actor actor, boolean center, boolean blockerPops, boolean selfPops, Runnable onPop){
+	List<Pair<Actor, InputBlocker>> modalStack = new ArrayList<>();
+
+	public void push(Actor a){
+		push(a, 0);
+	}
+
+	public void push(Actor a, float alpha){
+		push(a, true, true, true, alpha, null);
+	}
+
+	public void push(final Actor actor, boolean center, boolean blockerPops, boolean selfPops, float alpha, Runnable onPop){
 		InputBlocker ipb = new InputBlocker();
+		ipb.setAlpha(alpha);
 		Pair<Actor, InputBlocker> pair = new Pair<>(actor, ipb);
 		addActor(ipb);
 		ipb.setActiveClicker(blockerPops);
@@ -116,12 +127,6 @@ public abstract class Screen extends Lay{
 		if(selfPops){
 			actor.addListener(SELF_POP);
 		}
-	}
-
-	List<Pair<Actor, InputBlocker>> modalStack = new ArrayList<>();
-
-	public void push(Actor a){
-		push(a, true, true, true, null);
 	}
 
 	public void pop(){
@@ -193,7 +198,7 @@ public abstract class Screen extends Lay{
 		a.addActor(no);
 		no.setPosition((int)(a.getWidth()/3*2-yes.getWidth()/2), 2);
 		a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
-		push(a);
+		push(a, InputBlocker.DARK);
 	}
 
 }

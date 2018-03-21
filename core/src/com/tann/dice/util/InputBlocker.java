@@ -8,14 +8,8 @@ import com.tann.dice.Main;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 public class InputBlocker extends Actor{
-//    private static InputBlocker self;
-//    public static InputBlocker get(){
-//        return new InputBlocker();
-////        if(self == null){
-////            self = new InputBlocker();
-////        }
-////        return self;
-//    }
+
+    public static final float DARK = .7f;
 
     Runnable r;
     public void setAction(Runnable r){
@@ -46,14 +40,21 @@ public class InputBlocker extends Actor{
         });
     }
 
+    private float alpha = 0;
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
-//        batch.setColor(0,0,0,.5f);
-//        Draw.fillActor(batch, this);
+        batch.setColor(Colours.withAlpha(Colours.z_black, alpha));
+        Draw.fillActor(batch, this);
     }
 
     boolean blockerListen;
     public void setActiveClicker(boolean blockerListen) {
         this.blockerListen = blockerListen;
     }
+
+
 }
