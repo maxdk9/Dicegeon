@@ -287,6 +287,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
+        
     }
 
     @Override

@@ -18,8 +18,10 @@ public class EquipmentPanel extends Actor {
 
   Equipment equipment;
   boolean doubleSize;
-  public EquipmentPanel(Equipment equipment, boolean doubleSize){
+  boolean onPlayer;
+  public EquipmentPanel(Equipment equipment, boolean doubleSize, boolean onPlayer){
     this.doubleSize = doubleSize;
+    this.onPlayer = onPlayer;
     int size = Images.spellBorder.getRegionHeight()*(doubleSize?2:1);
     setSize(size, size);
     this.equipment=equipment;
@@ -50,7 +52,7 @@ public class EquipmentPanel extends Actor {
   public void draw(Batch batch, float parentAlpha) {
     int scale = doubleSize?2:1;
     batch.setColor(Colours.grey);
-    if(PartyManagementPanel.get().getSelectedEquipment()!=null){
+    if(PartyManagementPanel.get().getSelectedEquipment()!=null && onPlayer){
       batch.setColor(Colours.light);
     }
     Draw.drawScaled(batch, Images.spellBorder, getX(), getY(), scale, scale);

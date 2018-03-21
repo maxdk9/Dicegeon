@@ -11,9 +11,8 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 import com.tann.dice.util.Tann;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import java.util.*;
 
 public class Equipment {
 
@@ -52,16 +51,31 @@ public class Equipment {
     all.add(add);
   }
 
+  private static List<Equipment> randomBag = new ArrayList<>();
   public static Equipment random() {
-    return Tann.getRandom(all).copy();
+    if(randomBag.isEmpty()){
+      randomBag.addAll(all);
+      Collections.shuffle(randomBag);
+    }
+    return randomBag.remove(0).copy();
   }
 
+  private static Map<Integer, List<Equipment>> levelBag = new HashMap<>();
   public static Equipment random(int level) {
-    Collections.shuffle(all);
-    for(Equipment e:all){
-      if(e.level == level) return e;
+    List<Equipment> list = levelBag.get(level);
+    if(list==null) {
+      list = new ArrayList<>();
     }
-    return null;
+    if(list.isEmpty()){
+      for(Equipment e:all) {
+        if (e.level == level) {
+          list.add(e);
+        }
+      }
+      Collections.shuffle(list);
+      levelBag.put(level, list);
+    }
+    return list.remove(0).copy();
   }
 
   public static Equipment recent() {

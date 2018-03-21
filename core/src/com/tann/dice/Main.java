@@ -68,7 +68,6 @@ public class Main extends ApplicationAdapter {
 
   @Override
   public void create() {
-
     if (printCalls) {
       System.out.println("create");
     }

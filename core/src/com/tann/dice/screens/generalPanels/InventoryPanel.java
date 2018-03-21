@@ -49,7 +49,7 @@ public class InventoryPanel extends Group {
         List<Equipment> equip = Party.get().getEquipment();
         for(int i=0;i<equip.size();i++){
             Equipment e = equip.get(i);
-            EquipmentPanel ep = new EquipmentPanel(e, scale==2);
+            EquipmentPanel ep = new EquipmentPanel(e, scale==2, false);
             addActor(ep);
             ep.setPosition((i%across)*(PANEL_SIZE+gap)+gap, (i/across)*(PANEL_SIZE+gap)+gap);
         }

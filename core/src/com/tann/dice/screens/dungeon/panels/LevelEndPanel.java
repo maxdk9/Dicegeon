@@ -43,7 +43,7 @@ public class LevelEndPanel extends Group {
         for(Equipment e:gainedEquipment){
             p.actor(new TextWriter("You got: "));
             p.gap(4);
-            p.actor(new EquipmentPanel(e, false));
+            p.actor(new EquipmentPanel(e, false, false));
             p.row();
         }
         for(DiceEntity de: toLevelup){

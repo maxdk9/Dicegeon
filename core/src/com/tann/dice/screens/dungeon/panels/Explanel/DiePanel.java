@@ -78,7 +78,7 @@ public class DiePanel extends InfoPanel implements OnPop {
                     e = h.equipment.get(i);
                 }
 
-                EquipmentPanel panel = new EquipmentPanel(e, false);
+                EquipmentPanel panel = new EquipmentPanel(e, false, true);
                 panel.setPosition(startX+1, gap + panelSize*2*i+1);
                 addActor(panel);
             }
