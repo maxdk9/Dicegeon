@@ -143,6 +143,7 @@ public class DamageProfile {
             target.kill();
         }
         reset();
+        target.somethingChanged();
     }
 
     public boolean isGoingToDie(){
