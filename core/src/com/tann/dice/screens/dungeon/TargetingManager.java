@@ -102,7 +102,7 @@ public class TargetingManager {
         for (DiceEntity de : Party.get().getActiveEntities()) {
             de.setShaderState(DieShader.DieShaderState.Nothing);
         }
-        if (TargetingManager.get().getSelectedTargetable() == t) {
+        if (TargetingManager.get().getSelectedTargetable() != null) {
             deselectTargetable();
             return;
         }

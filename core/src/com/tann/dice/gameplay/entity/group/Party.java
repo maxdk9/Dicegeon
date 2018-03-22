@@ -43,9 +43,9 @@ public class Party extends EntityGroup{
         clearEntities();
         addHeroes();
         equipment.clear();
-        for(int i=0;i<30;i++){
-            addEquipment(Equipment.random(0));
-        }
+//        for(int i=0;i<8;i++){
+//            addEquipment(Equipment.random(0));
+//        }
 //        addEquipment(Equipment.recent());
     }
 
