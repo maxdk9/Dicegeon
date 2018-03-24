@@ -147,7 +147,6 @@ public class DungeonScreen extends Screen {
         levels.add(Arrays.asList(monsterTypes));
     }
     static{
-//        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake);
         addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
         addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);
         addLevel(MonsterType.snake, MonsterType.snake, MonsterType.goblin, MonsterType.goblin);
@@ -177,6 +176,7 @@ public class DungeonScreen extends Screen {
         else {
             PhaseManager.get().pushPhase(new VictoryPhase());
             PhaseManager.get().kickstartPhase(VictoryPhase.class);
+            return;
         }
 
         if(level>1){
@@ -187,7 +187,7 @@ public class DungeonScreen extends Screen {
     }
 
     private void setupLevelString() {
-        levelString = "Level "+level+"/5";
+        levelString = "Level "+level+"/"+levels.size();
     }
 
     public void restart() {

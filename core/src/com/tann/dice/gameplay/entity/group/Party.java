@@ -51,7 +51,8 @@ public class Party extends EntityGroup{
 
     public void addHeroes(){
         HeroType[] types = new HeroType[]{
-                apprentice, herbalist, defender, fighter, fighterOrange
+//                apprentice, herbalist, defender, fighter, fighterOrange
+                rogue, rogue, rogue, rogue, rogue
         };
         List<DiceEntity> tmp = new ArrayList<>();
         for(HeroType type: types){
@@ -119,8 +120,9 @@ public class Party extends EntityGroup{
 
     public List<Spell> getSpells(){
         List<Spell> spells = new ArrayList<>();
-        spells.add(Spell.dart);
+        spells.add(Spell.slice);
         spells.add(Spell.resist);
+        spells.add(Spell.dart);
         for(DiceEntity de:getEntities()){
             spells.addAll(((Hero)(de)).getSpells());
         }

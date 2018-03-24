@@ -20,10 +20,12 @@ public class BuffHolder extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.setColor(Colours.z_white);
-        float buffSize = 4;
+        int buffSize = 5;
+        int gap = 1;
+
         for(int i=0;i<entity.getBuffs().size();i++){
             Buff b = entity.getBuffs().get(i);
-            Draw.drawSize(batch, b.image, getX(), getY() + getHeight() - buffSize *(i+1), buffSize, buffSize);
+            Draw.drawSize(batch, b.image, getX(), getY() + getHeight() - buffSize *(i+1) - i*gap, buffSize, buffSize);
         }
     }
 }

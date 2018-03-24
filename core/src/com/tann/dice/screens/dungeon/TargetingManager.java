@@ -204,6 +204,7 @@ public class TargetingManager {
     }
 
     public void showTargetingHighlights() {
+        clearTargetingHighlights();
         Targetable t = TargetingManager.get().getSelectedTargetable();
         if (t == null || t.getEffects().length == 0) return;
         Eff.TargetingType tType = t.getEffects()[0].targetingType;

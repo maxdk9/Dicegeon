@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity.group;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
+import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
@@ -79,6 +80,7 @@ public class Room extends EntityGroup {
         if(volunteer != null){
             volunteer.slide(true);
             monster.slide(false);
+            TargetingManager.get().showTargetingHighlights();
         }
     }
 }

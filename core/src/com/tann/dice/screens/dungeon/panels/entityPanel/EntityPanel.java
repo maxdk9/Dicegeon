@@ -32,7 +32,7 @@ public class EntityPanel extends Group {
     static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
     public static final float WIDTH = SidePanel.width;
     static int borderSize = 4;
-    static int gap = 2;
+    private static final int gap = 2;
     boolean huge;
     public EntityPanel(final DiceEntity entity) {
         this.entity = entity;

@@ -228,6 +228,7 @@ public abstract class DiceEntity {
         getDie().flatDraw = false;
         DungeonScreen.get().layoutSidePanels();
         removeEffectsIfDead();
+        TargetingManager.get().showTargetingHighlights();
     }
 
     public void removeEffectsIfDead(){

@@ -19,7 +19,8 @@ public class Spell implements Targetable{
     public static final Spell fireWave = new Spell().name("Fire Wave").image("firewave").cost(3).effs(new Eff().damage(1).enemyGroup());
     public static final Spell healAll = new Spell().name("Mass Heal").image("healall").cost(2).effs(new Eff().heal(1).friendlyGroup());
     public static final Spell resist = new Spell().name("Resist").image("resist").cost(1).effs(new Eff().shield(1).friendlySingle()).repeatable();
-    public static final Spell dart = new Spell().name("Slice").image("strike").cost(1).effs(new Eff().damage(1)).repeatable();
+    public static final Spell dart = new Spell().name("Dart").image("dart").cost(2).effs(new Eff().damage(1).ranged()).repeatable();
+    public static final Spell slice = new Spell().name("Slice").image("strike").cost(1).effs(new Eff().damage(1)).repeatable();
 
     private String name;
     private String description;

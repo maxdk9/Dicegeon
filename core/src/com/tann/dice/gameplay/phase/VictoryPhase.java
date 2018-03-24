@@ -14,6 +14,6 @@ public class VictoryPhase extends Phase{
 
     @Override
     public void deactivate() {
-
+        DungeonScreen.get().restart();
     }
 }
