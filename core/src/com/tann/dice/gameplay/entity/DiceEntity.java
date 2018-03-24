@@ -170,7 +170,7 @@ public abstract class DiceEntity {
     public void hit(Eff e, boolean instant) {
         getProfile().addEffect(e);
         if (instant || !isPlayer()) getProfile().action();
-        if(!isPlayer() && profile.isGoingToDie()){
+        if(!isPlayer() && profile.isGoingToDie(false)){
             getDie().removeFromScreen();
         }
         somethingChanged();

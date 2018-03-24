@@ -146,8 +146,8 @@ public class DamageProfile {
         target.somethingChanged();
     }
 
-    public boolean isGoingToDie(){
-        return getEffectiveHp() <= 0 || getExecute();
+    public boolean isGoingToDie(boolean includePoison){
+        return getEffectiveHp()-(includePoison?getIncomingPoisonDamage():0) <= 0 || getExecute();
     }
 
     public int getEffectiveHp() {
