@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
@@ -50,7 +51,12 @@ public class Monster extends DiceEntity {
         nextLockTime += lockDelay;
     }
 
-
+    @Override
+    public void reduceToHalfHP() {
+        if(slidOut){
+            Room.get().requestSwap(this);
+        }
+    }
 
     @Override
     public void locked() {

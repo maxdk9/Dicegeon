@@ -249,7 +249,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void enemyCombat(){
-        Room.get().updateSlids(false);
+        Room.get().updateSlids(true);
         List<DiceEntity> monsters = Room.get().getActiveEntities();
         float timer = 0;
         float timerAdd = .00f;

@@ -2,9 +2,11 @@ package com.tann.dice.gameplay.entity.group;
 
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Room extends EntityGroup {
@@ -65,4 +67,18 @@ public class Room extends EntityGroup {
         }
     }
 
+    public void requestSwap(Monster monster) {
+        DiceEntity volunteer = null;
+        for(DiceEntity de:Tann.iterandom(activeEntities)){
+            if(de == monster) continue;
+            if(de.slidOut) continue;
+            if(!de.aboveHalfHealth()) continue;
+            volunteer = de;
+            break;
+        }
+        if(volunteer != null){
+            volunteer.slide(true);
+            monster.slide(false);
+        }
+    }
 }

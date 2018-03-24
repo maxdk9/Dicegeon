@@ -143,7 +143,7 @@ public abstract class DiceEntity {
         this.hp = Math.min(getMaxHp(), getHp() + amount);
     }
 
-
+    public void reduceToHalfHP(){}
 
     public void reset(){
         fullHeal();
@@ -186,10 +186,18 @@ public abstract class DiceEntity {
         if(value > 0){
             getEntityPanel().addDamageFlib(value);
         }
+        boolean above = aboveHalfHealth();
         hp -= value;
+        if(above && !aboveHalfHealth()){
+            reduceToHalfHP();
+        }
         if (hp <= 0) {
             die();
         }
+    }
+
+    public boolean aboveHalfHealth(){
+        return getHp()>getMaxHp()/2;
     }
 
     public void kill() {

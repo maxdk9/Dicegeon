@@ -81,6 +81,12 @@ public class Tann {
         return results;
     }
 
+    public static <T> List<T> iterandom(List<T> list){
+        List copy = new ArrayList(list);
+        Collections.shuffle(copy);
+        return copy;
+    }
+
     public static void center(Actor child, Group parent) {
         child.setPosition((int)(parent.getWidth()/2-child.getWidth()/2), (int)(parent.getHeight()/2-child.getHeight()/2));
     }
