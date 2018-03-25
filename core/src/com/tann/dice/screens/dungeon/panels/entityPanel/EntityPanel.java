@@ -1,10 +1,8 @@
 package com.tann.dice.screens.dungeon.panels.entityPanel;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -90,27 +88,27 @@ public class EntityPanel extends Group {
 
         BuffHolder buffHolder = new BuffHolder(entity, entity.getPixelSize());
         addActor(buffHolder);
-        holder = new DieHolder(entity);
-        addActor(holder);
+        dieHolder = new DieHolder(entity);
+        addActor(dieHolder);
         boolean player = entity.isPlayer();
 
-        holder.setY(borderSize);
+        dieHolder.setY(borderSize);
         title.setY((int)(getHeight()-borderSize-TannFont.font.getHeight()));
         heartsHolder.setY((int)(title.getY()-gap-heartsHolder.getHeight()));
         buffHolder.setY(borderSize);
         int heartsMiddley = 0;
         if(player){
             // playah!
-            holder.setX(getWidth()-borderSize-holder.getWidth());
-            heartsMiddley = Tann.between(portraitWidth, (int) (getWidth()-borderSize-holder.getWidth()));
-            buffHolder.setX(holder.getX()-buffHolder.getWidth()-gap);
+            dieHolder.setX(getWidth()-borderSize- dieHolder.getWidth());
+            buffHolder.setX(dieHolder.getX()-buffHolder.getWidth()-gap*2);
+            heartsMiddley = Tann.between(portraitWidth, (int) (getWidth()-borderSize- dieHolder.getWidth()));
 
         }
         else{
             // monstah!
-            holder.setX(borderSize);
-            heartsMiddley = Tann.between((int) (holder.getX()+holder.getWidth()), (int) getWidth()-portraitWidth);
-            buffHolder.setX(holder.getX()+holder.getWidth()+gap);
+            dieHolder.setX(borderSize);
+            buffHolder.setX(dieHolder.getX()+ dieHolder.getWidth()+gap*2);
+            heartsMiddley = Tann.between((int) (buffHolder.getX()+ buffHolder.getWidth()), (int) getWidth()-portraitWidth);
         }
 
         title.setX((int)(heartsMiddley-title.getWidth()/2));
@@ -123,10 +121,10 @@ public class EntityPanel extends Group {
     }
 
     public boolean isClickOnDie(float x){
-        return x>getWidth()-holder.getWidth()-8 && entity.isPlayer();
+        return x>getWidth()- dieHolder.getWidth()-8 && entity.isPlayer();
     }
 
-    public DieHolder holder;
+    public DieHolder dieHolder;
 
     public float getPreferredX() {
         int slideAmount = 14;
@@ -166,7 +164,7 @@ public class EntityPanel extends Group {
             batch.setColor(Colours.light);
         }
         panelBorderColour.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
-        Draw.fillRectangle(batch, getX()+holder.getX()+(entity.isPlayer()?-4:holder.getWidth()+3), getY(), 1, getHeight());
+        Draw.fillRectangle(batch, getX()+ dieHolder.getX()+(entity.isPlayer()?-4: dieHolder.getWidth()+3), getY(), 1, getHeight());
 
         batch.setColor(Colours.z_white);
         if(entity.portrait != null) {
@@ -203,10 +201,10 @@ public class EntityPanel extends Group {
     }
 
     private void drawCutout(Batch batch){
-        Draw.fillRectangle(batch, getX(), getY(), holder.getX(), getHeight());
-        Draw.fillRectangle(batch, getX()+holder.getX(), getY(), holder.getWidth(), holder.getY());
-        Draw.fillRectangle(batch, getX() + holder.getX() + holder.getWidth(), getY(), getWidth() - holder.getX() - holder.getWidth(), getHeight());
-        Draw.fillRectangle(batch, getX()+holder.getX(), getY() + holder.getY() + holder.getHeight(), holder.getWidth(), getHeight() - holder.getY() - holder.getHeight());
+        Draw.fillRectangle(batch, getX(), getY(), dieHolder.getX(), getHeight());
+        Draw.fillRectangle(batch, getX()+ dieHolder.getX(), getY(), dieHolder.getWidth(), dieHolder.getY());
+        Draw.fillRectangle(batch, getX() + dieHolder.getX() + dieHolder.getWidth(), getY(), getWidth() - dieHolder.getX() - dieHolder.getWidth(), getHeight());
+        Draw.fillRectangle(batch, getX()+ dieHolder.getX(), getY() + dieHolder.getY() + dieHolder.getHeight(), dieHolder.getWidth(), getHeight() - dieHolder.getY() - dieHolder.getHeight());
     }
 
     public void flash() {
@@ -215,7 +213,7 @@ public class EntityPanel extends Group {
     }
 
     public Vector2 getDieHolderLocation(){
-        return Tann.getLocalCoordinates(holder);
+        return Tann.getLocalCoordinates(dieHolder);
     }
 
     private boolean possibleTarget;
@@ -245,14 +243,14 @@ public class EntityPanel extends Group {
 
     public void drawBackground(Batch batch) {
         Vector2 loc = getDieHolderLocation();
-        batch.setColor(holder.getColor());
-        Draw.fillRectangle(batch, loc.x, loc.y, holder.getWidth(), holder.getHeight());
+        batch.setColor(dieHolder.getColor());
+        Draw.fillRectangle(batch, loc.x, loc.y, dieHolder.getWidth(), dieHolder.getHeight());
         int middle = 1;
 
         batch.setColor(Colours.dark);
-        Draw.fillRectangle(batch, loc.x+middle, loc.y+middle, (holder.getWidth()-middle*2), (holder.getHeight()-middle*2));
+        Draw.fillRectangle(batch, loc.x+middle, loc.y+middle, (dieHolder.getWidth()-middle*2), (dieHolder.getHeight()-middle*2));
 
-        Vector2 local = Tann.getLocalCoordinates(holder);
+        Vector2 local = Tann.getLocalCoordinates(dieHolder);
         if(entity.isDead()){
             batch.setColor(Colours.dark);
             Draw.fillRectangle(batch, local.x, local.y, entity.getPixelSize(), entity.getPixelSize());

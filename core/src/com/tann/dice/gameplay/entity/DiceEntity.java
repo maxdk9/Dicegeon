@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
@@ -12,6 +13,7 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
+import com.tann.dice.gameplay.effect.trigger.types.EndOfTurnSelfTrigger;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
@@ -71,7 +73,7 @@ public abstract class DiceEntity {
     }
 
     public void init(){
-
+        addBuff(new Buff(1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(1))));
     }
 
     protected void setSides(Side[] sides) {
