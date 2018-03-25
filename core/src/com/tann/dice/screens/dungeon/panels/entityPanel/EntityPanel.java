@@ -123,8 +123,7 @@ public class EntityPanel extends Group {
     }
 
     public boolean isClickOnDie(float x){
-        float threshold = .65f;
-        return x/getWidth()>threshold == entity.isPlayer();
+        return x>getWidth()-holder.getWidth()-8 && entity.isPlayer();
     }
 
     public DieHolder holder;
@@ -162,11 +161,13 @@ public class EntityPanel extends Group {
         batch.setColor(Colours.z_white);
         int npWiggle = 1;
         panelBorder.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
-        batch.setColor(entity.getColour());
+        batch.setColor(Colours.purple);
         if(possibleTarget){
             batch.setColor(Colours.light);
         }
         panelBorderColour.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
+        Draw.fillRectangle(batch, getX()+holder.getX()+(entity.isPlayer()?-4:holder.getWidth()+3), getY(), 1, getHeight());
+
         batch.setColor(Colours.z_white);
         if(entity.portrait != null) {
             if (entity.isPlayer()) {
