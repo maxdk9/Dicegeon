@@ -51,8 +51,8 @@ public class Tann {
         return (float) Math.sqrt(xDiff*xDiff + yDiff*yDiff);
     }
 
-    public static int between (int a, int b){
-        return a + (b-a)/2;
+    public static int between (float a, float b){
+        return (int)(a + (b-a)/2f);
     }
 
     public static void delay(Runnable runnable, float delay) {

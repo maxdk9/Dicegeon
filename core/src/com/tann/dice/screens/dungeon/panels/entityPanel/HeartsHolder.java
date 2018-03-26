@@ -13,9 +13,9 @@ import com.tann.dice.util.TannFont;
 public class HeartsHolder extends Group{
     DiceEntity entity;
     DamageProfile profile;
-    private static final int heartWidth = Images.heart.getRegionWidth();
-    private static final int heartHeight = Images.heart.getRegionHeight();
-    private static final int heartGap = 1;
+    public static final int heartWidth = Images.heart.getRegionWidth();
+    public static final int heartHeight = Images.heart.getRegionHeight();
+    public static final int heartGap = 1;
     int heartsPerRow = 5;
     boolean huge;
     public HeartsHolder(DiceEntity e) {
@@ -31,6 +31,8 @@ public class HeartsHolder extends Group{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+//        batch.setColor(Colours.grey);
+//        Draw.fillActor(batch, this);
         int heartGap = 1;
         float heartSize = Images.heart.getRegionHeight();
         int y = (int) (getY()+getHeight()-heartSize);
@@ -66,14 +68,16 @@ public class HeartsHolder extends Group{
             int overkillY = (int) (getY() + getHeight() / 2 - TannFont.font.getHeight() / 2);
             if (overkill > 0){
                 batch.setColor(Colours.yellow);
-                TannFont.font.drawString(batch, "+" + overkill, (int) (getX() + getWidth() + 2), overkillY, false);
+                String overkillText = "+" + overkill;
+                TannFont.font.drawString(batch, overkillText, (int) (getX() - 1 - TannFont.font.getWidth(overkillText)), overkillY, false);
             }
             if (poisonOverkill > 0){
                 batch.setColor(Colours.purple);
                 if(overkill>0){
                     overkillY -= TannFont.font.getLineHeight();
                 }
-                TannFont.font.drawString(batch, "+" + poisonOverkill, (int) (getX() + getWidth() + 2), overkillY, false);
+                String overkillText = "+" + poisonOverkill;
+                TannFont.font.drawString(batch, overkillText, (int) (getX() - 1 - TannFont.font.getWidth(overkillText)), overkillY, false);
             }
         }
         super.draw(batch, parentAlpha);

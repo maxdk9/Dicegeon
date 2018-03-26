@@ -29,7 +29,7 @@ public class EntityPanel extends Group {
     static NinePatch panelBorder = new NinePatch(Images.panelBorder, n,n,n,n);
     static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
     public static final float WIDTH = SidePanel.width;
-    static int borderSize = 4;
+    static int borderSize = 3;
     private static final int gap = 2;
     boolean huge;
     public EntityPanel(final DiceEntity entity) {
@@ -68,7 +68,7 @@ public class EntityPanel extends Group {
         clearChildren();
         int portraitWidth = 0;
         if(entity.portrait != null){
-            portraitWidth = entity.portrait.getRegionWidth() - entity.portraitOffset-2;
+            portraitWidth = entity.portrait.getRegionWidth() - entity.portraitOffset;
         }
 
         heartsHolder = new HeartsHolder(entity);
@@ -86,7 +86,7 @@ public class EntityPanel extends Group {
         }
 
 
-        BuffHolder buffHolder = new BuffHolder(entity, entity.getPixelSize());
+        BuffHolder buffHolder = new BuffHolder(entity);
         addActor(buffHolder);
         dieHolder = new DieHolder(entity);
         addActor(dieHolder);
@@ -95,24 +95,27 @@ public class EntityPanel extends Group {
         dieHolder.setY(borderSize);
         title.setY((int)(getHeight()-borderSize-TannFont.font.getHeight()));
         heartsHolder.setY((int)(title.getY()-gap-heartsHolder.getHeight()));
-        buffHolder.setY(borderSize);
         int heartsMiddley = 0;
         if(player){
             // playah!
             dieHolder.setX(getWidth()-borderSize- dieHolder.getWidth());
-            buffHolder.setX(dieHolder.getX()-buffHolder.getWidth()-gap*2);
-            heartsMiddley = Tann.between(portraitWidth, (int) (getWidth()-borderSize- dieHolder.getWidth()));
-
+            heartsMiddley = Tann.between(portraitWidth, dieHolder.getX()-borderSize);
         }
         else{
             // monstah!
             dieHolder.setX(borderSize);
-            buffHolder.setX(dieHolder.getX()+ dieHolder.getWidth()+gap*2);
-            heartsMiddley = Tann.between((int) (buffHolder.getX()+ buffHolder.getWidth()), (int) getWidth()-portraitWidth);
+            if(huge){
+                heartsMiddley = (int) (getWidth()/2);
+            }
+            else {
+                heartsMiddley = Tann.between(dieHolder.getX() + dieHolder.getWidth() + borderSize, getWidth() - portraitWidth);
+            }
         }
 
-        title.setX((int)(heartsMiddley-title.getWidth()/2));
-        heartsHolder.setX((int)(heartsMiddley-heartsHolder.getWidth()/2));
+        title.setX((int)(heartsMiddley-(title.getWidth()/2f-.5f)));
+        heartsHolder.setX((int)(heartsMiddley-(heartsHolder.getWidth()/2f-.5f)));
+        buffHolder.setX(heartsHolder.getX() + heartsHolder.getWidth() + 1);
+        buffHolder.setY(title.getY()-gap-buffHolder.getHeight());
     }
 
 
@@ -164,7 +167,11 @@ public class EntityPanel extends Group {
             batch.setColor(Colours.light);
         }
         panelBorderColour.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
-        Draw.fillRectangle(batch, getX()+ dieHolder.getX()+(entity.isPlayer()?-4: dieHolder.getWidth()+3), getY(), 1, getHeight());
+
+        if(!huge) {
+            // draw holder border
+            Draw.fillRectangle(batch, getX() + dieHolder.getX() + (entity.isPlayer() ? -borderSize : dieHolder.getWidth() + borderSize - 1), getY(), 1, getHeight());
+        }
 
         batch.setColor(Colours.z_white);
         if(entity.portrait != null) {
