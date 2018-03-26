@@ -29,12 +29,12 @@ public class EntityPanel extends Group {
     static NinePatch panelBorder = new NinePatch(Images.panelBorder, n,n,n,n);
     static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
     public static final float WIDTH = SidePanel.width;
-    static int borderSize = 3;
+    static int borderSize = 4;
     private static final int gap = 2;
     boolean huge;
     public EntityPanel(final DiceEntity entity) {
         this.entity = entity;
-        huge = entity.getSize() == DiceEntity.EntitySize.huge;
+        huge = entity.getSize() == DiceEntity.EntitySize.huge || entity.getSize() == DiceEntity.EntitySize.big;
         profile = entity.getProfile();
         layout();
 

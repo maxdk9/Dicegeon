@@ -147,7 +147,8 @@ public class DungeonScreen extends Screen {
         levels.add(Arrays.asList(monsterTypes));
     }
     static{
-        addLevel(MonsterType.dragon, MonsterType.bird, MonsterType.goblin, MonsterType.archer);
+//        addLevel(MonsterType.dragon, MonsterType.bird, MonsterType.goblin, MonsterType.archer);
+        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
         addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
         addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);
         addLevel(MonsterType.snake, MonsterType.snake, MonsterType.goblin, MonsterType.goblin);

@@ -27,6 +27,7 @@ public class DamageProfile {
         execute = null;
         blockedDamage = null;
         heals = null;
+        regen = null;
     }
 
 
@@ -66,17 +67,6 @@ public class DamageProfile {
         return buffs;
     }
 
-    private Integer incomingPoison;
-    public int getIncomingPoisonDamage(){
-        if(incomingPoison == null){
-            incomingPoison = 0;
-            for(Trigger t:target.getActiveTriggers()){
-                incomingPoison += t.getIncomingPoisonDamage();;
-            }
-        }
-        return incomingPoison;
-    }
-
 
     private Integer blockedDamage;
     public int getBlockedDamage(){
@@ -102,6 +92,33 @@ public class DamageProfile {
             }
         }
         return heals;
+    }
+
+    private Integer incomingPoison;
+    public int getIncomingPoisonDamage(){
+        if(incomingPoison == null){
+            incomingPoison = 0;
+            for(Trigger t:target.getActiveTriggers()){
+                incomingPoison += Math.max(0,t.getIncomingPoisonDamage());
+            }
+            for(Trigger t:target.getActiveTriggers()){
+                incomingPoison = t.alterIncomingDamage(incomingPoison);
+            }
+            incomingPoison -= getRegen();
+            incomingPoison = Math.max(0, incomingPoison);
+        }
+        return incomingPoison;
+    }
+
+    private Integer regen;
+    public int getRegen(){
+        if(regen==null){
+            regen = 0;
+            for(Trigger t:target.getActiveTriggers()){
+                regen += Math.max(0,t.getRegen());
+            }
+        }
+        return regen;
     }
 
     Boolean execute;
@@ -143,6 +160,7 @@ public class DamageProfile {
             target.kill();
         }
         reset();
+        target.imposeMaximumHealth();
         target.somethingChanged();
     }
 

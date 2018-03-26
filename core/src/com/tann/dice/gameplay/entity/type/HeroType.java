@@ -45,8 +45,8 @@ public class HeroType extends EntityType<HeroType> {
             .sides(Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing).colour(Colours.red)
             .spells(Spell.healAll);
 
-    public static final HeroType rogue = new HeroType().name("Rogue").hp(6).tag(fighter1)
-            .sides(Side.poison1, Side.poison1, Side.sword2, Side.sword2, Side.vanish, Side.nothing);
+    public static final HeroType rogue = new HeroType().name("Rogue").hp(5).tag(fighter1)
+            .sides(Side.poison1, Side.poison1, Side.sword2, Side.arrow1, Side.vanish, Side.nothing);
     public static final HeroType ranger = new HeroType().name("Ranger").hp(6).tag(fighter1)
             .sides(Side.execute3, Side.arrow2, Side.arrow2, Side.arrow1, Side.arrow1,Side.nothing);
     public static final HeroType gladiator = new HeroType().name("Gladiator").hp(7).tag(fighter1)
@@ -63,11 +63,11 @@ public class HeroType extends EntityType<HeroType> {
     public static final HeroType druid = new HeroType().name("Druid").hp(7).tag(healer1)
             .sides(Side.heal4, Side.heal4, Side.sword2, Side.magic1, Side.magic2, Side.nothing)
             .spells(Spell.balance);
-    public static final HeroType pyro = new HeroType().name("Pyro").hp(7).tag(magic1)
+    public static final HeroType pyro = new HeroType().name("Pyro").hp(6).tag(magic1)
             .sides(Side.flameWard, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
             .spells(Spell.inferno);
     public static final HeroType arcanist = new HeroType().name("Arcanist").hp(5).tag(magic1)
-            .sides(Side.magic3NextTurn, Side.magic2, Side.magic1, Side.magic1, Side.magic1, Side.nothing)
+            .sides(Side.magic3NextTurn, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
             .spells(Spell.arcaneMissile);
 
     public List<HeroType> getLevelupOptions() {

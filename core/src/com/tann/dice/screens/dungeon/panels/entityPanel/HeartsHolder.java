@@ -20,7 +20,7 @@ public class HeartsHolder extends Group{
     boolean huge;
     public HeartsHolder(DiceEntity e) {
         this.entity =e;
-        huge = e.getSize() == DiceEntity.EntitySize.huge;
+        huge = e.getSize() == DiceEntity.EntitySize.huge || e.getSize() == DiceEntity.EntitySize.big;
         if(huge){
             heartsPerRow = 10;
         }

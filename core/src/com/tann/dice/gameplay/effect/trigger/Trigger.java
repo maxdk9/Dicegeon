@@ -36,6 +36,8 @@ public abstract class Trigger {
     return result;
   }
 
+  public Integer getRegen(){return 0;};
+
   public abstract String describe();
 
   public void affectSide(Side side) { }

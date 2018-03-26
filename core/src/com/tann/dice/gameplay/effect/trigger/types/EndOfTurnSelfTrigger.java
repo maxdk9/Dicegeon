@@ -12,12 +12,23 @@ public class EndOfTurnSelfTrigger extends Trigger {
 
     @Override
     public void endOfTurn(DiceEntity target) {
-        target.hit(eff, true);
+        target.hit(eff, false);
     }
 
     @Override
     public Integer getIncomingPoisonDamage() {
-        return eff.getValue();
+        if(eff.type== Eff.EffType.Damage){
+            return eff.getValue();
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer getRegen() {
+        if(eff.type== Eff.EffType.Healing){
+            return eff.getValue();
+        }
+        return 0;
     }
 
     @Override

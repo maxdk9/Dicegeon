@@ -141,7 +141,7 @@ public abstract class DiceEntity {
     }
 
     public void heal(int amount) {
-        this.hp = Math.min(getMaxHp(), getHp() + amount);
+        this.hp += amount;
     }
 
     public void reduceToHalfHP(){}
@@ -367,6 +367,7 @@ public abstract class DiceEntity {
         for(Trigger t:activeTriggers){
             t.endOfTurn(this);
         }
+        getProfile().action();
         for(int i=buffs.size()-1; i>=0; i--){
             buffs.get(i).turn();
         }
@@ -431,7 +432,11 @@ public abstract class DiceEntity {
       return TextWriter.getColourTagForColour(getColour());
   }
 
-  public enum EntitySize {
+    public void imposeMaximumHealth() {
+      hp = Math.min(hp, getMaxHp());
+    }
+
+    public enum EntitySize {
 
         smol(12), reg(16), big(24), huge(32);
 

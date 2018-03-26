@@ -95,7 +95,7 @@ public class Side {
     public static final Side execute3 = new Side().image("execute").effect(new Eff().execute(3).ranged());
 
     public static final Side poison1 = new Side().image("poison").effect(new Eff().justValue(1).
-            buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(1)))));
+            buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().damage(1)))).ranged());
     public static final Side vanish = new Side().image("vanish").effect(new Eff().self().
             buff(new Buff(1, Images.stealth, new DamageImmunityTrigger())));
 
@@ -104,7 +104,7 @@ public class Side {
     public static final Side reroll = new Side().image("reroll").effect(new Eff().reroll(0).onRoll());
 
     public static final Side potionregen = new Side().image("potionOfRegen").effect(new Eff()
-            .buff(new Buff(-1, Images.poison, new EndOfTurnSelfTrigger(new Eff().heal(1)))).friendlySingle().justValue(1));
+            .buff(new Buff(-1, Images.regen, new EndOfTurnSelfTrigger(new Eff().heal(1)))).friendlySingle().justValue(1));
 
     public static final Side flameWard = new Side().image("flameWard").effect(new Eff().damage(2).allTargeters());
 
