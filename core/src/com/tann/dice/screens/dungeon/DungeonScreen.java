@@ -148,8 +148,8 @@ public class DungeonScreen extends Screen {
     }
     static{
 //        addLevel(MonsterType.dragon, MonsterType.bird, MonsterType.goblin, MonsterType.archer);
-        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
-        addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
+//        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
+//        addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.bird, MonsterType.bird);
         addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);
         addLevel(MonsterType.snake, MonsterType.snake, MonsterType.goblin, MonsterType.goblin);
         addLevel(MonsterType.spikeBat, MonsterType.snake, MonsterType.spikeBat);
@@ -167,9 +167,6 @@ public class DungeonScreen extends Screen {
         setupLevelString();
         Party.get().rejig();
         spellButt.setSpellHolder(spellHolder);
-        if(level>1){
-            Party.get().reset();
-        }
         spellHolder.setup(Party.get().getSpells());
         PhaseManager.get().clearPhases();
 
@@ -184,6 +181,7 @@ public class DungeonScreen extends Screen {
         }
 
         if(level>1){
+            Party.get().reset();
             PhaseManager.get().pushPhase(new LevelEndPhase());
         }
         PhaseManager.get().pushPhase(new EnemyRollingPhase());

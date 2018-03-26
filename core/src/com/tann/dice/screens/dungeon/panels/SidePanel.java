@@ -19,7 +19,7 @@ public class SidePanel extends Group {
   public SidePanel(boolean friendly) {
     int dist = 7;
     setSize(width, height);
-    setPosition(friendly?dist:Main.width-width-dist*2, DungeonScreen.BOTTOM_BUTTON_HEIGHT+DungeonScreen.BUTT_GAP*2);
+    setPosition(friendly?dist:Main.width-width-dist, DungeonScreen.BOTTOM_BUTTON_HEIGHT+DungeonScreen.BUTT_GAP*2);
   }
 
   public void layout(boolean slide){

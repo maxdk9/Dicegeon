@@ -51,7 +51,7 @@ public class HeroType extends EntityType<HeroType> {
             .sides(Side.execute3, Side.arrow2, Side.arrow2, Side.arrow1, Side.arrow1,Side.nothing);
     public static final HeroType gladiator = new HeroType().name("Gladiator").hp(7).tag(fighter1)
             .sides(Side.swordShield2, Side.swordShield2, Side.swordShield1, Side.swordShield1, Side.shield2, Side.nothing);
-    public static final HeroType dabbler = new HeroType().name("Dabbler").hp(6).tag(fighter1)
+    public static final HeroType dabbler = new HeroType().name("Jack").hp(6).tag(fighter1)
             .sides(Side.sword2, Side.arrow2, Side.heal2, Side.shield2, Side.magic2, Side.nothing);
     public static final HeroType paladin = new HeroType().name("Paladin").hp(7).tag(defender1)
             .sides(Side.shield2, Side.shieldHeart2, Side.shieldHeart2, Side.sword2, Side.sword1, Side.nothing);

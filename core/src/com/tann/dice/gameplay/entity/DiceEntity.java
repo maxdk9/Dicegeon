@@ -73,6 +73,9 @@ public abstract class DiceEntity {
     }
 
     public void init(){
+        for(int i=0;i<10;i++){
+//         addBuff(new Buff(5, Images.regen, new EndOfTurnSelfTrigger(new Eff().damage(1))));
+        }
     }
 
     protected void setSides(Side[] sides) {
