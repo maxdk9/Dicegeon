@@ -272,16 +272,17 @@ public class EntityPanel extends Group {
         if(!entity.isPlayer() && !holdsDie) return;
         List<DiceEntity> targs = entity.isPlayer()?entity.getAllTargeters():entity.getTarget();
         if(targs == null || targs.size()==0) return;
-        batch.setColor(Colours.withAlpha(Colours.orange, intensity));
+        batch.setColor(Colours.withAlpha(Colours.yellow, intensity));
         for(DiceEntity de:targs){
             EntityPanel ep = de.getEntityPanel();
             Vector2 me = Tann.getLocalCoordinates(this).cpy();
             Vector2 them = Tann.getLocalCoordinates(ep);
+            float width = 3, segmentSize = 5, gapSize = 2, speed = 2;
             if(entity.isPlayer()){
-                Draw.drawLine(batch, them.x, them.y+ep.getHeight()/2, me.x+getWidth(), me.y+getHeight()/2, 2);
+                Draw.drawDottedLine(batch, them.x, them.y+ep.getHeight()/2, me.x+getWidth(), me.y+getHeight()/2, width, segmentSize, gapSize, speed);
             }
             else{
-                Draw.drawLine(batch, me.x, me.y+getHeight()/2, them.x+ep.getWidth(), them.y+ep.getHeight()/2, 2);
+                Draw.drawDottedLine(batch, me.x, me.y+getHeight()/2, them.x+ep.getWidth(), them.y+ep.getHeight()/2, width, segmentSize, gapSize, speed);
             }
 
         }

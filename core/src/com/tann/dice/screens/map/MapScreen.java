@@ -1,7 +1,10 @@
 package com.tann.dice.screens.map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
@@ -15,6 +18,7 @@ import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class MapScreen extends Screen {
 
@@ -59,9 +63,11 @@ public class MapScreen extends Screen {
 
   }
 
+
   @Override
   public void postDraw(Batch batch) {
-
+    batch.setColor(Colours.light);
+    Draw.drawDottedLine(batch, 75, 75, Gdx.input.getX()/(float)Main.scale, Main.height-Gdx.input.getY()/(float)Main.scale, 10, 4, 4, 5);
   }
 
   @Override
@@ -76,7 +82,6 @@ public class MapScreen extends Screen {
 
   @Override
   public void keyPress(int keycode) {
-
   }
 
   @Override

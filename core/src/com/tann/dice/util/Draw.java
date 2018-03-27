@@ -146,17 +146,31 @@ public class Draw {
 	}
 	
 	public static void drawLine(Batch batch, float x, float y, float tX, float tY, float width) {
-		float dist = (float) Math.sqrt((tX - x) * (tX - x) + (tY - y)
-				* (tY - y));
+		float dist = (float) Math.sqrt((tX - x) * (tX - x) + (tY - y) * (tY - y))+.01f;
 		float radians = (float) Math.atan2(tY - y, tX - x);
+		batch.draw(getSq(), x, y, 0, .5f, 1, 1, dist, width, (float) Math.toDegrees(radians));
+	}
 
-//		x += Math.cos(radians) * width / 2f;
-//		y += Math.sin(radians) * width / 2f;
+	public static void drawDottedLine(Batch batch, float x, float y, float tX, float tY, float width, float segmentSize, float gapSize, float speed){
+		float dist = (float) Math.sqrt((tX - x) * (tX - x) + (tY - y) * (tY - y))+.01f;
+		float radians = (float) Math.atan2(tY - y, tX - x);
+		float position = Main.ticks*speed*(gapSize+segmentSize);
+		position %= (segmentSize+gapSize);
+		position -= (segmentSize+gapSize);
+		while(position < dist){
+			// if the position is <0, subtract that from the segmentwidth calculation and draw from 0
 
-		batch.draw(getSq(), x, y, 0, .5f, 1, 1, dist, width,
-				(float) Math.toDegrees(radians));
-
-//		Draw.drawRotatedScaled(batch, getSq(), (int)x, (int)y, dist, width/2f, radians);
+			float drawX = (float)(x+Math.cos(radians)*Math.max(0,position));
+			float drawY = (float)(y+Math.sin(radians)*Math.max(0,position));
+			float segmentWidth = Math.min(position+segmentSize, dist)-position;
+			if(position > -segmentSize) {
+				if (position < 0) {
+					segmentWidth += position;
+				}
+				batch.draw(getSq(), drawX, drawY, 0, .5f, 1, 1, segmentWidth, width, (float) Math.toDegrees(radians));
+			}
+			position += gapSize + segmentSize;
+		}
 	}
 
 	

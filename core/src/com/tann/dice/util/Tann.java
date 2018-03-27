@@ -55,6 +55,10 @@ public class Tann {
         return (int)(a + (b-a)/2f);
     }
 
+    public static float randomBetween (float a, float b){
+        return (float) (a+Math.random()*(b-a));
+    }
+
     public static void delay(Runnable runnable, float delay) {
         DungeonScreen.get().addAction(Actions.delay(delay, Actions.run(runnable)));
     }
