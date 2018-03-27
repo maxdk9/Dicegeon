@@ -33,6 +33,7 @@ public class SpellButt extends Group {
                     return false;
                 }
                 toggleButt();
+                event.setBubbles(false);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

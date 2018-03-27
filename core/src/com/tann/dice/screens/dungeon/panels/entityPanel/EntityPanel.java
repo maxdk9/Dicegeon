@@ -27,6 +27,8 @@ public class EntityPanel extends Group {
     float startX;
     static final int n = 5;
     static NinePatch panelBorder = new NinePatch(Images.panelBorder, n,n,n,n);
+    static NinePatch panelBorderLeft = new NinePatch(Images.panelBorderLeft, n,n,n,n);
+    static NinePatch panelBorderRight = new NinePatch(Images.panelBorderRight, n,n,n,n);
     static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
     public static final float WIDTH = SidePanel.width;
     static int borderSize = 4;
@@ -161,16 +163,30 @@ public class EntityPanel extends Group {
 
         batch.setColor(Colours.z_white);
         int npWiggle = 1;
-        panelBorder.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
-        batch.setColor(Colours.purple);
-        if(possibleTarget){
-            batch.setColor(Colours.light);
+
+        if(huge){
+            panelBorder.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
         }
-        panelBorderColour.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
+        else{
+            int borderX = (int) (dieHolder.getX() + (entity.isPlayer() ? -borderSize : dieHolder.getWidth() + borderSize - 1));
+            panelBorderRight.draw(batch, getX()+borderX, getY()-npWiggle, getWidth()-borderX+npWiggle, getHeight()+npWiggle*2);
+            panelBorderLeft.draw(batch, getX()-npWiggle, getY()-npWiggle, borderX+npWiggle*2, getHeight()+npWiggle*2);
+            if(possibleTarget){
+                batch.setColor(Colours.light);
+                if(entity.isPlayer()) {
+                    panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, borderX + npWiggle * 2, getHeight() + npWiggle * 2);
+                }
+                else{
+                    panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, getWidth() + npWiggle * 2, getHeight() + npWiggle * 2);
+                }
+            }
+        }
+
+
 
         if(!huge) {
             // draw holder border
-            Draw.fillRectangle(batch, getX() + dieHolder.getX() + (entity.isPlayer() ? -borderSize : dieHolder.getWidth() + borderSize - 1), getY(), 1, getHeight());
+//            Draw.fillRectangle(batch, getX() + dieHolder.getX() + (entity.isPlayer() ? -borderSize : dieHolder.getWidth() + borderSize - 1), getY(), 1, getHeight());
         }
 
         batch.setColor(Colours.z_white);

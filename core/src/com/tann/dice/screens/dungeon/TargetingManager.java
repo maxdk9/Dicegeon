@@ -12,6 +12,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
+import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
@@ -179,20 +180,32 @@ public class TargetingManager {
     }
 
     public void clicked(DiceEntity entity, boolean dieSide) {
-        if (getSelectedTargetable()!=null) {
-            if(!target(entity)){
-                deselectTargetable();
-            }
+//        deselectTargetable();
+
+        if ((getSelectedTargetable()==entity.getDie() && dieSide) || Main.getCurrentScrren().getTopActor()==entity.getDiePanel()) {
+            Main.getCurrentScrren().pop();
             return;
         }
 
+        if(!PhaseManager.get().getPhase().canTarget() || entity.isPlayer()&&dieSide) Main.getCurrentScrren().popLight();
+
+
+        if(target(entity)){ // attempt to target
+            return;
+        }
+
+        Main.getCurrentScrren().pop(DiePanel.class);
+
         if (entity.isPlayer()) {
             if (dieSide) {
+                // open die for targeting
                 click(entity.getDie(), false);
             } else {
+                // show friendly die panel
                 DungeonScreen.get().showDiePanel(entity);
             }
         } else {
+            // show enemy die panel
             DungeonScreen.get().showDiePanel(entity);
         }
     }

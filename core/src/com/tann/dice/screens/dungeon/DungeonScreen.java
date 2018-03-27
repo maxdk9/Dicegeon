@@ -149,7 +149,7 @@ public class DungeonScreen extends Screen {
     static{
 //        addLevel(MonsterType.dragon, MonsterType.bird, MonsterType.goblin, MonsterType.archer);
 //        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
-//        addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.bird, MonsterType.bird);
+        addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
         addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);
         addLevel(MonsterType.snake, MonsterType.snake, MonsterType.goblin, MonsterType.goblin);
         addLevel(MonsterType.spikeBat, MonsterType.snake, MonsterType.spikeBat);
@@ -248,7 +248,7 @@ public class DungeonScreen extends Screen {
 
     public void showDialog(String s, boolean popPhase) {
         TextWriter tw = new TextWriter(s, Integer.MAX_VALUE, Colours.purple, 2);
-        DungeonScreen.get().push(tw, true, true, true, 0, popPhase? PhaseManager.popPhaseRunnable:null);
+        DungeonScreen.get().push(tw, true, popPhase, true, true, 0, popPhase? PhaseManager.popPhaseRunnable:null);
     }
 
     public void enemyCombat(){
@@ -355,7 +355,8 @@ public class DungeonScreen extends Screen {
 
     public void positionExplanel() {
         Explanel.get().setPosition(Explanel.get().getNiceX(true), Explanel.get().getNiceY());
-        addActor(Explanel.get());
+        push(Explanel.get(), false, false, true, true, 0, null);
+//        addActor(Explanel.get());
     }
 
     public void removeLeftoverDice() {
@@ -368,7 +369,7 @@ public class DungeonScreen extends Screen {
 
     public void showDiePanel(DiceEntity entity){
         DiePanel pan = entity.getDiePanel();
-        push(pan);
+        push(pan, true, false, true, true, 0, null);
         pan.setPosition(pan.getNiceX(false), pan.getNiceY());
         if(entity.getTarget() != null) {
             for (DiceEntity de : entity.getTarget()) {
@@ -396,6 +397,8 @@ public class DungeonScreen extends Screen {
     }
 
     private void bottomClick() {
+        popLight();
+        spellButt.hide();
         TargetingManager.get().deselectTargetable();
     }
 

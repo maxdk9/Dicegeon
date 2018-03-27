@@ -66,7 +66,7 @@ public class LevelUpPanel extends Group{
             public void run() {
                 PartyManagementPanel p = PartyManagementPanel.get();
                 p.refresh();
-                Main.getCurrentScrren().push(p, false, true, false, InputBlocker.DARK, null);
+                Main.getCurrentScrren().push(p, false, true, true, false, InputBlocker.DARK, null);
                 p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
             }
         });

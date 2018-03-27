@@ -32,7 +32,7 @@ public class LevelEndPhase extends Phase {
             Party.get().addEquipment(e);
         }
         levelEndPanel = new LevelEndPanel(gainedEquipment, heroesToLevelUp);
-        DungeonScreen.get().push(levelEndPanel, true, false, false, 0, null);
+        DungeonScreen.get().push(levelEndPanel, true, true, false, false, 0, null);
     }
 
     @Override

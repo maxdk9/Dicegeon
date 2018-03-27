@@ -10,7 +10,7 @@ public class LossPhase extends Phase{
     @Override
     public void activate() {
         TextButton tb = new TextButton("You lose, you got to level "+ DungeonScreen.get().level, 5);
-        DungeonScreen.get().push(tb, true, true, true, InputBlocker.DARK, PhaseManager.popPhaseRunnable);
+        DungeonScreen.get().push(tb, true, true, true, true, InputBlocker.DARK, PhaseManager.popPhaseRunnable);
     }
 
     @Override
