@@ -106,6 +106,7 @@ public class DungeonScreen extends Screen {
         confirmButton.setRunnable(new Runnable() {
                     @Override
                     public void run() {
+                        popLight();
                         confirmDice(true);
                     }
                 });
@@ -229,6 +230,7 @@ public class DungeonScreen extends Screen {
             if(Party.get().getAvaliableMagic() > 0){
                 if(force) {
                     showDialog("Spend all your magic first!");
+                    DungeonScreen.get().spellButt.show();
                 }
                 return;
             }
@@ -248,7 +250,8 @@ public class DungeonScreen extends Screen {
 
     public void showDialog(String s, boolean popPhase) {
         TextWriter tw = new TextWriter(s, Integer.MAX_VALUE, Colours.purple, 2);
-        DungeonScreen.get().push(tw, true, popPhase, true, true, 0, popPhase? PhaseManager.popPhaseRunnable:null);
+        tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(getHeight()/3-tw.getHeight()/2));
+        DungeonScreen.get().push(tw, false, popPhase, true, true, 0, popPhase? PhaseManager.popPhaseRunnable:null);
     }
 
     public void enemyCombat(){

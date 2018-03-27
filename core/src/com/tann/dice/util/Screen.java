@@ -133,6 +133,7 @@ public abstract class Screen extends Lay{
 	}
 
 	public void pop(){
+		System.out.println(modalStack.size());
 		TargetingManager.get().deselectTargetable();
 		if(modalStack.size()==0){
 			System.err.println("Trying to pop with nothing to pop");
@@ -183,7 +184,7 @@ public abstract class Screen extends Lay{
 
 	public Actor getTopActor() {
 		if(modalStack.size()==0) return null;
-		return modalStack.get(0).a;
+		return modalStack.get(modalStack.size()-1).a;
 	}
 
 	public void showExceptionPopup(final String ex) {

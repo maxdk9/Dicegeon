@@ -16,6 +16,7 @@ import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
+import com.tann.dice.util.TextWriter;
 
 import java.util.List;
 
@@ -145,11 +146,15 @@ public class TargetingManager {
 
         Eff.TargetingType type = t.getEffects()[0].targetingType;
         List<DiceEntity> valids = EntityGroup.getValidTargets(type, t.getEffects(), true);
-        boolean contains = valids.contains(entity);
-        if (!contains && !(entity == null && valids.isEmpty())) {
+        if (!valids.contains(entity)) {
+            if(type== Eff.TargetingType.EnemySingle && !entity.isPlayer() && !entity.slidOut){
+                if(!(Main.getCurrentScrren().getTopActor() instanceof TextWriter)) {
+                    DungeonScreen.get().showDialog("Target enemies in the front row");
+                }
+            }
             return false;
         }
-
+        Main.getCurrentScrren().popLight();
         boolean containsDamage = false;
         if (t.use()) {
             for (Eff e : t.getEffects()) {
@@ -189,9 +194,10 @@ public class TargetingManager {
 
         if(!PhaseManager.get().getPhase().canTarget() || entity.isPlayer()&&dieSide) Main.getCurrentScrren().popLight();
 
+        if(PhaseManager.get().getPhase().canTarget()) {
+            if (target(entity)) return; // attempt to target
+            if(getSelectedTargetable()!=null) return; // cancel anything further if invalid target
 
-        if(target(entity)){ // attempt to target
-            return;
         }
 
         Main.getCurrentScrren().pop(DiePanel.class);
