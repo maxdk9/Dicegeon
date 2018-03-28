@@ -98,44 +98,33 @@ public class Main extends ApplicationAdapter {
     batch = new SpriteBatch();
     bufferDrawer = new SpriteBatch();
     fb = FrameBuffer.createFrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
+    fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
     InputProcessor diceInput = new InputProcessor() {
-
       public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
         return BulletStuff.click(screenX, Main.height - screenY, button);
-
       }
-
       public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
         return false;
-
       }
-
       public boolean keyDown(int keycode) {
         return false;
       }
-
       public boolean keyUp(int keycode) {
         return false;
       }
-
       public boolean keyTyped(char character) {
         return false;
       }
-
       public boolean touchDragged(int screenX, int screenY, int pointer) {
         return false;
       }
-
       public boolean mouseMoved(int screenX, int screenY) {
         return false;
       }
-
       public boolean scrolled(int amount) {
         return false;
       }
-
     };
 
     Gdx.input.setInputProcessor(new InputMultiplexer(stage, diceInput));
@@ -149,8 +138,8 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-//    setScreen(DungeonScreen.get());
-    setScreen(MapScreen.get());
+    setScreen(DungeonScreen.get());
+//    setScreen(MapScreen.get());
     logTime("screen");
 
     String ex = Prefs.getString("lastException", "");
@@ -169,42 +158,35 @@ public class Main extends ApplicationAdapter {
       }
       update(Gdx.graphics.getDeltaTime());
 
+      Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT);
+
       int sc = Main.scale;
 
+      // draw pre-dice
       fb.bind();
       fb.begin();
-      Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
-      Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
       stage.getViewport().apply();
       batch.begin();
       currentScreen.drawBackground(batch);
       drawFPSAndVersion();
       batch.end();
       fb.end();
-      fb.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-      Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
-      Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
       bufferDrawer.begin();
       Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
       bufferDrawer.end();
 
+      // draw dice
       BulletStuff.render();
 
+      // draw post-dice
       fb.bind();
       fb.begin();
       Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
-      Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-      stage.getBatch().setBlendFunctionSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
       stage.draw();
       fb.end();
-
       bufferDrawer.begin();
       Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
       bufferDrawer.end();
-      Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT);
 
     } catch (RuntimeException e){
       logException(e);
