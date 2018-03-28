@@ -86,7 +86,7 @@ public class Main extends ApplicationAdapter {
     }
     atlas_3d = new TextureAtlas(Gdx.files.internal("3d/atlas_image.atlas"));
     for (Texture t : atlas_3d.getTextures()) {
-//			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+			t.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
     }
     logTime("textures");
     self = this;
@@ -149,8 +149,8 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-    setScreen(DungeonScreen.get());
-//    setScreen(MapScreen.get());
+//    setScreen(DungeonScreen.get());
+    setScreen(MapScreen.get());
     logTime("screen");
 
     String ex = Prefs.getString("lastException", "");

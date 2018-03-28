@@ -13,6 +13,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.panels.DieSpinner;
 import com.tann.dice.screens.dungeon.panels.LevelEndPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
@@ -55,6 +56,10 @@ public class MapScreen extends Screen {
     addActor(fite);
     fite.setY(50);
 
+    DieSpinner ds = new DieSpinner(Party.get().getActiveEntities().get(0).getDie(), 80);
+    ds.setPosition(100, 50);
+    addActor(ds);
+
   }
 
 
@@ -66,8 +71,6 @@ public class MapScreen extends Screen {
 
   @Override
   public void postDraw(Batch batch) {
-    batch.setColor(Colours.light);
-    Draw.drawDottedLine(batch, 75, 75, Gdx.input.getX()/(float)Main.scale, Main.height-Gdx.input.getY()/(float)Main.scale, 10, 4, 4, 5);
   }
 
   @Override

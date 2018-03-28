@@ -45,6 +45,7 @@ public class BulletStuff {
 	public static ShaderProgram shaderProgram;
     public static PerspectiveCamera cam;
 	static CameraInputController camController;
+	public static PerspectiveCamera spinCam;
 	static ModelBatch modelBatch;
 	public static ObjectSet<ModelInstance> instances = new ObjectSet<ModelInstance>();
 	public static List<CollisionObject> walls = new ArrayList<>();
@@ -73,6 +74,7 @@ public class BulletStuff {
 	public static void init(){
 
 		Bullet.init();
+		spinCam= new PerspectiveCamera(fov, Main.width, Main.height);
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
@@ -201,6 +203,28 @@ public class BulletStuff {
 			dynamicsWorld.debugDrawWorld();
 			debugDrawer.end();
 		}
+	}
+
+	public static void drawSpinnyDie3(Die die, float x, float y, float size){
+
+		spinCam.position.set(-2.5f, 5, -2.5f);
+		spinCam.lookAt(-1, 2.0f, -1);
+		spinCam.update();
+
+//		cam.position.set(-2.5f, 5, -2.5f);
+//		cam.lookAt(-1, 2.0f, -1);
+//		cam.update();
+
+		float initialSize = 80;
+		float sizeFactor = size/initialSize;
+
+		Gdx.gl.glViewport((int)(x-Main.width*sizeFactor/2), (int)(y-Main.height*sizeFactor/2), (int)(Main.width*sizeFactor), (int)(Main.height*sizeFactor));
+		die.physical.transform.setToRotation(Vector3.X, 0);
+		die.physical.transform.setToRotation(1,1,1,Main.ticks*100);
+		modelBatch.begin(spinCam);
+		modelBatch.render(die.physical, shader);
+		modelBatch.end();
+		Gdx.gl.glViewport(0,0,Main.width, Main.height);
 	}
 
 
