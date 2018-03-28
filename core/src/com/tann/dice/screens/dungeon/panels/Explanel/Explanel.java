@@ -162,6 +162,7 @@ public class Explanel extends InfoPanel implements OnPop {
     @Override
     public void onPop() {
         EntityGroup.clearTargetedHighlights();
+        TargetingManager.get().deselectTargetable();
     }
 
 }

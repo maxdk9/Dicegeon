@@ -3,6 +3,7 @@ package com.tann.dice.screens.dungeon;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
+import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -19,6 +20,7 @@ import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
 
 import java.util.List;
+import javax.swing.event.PopupMenuListener;
 
 public class TargetingManager {
     private static TargetingManager self;
@@ -114,6 +116,7 @@ public class TargetingManager {
         t.select();
         if(t.getEffects()[0].isTargeted() && EntityGroup.getValidTargets(t).size()==0){
             DungeonScreen.get().showDialog(t.getEffects()[0].getNoTargetsString());
+            deselectTargetable();
             return;
         }
 
@@ -144,13 +147,32 @@ public class TargetingManager {
         if (t.getEffects().length == 0) return false;
 
 
-        Eff.TargetingType type = t.getEffects()[0].targetingType;
-        List<DiceEntity> valids = EntityGroup.getValidTargets(type, t.getEffects(), true);
+        Eff.TargetingType targetingType = t.getEffects()[0].targetingType;
+        EffType effType = t.getEffects()[0].type;
+        List<DiceEntity> valids = EntityGroup.getValidTargets(targetingType, t.getEffects(), true);
         if (!valids.contains(entity)) {
-            if(type== Eff.TargetingType.EnemySingle && !entity.isPlayer() && !entity.slidOut){
-                if(!(Main.getCurrentScrren().getTopActor() instanceof TextWriter)) {
-                    DungeonScreen.get().showDialog("Target enemies in the front row");
+            String invalidReason = null;
+            switch(targetingType){
+                case EnemySingle:
+                    if(entity.isPlayer()) invalidReason = "Target an enemy";
+                    if(!entity.isPlayer() && !entity.slidOut) invalidReason = "Target an enemy in the front row";
+                    break;
+                case FriendlySingle:
+                    if(!entity.isPlayer()) invalidReason = "Target a hero";
+                    else {
+                        switch (effType) {
+                            case Healing: invalidReason = "Can't heal heroes on full health"; break;
+                            case Shield: invalidReason = "Can only block incoming damage"; break;
+                        }
+                    }
+                    break;
+                default: break;
+            }
+            if(invalidReason != null){
+                if(Main.getCurrentScrren().getTopActor() instanceof TextWriter){
+                    Main.getCurrentScrren().popLight();
                 }
+                DungeonScreen.get().showDialog(invalidReason);
             }
             return false;
         }
@@ -185,26 +207,31 @@ public class TargetingManager {
     }
 
     public void clicked(DiceEntity entity, boolean dieSide) {
-//        deselectTargetable();
+        // click on an entity panel
+        // dieSide is true if it's a player, you click on the die side and it contains a die
 
-        if ((getSelectedTargetable()==entity.getDie() && dieSide) || Main.getCurrentScrren().getTopActor()==entity.getDiePanel()) {
+        // if you're de-clicking an entity, just declick and return
+        if ((dieSide && getSelectedTargetable()==entity.getDie()) || (!dieSide && Main.getCurrentScrren().getTopActor()==entity.getDiePanel())) {
             Main.getCurrentScrren().pop();
             return;
         }
 
-        if(!PhaseManager.get().getPhase().canTarget() || entity.isPlayer()&&dieSide) Main.getCurrentScrren().popLight();
+        // if you can't target or are clicking the die side, first poplight TODO deselect targetable and popLight hmmmmm
+        if(!PhaseManager.get().getPhase().canTarget() || dieSide) Main.getCurrentScrren().popLight();
 
+        // attempt to target an entity
         if(PhaseManager.get().getPhase().canTarget()) {
-            if (target(entity)) return; // attempt to target
+            boolean successfullyTargetd = target(entity); // attempt to target
+            if(successfullyTargetd) return;
             if(getSelectedTargetable()!=null) return; // cancel anything further if invalid target
-
         }
 
-        Main.getCurrentScrren().pop(DiePanel.class);
+        // if die panel is on top, it shold be removed before continuing
+        Main.getCurrentScrren().popLight();
 
         if (entity.isPlayer()) {
             if (dieSide) {
-                // open die for targeting
+                // open die explanel for targeting
                 click(entity.getDie(), false);
             } else {
                 // show friendly die panel
