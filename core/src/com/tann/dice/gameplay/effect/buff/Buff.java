@@ -31,6 +31,7 @@ public class Buff implements Cloneable{
     }
 
     public String toNiceString(){
-        return "ugh I gotta go do this some day I guess";
+        if(turns == -1) return trigger.describe();
+        return trigger.describe()+" for "+turns+" turn"+(turns==1?"":"s");
     }
 }
