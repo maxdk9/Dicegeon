@@ -317,7 +317,6 @@ public class EntityPanel extends Group {
             Vector2 them = Tann.getLocalCoordinates(ep);
             them.x-=getParent().getX();
             them.y-=getParent().getY();
-
             float width = 3, segmentSize = 5, gapSize = 2, speed = 2;
             if(entity.isPlayer()){
                 Draw.drawDottedLine(batch, them.x, them.y+ep.getHeight()/2, me.x+getWidth(), me.y+getHeight()/2, width, segmentSize, gapSize, speed);
@@ -325,7 +324,6 @@ public class EntityPanel extends Group {
             else{
                 Draw.drawDottedLine(batch, me.x, me.y+getHeight()/2, them.x+ep.getWidth(), them.y+ep.getHeight()/2, width, segmentSize, gapSize, speed);
             }
-
         }
     }
 
