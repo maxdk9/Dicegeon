@@ -7,34 +7,57 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.panels.DieSidePanel;
+import com.tann.dice.screens.dungeon.panels.EquipmentPanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
+import com.tann.dice.screens.dungeon.panels.SpellPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.Pixl;
+import com.tann.dice.util.Draw;
 import com.tann.dice.util.Tann;
+
+import java.util.List;
 
 public class NetPanel extends Group {
     DiceEntity de;
     int size;
     public NetPanel(DiceEntity de) {
-        this.de = de;
         size = de.getSize().pixels;
-        Pixl p = new Pixl(this, 0);
-        p.gap(size);
-        p.actor(setup(de.getSides()[0]));
-        p.gap(size*2-1);
-        p.row(-1);
+        setSize((size-1)*4+1, (size-1)*3+1);
+        this.de = de;
+
+        place(setup(de.getSides()[0]), 1, 0);
+        place(setup(de.getSides()[5]), 1, 2);
         for(int i=1;i<=4;i++){
-            p.actor(setup(de.getSides()[i]));
-            p.gap(-1);
+            place(setup(de.getSides()[i]), i-1, 1);
         }
-        p.row(-1);
-        p.gap(size);
-        p.actor(setup(de.getSides()[5]));
-        p.gap(size*2-1);
-        p.pix();
+
+        if(de instanceof Hero){
+            Hero h  = (Hero) de;
+            List<Spell> spellList = h.getSpells();
+            for(int i=0;i<spellList.size();i++){
+                Spell s = spellList.get(i);
+                SpellPanel panel = new SpellPanel(s, false);
+                place(panel, 2,2);
+            }
+            for(int i=0;i< h.equipmentMaxSize;i++){
+                Equipment e = null;
+                if(h.equipment.size()>i){
+                    e = h.equipment.get(i);
+                }
+                EquipmentPanel panel = new EquipmentPanel(e, false, true);
+                place(panel, 0, i*2);
+            }
+        }
+    }
+
+    void place(Actor a, int x, int y){
+        addActor(a);
+        a.setPosition(x*(size-1) + (size - a.getWidth())/2, y*(size-1) + (size - a.getHeight())/2);
     }
 
     private DieSidePanel setup(final Side s) {
@@ -75,6 +98,7 @@ public class NetPanel extends Group {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+//        Draw.fillActor(batch, this);
         super.draw(batch, parentAlpha);
     }
 }
