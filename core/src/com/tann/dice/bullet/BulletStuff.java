@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -222,12 +223,17 @@ public class BulletStuff {
 		float sizeFactor = size/initialSize;
 
 		Gdx.gl.glViewport((int)(x-Main.width*sizeFactor/2), (int)(y-Main.height*sizeFactor/2), (int)(Main.width*sizeFactor), (int)(Main.height*sizeFactor));
+		Matrix4 copy = die.physical.transform.cpy();
+		boolean prev = die.flatDraw;
+		die.flatDraw = false;
 		die.physical.transform.setToRotation(Vector3.X, 0);
 		die.physical.transform.setToRotation(1,1,1,Main.ticks*100);
 		modelBatch.begin(spinCam);
 		modelBatch.render(die.physical, shader);
 		modelBatch.end();
 		Gdx.gl.glViewport(0,0,Main.width, Main.height);
+		die.physical.transform = copy;
+		die.flatDraw = prev;
 	}
 
 
