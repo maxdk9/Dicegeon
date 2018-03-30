@@ -43,6 +43,7 @@ public class Explanel extends InfoPanel implements OnPop {
     }
 
     private void reset() {
+        this.side = null;
         clearChildren();
     }
 
@@ -87,7 +88,7 @@ public class Explanel extends InfoPanel implements OnPop {
     }
 
 
-
+    public Side side;
     public void setup(Side side, boolean usable, Color colour){
         reset();
         Pixl p = getPixl();
@@ -95,6 +96,7 @@ public class Explanel extends InfoPanel implements OnPop {
         .row()
         .actor(new TextWriter(Eff.describe(side.getEffects()), textWidth));
         finalise(p);
+        this.side = side;
     }
 
 

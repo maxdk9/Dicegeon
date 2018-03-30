@@ -20,6 +20,7 @@ public class Images {
 
 	public static final TextureRegion roll = Main.atlas.findRegion("ui/roll");
     public static final TextureRegion tick = Main.atlas.findRegion("ui/tick");
+    public static final TextureRegion levelup = Main.atlas.findRegion("ui/levelup");
     public static final TextureRegion skull = Main.atlas.findRegion("icon/skull");
 
     public static final TextureRegion poison = Main.atlas.findRegion("buff/poison");

@@ -2,19 +2,14 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
-import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.*;
 
 import java.util.ArrayList;
@@ -105,7 +100,7 @@ public class SpellHolder extends Group {
     }
 
     public float getX(boolean out){
-        return out ? SidePanel.width : SidePanel.width-getWidth();
+        return out ? EntityContainer.width : EntityContainer.width-getWidth();
     }
 
     public float getY(boolean out){

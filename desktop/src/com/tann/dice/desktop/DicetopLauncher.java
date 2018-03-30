@@ -25,7 +25,7 @@ public class DicetopLauncher {
 		config.foregroundFPS = 60;
         config.backgroundFPS = 20;
 		config.width=1280;
-		config.height=800;
+		config.height=180*4;
 		config.samples=10;
 		config.title="Dicegeon";
 		config.resizable = false;

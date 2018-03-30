@@ -1,6 +1,7 @@
 package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
@@ -8,16 +9,17 @@ import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
+import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
 import java.util.List;
 
-public class LevelUpPanel extends Group{
+public class LevelUpPanel extends Group implements ExplanelReposition{
     Hero hero;
     DiePanel basePanel;
     DiePanel[] optionsPanels;
-    static final int topHeight = 14, hGap = 10, vGap = 4, tickSize = 20;
+    static final int topHeight = 10, hGap = 10, vGap = 3, tickSize = 20;
     public LevelUpPanel(final Hero hero) {
     this.hero = hero;
 
@@ -47,6 +49,7 @@ public class LevelUpPanel extends Group{
           @Override
           public void run() {
               hero.levelUpTo(et);
+              Main.getCurrentScrren().popLight();
               Main.getCurrentScrren().pop(LevelUpPanel.this);
               PhaseManager.get().getPhase().refreshPhase();
           }
@@ -71,7 +74,7 @@ public class LevelUpPanel extends Group{
             }
         });
         addActor(org);
-        org.setPosition(3, 3);
+        org.setPosition(3, getHeight()-3-org.getHeight()-topHeight);
   }
 
   @Override
@@ -88,7 +91,7 @@ public class LevelUpPanel extends Group{
       //TODO fix this magic number +1 ugh
       super.draw(batch, parentAlpha);
       batch.setColor(Colours.light);
-      Draw.drawLine(batch, lineStartX, lineStartY, lineStartX, lineStartY+lineDist+1, 1);
+      Draw.drawLine(batch, lineStartX, lineStartY, lineStartX, lineStartY+lineDist, 1);
       Draw.drawLine(batch, lineStartX, lineStartY+lineDist, lineEndX, lineStartY+lineDist, 1);
       lineStartY = (int) (getY() + basePanel.getY());
       Draw.drawLine(batch, lineStartX, lineStartY, lineStartX, lineStartY-lineDist, 1);
@@ -97,4 +100,10 @@ public class LevelUpPanel extends Group{
   }
 
 
+    @Override
+    public void repositionExplanel(Explanel p) {
+        Vector2 local= Tann.getLocalCoordinates(this);
+        p.setPosition(local.x+basePanel.getX()+basePanel.getWidth()/2-p.getWidth()/2,
+                local.y+basePanel.getY()-p.getHeight()-2);
+    }
 }

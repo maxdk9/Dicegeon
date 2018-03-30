@@ -63,7 +63,8 @@ public class Side {
 
     // REGULAR
 
-    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(1));
+    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(5).enemyGroup());
+    //    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(1));
     public static final Side sword2 = sword1.withValue(2);
     public static final Side sword3 = sword1.withValue(3);
     public static final Side sword4 = sword1.withValue(4);

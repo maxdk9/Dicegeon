@@ -29,6 +29,7 @@ public class Button extends Lay{
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				runnable.run();
+				event.stop();
 				return true;
 			}
 		});

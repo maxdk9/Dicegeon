@@ -6,6 +6,7 @@ import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.LevelEndPanel;
+import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.util.InputBlocker;
 import com.tann.dice.util.Tann;
 import java.util.ArrayList;
@@ -15,37 +16,31 @@ public class LevelEndPhase extends Phase {
     LevelEndPanel levelEndPanel;
     @Override
     public void activate() {
+        int level = DungeonScreen.get().level;
         List<Equipment> gainedEquipment = new ArrayList<>();
-        List<Hero> heroesToLevelUp = new ArrayList<>();
-        if(DungeonScreen.get().level%2==0) {
-            for (int i = 0; i < 1000; i++) {
-                Hero h = (Hero) Tann.getRandom(Party.get().getActiveEntities());
-                if (h.getHeroType().getLevelupOptions().size() > 0){
-                    heroesToLevelUp.add(h);
-                    break;
-                }
-            }
-        }
-        else{
+        if(level%2==1){
             gainedEquipment.add(Equipment.random(DungeonScreen.get().level/4));
         }
         for(Equipment e:gainedEquipment){
             Party.get().addEquipment(e);
         }
-        levelEndPanel = new LevelEndPanel(gainedEquipment, heroesToLevelUp);
-        DungeonScreen.get().push(levelEndPanel, true, true, false, false, 0, null);
+        levelEndPanel = new LevelEndPanel(gainedEquipment, level%2==0);
+        DungeonScreen.get().addActor(levelEndPanel);
+        Tann.center(levelEndPanel);
         for(DiceEntity de:Party.get().getActiveEntities()){
             de.slide(false);
         }
+        DungeonScreen.get().spellButt.setVisible(false);
     }
 
     @Override
     public void deactivate() {
-
+        DungeonScreen.get().spellButt.setVisible(true);
     }
 
     @Override
     public void refreshPhase() {
+        levelEndPanel.levelledUp();
         levelEndPanel.layout();
     }
 }

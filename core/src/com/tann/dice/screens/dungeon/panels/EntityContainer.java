@@ -12,11 +12,11 @@ import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SidePanel extends Group {
+public class EntityContainer extends Group {
   public static final int width = (int) 78;
   static final float height = Main.height - DungeonScreen.BOTTOM_BUTTON_HEIGHT-DungeonScreen.BUTT_GAP*2;
   private List<DiceEntity> entities = new ArrayList<>();
-  public SidePanel(boolean friendly) {
+  public EntityContainer(boolean friendly) {
     int dist = 7;
     setSize(width, height);
     setPosition(friendly?dist:Main.width-width-dist, DungeonScreen.BOTTOM_BUTTON_HEIGHT+DungeonScreen.BUTT_GAP*2);

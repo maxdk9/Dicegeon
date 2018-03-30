@@ -30,6 +30,7 @@ public class DiePanel extends InfoPanel implements OnPop {
                 if(e!=null){
                     PartyManagementPanel.get().equip(entity);
                 }
+                Main.getCurrentScrren().popLight();
                 event.cancel();
                 event.stop();
                 event.handle();
@@ -45,7 +46,7 @@ public class DiePanel extends InfoPanel implements OnPop {
         Pixl p = new Pixl(this, gap);
         p.actor(new TextWriter(entity.name+"  ("+entity.getMaxHp()+"[h][red][heart][h][light])"));
         p.row(gap+2);
-        p.actor(new DieSpinner(entity.getDie(), 36));
+        p.actor(new DieSpinner(entity.getDie(), 26));
         p.actor(new NetPanel(entity));
         p.pix();
     }

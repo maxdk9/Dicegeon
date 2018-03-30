@@ -12,8 +12,6 @@ import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.gameplay.entity.die.Die;
@@ -21,16 +19,10 @@ import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
-import com.tann.dice.gameplay.phase.EnemyRollingPhase;
-import com.tann.dice.gameplay.phase.LevelEndPhase;
-import com.tann.dice.gameplay.phase.LossPhase;
-import com.tann.dice.gameplay.phase.PlayerRollingPhase;
-import com.tann.dice.gameplay.phase.TargetingPhase;
-import com.tann.dice.gameplay.phase.VictoryPhase;
+import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
-import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
-import com.tann.dice.screens.dungeon.panels.SidePanel;
+import com.tann.dice.screens.dungeon.panels.EntityContainer;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
@@ -57,8 +49,8 @@ public class DungeonScreen extends Screen {
     public static final float BOTTOM_BUTTON_HEIGHT = 25;
     public static final float BOTTOM_BUTTON_WIDTH = 78;
     public static final float BUTT_GAP = 2;
-    public SidePanel friendly;
-    public SidePanel enemy;
+    public EntityContainer friendly;
+    public EntityContainer enemy;
     public SpellHolder spellHolder;
 
     private DungeonScreen() {
@@ -69,9 +61,9 @@ public class DungeonScreen extends Screen {
     public SpellButt spellButt;
     private void init(){
         spellHolder = new SpellHolder();
-        enemy = new SidePanel(false);
+        enemy = new EntityContainer(false);
         addActor(enemy);
-        friendly = new SidePanel(true);
+        friendly = new EntityContainer(true);
         addActor(friendly);
         rollButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.roll, Colours.dark,
                 new Runnable() {
@@ -126,7 +118,7 @@ public class DungeonScreen extends Screen {
         spellButt = new SpellButt();
         addActor(spellButt);
         float gap = 12;
-        spellButt.setPosition(SidePanel.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
+        spellButt.setPosition(EntityContainer.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
         nextLevel();
         PartyManagementPanel.get();
     }
@@ -186,6 +178,7 @@ public class DungeonScreen extends Screen {
             PhaseManager.get().pushPhase(new LevelEndPhase());
         }
         PhaseManager.get().pushPhase(new EnemyRollingPhase());
+//        PhaseManager.get().pushPhase(new LevelEndPhase());
         PhaseManager.get().kickstartPhase();
     }
 
@@ -380,12 +373,6 @@ public class DungeonScreen extends Screen {
             }
         }
         entity.getEntityPanel().setArrowIntenity(1, 0);
-    }
-
-    public void showLevelupPanel(Hero hero, List<HeroType> options) {
-        LevelUpPanel lup = new LevelUpPanel(hero);
-        lup.setPosition(getWidth()/2, getHeight()/2f, Align.center);
-        addActor(lup);
     }
 
     @Override

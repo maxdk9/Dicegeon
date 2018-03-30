@@ -2,6 +2,8 @@ package com.tann.dice.screens.generalPanels;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -11,12 +13,10 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.OnPop;
-import com.tann.dice.util.TextButton;
+import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
+import com.tann.dice.util.*;
 
-public class PartyManagementPanel extends Group implements OnPop{
+public class PartyManagementPanel extends Group implements OnPop, ExplanelReposition{
 
   private static PartyManagementPanel self;
   public static PartyManagementPanel get() {
@@ -87,8 +87,8 @@ public class PartyManagementPanel extends Group implements OnPop{
     }
     this.selectedEquipment = equipment;
     Explanel.get().setup(equipment);
-    addActor(panel);
-    panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()+1);
+    Main.getCurrentScrren().push(panel, false, false, true, true, 0, null);
+    repositionExplanel(panel);
   }
 
   private void deselectEquipment() {
@@ -115,4 +115,13 @@ public class PartyManagementPanel extends Group implements OnPop{
   public void onPop() {
     deselectEquipment();
   }
+
+
+  @Override
+  public void repositionExplanel(Explanel p) {
+    Vector2 local= Tann.getLocalCoordinates(this);
+    InventoryPanel panel = InventoryPanel.get();
+    p.setPosition((int) Math.min(Main.width-p.getWidth()-2, local.x+panel.getX()+panel.getWidth()/2-p.getWidth()/2),
+            (int)(local.y+panel.getY()+panel.getHeight()+2));
+}
 }

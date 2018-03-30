@@ -12,8 +12,10 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.screens.dungeon.TargetingManager;
-import com.tann.dice.screens.dungeon.panels.SidePanel;
+import com.tann.dice.screens.dungeon.panels.EntityContainer;
+import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
 import com.tann.dice.util.*;
 
 import java.util.List;
@@ -30,10 +32,12 @@ public class EntityPanel extends Group {
     static NinePatch panelBorderLeft = new NinePatch(Images.panelBorderLeft, n,n,n,n);
     static NinePatch panelBorderRight = new NinePatch(Images.panelBorderRight, n,n,n,n);
     static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
-    public static final float WIDTH = SidePanel.width;
+    public static final float WIDTH = EntityContainer.width;
     static int borderSize = 4;
     private static final int gap = 2;
     boolean huge;
+
+    Button tick;
     public EntityPanel(final DiceEntity entity) {
         this.entity = entity;
         huge = entity.getSize() == DiceEntity.EntitySize.huge || entity.getSize() == DiceEntity.EntitySize.big;
@@ -118,6 +122,24 @@ public class EntityPanel extends Group {
         heartsHolder.setX((int)(heartsMiddley-(heartsHolder.getWidth()/2f-.5f)));
         buffHolder.setX(heartsHolder.getX() + heartsHolder.getWidth() + 1);
         buffHolder.setY(title.getY()-gap-buffHolder.getHeight());
+
+
+        if(entity instanceof Hero){
+            tick = new Button(dieHolder.getWidth(), dieHolder.getHeight(), 1, Images.tick, Colours.dark, new Runnable() {
+                @Override
+                public void run() {
+                    LevelUpPanel lup = new LevelUpPanel((Hero) entity);
+                    Main.getCurrentScrren().push(lup, true, true, false, false, InputBlocker.DARK, null);
+                    lup.setY(Main.height-lup.getHeight()-3);
+                }
+            });
+            tick.setPosition(dieHolder.getX()+dieHolder.getWidth()/2-tick.getWidth()/2,
+                    dieHolder.getY()+dieHolder.getHeight()/2-tick.getHeight()/2);
+            tick.setColor(entity.getColour());
+            tick.setBorder(Colours.dark, Colours.light, 1);
+            addActor(tick);
+            tick.setVisible(false);
+        }
     }
 
 
@@ -316,5 +338,9 @@ public class EntityPanel extends Group {
     public void setArrowIntenity(float intensity, float fadeSpeed) {
         this.intensity = intensity;
         this.fadeSpeed = fadeSpeed;
+    }
+
+    public void showLevelUpTick(boolean show) {
+        tick.setVisible(show);
     }
 }

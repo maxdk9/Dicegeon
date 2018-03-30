@@ -25,6 +25,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.tann.dice.Main;
@@ -36,6 +37,8 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.util.Actor3d;
+import com.tann.dice.util.InputBlocker;
+import com.tann.dice.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -332,10 +335,17 @@ public class BulletStuff {
 	}
 
 	public static void renderTopBits() {
-		for (Actor3d actor3d : Actor3d.actor3dList) {
-			if(actor3d.getStage()!=null) {
-				actor3d.draw3D();
+		List<Pair<Actor, InputBlocker>> list = Main.getCurrentScrren().modalStack;
+		for(int i=list.size()-1;i>=0;i--){
+			Pair<Actor, InputBlocker> p = list.get(i);
+			boolean found = false;
+			for(Actor3d ac:Actor3d.actor3dList){
+				if(p.a!=null && ac.isDescendantOf(p.a)){
+					found = true;
+					ac.draw3D();
+				}
 			}
+			if(found) return;
 		}
 	}
 }

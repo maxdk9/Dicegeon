@@ -2,19 +2,16 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.PhaseManager;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.InputBlocker;
-import com.tann.dice.util.Pixl;
-import com.tann.dice.util.Tann;
-import com.tann.dice.util.TextButton;
-import com.tann.dice.util.TextWriter;
+import com.tann.dice.util.*;
 
 import java.util.List;
 
@@ -25,12 +22,12 @@ public class LevelEndPanel extends Group {
             "Imbressive", "[sin]Dicey[sin]"};
 
     List<Equipment> gainedEquipment;
-    List<Hero> toLevelup;
+    boolean levelup;
     String congrat;
-    public LevelEndPanel(List<Equipment> gainedEquipment, List<Hero> toLevelup) {
+    public LevelEndPanel(List<Equipment> gainedEquipment, boolean levelup) {
         this.gainedEquipment = gainedEquipment;
-        this.toLevelup = toLevelup;
         this.congrat = Tann.getRandom(congrats);
+        this.levelup = levelup;
         layout();
     }
 
@@ -46,15 +43,24 @@ public class LevelEndPanel extends Group {
             p.actor(new EquipmentPanel(e, false, false));
             p.row();
         }
-        for(DiceEntity de: toLevelup){
-            p.actor(new TextWriter(de.getColourTag()+de.getName()+" [light]levelled up!"));
+        if(levelup){
+            p.actor(new TextWriter("Choose a hero to level up"));
             p.row();
         }
         p.row(4);
         TextButton org = new TextButton("Inventory", 2);
-        TextButton cont = new TextButton(toLevelup.size()==0?"Continue":"Level up", 2);
         p.actor(org);
-        p.actor(cont);
+        if(!levelup) {
+            TextButton cont = new TextButton("Continue", 2);
+            p.actor(cont);
+            cont.setRunnable(new Runnable() {
+                @Override
+                public void run() {
+                remove();
+                PhaseManager.get().popPhase();
+                }
+            });
+        }
         p.row(3);
         p.pix();
         org.setRunnable(new Runnable() {
@@ -66,25 +72,18 @@ public class LevelEndPanel extends Group {
                 p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
             }
         });
-
-        cont.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                if(toLevelup.size()==0) {
-                    PhaseManager.get().popPhase();
-                    Main.getCurrentScrren().pop(LevelEndPanel.this);
-                }
-                else{
-                    LevelUpPanel lup = new LevelUpPanel(toLevelup.remove(0));
-                    Main.getCurrentScrren().push(lup, true, true, false, false, InputBlocker.DARK, null);
-                }
-            }
-        });
+        for (final DiceEntity de : Party.get().getActiveEntities()) {
+            de.getEntityPanel().showLevelUpTick(levelup);
+        }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
         super.draw(batch, parentAlpha);
+    }
+
+    public void levelledUp() {
+        levelup = false;
     }
 }

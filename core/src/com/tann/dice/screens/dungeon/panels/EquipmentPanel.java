@@ -40,6 +40,10 @@ public class EquipmentPanel extends Actor {
         else{
           Explanel.get().setup(EquipmentPanel.this.equipment);
           Main.getCurrentScrren().push(Explanel.get());
+          Actor a = Main.getCurrentScrren().getTopActor();
+          if(a != null && a instanceof ExplanelReposition){
+            ((ExplanelReposition)a).repositionExplanel(Explanel.get());
+          }
         }
 
         event.cancel();

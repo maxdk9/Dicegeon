@@ -2,6 +2,7 @@ package com.tann.dice.screens.dungeon.panels.Explanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -9,6 +10,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.panels.DieSidePanel;
+import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Pixl;
 import com.tann.dice.util.Tann;
@@ -43,12 +45,26 @@ public class NetPanel extends Group {
                 if(PartyManagementPanel.get().getSelectedEquipment()!=null){
                     return false;
                 }
+                Actor top =Main.getCurrentScrren().getTopActor();
+                if(top instanceof Explanel){
+                    Explanel e = (Explanel) top;
+                    if(e.side == s){
+                        Main.getCurrentScrren().popLight();
+                        return false;
+                    }
+                }
                 Main.getCurrentScrren().pop(Explanel.class);
                 Explanel exp = Explanel.get();
                 exp.setup(s, false, de.getColour());
+                Actor a = Main.getCurrentScrren().getTopActor();
+                if(a != null && a instanceof ExplanelReposition){
+                    ((ExplanelReposition)a).repositionExplanel(exp);
+                }
+                else{
+                    Vector2 pos = Tann.getLocalCoordinates(NetPanel.this);
+                    exp.setPosition(exp.getNiceX(false), pos.y-4-exp.getHeight());
+                }
                 Main.getCurrentScrren().push(exp, false, false, true, true, 0, null);
-                Vector2 pos = Tann.getLocalCoordinates(NetPanel.this);
-                exp.setPosition(exp.getNiceX(false), pos.y-4-exp.getHeight());
                 event.handle();
                 event.stop();
                 return super.touchDown(event, x, y, pointer, button);

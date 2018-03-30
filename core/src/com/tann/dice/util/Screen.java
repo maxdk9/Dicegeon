@@ -110,7 +110,7 @@ public abstract class Screen extends Lay{
 	};
 
 	Runnable extraOnPop;
-	List<Pair<Actor, InputBlocker>> modalStack = new ArrayList<>();
+	public List<Pair<Actor, InputBlocker>> modalStack = new ArrayList<>();
 
 	public void push(Actor a){
 		push(a, 0);
@@ -132,9 +132,8 @@ public abstract class Screen extends Lay{
 		modalStack.add(pair);
 		addActor(actor);
 		this.extraOnPop = onPop;
-
 		if(center){
-			Tann.center(actor, this);
+			Tann.center(actor);
 		}
 		if(selfPops){
 			actor.addListener(SELF_POP);
