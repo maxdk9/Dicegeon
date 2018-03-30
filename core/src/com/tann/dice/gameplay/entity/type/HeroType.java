@@ -33,9 +33,9 @@ public class HeroType extends EntityType<HeroType> {
     }
 
     public static final HeroType fighter = new HeroType().name("Fighter").hp(5).levelsUpInto(fighter1)
-            .sides(Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.shield1, Side.nothing).colour(Colours.yellow);
+            .sides(Side.sword2, Side.shield1, Side.sword1, Side.sword1, Side.sword2, Side.nothing).colour(Colours.yellow);
     public static final HeroType fighterOrange = new HeroType().name("Fighter").hp(5).levelsUpInto(fighter1)
-            .sides(Side.sword1, Side.sword1, Side.sword2, Side.sword2, Side.shield1, Side.nothing).colour(Colours.orange);
+            .sides( Side.sword2, Side.sword2, Side.sword1, Side.sword1,Side.shield1, Side.nothing).colour(Colours.orange);
     public static final HeroType defender = new HeroType().name("Defender").hp(5).levelsUpInto(defender1)
             .sides(Side.shield2, Side.shield2, Side.shield1, Side.sword1, Side.sword1, Side.nothing).colour(Colours.grey);
     public static final HeroType apprentice = new HeroType().name("Acolyte").hp(4).levelsUpInto(magic1)
@@ -44,6 +44,7 @@ public class HeroType extends EntityType<HeroType> {
     public static final HeroType herbalist = new HeroType().name("Herbalist").hp(4).levelsUpInto(healer1)
             .sides(Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing).colour(Colours.red)
             .spells(Spell.healAll);
+
 
     public static final HeroType rogue = new HeroType().name("Rogue").hp(5).tag(fighter1)
             .sides(Side.poison1, Side.poison1, Side.sword2, Side.arrow1, Side.vanish, Side.nothing);

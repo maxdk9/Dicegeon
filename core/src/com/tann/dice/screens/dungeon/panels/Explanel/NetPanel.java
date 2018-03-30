@@ -30,11 +30,13 @@ public class NetPanel extends Group {
         setSize((size-1)*4+1, (size-1)*3+1);
         this.de = de;
 
-        place(setup(de.getSides()[0]), 1, 0);
-        place(setup(de.getSides()[5]), 1, 2);
-        for(int i=1;i<=4;i++){
-            place(setup(de.getSides()[i]), i-1, 1);
-        }
+        place(setup(de.getSides()[0]), 1, 2);
+        place(setup(de.getSides()[1]), 1, 0);
+
+        place(setup(de.getSides()[2]), 0, 1);
+        place(setup(de.getSides()[4]), 1, 1);
+        place(setup(de.getSides()[3]), 2, 1);
+        place(setup(de.getSides()[5]), 3, 1);
 
         if(de instanceof Hero){
             Hero h  = (Hero) de;
