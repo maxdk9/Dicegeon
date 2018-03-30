@@ -343,4 +343,8 @@ public class EntityPanel extends Group {
     public void showLevelUpTick(boolean show) {
         tick.setVisible(show);
     }
+
+    public void resetDieHolding() {
+        holdsDie = false;
+    }
 }

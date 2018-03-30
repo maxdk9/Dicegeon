@@ -98,6 +98,7 @@ public abstract class DiceEntity {
     }
 
     protected void resetPanels() {
+        getEntityPanel().resetDieHolding();
         getEntityPanel().layout();
         getDiePanel().layout();
     }
