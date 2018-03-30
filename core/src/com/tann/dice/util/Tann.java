@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
@@ -94,4 +95,5 @@ public class Tann {
     public static void center(Actor child, Group parent) {
         child.setPosition((int)(parent.getWidth()/2-child.getWidth()/2), (int)(parent.getHeight()/2-child.getHeight()/2));
     }
+
 }

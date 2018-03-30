@@ -1,13 +1,12 @@
 package com.tann.dice.screens.dungeon.panels;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.entity.die.Die;
-import com.tann.dice.util.Draw;
+import com.tann.dice.util.Actor3d;
 
-public class DieSpinner extends Actor {
+public class DieSpinner extends Actor3d {
     Die d;
     public DieSpinner(Die d, float size) {
         this.d=d;
@@ -15,12 +14,8 @@ public class DieSpinner extends Actor {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this);
-        batch.end();
+    public void draw3D() {
         Vector2 result = localToStageCoordinates(new Vector2());
-        BulletStuff.drawSpinnyDie3(d, result.x+getWidth()/2, result.y+getHeight()/2, getWidth());
-        batch.begin();
-        super.draw(batch, parentAlpha);
+        BulletStuff.drawSpinnyDie3(d, (result.x+getWidth()/2)* Main.scale, (result.y+getHeight()/2)* Main.scale, getWidth()*Main.scale);
     }
 }

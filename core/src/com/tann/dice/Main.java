@@ -35,7 +35,7 @@ public class Main extends ApplicationAdapter {
   public static String versionName = "v" + version;
   SpriteBatch batch;
   SpriteBatch bufferDrawer;
-  public Stage stage;
+  public static Stage stage;
   public OrthographicCamera orthoCam;
   public static TextureAtlas atlas;
   public static TextureAtlas atlas_3d;
@@ -187,6 +187,9 @@ public class Main extends ApplicationAdapter {
       bufferDrawer.begin();
       Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
       bufferDrawer.end();
+
+      // draw top dice
+      BulletStuff.renderTopBits();
 
     } catch (RuntimeException e){
       logException(e);

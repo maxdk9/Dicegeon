@@ -23,6 +23,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.tann.dice.Main;
@@ -33,6 +34,8 @@ import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import com.tann.dice.screens.dungeon.TargetingManager;
+import com.tann.dice.util.Actor3d;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -322,4 +325,11 @@ public class BulletStuff {
 		return convertToScreen(pos.x, pos.y);
 	}
 
+	public static void renderTopBits() {
+		for (Actor3d actor3d : Actor3d.actor3dList) {
+			if(actor3d.getStage()!=null) {
+				actor3d.draw3D();
+			}
+		}
+	}
 }

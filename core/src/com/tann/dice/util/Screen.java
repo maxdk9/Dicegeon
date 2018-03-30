@@ -95,7 +95,16 @@ public abstract class Screen extends Lay{
 	final InputListener SELF_POP = new InputListener(){
 		@Override
 		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			popAllLight();
 			pop(event.getListenerActor());
+			return true;
+		}
+	};
+
+	final InputListener POP_ALL_LIGHT = new InputListener(){
+		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			popAllLight();
 			return true;
 		}
 	};
@@ -163,8 +172,16 @@ public abstract class Screen extends Lay{
 		}
 	}
 
-	public void popLight() {
-		if(modalStack.size()>0 && modalStack.get(modalStack.size()-1).b == null) pop();
+	public void popAllLight(){
+		while(popLight()){}
+	}
+
+	public boolean popLight() {
+		if(modalStack.size()>0 && modalStack.get(modalStack.size()-1).b == null){
+			pop();
+			return true;
+		}
+		return false;
 	}
 
 	public void pop(Actor a) {

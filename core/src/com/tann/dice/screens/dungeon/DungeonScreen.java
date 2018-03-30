@@ -400,7 +400,7 @@ public class DungeonScreen extends Screen {
     }
 
     private void bottomClick() {
-        popLight();
+        popAllLight();
         spellButt.hide();
         TargetingManager.get().deselectTargetable();
     }
