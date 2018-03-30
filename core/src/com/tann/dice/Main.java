@@ -94,6 +94,7 @@ public class Main extends ApplicationAdapter {
     TextWriter.setup();
     logTime("setup");
     stage = new TannStage(new FitViewport(Main.width, Main.height));
+    stage.getBatch().setBlendFunctionSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
     orthoCam = (OrthographicCamera) stage.getCamera();
     batch = new SpriteBatch();
     bufferDrawer = new SpriteBatch();
