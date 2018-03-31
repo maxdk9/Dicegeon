@@ -6,6 +6,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
@@ -34,6 +35,8 @@ public class LevelEndPanel extends Group {
         Pixl p = new Pixl(this, 2);
         p.row(4);
         p.actor(new TextWriter("[orange]"+ congrat));
+        p.row();
+        p.actor(new TextWriter("[purple]Level "+ DungeonScreen.get().level+"/"+DungeonScreen.levels.size()));
         p.row(4);
         for(Equipment e:gainedEquipment){
             p.gap(4);

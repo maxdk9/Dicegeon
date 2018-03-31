@@ -63,8 +63,8 @@ void main() {
 	vec2 lapel = vec2(l_x,l_y);
 	// add lapels
 	vec4 colour = texture2D(u_texture, lapel+UV);
-	if(colour.r==0 && colour.a!=0){
-	gl_FragColor.rgb =  gl_FragColor.rgb*(1.0-colour.a) + v_villagerColour.rgb*colour.a;	
+	if(colour.r==0.0 && colour.a!=0.0){
+		gl_FragColor.rgb =  gl_FragColor.rgb*(1.0-colour.a) + v_villagerColour.rgb*colour.a;	
 	} 
 	else{
 	gl_FragColor.rgb =  gl_FragColor.rgb*(1.0-colour.a) + colour.rgb*colour.a;	

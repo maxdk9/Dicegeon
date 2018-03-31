@@ -147,7 +147,7 @@ public class DungeonScreen extends Screen {
         enemy.setEntities(monsters);
     }
 
-    static final List<List<MonsterType>> levels = new ArrayList<>();
+    public static final List<List<MonsterType>> levels = new ArrayList<>();
     private static void addLevel(MonsterType... monsterTypes){
         levels.add(Arrays.asList(monsterTypes));
     }

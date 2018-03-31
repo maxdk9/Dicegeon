@@ -77,6 +77,8 @@ public class Side {
     public static final Side shield2 = shield1.withValue(2);
     public static final Side shield3 = shield1.withValue(3);
 
+    public static final Side taunt = shield1.withValue(3);
+
     public static final Side magic1 = new Side().image("magic").effect(new Eff().magic(1).untargeted());
     public static final Side magic2 = magic1.withValue(2);
 

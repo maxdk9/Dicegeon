@@ -9,6 +9,8 @@ import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.type.EntityType;
+import com.tann.dice.gameplay.phase.Phase;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.DieSpinner;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
@@ -53,23 +55,28 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
         batch.setColor(entity.getColour());
         int rectHeight = TEXT_GAP*2 + TannFont.font.getHeight();
         Draw.drawRectangle(batch, getX(), getY()+getHeight()-rectHeight, getWidth(), rectHeight, 1);
-        if(!Main.learnt){
-            String text = "Tap icons to learn what they do";
-            int gap = 2;
-            int width = TannFont.font.getWidth(text)+gap*2;
-            int height = TannFont.font.getHeight()+gap*2;
-            int startX = (int) (getX() + getWidth()/2-width/2);
-            int startY = (int) (getY() - height - 3);
-
-            batch.setColor(entity.getColour());
-            Draw.fillRectangle(batch, startX, startY, width, height);
-            batch.setColor(Colours.dark);
-            Draw.fillRectangle(batch, startX+gap/2, startY+gap/2, (float) (width-gap), (float) (height-gap));
-            batch.setColor(Colours.light);
-            TannFont.font.drawString(batch, text, startX + gap, startY + gap);
-        }
-
+        drawReminder(batch);
         super.draw(batch, parentAlpha);
+    }
+
+    private void drawReminder(Batch batch) {
+        if(Main.learnt) return;
+        Phase phase = PhaseManager.get().getPhase();
+        if(phase == null) return;
+        if(!phase.showDiePanelReminder()) return;
+        String text = "Tap icons to learn what they do";
+        int gap = 2;
+        int width = TannFont.font.getWidth(text)+gap*2;
+        int height = TannFont.font.getHeight()+gap*2;
+        int startX = (int) (getX() + getWidth()/2-width/2);
+        int startY = (int) (getY() - height - 3);
+
+        batch.setColor(entity.getColour());
+        Draw.fillRectangle(batch, startX, startY, width, height);
+        batch.setColor(Colours.dark);
+        Draw.fillRectangle(batch, startX+gap/2, startY+gap/2, (float) (width-gap), (float) (height-gap));
+        batch.setColor(Colours.light);
+        TannFont.font.drawString(batch, text, startX + gap, startY + gap);
     }
 
     @Override

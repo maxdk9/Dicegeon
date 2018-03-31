@@ -38,4 +38,8 @@ public abstract class Phase {
     public void refreshPhase() {}
 
     public abstract String describe();
+
+    public boolean showDiePanelReminder() {
+        return true;
+    }
 }

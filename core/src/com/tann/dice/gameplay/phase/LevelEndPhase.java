@@ -44,6 +44,11 @@ public class LevelEndPhase extends Phase {
     }
 
     @Override
+    public boolean showDiePanelReminder() {
+        return false;
+    }
+
+    @Override
     public String describe() {
         return "You beat it!";
     }
