@@ -1,5 +1,6 @@
 package com.tann.dice.screens.dungeon;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
@@ -14,6 +15,7 @@ import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
+import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
@@ -99,8 +101,20 @@ public class TargetingManager {
 
     private void targetableClick(Targetable t) {
         if (!PhaseManager.get().getPhase().canTarget()) {
+
+            Actor a = Main.getCurrentScreen().getTopActor();
+            if(a instanceof Explanel){
+                Main.getCurrentScreen().popSingleLight();
+                if(Explanel.get().spell == t){
+                    return;
+                }
+            }
+            a = Main.getCurrentScreen().getTopActor();
             Explanel.get().setup(t, false);
-            Main.getCurrentScreen().push(Explanel.get());
+            if(a != null && a instanceof ExplanelReposition){
+                ((ExplanelReposition)a).repositionExplanel(Explanel.get());
+            }
+            Main.getCurrentScreen().push(Explanel.get(), false, false, true, true, 0 , null);
             return;
         }
         for (DiceEntity de : Party.get().getActiveEntities()) {
@@ -170,13 +184,13 @@ public class TargetingManager {
             }
             if(invalidReason != null){
                 if(Main.getCurrentScreen().getTopActor() instanceof TextWriter){
-                    Main.getCurrentScreen().popLight();
+                    Main.getCurrentScreen().popAllLight();
                 }
                 DungeonScreen.get().showDialog(invalidReason);
             }
             return false;
         }
-        Main.getCurrentScreen().popLight();
+        Main.getCurrentScreen().popAllLight();
         boolean containsDamage = false;
         if (t.use()) {
             for (Eff e : t.getEffects()) {
@@ -216,8 +230,8 @@ public class TargetingManager {
             return;
         }
 
-        // if you can't target or are clicking the die side, first poplight TODO deselect targetable and popLight hmmmmm
-        if(!PhaseManager.get().getPhase().canTarget() || dieSide) Main.getCurrentScreen().popLight();
+        // if you can't target or are clicking the die side, first poplight TODO deselect targetable and popSingleLight hmmmmm
+        if(!PhaseManager.get().getPhase().canTarget() || dieSide) Main.getCurrentScreen().popAllLight();
 
         // attempt to target an entity
         if(PhaseManager.get().getPhase().canTarget()) {
@@ -226,8 +240,8 @@ public class TargetingManager {
             if(getSelectedTargetable()!=null) return; // cancel anything further if invalid target
         }
 
-        // if die panel is on top, it shold be removed before continuing
-        Main.getCurrentScreen().popLight();
+        // if die panel is on top, it should be removed before continuing
+        Main.getCurrentScreen().popAllLight();
 
         if (entity.isPlayer()) {
             if (dieSide) {

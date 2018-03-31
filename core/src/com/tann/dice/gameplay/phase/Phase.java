@@ -36,4 +36,6 @@ public abstract class Phase {
     public boolean canTarget() { return false; }
 
     public void refreshPhase() {}
+
+    public abstract String describe();
 }

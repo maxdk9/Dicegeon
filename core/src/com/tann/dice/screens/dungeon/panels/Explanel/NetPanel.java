@@ -66,6 +66,8 @@ public class NetPanel extends Group {
         dsp.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                event.handle();
+                event.stop();
                 if(PartyManagementPanel.get().getSelectedEquipment()!=null){
                     return false;
                 }
@@ -73,7 +75,8 @@ public class NetPanel extends Group {
                 if(top instanceof Explanel){
                     Explanel e = (Explanel) top;
                     if(e.side == s){
-                        Main.getCurrentScreen().popLight();
+                        Main.getCurrentScreen().popSingleLight();
+                        event.stop();
                         return false;
                     }
                 }
@@ -92,8 +95,6 @@ public class NetPanel extends Group {
                     exp.setPosition(exp.getNiceX(false), pos.y-4-exp.getHeight());
                 }
                 Main.getCurrentScreen().push(exp, false, false, true, true, 0, null);
-                event.handle();
-                event.stop();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

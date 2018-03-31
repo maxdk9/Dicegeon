@@ -33,7 +33,7 @@ public class Party extends EntityGroup{
     public static Party get() {
         if (self == null) {
             self = new Party();
-            self.addHeroes();
+            self.fullyReset();
         }
         return self;
     }
@@ -43,9 +43,9 @@ public class Party extends EntityGroup{
         clearEntities();
         addHeroes();
         equipment.clear();
-//        for(int i=0;i<8;i++){
-//            addEquipment(Equipment.random(0));
-//        }
+        for(int i=0;i<8;i++){
+            addEquipment(Equipment.random());
+        }
 //        addEquipment(Equipment.recent());
     }
 
@@ -228,5 +228,11 @@ public class Party extends EntityGroup{
             }
         }
         return null;
+    }
+
+    public void startOfFight(){
+        for(DiceEntity de: getEntities()){
+            de.startOfFight();
+        }
     }
 }

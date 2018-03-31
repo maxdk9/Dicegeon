@@ -47,6 +47,9 @@ public class EntityPanel extends Group {
         addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(button == 1 && Main.debug){
+                    entity.kill();
+                }
                 if (entity.isDead()) return false;
                 boolean dieSide = isClickOnDie(x);
                 TargetingManager.get().clicked(EntityPanel.this.entity, dieSide && holdsDie && entity.isPlayer());

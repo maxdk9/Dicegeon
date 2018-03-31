@@ -43,6 +43,7 @@ public class Main extends ApplicationAdapter {
   public static Main self;
   private static boolean showFPS = true;
   private static boolean printCalls = false;
+  public static boolean debug = true;
   Screen currentScreen;
   Screen previousScreen;
   public static float ticks;
@@ -136,6 +137,7 @@ public class Main extends ApplicationAdapter {
     BulletStuff.init();
     logTime("bullet");
     setScreen(DungeonScreen.get());
+    DungeonScreen.get().nextLevel();
 //    setScreen(new DebugScreen());
 //    setScreen(MapScreen.get());
     logTime("screen");
@@ -347,6 +349,7 @@ public class Main extends ApplicationAdapter {
       previousScreen = currentScreen;
       currentScreen.setActive(false);
     }
+    screen.setActive(true);
     currentScreen = screen;
     stage.addActor(screen);
 

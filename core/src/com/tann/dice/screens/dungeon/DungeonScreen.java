@@ -59,7 +59,10 @@ public class DungeonScreen extends Screen {
     Button rollButton;
     Button confirmButton;
     public SpellButt spellButt;
+    private TextWriter turnPhaseWriter;
     private void init(){
+        turnPhaseWriter = new TextWriter("", 990, Colours.purple, 2);
+        addActor(turnPhaseWriter);
         spellHolder = new SpellHolder();
         enemy = new EntityContainer(false);
         addActor(enemy);
@@ -109,7 +112,7 @@ public class DungeonScreen extends Screen {
         confirmButton.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        popLight();
+                        popAllLight();
                         confirmDice(true);
                     }
                 });
@@ -130,12 +133,10 @@ public class DungeonScreen extends Screen {
         addActor(spellButt);
         float gap = 12;
         spellButt.setPosition(EntityContainer.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
-        nextLevel();
         PartyManagementPanel.get();
     }
 
     public int level=0;
-    String levelString = "";
 
     public void setup(List<Monster> monsters){
         Room.get().reset();
@@ -168,7 +169,6 @@ public class DungeonScreen extends Screen {
     public void nextLevel() {
         spellButt.removeAllHovers();
         Explanel.get().remove();
-        setupLevelString();
         Party.get().rejig();
         spellButt.setSpellHolder(spellHolder);
         spellHolder.setup(Party.get().getSpells());
@@ -193,13 +193,8 @@ public class DungeonScreen extends Screen {
         PhaseManager.get().kickstartPhase();
     }
 
-    private void setupLevelString() {
-        levelString = "Level "+level+"/"+levels.size();
-    }
-
     public void restart() {
         level = 0;
-        setupLevelString();
         Party.get().fullyReset();
         nextLevel();
     }
@@ -286,8 +281,6 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void preDraw(Batch batch) {
-        batch.setColor(Colours.light);
-        TannFont.font.drawString(batch, levelString,Main.width/2-10, Main.height- TannFont.font.getHeight()-1);
     }
 
     public void drawRectThing(Batch batch, Rectangle rect) {
@@ -419,5 +412,12 @@ public class DungeonScreen extends Screen {
         if(!checkEnd()){
             confirmDice(false);
         }
+    }
+
+    @Override
+    public void activatePhase(Phase phase) {
+        System.out.println(phase.getClass().getSimpleName());
+        turnPhaseWriter.setText(phase.describe());
+        turnPhaseWriter.setPosition((int)(getWidth()/2-turnPhaseWriter.getWidth()/2), (int)(getHeight()-turnPhaseWriter.getHeight()-1));
     }
 }

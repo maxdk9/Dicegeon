@@ -39,7 +39,6 @@ public class TextWriter extends Group {
         this.borderSize = borderSize;
         this.borderCol = borderCol;
         setWidth(width);
-        split = text.split("[\\[\\]]");
         layout();
     }
 
@@ -71,6 +70,7 @@ public class TextWriter extends Group {
 
 
     public void layout() {
+        split = text.split("[\\[\\]]");
         Color currentColour = Colours.light;
         clearChildren();
         int index = 0;
@@ -159,6 +159,12 @@ public class TextWriter extends Group {
             Draw.fillActor(batch, this, Colours.dark, borderCol, 1);
         }
         super.draw(batch, parentAlpha);
+    }
+
+    public void setText(String text){
+        this.text = text;
+        setWidth(Integer.MAX_VALUE);
+        layout();
     }
 }
 

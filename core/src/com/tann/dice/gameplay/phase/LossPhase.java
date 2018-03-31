@@ -17,4 +17,9 @@ public class LossPhase extends Phase{
     public void deactivate() {
         DungeonScreen.get().restart();
     }
+
+    @Override
+    public String describe() {
+        return "You lost";
+    }
 }

@@ -28,4 +28,9 @@ public class EnemyRollingPhase extends Phase {
         }
         return true;
     }
+
+    @Override
+    public String describe() {
+        return "Enemy is rolling";
+    }
 }

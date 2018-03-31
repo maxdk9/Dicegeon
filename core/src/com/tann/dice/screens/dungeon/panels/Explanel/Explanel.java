@@ -35,6 +35,11 @@ public class Explanel extends InfoPanel implements OnPop {
 
 
     private static Explanel self;
+
+    public Side side;
+    public Equipment equipment;
+    public Spell spell;
+
     public static Explanel get(){
         if(self == null) self = new Explanel();
         return self;
@@ -45,6 +50,8 @@ public class Explanel extends InfoPanel implements OnPop {
 
     private void reset() {
         this.side = null;
+        this.equipment = null;
+        this.spell = null;
         clearChildren();
     }
 
@@ -67,7 +74,7 @@ public class Explanel extends InfoPanel implements OnPop {
 
     public void setup(final Equipment equipment){
         reset();
-
+        this.equipment = equipment;
         final int scale = 2;
         Actor equipDraw = new Actor(){
             @Override
@@ -89,21 +96,20 @@ public class Explanel extends InfoPanel implements OnPop {
     }
 
 
-    public Side side;
     public void setup(Side side, boolean usable, DiceEntity entity){
         reset();
+        this.side = side;
         Pixl p = getPixl();
         p.actor(new DieSidePanel(side, entity, 2))
         .row()
         .actor(new TextWriter(Eff.describe(side.getEffects()), textWidth));
         finalise(p);
-        this.side = side;
     }
 
 
     private void setup(final Spell spell, boolean usable){
         reset();
-
+        this.spell = spell;
         final int scale = 2;
         Actor spellDraw = new Actor(){
             @Override

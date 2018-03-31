@@ -24,4 +24,9 @@ public class TargetingPhase extends Phase {
 
     @Override
     public boolean canTarget() { return true; }
+
+    @Override
+    public String describe() {
+        return "Use your dice to attack and defend";
+    }
 }

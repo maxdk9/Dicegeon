@@ -33,7 +33,7 @@ public class SpellButt extends Group {
                 if(Tann.dist(x,y,getWidth()/2, getHeight()/2)>getWidth()/2){
                     return false;
                 }
-                Main.getCurrentScreen().popLight();
+                Main.getCurrentScreen().popAllLight();
                 toggleButt();
                 event.setBubbles(false);
                 return super.touchDown(event, x, y, pointer, button);

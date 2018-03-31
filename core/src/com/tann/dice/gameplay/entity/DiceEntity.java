@@ -38,6 +38,7 @@ public abstract class DiceEntity {
     protected Side[] sides;
     protected int baseMaxHp;
     protected boolean dead;
+    public boolean diedLastRound;
     protected int hp;
     protected List<DiceEntity> targets;
     List<Buff> buffs = new ArrayList<>();
@@ -73,6 +74,10 @@ public abstract class DiceEntity {
         setSides(entityType.sides);
     }
 
+    public void startOfFight(){
+        diedLastRound = false;
+    }
+
     public void init(){
         for(int i=0;i<10;i++){
 //         addBuff(new Buff(5, Images.regen, new EndOfTurnSelfTrigger(new Eff().damage(1))));
@@ -94,8 +99,9 @@ public abstract class DiceEntity {
         this.baseMaxHp = maxHp;
     }
 
-    protected void fullHeal() {
-        hp = dead?getMaxHp()/2:getMaxHp();
+    public void fullHeal() {
+        calculatedMaxHp = null;
+        hp = diedLastRound?getMaxHp()/2:getMaxHp();
     }
 
     protected void resetPanels() {
@@ -152,8 +158,8 @@ public abstract class DiceEntity {
     public void reduceToHalfHP(){}
 
     public void reset(){
+        dead = false;
         fullHeal();
-        dead= false;
         targeted = null;
         getDie().flatDraw = false;
         buffs.clear();
@@ -223,6 +229,7 @@ public abstract class DiceEntity {
         }
         BulletStuff.dice.remove(getDie());
         dead = true;
+        diedLastRound = true;
         if (this instanceof Monster) {
             Room.get().getActiveEntities().remove(this);
         } else {
@@ -423,15 +430,21 @@ public abstract class DiceEntity {
         }
         equipment.add(e);
         somethingChanged();
+        fullHeal();
+        somethingChanged();
     }
 
     public void removeEquipment(Equipment e) {
         equipment.remove(e);
         somethingChanged();
+        fullHeal();
+        somethingChanged();
     }
 
     public void resetEquipment(){
         equipment.clear();
+        somethingChanged();
+        fullHeal();
         somethingChanged();
     }
 

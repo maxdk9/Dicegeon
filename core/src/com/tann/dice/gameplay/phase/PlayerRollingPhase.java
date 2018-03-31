@@ -36,4 +36,9 @@ public class PlayerRollingPhase extends Phase {
     public boolean canRoll() {
         return true;
     }
+
+    @Override
+    public String describe() {
+        return "Roll or keep your dice";
+    }
 }

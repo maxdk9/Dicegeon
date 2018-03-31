@@ -27,4 +27,9 @@ public class DamagePhase extends Phase {
     public void deactivate() {
         PhaseManager.get().pushPhase(new EnemyRollingPhase());
     }
+
+    @Override
+    public String describe() {
+        return "Enemy is targeting";
+    }
 }

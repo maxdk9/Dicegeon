@@ -21,47 +21,49 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
     DiePanel[] optionsPanels;
     static final int topHeight = 10, hGap = 10, vGap = 3, tickSize = 20;
     public LevelUpPanel(final Hero hero) {
-    this.hero = hero;
+        this.hero = hero;
 
-    basePanel = new DiePanel(hero);
-    addActor(basePanel);
+        basePanel = new DiePanel(hero);
+        addActor(basePanel);
 
-    setSize(basePanel.getWidth()*2 + hGap*3 + tickSize, basePanel.getHeight()*2+vGap*3+topHeight);
-    int bottomHeight = (int) (getHeight()-topHeight);
+        setSize(basePanel.getWidth() * 2 + hGap * 3 + tickSize, basePanel.getHeight() * 2 + vGap * 3 + topHeight);
+        int bottomHeight = (int) (getHeight() - topHeight);
 
-    TextWriter tw = new TextWriter("Level up! Choose a new class:");
-    addActor(tw);
-    tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(bottomHeight+topHeight/2-tw.getHeight()/2));
+        TextWriter tw = new TextWriter("Level up! Choose a new class:");
+        addActor(tw);
+        tw.setPosition((int) (getWidth() / 2 - tw.getWidth() / 2), (int) (bottomHeight + topHeight / 2 - tw.getHeight() / 2));
 
 
-    List<HeroType> options = Tann.pickNRandomElements(hero.getHeroType().getLevelupOptions(), 2);
-    basePanel.setPosition(hGap, (int)(bottomHeight/2-basePanel.getHeight()/2));
-    optionsPanels = new DiePanel[options.size()];
-    //TODO update this for new EntityType stuff
-    for(int i=0;i<options.size();i++){
-        final HeroType et = options.get(i);
-        Hero choice = et.buildHero();
-        choice.setColour(hero.getColour());
-        DiePanel dp = choice.getDiePanel();
-        addActor(dp);
-        dp.setPosition(dp.getWidth() + hGap*2, i*(vGap+dp.getHeight())+vGap);
-        Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
-          @Override
-          public void run() {
-              hero.levelUpTo(et);
-              Main.getCurrentScreen().popLight();
-              Main.getCurrentScreen().pop(LevelUpPanel.this);
-              PhaseManager.get().getPhase().refreshPhase();
-          }
-        });
+        List<HeroType> options = Tann.pickNRandomElements(hero.getHeroType().getLevelupOptions(), 2);
+        basePanel.setPosition(hGap, (int) (bottomHeight / 2 - basePanel.getHeight() / 2));
+        optionsPanels = new DiePanel[options.size()];
 
-        tick.setBorder(Colours.dark, Colours.light, 1);
-        tick.setColor(hero.getColour());
-        addActor(tick);
-        tick.setPosition((int)(dp.getWidth()*2 + hGap * 2.5f),
-            (int)(dp.getY() + dp.getHeight()/2 - tick.getHeight()/2));
-        optionsPanels[i] = dp;
-    }
+        for (int i = 0; i < options.size(); i++) {
+            final HeroType et = options.get(i);
+            Hero choice = et.buildHero();
+            choice.diedLastRound = hero.diedLastRound;
+            choice.fullHeal();
+            choice.setColour(hero.getColour());
+            DiePanel dp = choice.getDiePanel();
+            addActor(dp);
+            dp.setPosition(dp.getWidth() + hGap * 2, i * (vGap + dp.getHeight()) + vGap);
+            Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
+                @Override
+                public void run() {
+                    hero.levelUpTo(et);
+                    Main.getCurrentScreen().popAllLight();
+                    Main.getCurrentScreen().pop(LevelUpPanel.this);
+                    PhaseManager.get().getPhase().refreshPhase();
+                }
+            });
+
+            tick.setBorder(Colours.dark, Colours.light, 1);
+            tick.setColor(hero.getColour());
+            addActor(tick);
+            tick.setPosition((int) (dp.getWidth() * 2 + hGap * 2.5f),
+                    (int) (dp.getY() + dp.getHeight() / 2 - tick.getHeight() / 2));
+            optionsPanels[i] = dp;
+        }
 
         TextButton org = new TextButton("Inventory", 2);
         org.setRunnable(new Runnable() {
@@ -70,12 +72,12 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
                 PartyManagementPanel p = PartyManagementPanel.get();
                 p.refresh();
                 Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
-                p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
+                p.setPosition((int) (Main.width / 2 - p.getWidth() / 2), 5);
             }
         });
         addActor(org);
-        org.setPosition(3, getHeight()-3-org.getHeight()-topHeight);
-  }
+        org.setPosition(3, getHeight() - 3 - org.getHeight() - topHeight);
+    }
 
   @Override
   public void draw(Batch batch, float parentAlpha) {

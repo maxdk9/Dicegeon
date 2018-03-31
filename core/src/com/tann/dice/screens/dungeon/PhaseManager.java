@@ -1,5 +1,6 @@
 package com.tann.dice.screens.dungeon;
 
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.phase.Phase;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class PhaseManager {
             System.err.println("popping error, previous phase was " + popped.toString());
         }
         getPhase().activate();
+        Main.getCurrentScreen().activatePhase(getPhase());
     }
 
     public void popPhase(Class clazz) {
@@ -63,5 +65,6 @@ public class PhaseManager {
 
     public void kickstartPhase() {
         getPhase().activate();
+        Main.getCurrentScreen().activatePhase(getPhase());
     }
 }

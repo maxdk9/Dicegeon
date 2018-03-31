@@ -9,8 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
-import com.tann.dice.screens.dungeon.TargetingManager;
-import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
+import com.tann.dice.gameplay.phase.Phase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ public abstract class Screen extends Lay{
 	public void act(float delta) {
 		if(active){
 			if(shakeMagnitude>.1){
-			setPosition((float)(Math.sin(Main.ticks*shakeFrequency)*shakeMagnitude), 
+				setPosition((float)(Math.sin(Main.ticks*shakeFrequency)*shakeMagnitude),
 					(float) (Math.cos((Main.ticks+100)*shakeFrequency)*shakeMagnitude));
 			}
 			else{
@@ -172,10 +171,10 @@ public abstract class Screen extends Lay{
 	}
 
 	public void popAllLight(){
-		while(popLight()){}
+		while(popSingleLight()){}
 	}
 
-	public boolean popLight() {
+	public boolean popSingleLight() {
 		if(modalStack.size()>0 && modalStack.get(modalStack.size()-1).b == null){
 			pop();
 			return true;
@@ -235,5 +234,7 @@ public abstract class Screen extends Lay{
 		a.setPosition((int)(getWidth()/2-a.getWidth()/2), (int)(getHeight()/2-a.getHeight()/2));
 		push(a, InputBlocker.DARK);
 	}
+
+	public void activatePhase(Phase phase){}
 
 }

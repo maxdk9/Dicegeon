@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.bullet.collision.ContactListener;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btManifoldPoint;
 
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Sounds;
 
 public class MyContactListener extends ContactListener {

@@ -13,6 +13,7 @@ public class LevelEndPhase extends Phase {
     LevelEndPanel levelEndPanel;
     @Override
     public void activate() {
+        Party.get().reset();
         int level = DungeonScreen.get().level;
         List<Equipment> gainedEquipment = new ArrayList<>();
         if(level%2==1){
@@ -33,12 +34,18 @@ public class LevelEndPhase extends Phase {
     @Override
     public void deactivate() {
         DungeonScreen.get().spellButt.setVisible(true);
+        Party.get().startOfFight();
     }
 
     @Override
     public void refreshPhase() {
         levelEndPanel.action();
         levelEndPanel.layout();
+    }
+
+    @Override
+    public String describe() {
+        return "You beat it!";
     }
 
 

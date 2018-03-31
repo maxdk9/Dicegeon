@@ -10,4 +10,9 @@ public class NothingPhase extends Phase {
 
     }
 
+    @Override
+    public String describe() {
+        return "Nothing hmm... this probably shouldn't be here";
+    }
+
 }

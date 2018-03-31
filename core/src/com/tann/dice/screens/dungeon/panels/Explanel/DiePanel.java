@@ -1,17 +1,20 @@
 package com.tann.dice.screens.dungeon.panels.Explanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
+import com.tann.dice.gameplay.entity.type.EntityType;
 import com.tann.dice.screens.dungeon.panels.DieSpinner;
+import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
-public class DiePanel extends InfoPanel implements OnPop {
+public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
     public DiceEntity entity;
     public DiePanel(final DiceEntity entity) {
         this.entity = entity;
@@ -22,7 +25,7 @@ public class DiePanel extends InfoPanel implements OnPop {
                 if(e!=null){
                     PartyManagementPanel.get().equip(entity);
                 }
-                Main.getCurrentScreen().popLight();
+                Main.getCurrentScreen().popAllLight();
                 event.cancel();
                 event.stop();
                 event.handle();
@@ -36,7 +39,7 @@ public class DiePanel extends InfoPanel implements OnPop {
     public void layout(){
         clearChildren();
         Pixl p = new Pixl(this, gap);
-        p.actor(new TextWriter(entity.name+"  ("+entity.getMaxHp()+"[h][red][heart][h][light])"));
+        p.actor(new TextWriter(entity.name+"  ("+entity.getHp()+"/"+entity.getMaxHp()+"[h][red][heart][h][light])"));
         p.row(gap+2);
         p.actor(new DieSpinner(entity.getDie(), entity.getSize().pixels*1.5f));
         p.actor(new NetPanel(entity));
@@ -60,5 +63,11 @@ public class DiePanel extends InfoPanel implements OnPop {
 
     public void somethingChanged() {
         layout();
+    }
+
+    @Override
+    public void repositionExplanel(Explanel p) {
+        Vector2 local = Tann.getLocalCoordinates(this);
+        p.setPosition((int)(local.x+getWidth()/2-p.getWidth()/2), (int)(local.y-p.getHeight()-0));
     }
 }
