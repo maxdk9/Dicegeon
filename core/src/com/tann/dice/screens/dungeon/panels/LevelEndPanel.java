@@ -19,6 +19,7 @@ public class LevelEndPanel extends Group {
             "Imbressive", "[sin]Dicey[sin]"};
 
     List<Equipment> gainedEquipment;
+    boolean action;
     boolean levelup;
     String congrat;
     public LevelEndPanel(List<Equipment> gainedEquipment, boolean levelup) {
@@ -35,9 +36,11 @@ public class LevelEndPanel extends Group {
         p.actor(new TextWriter("[orange]"+ congrat));
         p.row(4);
         for(Equipment e:gainedEquipment){
+            p.gap(4);
             p.actor(new TextWriter("You got: "));
             p.gap(4);
             p.actor(new EquipmentPanel(e, false, false));
+            p.gap(4);
             p.row();
         }
         if(levelup){
@@ -45,9 +48,23 @@ public class LevelEndPanel extends Group {
             p.row();
         }
         p.row(4);
-        TextButton org = new TextButton("Inventory", 2);
-        p.actor(org);
         if(!levelup) {
+            TextButton inventory = new TextButton("Inventory", 2);
+            p.actor(inventory);
+            inventory.setRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    PartyManagementPanel p = PartyManagementPanel.get();
+                    if (!levelup) {
+                        PhaseManager.get().getPhase().refreshPhase();
+                    }
+                    p.refresh();
+                    Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
+                    p.setPosition((int) (Main.width / 2 - p.getWidth() / 2), 5);
+                }
+            });
+        }
+        if(action) {
             TextButton cont = new TextButton("Continue", 2);
             p.actor(cont);
             cont.setRunnable(new Runnable() {
@@ -60,15 +77,7 @@ public class LevelEndPanel extends Group {
         }
         p.row(3);
         p.pix();
-        org.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                PartyManagementPanel p = PartyManagementPanel.get();
-                p.refresh();
-                Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
-                p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
-            }
-        });
+
         for (final DiceEntity de : Party.get().getActiveEntities()) {
             de.getEntityPanel().showLevelUpTick(levelup);
         }
@@ -80,7 +89,9 @@ public class LevelEndPanel extends Group {
         super.draw(batch, parentAlpha);
     }
 
-    public void levelledUp() {
+    public void action(){
+        action = true;
         levelup = false;
     }
+
 }

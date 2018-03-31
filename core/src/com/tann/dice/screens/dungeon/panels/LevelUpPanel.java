@@ -106,4 +106,5 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
         p.setPosition(local.x+basePanel.getX()+basePanel.getWidth()/2-p.getWidth()/2,
                 local.y+basePanel.getY()-p.getHeight()-2);
     }
+
 }

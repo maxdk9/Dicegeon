@@ -14,6 +14,7 @@ import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
+import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
@@ -73,6 +74,7 @@ public class TargetingManager {
                 d.use();
                 break;
             default:
+                DungeonScreen.get().spellButt.hide();
                 targetableClick(d);
                 break;
         }

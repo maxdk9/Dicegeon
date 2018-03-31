@@ -2,12 +2,9 @@ package com.tann.dice.gameplay.phase;
 
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.LevelEndPanel;
-import com.tann.dice.screens.dungeon.panels.SpellButt;
-import com.tann.dice.util.InputBlocker;
 import com.tann.dice.util.Tann;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +37,9 @@ public class LevelEndPhase extends Phase {
 
     @Override
     public void refreshPhase() {
-        levelEndPanel.levelledUp();
+        levelEndPanel.action();
         levelEndPanel.layout();
     }
+
+
 }
