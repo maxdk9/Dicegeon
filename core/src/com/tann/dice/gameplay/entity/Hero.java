@@ -64,6 +64,9 @@ public class Hero extends DiceEntity {
                 Party.get().activateRollEffect(e);
             }
         }
+        if(Party.get().getRolls() == 0 && Party.get().allDiceStopped()){
+            DungeonScreen.get().confirmDice(true);
+        }
     }
 
     public List<Spell> getSpells() {

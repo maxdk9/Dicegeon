@@ -79,7 +79,18 @@ public class DungeonScreen extends Screen {
             public void draw(Batch batch, float parentAlpha) {
                 Draw.fillActor(batch, this, Colours.dark, Colours.grey, 1);
                 batch.setColor(Colours.light);
-                TannFont.font.drawString(batch, Party.get().getRolls()+"/"+Party.get().getMaxRolls(), (int)(this.getX()+this.getWidth()/3), (int)(this.getY()+this.getHeight()/2), Align.center);
+                int rolls = Party.get().getRolls();
+                int maxRolls = Party.get().getMaxRolls();
+                String rollText;
+                if(rolls == 0){
+                    batch.setColor(Colours.red);
+                    rollText = "Final Roll";
+                }
+                else {
+                    batch.setColor(Colours.light);
+                    rollText = rolls + "/" + maxRolls;
+                }
+                TannFont.font.drawString(batch, rollText, (int)(this.getX()+this.getWidth()/3), (int)(this.getY()+this.getHeight()/2), Align.center);
                 batch.setColor(Colours.z_white);
                 batch.draw(Images.roll, (int)(this.getX()+this.getWidth()/3*2-Images.roll.getRegionWidth()/2), (int)(this.getY() + this.getHeight()/2 - Images.roll.getRegionHeight()/2));
             }
@@ -204,7 +215,7 @@ public class DungeonScreen extends Screen {
         }
     }
 
-    private void confirmDice(boolean force) {
+    public void confirmDice(boolean force) {
         if(PhaseManager.get().getPhase() instanceof PlayerRollingPhase) {
             boolean allGood = true;
             for (DiceEntity h : Party.get().getActiveEntities()) {

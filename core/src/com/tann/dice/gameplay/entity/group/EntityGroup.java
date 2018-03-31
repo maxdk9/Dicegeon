@@ -5,6 +5,7 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
@@ -206,5 +207,21 @@ public class EntityGroup {
     }
 
     public void reset() {
+    }
+
+    public boolean allDiceStopped() {
+        for(DiceEntity de:getAllActive()){
+            Die.DieState state = de.getDie().getState();
+            switch(state){
+                case Rolling:
+                case Unlocking:
+                    return false;
+                case Stopped:
+                case Locked:
+                case Locking:
+                    break;
+            }
+        }
+        return true;
     }
 }

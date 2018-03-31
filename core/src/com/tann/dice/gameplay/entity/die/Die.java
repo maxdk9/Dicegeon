@@ -138,9 +138,9 @@ public class Die implements Targetable{
             case Stopped:
                 damp();
                 if(previousState == Rolling) {
-                    entity.stopped();
                     this.lockedSide = getSide();
                     glow = 1;
+                    entity.stopped();
                 }
                 break;
             case Locked:
