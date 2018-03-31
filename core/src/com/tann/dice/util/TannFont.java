@@ -98,7 +98,7 @@ public class TannFont {
         for(int i=0;i<text.length();i++){
             char c = text.charAt(i);
             total+=glyphs.get(c).getRegionWidth();
-            if(c==' ')total+=1;
+//            if(c==' ')total+=1;
             if(i<text.length()-1)total+=1;
         }
         return total;

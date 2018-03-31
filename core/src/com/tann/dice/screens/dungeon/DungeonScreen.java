@@ -416,7 +416,6 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void activatePhase(Phase phase) {
-        System.out.println(phase.getClass().getSimpleName());
         turnPhaseWriter.setText(phase.describe());
         turnPhaseWriter.setPosition((int)(getWidth()/2-turnPhaseWriter.getWidth()/2), (int)(getHeight()-turnPhaseWriter.getHeight()-1));
     }

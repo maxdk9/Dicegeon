@@ -42,7 +42,14 @@ public class NetPanel extends Group {
             List<Spell> spellList = h.getSpells();
             for(int i=0;i<spellList.size();i++){
                 Spell s = spellList.get(i);
-                SpellPanel panel = new SpellPanel(s, false);
+                SpellPanel panel = new SpellPanel(s, false, false);
+                panel.addListener(new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        Main.learnt = true;
+                        return false;
+                    }
+                });
                 place(panel, 2,2);
             }
             for(int i=0;i< h.equipmentMaxSize;i++){
@@ -80,6 +87,7 @@ public class NetPanel extends Group {
                         return false;
                     }
                 }
+                Main.learnt = true;
                 Main.getCurrentScreen().pop(Explanel.class);
                 Explanel exp = Explanel.get();
                 exp.setup(s, false, de);

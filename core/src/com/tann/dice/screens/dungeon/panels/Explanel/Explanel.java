@@ -148,17 +148,16 @@ public class Explanel extends InfoPanel implements OnPop {
                     }
                     break;
             }
-        }
-
-        if(PhaseManager.get().getPhase().canTarget() && !enoughMagic){
-            String text = "[red]Not enough magic";
-            if(Party.get().getTotalTotalTotalAvailableMagic() >= spell.getCost()){
-                text += "[n][light]Tap your magic dice to gain magic";
+            if(PhaseManager.get().getPhase().canTarget() && !enoughMagic){
+                String text = "[red]Not enough magic";
+                if(Party.get().getTotalTotalTotalAvailableMagic() >= spell.getCost()){
+                    text += "[n][light]Tap your magic dice to gain magic";
+                }
+                TextWriter tw = new TextWriter(text, Integer.MAX_VALUE, Colours.red, 2);
+                tw.setColor(Colours.red);
+                addActor(tw);
+                tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(-tw.getHeight()-5));
             }
-            TextWriter tw = new TextWriter(text, Integer.MAX_VALUE, Colours.red, 2);
-            tw.setColor(Colours.red);
-            addActor(tw);
-            tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(-tw.getHeight()-5));
         }
     }
 

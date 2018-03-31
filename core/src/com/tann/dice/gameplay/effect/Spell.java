@@ -57,7 +57,7 @@ public class Spell implements Targetable{
 
     private SpellPanel panel;
     public SpellPanel getPanel() {
-        if(panel == null) panel = new SpellPanel(this, true);
+        if(panel == null) panel = new SpellPanel(this, true, true);
         return panel;
     }
 

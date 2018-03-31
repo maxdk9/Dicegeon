@@ -53,6 +53,22 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
         batch.setColor(entity.getColour());
         int rectHeight = TEXT_GAP*2 + TannFont.font.getHeight();
         Draw.drawRectangle(batch, getX(), getY()+getHeight()-rectHeight, getWidth(), rectHeight, 1);
+        if(!Main.learnt){
+            String text = "Tap icons to learn what they do";
+            int gap = 2;
+            int width = TannFont.font.getWidth(text)+gap*2;
+            int height = TannFont.font.getHeight()+gap*2;
+            int startX = (int) (getX() + getWidth()/2-width/2);
+            int startY = (int) (getY() - height - 3);
+
+            batch.setColor(entity.getColour());
+            Draw.fillRectangle(batch, startX, startY, width, height);
+            batch.setColor(Colours.dark);
+            Draw.fillRectangle(batch, startX+gap/2, startY+gap/2, (float) (width-gap), (float) (height-gap));
+            batch.setColor(Colours.light);
+            TannFont.font.drawString(batch, text, startX + gap, startY + gap);
+        }
+
         super.draw(batch, parentAlpha);
     }
 

@@ -16,7 +16,7 @@ public class SpellPanel extends Actor{
 
     final Spell spell;
     boolean big;
-    public SpellPanel(final Spell spell, boolean big){
+    public SpellPanel(final Spell spell, boolean big, final boolean targetable){
         this.big = big;
         int size = big?Images.spellBorderBig.getRegionHeight():Images.spellBorder.getRegionHeight();
         setSize(size, size);
@@ -27,7 +27,7 @@ public class SpellPanel extends Actor{
                 if(PartyManagementPanel.get().getSelectedEquipment()!=null){
                     return false;
                 }
-                TargetingManager.get().click(spell);
+                TargetingManager.get().click(spell, targetable);
                 event.cancel();
                 return true;
             }

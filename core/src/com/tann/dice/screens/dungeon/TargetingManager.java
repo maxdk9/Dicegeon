@@ -77,7 +77,7 @@ public class TargetingManager {
                 break;
             default:
                 DungeonScreen.get().spellButt.hide();
-                targetableClick(d);
+                targetableClick(d, true);
                 break;
         }
         DungeonScreen.get().checkDoneTargeting();
@@ -95,12 +95,12 @@ public class TargetingManager {
         }
     }
 
-    public void click(Spell spell) {
-        targetableClick(spell);
+    public void click(Spell spell, boolean targetable) {
+        targetableClick(spell, targetable);
     }
 
-    private void targetableClick(Targetable t) {
-        if (!PhaseManager.get().getPhase().canTarget()) {
+    private void targetableClick(Targetable t, boolean targetable) {
+        if (!targetable || !PhaseManager.get().getPhase().canTarget()) {
 
             Actor a = Main.getCurrentScreen().getTopActor();
             if(a instanceof Explanel){
@@ -134,7 +134,7 @@ public class TargetingManager {
             return;
         }
 
-        boolean usable = t.isUsable();
+        boolean usable = true;
         if(usable) {
             showTargetingHighlights();
         }

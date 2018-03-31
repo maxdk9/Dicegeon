@@ -48,6 +48,8 @@ public class Main extends ApplicationAdapter {
   Screen previousScreen;
   public static float ticks;
 
+  public static boolean learnt;
+
   FrameBuffer fb;
 
   public static Screen getCurrentScreen() {
