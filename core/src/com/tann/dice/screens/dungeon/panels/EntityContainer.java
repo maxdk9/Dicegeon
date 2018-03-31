@@ -17,6 +17,7 @@ public class EntityContainer extends Group {
   static final float height = Main.height - DungeonScreen.BOTTOM_BUTTON_HEIGHT-DungeonScreen.BUTT_GAP*2;
   private List<DiceEntity> entities = new ArrayList<>();
   public EntityContainer(boolean friendly) {
+    setTransform(false);
     int dist = 7;
     setSize(width, height);
     setPosition(friendly?dist:Main.width-width-dist, DungeonScreen.BOTTOM_BUTTON_HEIGHT+DungeonScreen.BUTT_GAP*2);

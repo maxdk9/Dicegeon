@@ -25,6 +25,7 @@ public class NetPanel extends Group {
     DiceEntity de;
     int size;
     public NetPanel(DiceEntity de) {
+        setTransform(false);
         size = de.getSize().pixels;
         setSize((size-1)*4+1, (size-1)*3+1);
         this.de = de;

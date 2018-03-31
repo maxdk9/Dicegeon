@@ -19,6 +19,7 @@ import com.tann.dice.util.*;
 public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
     public DiceEntity entity;
     public DiePanel(final DiceEntity entity) {
+        setTransform(false);
         this.entity = entity;
         addListener(new InputListener(){
             @Override

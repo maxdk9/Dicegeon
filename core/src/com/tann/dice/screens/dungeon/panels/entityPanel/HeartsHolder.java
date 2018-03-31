@@ -19,6 +19,7 @@ public class HeartsHolder extends Group{
     int heartsPerRow = 5;
     boolean huge;
     public HeartsHolder(DiceEntity e) {
+        setTransform(false);
         this.entity =e;
         huge = e.getSize() == DiceEntity.EntitySize.huge || e.getSize() == DiceEntity.EntitySize.big;
         if(huge){

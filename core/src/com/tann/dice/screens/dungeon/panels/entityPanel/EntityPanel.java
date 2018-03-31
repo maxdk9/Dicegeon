@@ -39,6 +39,7 @@ public class EntityPanel extends Group {
 
     Button tick;
     public EntityPanel(final DiceEntity entity) {
+        setTransform(false);
         this.entity = entity;
         huge = entity.getSize() == DiceEntity.EntitySize.huge || entity.getSize() == DiceEntity.EntitySize.big;
         profile = entity.getProfile();

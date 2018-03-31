@@ -14,11 +14,13 @@ public class TextButton extends Group{
     TannFont font = TannFont.font;
     boolean highlight;
     public TextButton(float width, float height, String text) {
+        setTransform(false);
         setText(text);
         setSize(width, height);
     }
 
     public TextButton(String text, int gap) {
+        setTransform(false);
         setText(text);
         setSize(TannFont.font.getWidth(text)+gap*2, TannFont.font.getHeight()+gap*2);
     }

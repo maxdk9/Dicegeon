@@ -24,6 +24,7 @@ public class SpellHolder extends Group {
     public static int GAP = 2;
 
     public SpellHolder() {
+        setTransform(false);
         // just block for dice underneath
         addListener(new InputListener(){
             @Override

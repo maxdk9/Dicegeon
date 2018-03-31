@@ -32,6 +32,7 @@ public class InventoryPanel extends Group {
     }
 
     private InventoryPanel() {
+        setTransform(false);
         setSize(PANEL_SIZE*across + gap*(across+1), PANEL_SIZE*down + gap*(down+1));
         reset();
         addListener(new InputListener(){

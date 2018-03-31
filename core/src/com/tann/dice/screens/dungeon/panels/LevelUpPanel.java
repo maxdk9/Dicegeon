@@ -21,6 +21,7 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
     DiePanel[] optionsPanels;
     static final int topHeight = 10, hGap = 10, vGap = 3, tickSize = 20;
     public LevelUpPanel(final Hero hero) {
+        setTransform(false);
         this.hero = hero;
 
         basePanel = new DiePanel(hero);

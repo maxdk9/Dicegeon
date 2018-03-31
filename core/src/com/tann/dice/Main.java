@@ -23,6 +23,7 @@ import com.tann.dice.screens.map.MapScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.badlogic.gdx.graphics.GL20.*;
@@ -47,6 +48,7 @@ public class Main extends ApplicationAdapter {
   Screen currentScreen;
   Screen previousScreen;
   public static float ticks;
+  public static int frames;
 
   public static boolean learnt;
 
@@ -58,9 +60,6 @@ public class Main extends ApplicationAdapter {
 
   public enum MainState {
     Normal, Paused
-  }
-
-  public Main() {
   }
 
   //Callbacks
@@ -76,8 +75,6 @@ public class Main extends ApplicationAdapter {
     scale = SCREEN_HEIGHT / 180;
     width = SCREEN_WIDTH / scale;
     height = SCREEN_HEIGHT / scale;
-    logTime(null);
-    logTime("start");
     Sounds.setup();
     atlas = new TextureAtlas(Gdx.files.internal("2d/atlas_image.atlas"));
     for (Texture t : atlas.getTextures()) {
@@ -87,11 +84,9 @@ public class Main extends ApplicationAdapter {
     for (Texture t : atlas_3d.getTextures()) {
 			t.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
     }
-    logTime("textures");
     self = this;
     Draw.setup();
     TextWriter.setup();
-    logTime("setup");
     stage = new TannStage(new FitViewport(Main.width, Main.height));
     stage.getBatch().setBlendFunctionSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
     orthoCam = (OrthographicCamera) stage.getCamera();
@@ -135,14 +130,11 @@ public class Main extends ApplicationAdapter {
         return true;
       }
     });
-    logTime("bits");
     BulletStuff.init();
-    logTime("bullet");
     setScreen(DungeonScreen.get());
     DungeonScreen.get().nextLevel();
 //    setScreen(new DebugScreen());
 //    setScreen(MapScreen.get());
-    logTime("screen");
 
     String ex = Prefs.getString("lastException", "");
     if(!ex.equals("")){
@@ -153,16 +145,17 @@ public class Main extends ApplicationAdapter {
 
   @Override
   public void render() {
+    frames++;
+    int sc = Main.scale;
+    resetTime();
     long renderStart = System.currentTimeMillis();
     try {
       if (Gdx.graphics.getDeltaTime() > 63 / 1000f && Main.ticks > 2) {
         gcPauses++;
       }
       update(Gdx.graphics.getDeltaTime());
-
+      logTime("upd");
       Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT);
-
-      int sc = Main.scale;
 
       // draw pre-dice
       fb.bind();
@@ -170,8 +163,10 @@ public class Main extends ApplicationAdapter {
       stage.getViewport().apply();
       batch.begin();
       currentScreen.drawBackground(batch);
+      logTime("bk1");
       drawFPSAndVersion();
       batch.end();
+      if(renderSwapChadwick) System.out.println("background: "+batch.renderCalls);
       fb.end();
       Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
       bufferDrawer.begin();
@@ -180,19 +175,23 @@ public class Main extends ApplicationAdapter {
 
       // draw dice
       BulletStuff.render();
+      logTime("bl1");
 
       // draw post-dice
       fb.bind();
       fb.begin();
       Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
       stage.draw();
+      if(renderSwapChadwick) System.out.println("foreground: "+((SpriteBatch)stage.getBatch()).renderCalls);
       fb.end();
       bufferDrawer.begin();
       Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
       bufferDrawer.end();
+      logTime("frg");
 
       // draw top dice
       BulletStuff.renderTopBits();
+      logTime("bl2");
 
     } catch (RuntimeException e){
       logException(e);
@@ -283,11 +282,28 @@ public class Main extends ApplicationAdapter {
 
   int gcPauses = 0;
 
+  public static void log(String s){
+
+  }
+
   private void drawFPSAndVersion() {
     batch.setColor(Colours.blue);
     TannFont.font.drawString(batch, versionName, width / 2 - 25, 1);
     TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", width / 2 + 5, 1); // + gcPauses
     TannFont.font.drawString(batch, averageRenderTime +"ms", width / 2 + 27, 1); // + gcPauses
+    if(chadwick){
+      for(int y=0;y<times.size();y++){
+        int yPos = 2+(1+y)*(1+TannFont.font.getHeight());
+
+        TannFont.font.drawString(batch, times.get(y).a+":", width / 2 + 27, yPos);
+        long avg = 0;
+        for(Long l:times.get(y).b){
+          if(l != null) avg += l;
+        }
+        avg /= chadSamples;
+        TannFont.font.drawString(batch, ""+avg, width / 2 + 45, yPos);
+      }
+    }
   }
 
   public static float w(float factor) {
@@ -359,16 +375,29 @@ public class Main extends ApplicationAdapter {
 
   // benchmarking
   public static boolean chadwick = false;
+  public static boolean renderSwapChadwick = false;
   private static long previousTime;
-
+  private static List<Pair<String, Long[]>> times = new ArrayList<>();
+  private static int chadSamples = 20;
   public static void logTime(String id) {
     if (!chadwick) {
       return;
     }
     long currentTime = System.currentTimeMillis();
-    if (id != null) {
-      System.out.println(id + ": " + (currentTime - previousTime));
+    long time = currentTime - previousTime;
+    previousTime = currentTime;
+    boolean found = false;
+    for(Pair<String, Long[]> p:times){
+      if(p.a.equals(id)){
+        p.b[frames%chadSamples]=time;
+        found = true;
+      }
     }
+    if(!found){
+      times.add(new Pair<>(id, new Long[chadSamples]));
+    }
+  }
+  private static void resetTime(){
     previousTime = System.currentTimeMillis();
   }
 

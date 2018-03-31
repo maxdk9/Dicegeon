@@ -35,6 +35,7 @@ public class TextWriter extends Group {
     }
 
     public TextWriter(String text, int width, Color borderCol, int borderSize) {
+        setTransform(false);
         this.text=text;
         this.borderSize = borderSize;
         this.borderCol = borderCol;

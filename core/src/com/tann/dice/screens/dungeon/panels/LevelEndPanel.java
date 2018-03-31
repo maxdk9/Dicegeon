@@ -24,6 +24,7 @@ public class LevelEndPanel extends Group {
     boolean levelup;
     String congrat;
     public LevelEndPanel(List<Equipment> gainedEquipment, boolean levelup) {
+        setTransform(false);
         this.gainedEquipment = gainedEquipment;
         this.congrat = Tann.getRandom(congrats);
         this.levelup = levelup;
