@@ -45,6 +45,7 @@ public abstract class DiceEntity {
     // rendering vars
     protected Color col = Colours.purple;
     protected TextureRegion lapel;
+    protected TextureRegion lapel2d;
     private EntityPanel ep;
     // temp junky variables
     public String name;
@@ -61,7 +62,7 @@ public abstract class DiceEntity {
         this.name = type.name;
 
         this.size = type.size;
-        this.lapel = Main.atlas_3d.findRegion(size+"/lapel/lapel");
+        setupLapels(0);
         List<AtlasRegion> portraits = Tann.getRegionsStartingWith("portrait/"+name);
         if(portraits.size()>0){
             portrait = Tann.getRandom(portraits);
@@ -316,6 +317,10 @@ public abstract class DiceEntity {
         return lapel;
     }
 
+    public TextureRegion get2DLapel() {
+        return lapel2d;
+    }
+
 
     public void targetedBy(DiceEntity e) {
         targeted = e;
@@ -456,4 +461,8 @@ public abstract class DiceEntity {
         return size;
     }
 
+    public void setupLapels(int level){
+        this.lapel = Main.atlas_3d.findRegion(size+"/lapel/"+level);
+        this.lapel2d = Main.atlas.findRegion("lapel2d/"+level);
+    }
 }

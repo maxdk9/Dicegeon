@@ -192,12 +192,7 @@ public class Side {
 	    this.calculatedEffects = other.effects;
     }
 
-
-    public void draw(Batch batch, float x, float y) {
-        draw(batch, x, y, 1, null);
-    }
-
-    public void draw(Batch batch, float x, float y, int scale, Color colour) {
+    public void draw(Batch batch, float x, float y, int scale, Color colour, TextureRegion lapel2D) {
 	    int sz = size.pixels;
 
 	    if(colour != null){
@@ -207,6 +202,7 @@ public class Side {
         batch.setColor(Colours.z_white);
         Draw.drawScaled(batch, getTexture(), (int)x, (int)y, scale, scale);
         Draw.drawScaled(batch, Side.sizeToPips.get(size)[getEffects()[0].getValue()], (int)x, (int)y, scale, scale);
+        Draw.drawScaled(batch, lapel2D, (int)x, (int)y, scale, scale);
     }
 
     private TextureRegion calculatedTexture;

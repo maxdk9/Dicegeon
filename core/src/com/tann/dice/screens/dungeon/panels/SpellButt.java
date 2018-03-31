@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
+import com.tann.dice.Main;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -32,6 +33,7 @@ public class SpellButt extends Group {
                 if(Tann.dist(x,y,getWidth()/2, getHeight()/2)>getWidth()/2){
                     return false;
                 }
+                Main.getCurrentScreen().popLight();
                 toggleButt();
                 event.setBubbles(false);
                 return super.touchDown(event, x, y, pointer, button);

@@ -15,19 +15,19 @@ import com.tann.dice.util.Draw;
 
 public class DieSidePanel extends Actor {
     Side side;
-    Color colour;
+    DiceEntity entity;
     int scale;
 
-    public DieSidePanel(Side side, Color colour, int scale) {
+    public DieSidePanel(Side side, DiceEntity entity, int scale) {
         this.side = side;
-        this.colour = colour;
+        this.entity = entity;
         this.scale = scale;
         setSize(side.getTexture().getRegionWidth()*scale, side.getTexture().getRegionHeight()*scale);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        side.draw(batch, getX(), getY(), scale, colour);
+        side.draw(batch, getX(), getY(), scale, entity.getColour(), entity.get2DLapel());
         super.draw(batch, parentAlpha);
     }
 }

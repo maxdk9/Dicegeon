@@ -16,7 +16,7 @@ public class MonsterType extends EntityType<MonsterType>{
         ALL_MONSTERS.add(this);
     }
 
-    public static final MonsterType goblin = new MonsterType().name("Goblin").hp(5)
+    public static final MonsterType goblin = new MonsterType().name("Goblin").hp(1)
         .sides(Side.sword2, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1);
     public static final MonsterType archer = new MonsterType().name("Archer").hp(3).size(DiceEntity.EntitySize.smol)
             .sides(Side.smol_arrow3, Side.smol_arrow3, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2);

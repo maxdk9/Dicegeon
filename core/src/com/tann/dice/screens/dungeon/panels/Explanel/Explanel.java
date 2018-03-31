@@ -15,6 +15,7 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
@@ -60,7 +61,7 @@ public class Explanel extends InfoPanel implements OnPop {
         if(targetable instanceof Spell) setup((Spell) targetable, usable);
         else if(targetable instanceof Die){
             Die d = (Die) targetable;
-            setup(d.getActualSide(), usable, d.getColour());
+            setup(d.getActualSide(), usable, d.entity);
         }
     }
 
@@ -89,10 +90,10 @@ public class Explanel extends InfoPanel implements OnPop {
 
 
     public Side side;
-    public void setup(Side side, boolean usable, Color colour){
+    public void setup(Side side, boolean usable, DiceEntity entity){
         reset();
         Pixl p = getPixl();
-        p.actor(new DieSidePanel(side, colour, 2))
+        p.actor(new DieSidePanel(side, entity, 2))
         .row()
         .actor(new TextWriter(Eff.describe(side.getEffects()), textWidth));
         finalise(p);

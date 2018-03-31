@@ -62,7 +62,7 @@ public class NetPanel extends Group {
     }
 
     private DieSidePanel setup(final Side s) {
-        DieSidePanel dsp = new DieSidePanel(s, de.getColour(), 1);
+        DieSidePanel dsp = new DieSidePanel(s, de, 1);
         dsp.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -79,7 +79,7 @@ public class NetPanel extends Group {
                 }
                 Main.getCurrentScreen().pop(Explanel.class);
                 Explanel exp = Explanel.get();
-                exp.setup(s, false, de.getColour());
+                exp.setup(s, false, de);
                 Actor a = Main.getCurrentScreen().getTopActor();
                 if(a != null && a instanceof ExplanelReposition){
                     ((ExplanelReposition)a).repositionExplanel(exp);

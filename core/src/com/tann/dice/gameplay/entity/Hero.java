@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.entity;
 
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
@@ -13,12 +14,14 @@ import java.util.List;
 public class Hero extends DiceEntity {
 
     List<Spell> spells;
+    int level;
     public Hero(HeroType type) {
         super(type);
         if(type.colour!=null){
             setColour(type.colour);
         }
         this.spells = Arrays.asList(type.spells);
+        setupLapels(1);
 //        addEquipment(Equipment.byName("Glow Stone"));
     }
 
@@ -30,6 +33,8 @@ public class Hero extends DiceEntity {
     public void levelUpTo(HeroType type) {
         this.entityType = type;
         this.name = type.name;
+        level++;
+        this.lapel = Main.atlas_3d.findRegion(size+"/lapel/"+level);
         setMaxHp(type.hp);
         setSides(type.sides);
         somethingChanged();
