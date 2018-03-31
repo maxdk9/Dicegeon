@@ -72,10 +72,10 @@ public class Eff {
             case Shield:
                 result = getBaseString();
                 switch(targetingType){
-                    case FriendlySingle: result += " one hero"; break;
-                    case FriendlyGroup: result += " everyone"; break;
-                    case Self: result += " yourself"; break;
-                    default: result += " ????"+targetingType; break;
+                    case FriendlySingle: result += " to one hero"; break;
+                    case FriendlyGroup: result += " to everyone"; break;
+                    case Self: result += " to yourself"; break;
+                    default: result += " to ????"+targetingType; break;
                 }
                 break;
             case Magic: result = getBaseString(); break;

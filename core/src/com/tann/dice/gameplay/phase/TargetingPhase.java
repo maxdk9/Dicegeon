@@ -27,6 +27,6 @@ public class TargetingPhase extends Phase {
 
     @Override
     public String describe() {
-        return "Use your dice to attack and defend";
+        return "Use your dice";
     }
 }
