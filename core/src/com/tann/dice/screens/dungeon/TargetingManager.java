@@ -144,11 +144,11 @@ public class TargetingManager {
         if (t.getEffects() == null) return false;
         if (t.getEffects().length == 0) return false;
 
-
-        Eff.TargetingType targetingType = t.getEffects()[0].targetingType;
-        EffType effType = t.getEffects()[0].type;
+        Eff first = t.getEffects()[0];
+        Eff.TargetingType targetingType = first.targetingType;
+        EffType effType = first.type;
         List<DiceEntity> valids = EntityGroup.getValidTargets(targetingType, t.getEffects(), true);
-        if (!valids.contains(entity)) {
+        if (first.isTargeted() && !valids.contains(entity)) {
             String invalidReason = null;
             switch(targetingType){
                 case EnemySingle:
