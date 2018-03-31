@@ -214,12 +214,6 @@ public class BulletStuff {
 		spinCam.lookAt(-1, 2.0f, -1);
 		spinCam.update();
 
-//		cam.position.set(-2.5f, 5, -2.5f);
-//		cam.lookAt(-1, 2.0f, -1);
-//		cam.update();
-
-
-
 		float initialSize = 5*die.entity.getSize().pixels;
 		float sizeFactor = size/initialSize;
 

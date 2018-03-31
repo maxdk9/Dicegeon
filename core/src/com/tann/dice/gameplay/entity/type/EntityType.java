@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity.type;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.util.Tann;
 
 public class EntityType <t>{
 
@@ -29,6 +30,9 @@ public class EntityType <t>{
 
     public t sides(Side... sides){
         this.sides = sides;
+        Tann.swap(sides, 3, 4);
+        Tann.swap(sides, 0, 2);
+        Tann.swap(sides, 1, 0);
         return (t) this;
     }
 

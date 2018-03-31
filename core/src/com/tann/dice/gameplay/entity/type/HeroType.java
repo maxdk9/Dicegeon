@@ -33,7 +33,7 @@ public class HeroType extends EntityType<HeroType> {
     }
 
     public static final HeroType fighter = new HeroType().name("Fighter").hp(5).levelsUpInto(fighter1)
-            .sides(Side.sword2, Side.shield1, Side.sword1, Side.sword1, Side.sword2, Side.nothing).colour(Colours.yellow);
+            .sides( Side.sword2, Side.sword2, Side.sword1, Side.sword1,Side.shield1, Side.nothing).colour(Colours.yellow);
     public static final HeroType fighterOrange = new HeroType().name("Fighter").hp(5).levelsUpInto(fighter1)
             .sides( Side.sword2, Side.sword2, Side.sword1, Side.sword1,Side.shield1, Side.nothing).colour(Colours.orange);
     public static final HeroType defender = new HeroType().name("Defender").hp(5).levelsUpInto(defender1)

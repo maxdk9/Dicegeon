@@ -97,4 +97,10 @@ public class Tann {
         child.setPosition((int)(parent.getWidth()/2-child.getWidth()/2), (int)(parent.getHeight()/2-child.getHeight()/2));
     }
 
+    public static void swap(Object[] array, int i1, int i2){
+        Object o = array[i1];
+        array[i1]=array[i2];
+        array[i2]=o;
+    }
+
 }

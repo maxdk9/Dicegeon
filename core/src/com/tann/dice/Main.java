@@ -135,8 +135,8 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-//    setScreen(DungeonScreen.get());
-    setScreen(new DebugScreen());
+    setScreen(DungeonScreen.get());
+//    setScreen(new DebugScreen());
 //    setScreen(MapScreen.get());
     logTime("screen");
 

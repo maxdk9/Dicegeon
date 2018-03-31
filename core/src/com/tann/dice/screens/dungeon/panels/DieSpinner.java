@@ -28,8 +28,8 @@ public class DieSpinner extends Actor3d {
         }
         else{
             BulletStuff.drawSpinnyDie3(d,
-                    -Main.stage.getCamera().position.x*Main.scale+(result.x+getWidth()/2)* Main.scale,
-                    -Main.stage.getCamera().position.y*Main.scale+(result.y+getHeight()/2)* Main.scale,
+                    (result.x+getWidth()/2)* Main.scale,
+                    (result.y+getHeight()/2)* Main.scale,
                     getWidth()*Main.scale);
         }
 
