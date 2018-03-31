@@ -84,7 +84,7 @@ public class BulletStuff {
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -42f, 0));
-		contactListener = new MyContactListener();
+//		contactListener = new MyContactListener();
 		modelBatch = new ModelBatch();
 
 		ModelBuilder mb = new ModelBuilder();

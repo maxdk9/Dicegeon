@@ -23,6 +23,7 @@ import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
+import com.tann.dice.screens.dungeon.panels.Graph;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
@@ -38,6 +39,7 @@ import java.util.*;
 public class DungeonScreen extends Screen {
 
     private static DungeonScreen self;
+
     public static DungeonScreen get() {
         if (self == null) {
             self = new DungeonScreen();
@@ -60,7 +62,8 @@ public class DungeonScreen extends Screen {
     Button confirmButton;
     public SpellButt spellButt;
     private TextWriter turnPhaseWriter;
-    private void init(){
+
+    private void init() {
         turnPhaseWriter = new TextWriter("", 990, Colours.purple, 2);
         addActor(turnPhaseWriter);
         spellHolder = new SpellHolder();
@@ -72,12 +75,12 @@ public class DungeonScreen extends Screen {
                 new Runnable() {
                     @Override
                     public void run() {
-                        if(Party.get().getRolls()>0){
+                        if (Party.get().getRolls() > 0) {
                             Party.get().roll(false);
                             spellButt.hide();
                         }
                     }
-                }){
+                }) {
             @Override
             public void draw(Batch batch, float parentAlpha) {
                 Draw.fillActor(batch, this, Colours.dark, Colours.grey, 1);
@@ -85,46 +88,45 @@ public class DungeonScreen extends Screen {
                 int rolls = Party.get().getRolls();
                 int maxRolls = Party.get().getMaxRolls();
                 String rollText;
-                if(rolls == 0){
+                if (rolls == 0) {
                     batch.setColor(Colours.red);
                     rollText = "Final Roll";
-                }
-                else {
+                } else {
                     batch.setColor(Colours.light);
                     rollText = rolls + "/" + maxRolls;
                 }
-                TannFont.font.drawString(batch, rollText, (int)(this.getX()+this.getWidth()/3), (int)(this.getY()+this.getHeight()/2), Align.center);
+                TannFont.font.drawString(batch, rollText, (int) (this.getX() + this.getWidth() / 3), (int) (this.getY() + this.getHeight() / 2), Align.center);
                 batch.setColor(Colours.z_white);
-                batch.draw(Images.roll, (int)(this.getX()+this.getWidth()/3*2-Images.roll.getRegionWidth()/2), (int)(this.getY() + this.getHeight()/2 - Images.roll.getRegionHeight()/2));
+                batch.draw(Images.roll, (int) (this.getX() + this.getWidth() / 3 * 2 - Images.roll.getRegionWidth() / 2), (int) (this.getY() + this.getHeight() / 2 - Images.roll.getRegionHeight() / 2));
             }
         };
         addActor(rollButton);
         rollButton.setPosition(-500, 0);
         slideRollButton(false);
-        confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.tick, Colours.dark){
+        confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.tick, Colours.dark) {
             @Override
             public void draw(Batch batch, float parentAlpha) {
                 Draw.fillActor(batch, this, Colours.dark, Colours.grey, 1);
                 batch.setColor(Colours.light);
-                batch.draw(Images.tick, (int)(this.getX()+this.getWidth()/2-Images.tick.getRegionWidth()/2), (int)(this.getY() + this.getHeight()/2 - Images.tick.getRegionHeight()/2));
+                batch.draw(Images.tick, (int) (this.getX() + this.getWidth() / 2 - Images.tick.getRegionWidth() / 2), (int) (this.getY() + this.getHeight() / 2 - Images.tick.getRegionHeight() / 2));
             }
         };
         confirmButton.setRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        popAllLight();
-                        confirmDice(true);
-                    }
-                });
+            @Override
+            public void run() {
+                popAllLight();
+                confirmDice(true);
+            }
+        });
         confirmButton.setColor(Colours.yellow);
         addActor(confirmButton);
         confirmButton.setPosition(getWidth(), 0);
         slideConfirmButton(false);
 
-        addListener(new InputListener(){
+        addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if(!event.isHandled()) bottomClick();
+                if (!event.isHandled()) bottomClick();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -132,13 +134,13 @@ public class DungeonScreen extends Screen {
         spellButt = new SpellButt();
         addActor(spellButt);
         float gap = 12;
-        spellButt.setPosition(EntityContainer.width + friendly.getX() + gap,Main.height-spellButt.getHeight()-gap);
+        spellButt.setPosition(EntityContainer.width + friendly.getX() + gap, Main.height - spellButt.getHeight() - gap);
         PartyManagementPanel.get();
     }
 
-    public int level=0;
+    public int level = 0;
 
-    public void setup(List<Monster> monsters){
+    public void setup(List<Monster> monsters) {
         Room.get().reset();
         Room.get().setEntities(monsters);
         spellButt.hide();
@@ -148,10 +150,12 @@ public class DungeonScreen extends Screen {
     }
 
     public static final List<List<MonsterType>> levels = new ArrayList<>();
-    private static void addLevel(MonsterType... monsterTypes){
+
+    private static void addLevel(MonsterType... monsterTypes) {
         levels.add(Arrays.asList(monsterTypes));
     }
-    static{
+
+    static {
 //        addLevel(MonsterType.dragon, MonsterType.bird, MonsterType.goblin, MonsterType.archer);
 //        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
         addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
@@ -174,17 +178,16 @@ public class DungeonScreen extends Screen {
         spellHolder.setup(Party.get().getSpells());
         PhaseManager.get().clearPhases();
 
-        if(level<levels.size()) {
+        if (level < levels.size()) {
             setup(MonsterType.monsterList(levels.get(level)));
-            level ++;
-        }
-        else {
+            level++;
+        } else {
             PhaseManager.get().pushPhase(new VictoryPhase());
             PhaseManager.get().kickstartPhase(VictoryPhase.class);
             return;
         }
 
-        if(level>1){
+        if (level > 1) {
             Party.get().reset();
             PhaseManager.get().pushPhase(new LevelEndPhase());
         }
@@ -200,18 +203,18 @@ public class DungeonScreen extends Screen {
     }
 
     @Override
-    public void drawBackground(Batch batch){
+    public void drawBackground(Batch batch) {
         batch.setColor(Colours.dark);
         Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
         batch.setColor(Colours.z_white);
-        batch.draw(Images.background, getX(),getY());
-        for(DiceEntity de: EntityGroup.getAllActive()){
+        batch.draw(Images.background, getX(), getY());
+        for (DiceEntity de : EntityGroup.getAllActive()) {
             de.getEntityPanel().drawBackground(batch);
         }
     }
 
     public void confirmDice(boolean force) {
-        if(PhaseManager.get().getPhase() instanceof PlayerRollingPhase) {
+        if (PhaseManager.get().getPhase() instanceof PlayerRollingPhase) {
             boolean allGood = true;
             for (DiceEntity h : Party.get().getActiveEntities()) {
                 Die d = h.getDie();
@@ -224,17 +227,16 @@ public class DungeonScreen extends Screen {
             if (allGood) {
                 PhaseManager.get().popPhase(PlayerRollingPhase.class);
             }
-        }
-        else if (PhaseManager.get().getPhase() instanceof TargetingPhase){
-            if(Party.get().getAvaliableMagic() > 0){
-                if(force) {
+        } else if (PhaseManager.get().getPhase() instanceof TargetingPhase) {
+            if (Party.get().getAvaliableMagic() > 0) {
+                if (force) {
                     showDialog("Spend all your magic first!");
                     DungeonScreen.get().spellButt.show();
                 }
                 return;
             }
-            if(!checkAllDiceUsed()){
-                if(force) {
+            if (!checkAllDiceUsed()) {
+                if (force) {
                     showDialog("Use all your dice first!");
                 }
                 return;
@@ -249,35 +251,15 @@ public class DungeonScreen extends Screen {
 
     public void showDialog(String s, boolean popPhase) {
         TextWriter tw = new TextWriter(s, Integer.MAX_VALUE, Colours.purple, 2);
-        tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(getHeight()/3-tw.getHeight()/2));
-        DungeonScreen.get().push(tw, false, popPhase, true, true, 0, popPhase? PhaseManager.popPhaseRunnable:null);
+        tw.setPosition((int) (getWidth() / 2 - tw.getWidth() / 2), (int) (getHeight() / 3 - tw.getHeight() / 2));
+        DungeonScreen.get().push(tw, false, popPhase, true, true, 0, popPhase ? PhaseManager.popPhaseRunnable : null);
     }
 
-    public void enemyCombat(){
+    public void enemyCombat() {
         Room.get().updateSlids(true);
-        List<DiceEntity> monsters = Room.get().getActiveEntities();
-        float timer = 0;
-        float timerAdd = .00f;
-        for (final DiceEntity de : monsters) {
-            final Monster m = (Monster) de;
-            if(m.isDead()) continue;
-            m.locked=false;
-            timer += timerAdd;
-            addAction(Actions.delay(timer, Actions.run(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            addDie(m);
-                        }
-                    })));
-        }
+        Room.get().roll(true);
     }
 
-    private void addDie(DiceEntity v){
-        v.getDie().addToScreen();
-        v.getDie().resetForRoll();
-        v.getDie().roll();
-    }
 
     @Override
     public void preDraw(Batch batch) {
@@ -290,7 +272,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postDraw(Batch batch) {
-        
+
     }
 
     @Override
@@ -299,7 +281,7 @@ public class DungeonScreen extends Screen {
 
     @Override
     public void postTick(float delta) {
-        if(enemy!=null) enemy.act(delta);
+        if (enemy != null) enemy.act(delta);
     }
 
 
@@ -313,24 +295,23 @@ public class DungeonScreen extends Screen {
 
     }
 
-    private boolean checkAllDiceUsed(){
+    private boolean checkAllDiceUsed() {
         for (DiceEntity de : Party.get().getActiveEntities()) {
             Die d = de.getDie();
             Eff first = d.getActualSide().getEffects()[0];
             if (d.getUsed()) continue;
             if (!first.needsUsing()) continue;
             if (!first.isTargeted()) return false;
-            if (EntityGroup.getValidTargets(d).size()>0) return false;
+            if (EntityGroup.getValidTargets(d).size() > 0) return false;
         }
         return true;
     }
 
     public boolean checkEnd() {
-        if(checkDead(Room.get().getActiveEntities(), true)){
+        if (checkDead(Room.get().getActiveEntities(), true)) {
             nextLevel();
             return true;
-        }
-        else if(checkDead(Party.get().getActiveEntities(), false)){
+        } else if (checkDead(Party.get().getActiveEntities(), false)) {
             PhaseManager.get().clearPhases();
             PhaseManager.get().pushPhase(new LossPhase());
             PhaseManager.get().kickstartPhase(LossPhase.class);
@@ -340,13 +321,12 @@ public class DungeonScreen extends Screen {
     }
 
     private boolean checkDead(List<DiceEntity> entities, boolean testGoingToDie) {
-        for(DiceEntity de:entities){
-            if(testGoingToDie){
-                if(!de.getProfile().isGoingToDie(false)){
+        for (DiceEntity de : entities) {
+            if (testGoingToDie) {
+                if (!de.getProfile().isGoingToDie(false)) {
                     return false;
                 }
-            }
-            else if(!de.isDead()){
+            } else if (!de.isDead()) {
                 return false;
             }
         }
@@ -360,18 +340,18 @@ public class DungeonScreen extends Screen {
     }
 
     public void removeLeftoverDice() {
-        for(DiceEntity h:Party.get().getActiveEntities()){
-            if(!h.getDie().getUsed()){
+        for (DiceEntity h : Party.get().getActiveEntities()) {
+            if (!h.getDie().getUsed()) {
                 h.getDie().use();
             }
         }
     }
 
-    public void showDiePanel(DiceEntity entity){
+    public void showDiePanel(DiceEntity entity) {
         DiePanel pan = entity.getDiePanel();
         push(pan, true, false, true, true, 0, null);
         pan.setPosition(pan.getNiceX(false), pan.getNiceY());
-        if(entity.getTarget() != null) {
+        if (entity.getTarget() != null) {
             for (DiceEntity de : entity.getTarget()) {
                 de.getEntityPanel().setTargeted(true);
             }
@@ -396,12 +376,12 @@ public class DungeonScreen extends Screen {
         TargetingManager.get().deselectTargetable();
     }
 
-    public void slideRollButton(boolean in){
-        rollButton.addAction(Actions.moveTo(in?BUTT_GAP:-rollButton.getWidth(), BUTT_GAP, .3f, Interpolation.pow2Out));
+    public void slideRollButton(boolean in) {
+        rollButton.addAction(Actions.moveTo(in ? BUTT_GAP : -rollButton.getWidth(), BUTT_GAP, .3f, Interpolation.pow2Out));
     }
 
-    public void slideConfirmButton(boolean in){
-        confirmButton.addAction(Actions.moveTo(in?getWidth()-confirmButton.getWidth()-BUTT_GAP: getWidth(), BUTT_GAP, .3f, Interpolation.pow2Out));
+    public void slideConfirmButton(boolean in) {
+        confirmButton.addAction(Actions.moveTo(in ? getWidth() - confirmButton.getWidth() - BUTT_GAP : getWidth(), BUTT_GAP, .3f, Interpolation.pow2Out));
     }
 
     public void setConfirmText(String s) {
@@ -409,7 +389,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void checkDoneTargeting() {
-        if(!checkEnd()){
+        if (!checkEnd()) {
             confirmDice(false);
         }
     }
@@ -417,6 +397,6 @@ public class DungeonScreen extends Screen {
     @Override
     public void activatePhase(Phase phase) {
         turnPhaseWriter.setText(phase.describe());
-        turnPhaseWriter.setPosition((int)(getWidth()/2-turnPhaseWriter.getWidth()/2), (int)(getHeight()-turnPhaseWriter.getHeight()-1));
+        turnPhaseWriter.setPosition((int) (getWidth() / 2 - turnPhaseWriter.getWidth() / 2), (int) (getHeight() - turnPhaseWriter.getHeight() - 1));
     }
 }

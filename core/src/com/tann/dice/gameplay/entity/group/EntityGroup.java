@@ -6,6 +6,7 @@ import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
@@ -46,10 +47,6 @@ public class EntityGroup {
     }
 
     public void firstRoll(){
-        for(DiceEntity entity:getActiveEntities()){
-            entity.getDie().addToScreen();
-            entity.getDie().resetForRoll();
-        }
         roll(true);
     }
 
@@ -59,6 +56,37 @@ public class EntityGroup {
     }
 
     public void roll(boolean firstRoll){
+        if(firstRoll){
+            for(DiceEntity entity:getActiveEntities()){
+                entity.getDie().addToScreen();
+                entity.getDie().resetForRoll();
+            }
+        }
+        int amount = getActiveEntities().size();
+
+        float clackStart = firstRoll?0:.18f;
+        float clackRand = .1f;
+        for(int i=1;i<amount;i++){
+            Tann.delay(new Runnable() {
+                @Override
+                public void run() {
+                    Sounds.playSound(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f));
+                }
+            }, (float) (clackStart+i*clackRand*Math.random()));
+        }
+
+
+        float clockStart = .6f;
+        float clockRand = .1f;
+        for(int i=1;i<amount;i++){
+            Tann.delay(new Runnable() {
+                @Override
+                public void run() {
+                    Sounds.playSound(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f));
+                }
+            }, (float) (clockStart+i*Math.random()*clockRand));
+        }
+
         for(DiceEntity entity:getActiveEntities()){
             entity.getDie().roll();
         }

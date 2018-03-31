@@ -51,7 +51,6 @@ public abstract class DiceEntity {
     // temp junky variables
     public String name;
     EntitySize size;
-    public boolean locked; // only used for monster
     public EntityType entityType;
     public AtlasRegion portrait;
     public int portraitOffset;

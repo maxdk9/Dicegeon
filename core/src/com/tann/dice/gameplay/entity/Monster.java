@@ -45,7 +45,6 @@ public class Monster extends DiceEntity {
                 getDie().removeFromPhysics();
                 EntityPanel ep = getDie().entity.getEntityPanel();
                 ep.lockDie();
-                locked = true;
             }
         }, (nextLockTime-now)/1000f);
         nextLockTime += lockDelay;
