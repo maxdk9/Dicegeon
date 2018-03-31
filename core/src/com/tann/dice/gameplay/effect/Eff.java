@@ -31,43 +31,65 @@ public class Eff {
 
     public Eff(){}
 
-    public String toString(){
-        String result;
+    public String getBaseString(){
         switch(type){
             case Empty:
-                result = "Nothing!"; break;
+                return "Nothing!";
+            case Damage:
+                return getValue() +" damage";
+            case Shield:
+                return "Block "+getValue()+" incoming damage ([yellow][heart][light])";
+            case Magic:
+                return "Gain "+getValue()+" magic to spend on spells";
+            case Healing:
+                return "Restore "+getValue()+" missing health ([purple][heartEmpty][light])";
+            case Buff:
+                return buff.toNiceString();
+            case Execute:
+                return "Kills target if they are on exactly "+getValue()+" hp";
+            case Reroll:
+                return "gain +1 reroll this turn";
+        }
+        return "no base for "+type;
+    }
+
+    public String toString(){
+        String result = getBaseString();
+        switch(type){
+            case Empty:
+                break;
             case Damage:
                 switch(targetingType){
-                    case EnemySingle: result = getValue() +" damage to an enemy"; break;
-                    case EnemySingleRanged: result = getValue() +" damage to ANY enemy"; break;
-                    case EnemyGroup: result = getValue() +" damage to ALL enemies"; break;
-                    case EnemyAndAdjacents: result = getValue() +" damage an enemy and both adjacent enemies"; break;
-                    case EnemyAndAdjacentsRanged: result = getValue() +" damage ANY enemy and both adjacent enemies"; break;
-                    case AllTargeters: result = getValue()+" damage to all enemies who have targeted the hero of your choice"; break;
+                    case EnemySingle: result += " to an enemy"; break;
+                    case EnemySingleRanged: result +=" to ANY enemy"; break;
+                    case EnemyGroup: result += " to ALL enemies"; break;
+                    case EnemyAndAdjacents: result += " to an enemy and both adjacent enemies"; break;
+                    case EnemyAndAdjacentsRanged: result += " to ANY enemy and both adjacent enemies"; break;
+                    case AllTargeters: result += " to all enemies who have targeted the hero of your choice"; break;
                     default: result = "ahh help damage"; break;
                 }
                 break;
             case Shield:
-                result = "Block "+getValue()+" incoming damage ([yellow][heart][light]) to ";
+                result = getBaseString();
                 switch(targetingType){
-                    case FriendlySingle: result += "one hero"; break;
-                    case FriendlyGroup: result += "everyone"; break;
-                    case Self: result += "yourself"; break;
-                    default: result += "????"; break;
+                    case FriendlySingle: result += " one hero"; break;
+                    case FriendlyGroup: result += " everyone"; break;
+                    case Self: result += " yourself"; break;
+                    default: result += " ????"+targetingType; break;
                 }
                 break;
-            case Magic: result = "Gain "+getValue()+" magic to spend on spells"; break;
+            case Magic: result = getBaseString(); break;
             case Healing:
-                result = "Restore "+getValue()+" missing health ([purple][heartEmpty][light]) to ";
+                result = getBaseString();
                 switch(targetingType){
-                    case FriendlySingle: result += "a damaged character"; break;
-                    case FriendlyGroup: result += "ALL damaged characters"; break;
-                    default: result += "Need description QAWEDRFUJ";
+                    case FriendlySingle: result += " a damaged character"; break;
+                    case FriendlyGroup: result += " ALL damaged characters"; break;
+                    default: result += " Need description: " +targetingType;
                 }
                 break;
-            case Execute: result = "Kills target if they are on exactly "+getValue()+" hp"; break;
-            case Reroll: result = "When you roll this, gain +1 reroll this turn"; break;
-            case Buff: result = buff.toNiceString(); break;
+            case Execute: result = getBaseString(); break;
+            case Reroll: result = "When you roll this, "+getBaseString(); break;
+            case Buff: result = getBaseString(); break;
             default: result = "uhoh unknown "+type;
         }
         if(nextTurn){
@@ -148,11 +170,11 @@ public class Eff {
 
     public static String describe(Eff[] effects) {
         String result = "";
-        for(int i=0;i<effects.length;i++){
+        for(int i=0;i<effects.length-1;i++){
             Eff e = effects[i];
-            result += e.toString();
-            if(i<effects.length-1) result += ", ";
+            result += e.getBaseString() + " and ";
         }
+        result += effects[effects.length-1].toString();
         return  result;
     }
 

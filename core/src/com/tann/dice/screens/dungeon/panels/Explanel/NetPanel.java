@@ -17,7 +17,6 @@ import com.tann.dice.screens.dungeon.panels.EquipmentPanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.Draw;
 import com.tann.dice.util.Tann;
 
 import java.util.List;
@@ -70,26 +69,29 @@ public class NetPanel extends Group {
                 if(PartyManagementPanel.get().getSelectedEquipment()!=null){
                     return false;
                 }
-                Actor top =Main.getCurrentScrren().getTopActor();
+                Actor top =Main.getCurrentScreen().getTopActor();
                 if(top instanceof Explanel){
                     Explanel e = (Explanel) top;
                     if(e.side == s){
-                        Main.getCurrentScrren().popLight();
+                        Main.getCurrentScreen().popLight();
                         return false;
                     }
                 }
-                Main.getCurrentScrren().pop(Explanel.class);
+                Main.getCurrentScreen().pop(Explanel.class);
                 Explanel exp = Explanel.get();
                 exp.setup(s, false, de.getColour());
-                Actor a = Main.getCurrentScrren().getTopActor();
+                Actor a = Main.getCurrentScreen().getTopActor();
                 if(a != null && a instanceof ExplanelReposition){
                     ((ExplanelReposition)a).repositionExplanel(exp);
+                }
+                else if(Main.getCurrentScreen() instanceof ExplanelReposition){
+                    ((ExplanelReposition)Main.getCurrentScreen()).repositionExplanel(exp);
                 }
                 else{
                     Vector2 pos = Tann.getLocalCoordinates(NetPanel.this);
                     exp.setPosition(exp.getNiceX(false), pos.y-4-exp.getHeight());
                 }
-                Main.getCurrentScrren().push(exp, false, false, true, true, 0, null);
+                Main.getCurrentScreen().push(exp, false, false, true, true, 0, null);
                 event.handle();
                 event.stop();
                 return super.touchDown(event, x, y, pointer, button);

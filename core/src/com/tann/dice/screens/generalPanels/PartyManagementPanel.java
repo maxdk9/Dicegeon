@@ -3,7 +3,6 @@ package com.tann.dice.screens.generalPanels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -64,7 +63,7 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     done.setRunnable(new Runnable() {
       @Override
       public void run() {
-        Main.getCurrentScrren().pop();
+        Main.getCurrentScreen().pop();
       }
     });
     done.setPosition((int)(getWidth()-gap-done.getWidth()), (int)(getHeight()-gap-done.getHeight()));
@@ -87,7 +86,7 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     }
     this.selectedEquipment = equipment;
     Explanel.get().setup(equipment);
-    Main.getCurrentScrren().push(panel, false, false, true, true, 0, null);
+    Main.getCurrentScreen().push(panel, false, false, true, true, 0, null);
     repositionExplanel(panel);
   }
 

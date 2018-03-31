@@ -129,7 +129,7 @@ public class EntityPanel extends Group {
                 @Override
                 public void run() {
                     LevelUpPanel lup = new LevelUpPanel((Hero) entity);
-                    Main.getCurrentScrren().push(lup, true, true, false, false, InputBlocker.DARK, null);
+                    Main.getCurrentScreen().push(lup, true, true, false, false, InputBlocker.DARK, null);
                     lup.setY(Main.height-lup.getHeight()-3);
                 }
             });

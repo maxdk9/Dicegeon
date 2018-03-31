@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 
 public class InputBlocker extends Actor{
 
@@ -22,7 +21,7 @@ public class InputBlocker extends Actor{
                 @Override
                 public void run() {
                     if(blockerListen) {
-                        Main.getCurrentScrren().pop();
+                        Main.getCurrentScreen().pop();
                     }
 
                 }
@@ -33,7 +32,7 @@ public class InputBlocker extends Actor{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(r!=null) r.run();
-                Main.getCurrentScrren().popLight();
+                Main.getCurrentScreen().popLight();
                 event.handle();
                 event.stop();
                 return super.touchDown(event, x, y, pointer, button);

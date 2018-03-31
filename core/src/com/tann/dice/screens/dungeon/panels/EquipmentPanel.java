@@ -7,9 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
-import com.tann.dice.screens.generalPanels.InventoryPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -39,8 +37,8 @@ public class EquipmentPanel extends Actor {
         }
         else{
           Explanel.get().setup(EquipmentPanel.this.equipment);
-          Main.getCurrentScrren().push(Explanel.get());
-          Actor a = Main.getCurrentScrren().getTopActor();
+          Main.getCurrentScreen().push(Explanel.get());
+          Actor a = Main.getCurrentScreen().getTopActor();
           if(a != null && a instanceof ExplanelReposition){
             ((ExplanelReposition)a).repositionExplanel(Explanel.get());
           }

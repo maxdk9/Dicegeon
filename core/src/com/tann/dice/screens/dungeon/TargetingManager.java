@@ -13,14 +13,12 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
-import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
 
 import java.util.List;
-import javax.swing.event.PopupMenuListener;
 
 public class TargetingManager {
     private static TargetingManager self;
@@ -100,7 +98,7 @@ public class TargetingManager {
     private void targetableClick(Targetable t) {
         if (!PhaseManager.get().getPhase().canTarget()) {
             Explanel.get().setup(t, false);
-            Main.getCurrentScrren().push(Explanel.get());
+            Main.getCurrentScreen().push(Explanel.get());
             return;
         }
         for (DiceEntity de : Party.get().getActiveEntities()) {
@@ -169,14 +167,14 @@ public class TargetingManager {
                 default: break;
             }
             if(invalidReason != null){
-                if(Main.getCurrentScrren().getTopActor() instanceof TextWriter){
-                    Main.getCurrentScrren().popLight();
+                if(Main.getCurrentScreen().getTopActor() instanceof TextWriter){
+                    Main.getCurrentScreen().popLight();
                 }
                 DungeonScreen.get().showDialog(invalidReason);
             }
             return false;
         }
-        Main.getCurrentScrren().popLight();
+        Main.getCurrentScreen().popLight();
         boolean containsDamage = false;
         if (t.use()) {
             for (Eff e : t.getEffects()) {
@@ -211,13 +209,13 @@ public class TargetingManager {
         // dieSide is true if it's a player, you click on the die side and it contains a die
 
         // if you're de-clicking an entity, just declick and return
-        if ((dieSide && getSelectedTargetable()==entity.getDie()) || (!dieSide && Main.getCurrentScrren().getTopActor()==entity.getDiePanel())) {
-            Main.getCurrentScrren().pop();
+        if ((dieSide && getSelectedTargetable()==entity.getDie()) || (!dieSide && Main.getCurrentScreen().getTopActor()==entity.getDiePanel())) {
+            Main.getCurrentScreen().pop();
             return;
         }
 
         // if you can't target or are clicking the die side, first poplight TODO deselect targetable and popLight hmmmmm
-        if(!PhaseManager.get().getPhase().canTarget() || dieSide) Main.getCurrentScrren().popLight();
+        if(!PhaseManager.get().getPhase().canTarget() || dieSide) Main.getCurrentScreen().popLight();
 
         // attempt to target an entity
         if(PhaseManager.get().getPhase().canTarget()) {
@@ -227,7 +225,7 @@ public class TargetingManager {
         }
 
         // if die panel is on top, it shold be removed before continuing
-        Main.getCurrentScrren().popLight();
+        Main.getCurrentScreen().popLight();
 
         if (entity.isPlayer()) {
             if (dieSide) {

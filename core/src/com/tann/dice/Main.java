@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.screens.map.MapScreen;
@@ -48,7 +49,7 @@ public class Main extends ApplicationAdapter {
 
   FrameBuffer fb;
 
-  public static Screen getCurrentScrren() {
+  public static Screen getCurrentScreen() {
     return self.currentScreen;
   }
 
@@ -56,15 +57,10 @@ public class Main extends ApplicationAdapter {
     Normal, Paused
   }
 
-
-
-
   public Main() {
   }
 
   //Callbacks
-
-
 
   @Override
   public void create() {
@@ -139,7 +135,8 @@ public class Main extends ApplicationAdapter {
     logTime("bits");
     BulletStuff.init();
     logTime("bullet");
-    setScreen(DungeonScreen.get());
+//    setScreen(DungeonScreen.get());
+    setScreen(new DebugScreen());
 //    setScreen(MapScreen.get());
     logTime("screen");
 
@@ -172,6 +169,7 @@ public class Main extends ApplicationAdapter {
       drawFPSAndVersion();
       batch.end();
       fb.end();
+      Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
       bufferDrawer.begin();
       Draw.drawRotatedScaledFlipped(bufferDrawer, fb.getColorBufferTexture(), 0, 0, sc, sc, 0, false, true);
       bufferDrawer.end();

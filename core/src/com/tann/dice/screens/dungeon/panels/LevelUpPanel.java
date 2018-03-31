@@ -49,8 +49,8 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
           @Override
           public void run() {
               hero.levelUpTo(et);
-              Main.getCurrentScrren().popLight();
-              Main.getCurrentScrren().pop(LevelUpPanel.this);
+              Main.getCurrentScreen().popLight();
+              Main.getCurrentScreen().pop(LevelUpPanel.this);
               PhaseManager.get().getPhase().refreshPhase();
           }
         });
@@ -69,7 +69,7 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
             public void run() {
                 PartyManagementPanel p = PartyManagementPanel.get();
                 p.refresh();
-                Main.getCurrentScrren().push(p, false, true, true, false, InputBlocker.DARK, null);
+                Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
                 p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
             }
         });

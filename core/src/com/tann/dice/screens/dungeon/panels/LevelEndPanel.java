@@ -2,14 +2,11 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.PhaseManager;
-import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
@@ -68,7 +65,7 @@ public class LevelEndPanel extends Group {
             public void run() {
                 PartyManagementPanel p = PartyManagementPanel.get();
                 p.refresh();
-                Main.getCurrentScrren().push(p, false, true, true, false, InputBlocker.DARK, null);
+                Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
                 p.setPosition((int)(Main.width/2-p.getWidth()/2), 5);
             }
         });

@@ -25,14 +25,10 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Die;
-import com.tann.dice.gameplay.phase.PlayerRollingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import com.tann.dice.screens.dungeon.TargetingManager;
@@ -222,7 +218,9 @@ public class BulletStuff {
 //		cam.lookAt(-1, 2.0f, -1);
 //		cam.update();
 
-		float initialSize = 80;
+
+
+		float initialSize = 5*die.entity.getSize().pixels;
 		float sizeFactor = size/initialSize;
 
 		Gdx.gl.glViewport((int)(x-Main.width*sizeFactor/2), (int)(y-Main.height*sizeFactor/2), (int)(Main.width*sizeFactor), (int)(Main.height*sizeFactor));
@@ -335,7 +333,7 @@ public class BulletStuff {
 	}
 
 	public static void renderTopBits() {
-		List<Pair<Actor, InputBlocker>> list = Main.getCurrentScrren().modalStack;
+		List<Pair<Actor, InputBlocker>> list = Main.getCurrentScreen().modalStack;
 		for(int i=list.size()-1;i>=0;i--){
 			Pair<Actor, InputBlocker> p = list.get(i);
 			boolean found = false;
