@@ -24,6 +24,7 @@ public class Side {
 
     private TextureRegion tr;
 	private Eff[] effects;
+	private String description;
 	DiceEntity.EntitySize size = reg;
 
     public static final HashMap<EntitySize, TextureRegion[]> sizeToPips = new HashMap<>();
@@ -61,10 +62,15 @@ public class Side {
         return copy;
     }
 
+    private Side customDescription(String desc){
+        this.description = desc;
+        return this;
+    }
+
     // REGULAR
 
 //    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(5).enemyGroup());
-        public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(1));
+    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(1));
     public static final Side sword2 = sword1.withValue(2);
     public static final Side sword3 = sword1.withValue(3);
     public static final Side sword4 = sword1.withValue(4);
@@ -98,7 +104,8 @@ public class Side {
     public static final Side execute3 = new Side().image("execute").effect(new Eff().execute(3).ranged());
 
     public static final Side poison1 = new Side().image("poison").effect(new Eff().justValue(1).
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1)))).ranged());
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged())
+            .customDescription("1 damage each turn to any enemy");
     public static final Side vanish = new Side().image("vanish").effect(new Eff().self().
             buff(new Buff(1, new TriggerDamageImmunity())));
 
@@ -121,9 +128,11 @@ public class Side {
     // REG
 
     public static final Side snakePoison1 = new Side().image("snakeBite").effect(new Eff().damage(1), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1)))));
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))))
+            .customDescription("1 damage now and 1 poison damage each turn to an enemy");
     public static final Side snakePoison2 = new Side().image("snakeBite").effect(new Eff().damage(2), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(2)))));
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(2).self()))))
+            .customDescription("2 damage now and 2 poison damage each turn to an enemy");
 
     public static final Side claw = new Side().image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side claw_2 = claw.withValue(2);
@@ -151,11 +160,14 @@ public class Side {
     public static final Side huge_flame3 = huge_flame.withValue(3);
 
     public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1)))));
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1)))))
+            .customDescription("1 damage now and 1 poison damage each turn to an enemy");
     public static final Side huge_posionChomp2 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(2), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(2)))));
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(2)))))
+            .customDescription("2 damage now and 2 poison damage each turn to an enemy");
     public static final Side huge_posionChomp3 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(3), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(3)))));
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(3)))))
+            .customDescription("3 damage now and 3 poison damage each turn to an enemy");
 
 
 	public Side copy(){
@@ -167,6 +179,7 @@ public class Side {
         copy.size = size;
         copy.tr = tr;
         copy.effects = newEffects;
+        copy.description = description;
 		return copy;
 	}
 
@@ -224,6 +237,7 @@ public class Side {
     }
 
     public String toString(){
+        if(description != null) return description;
         return Eff.describe(effects);
     }
 

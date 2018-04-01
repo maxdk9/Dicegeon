@@ -63,6 +63,10 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Druid").hp(7).tag(healer1)
                 .sides(Side.heal4, Side.heal4, Side.sword2, Side.magic1, Side.magic2, Side.nothing)
                 .spells(Spell.balance));
+        add(new HeroType().name("Medic").hp(6).tag(healer1)
+                .sides(Side.heal4, Side.heal4, Side.sword2, Side.magic1, Side.magic2, Side.nothing)
+                .spells(Spell.balance));
+
 
         add(new HeroType().name("Pyro").hp(6).tag(magic1)
                 .sides(Side.flameWard, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)

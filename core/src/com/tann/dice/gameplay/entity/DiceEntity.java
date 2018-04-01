@@ -66,7 +66,7 @@ public abstract class DiceEntity {
         List<AtlasRegion> portraits = Tann.getRegionsStartingWith("portrait/"+name);
         if(portraits.size()>0){
             portrait = Tann.getRandom(portraits);
-            portraitOffset = Integer.valueOf(portrait.name.split("-")[1])+0;
+            portraitOffset = Integer.valueOf(portrait.name.split("-")[1]);
         }
         setMaxHp(type.hp);
         fullHeal();
@@ -110,11 +110,11 @@ public abstract class DiceEntity {
     }
 
     private Integer calculatedMaxHp;
-    private ArrayList<Trigger> activeTriggers;
 
     public void somethingChanged(){
         calculatedMaxHp = null;
         activeTriggers = null;
+        describableTriggers = null;
         for(Side s:sides){
             s.useTriggers(getActiveTriggers());
         }
@@ -133,6 +133,20 @@ public abstract class DiceEntity {
         return calculatedMaxHp;
     }
 
+    private ArrayList<Trigger> describableTriggers;
+    public List<Trigger> getDescribableTriggers(){
+        if(describableTriggers == null){
+            describableTriggers = new ArrayList<>();
+            for(Trigger t:getActiveTriggers()){
+                if(t.showInPanel()){
+                    describableTriggers.add(t);
+                }
+            }
+        }
+        return describableTriggers;
+    }
+
+    private ArrayList<Trigger> activeTriggers;
     public List<Trigger> getActiveTriggers(){
         if(activeTriggers == null) {
             activeTriggers = new ArrayList<>();

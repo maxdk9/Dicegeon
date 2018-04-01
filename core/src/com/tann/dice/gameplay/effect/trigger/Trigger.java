@@ -58,5 +58,7 @@ public abstract class Trigger {
     return unknown;
   }
 
+  public String describeForBuffText(){ return describe(); }
+
   public abstract String describe();
 }

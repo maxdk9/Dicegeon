@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
@@ -47,6 +48,16 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
         p.actor(new DieSpinner(entity.getDie(), entity.getSize().pixels*1.5f));
         p.actor(new NetPanel(entity));
         p.pix();
+
+        int displayIndex = 0;
+        for(Trigger t:entity.getDescribableTriggers()){
+            int border = 2;
+            TextWriter trigger = new TextWriter("[image][h]: "+t.describeForBuffText(), (int) getWidth()-border*2, entity.getColour(), border, t.getImage());
+            addActor(trigger);
+            trigger.setWidth(getWidth());
+            trigger.setPosition(0, -(trigger.getHeight()-1)*(displayIndex+1));
+            displayIndex++;
+        }
     }
 
 
@@ -62,6 +73,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
 
     private void drawReminder(Batch batch) {
         if(Main.learnt) return;
+        if(entity.getDescribableTriggers().size()>0) return;
         Phase phase = PhaseManager.get().getPhase();
         if(phase == null) return;
         if(!phase.showDiePanelReminder()) return;
@@ -92,6 +104,6 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
     @Override
     public void repositionExplanel(Explanel p) {
         Vector2 local = Tann.getLocalCoordinates(this);
-        p.setPosition((int)(local.x+getWidth()/2-p.getWidth()/2), (int)(local.y-p.getHeight()-0));
+        p.setPosition((int)(local.x+getWidth()/2-p.getWidth()/2), (int)(local.y-p.getHeight()+1));
     }
 }

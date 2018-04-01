@@ -67,6 +67,7 @@ public class Eff {
                     case EnemyAndAdjacents: result += " to an enemy and both adjacent enemies"; break;
                     case EnemyAndAdjacentsRanged: result += " to ANY enemy and both adjacent enemies"; break;
                     case AllTargeters: result += " to all enemies who have targeted the hero of your choice"; break;
+                    case Self: result = "Take "+value+" damage"; break;
                     default: result = "ahh help damage"; break;
                 }
                 break;

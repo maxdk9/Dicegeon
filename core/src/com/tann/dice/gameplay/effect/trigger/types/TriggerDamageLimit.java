@@ -24,7 +24,7 @@ public class TriggerDamageLimit extends Trigger {
 
     @Override
     public String describe() {
-        return "Can't take more than "+limit+" damage in one turn";
+        return "Block all incoming damage after the first "+limit+" each turn";
     }
 
     @Override

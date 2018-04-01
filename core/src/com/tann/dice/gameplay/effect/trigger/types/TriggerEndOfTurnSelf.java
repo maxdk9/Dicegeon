@@ -54,7 +54,18 @@ public class TriggerEndOfTurnSelf extends Trigger {
     }
 
     @Override
+    public String describeForBuffText() {
+        switch (eff.type){
+            case Damage:
+                return eff.getValue() + " poison damage ([purple][heart][light]) each turn";
+            case Healing:
+                return "Regenerate "+eff.getValue() + " health each turn";
+            default: return "missing buff text: "+eff.type;
+        }
+    }
+
+    @Override
     public String describe() {
-        return "At the end of each turn, "+eff.toString();
+        return describeForBuffText();
     }
 }

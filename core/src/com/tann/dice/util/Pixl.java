@@ -1,5 +1,6 @@
 package com.tann.dice.util;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
@@ -42,6 +43,11 @@ public class Pixl {
 
     public Pixl gap(int gap){
         currentRow.addGap(gap);
+        return this;
+    }
+
+    public Pixl actor(TextureRegion tr){
+        currentRow.addActor(new ImageActor(tr));
         return this;
     }
 

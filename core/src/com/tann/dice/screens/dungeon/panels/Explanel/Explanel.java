@@ -102,7 +102,7 @@ public class Explanel extends InfoPanel implements OnPop {
         Pixl p = getPixl();
         p.actor(new DieSidePanel(side, entity, 2))
         .row()
-        .actor(new TextWriter(Eff.describe(side.getEffects()), textWidth));
+        .actor(new TextWriter(side.toString(), textWidth));
         finalise(p);
     }
 

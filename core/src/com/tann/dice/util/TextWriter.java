@@ -5,11 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Images;
-import com.tann.dice.gameplay.effect.Spell;
-import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +20,13 @@ public class TextWriter extends Group {
     int y;
     Color borderCol;
     int borderSize;
-
+    TextureRegion image;
 
     public TextWriter(String text) {
         this(text, Integer.MAX_VALUE);
+    }
+    public TextWriter(String text, TextureRegion image) {
+        this(text, Integer.MAX_VALUE, null, 0, image);
     }
 
     public TextWriter(String text, int width) {
@@ -35,13 +34,20 @@ public class TextWriter extends Group {
     }
 
     public TextWriter(String text, int width, Color borderCol, int borderSize) {
+        this(text, width, borderCol, borderSize, null);
+    }
+
+    public TextWriter(String text, int width, Color borderCol, int borderSize, TextureRegion image) {
         setTransform(false);
         this.text=text;
         this.borderSize = borderSize;
         this.borderCol = borderCol;
+        this.image = image;
         setWidth(width);
         layout();
     }
+
+
 
     private static Map<String, TextureRegion> textureMap = new HashMap<>();
     private static Map<String, Color> colorMap = new HashMap<>();
@@ -123,6 +129,9 @@ public class TextWriter extends Group {
                 }
                 if(image) {
                     TextureRegion tr = textureMap.get(s);
+                    if(s.equals("image")){
+                        tr = this.image;
+                    }
                     if (tr == null) {
                         System.err.println("unable to find texture '" + s + "' for string " + text);
                         return;
