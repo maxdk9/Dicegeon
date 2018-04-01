@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.entity.group;
 
+import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff.TargetingType;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.buff.Buff;
@@ -63,29 +64,7 @@ public class EntityGroup {
             }
         }
         int amount = getActiveEntities().size();
-
-        float clackStart = firstRoll?0:.18f;
-        float clackRand = .1f;
-        for(int i=1;i<amount;i++){
-            Tann.delay(new Runnable() {
-                @Override
-                public void run() {
-                    Sounds.playSound(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f));
-                }
-            }, (float) (clackStart+i*clackRand*Math.random()));
-        }
-
-
-        float clockStart = .6f;
-        float clockRand = .1f;
-        for(int i=1;i<amount;i++){
-            Tann.delay(new Runnable() {
-                @Override
-                public void run() {
-                    Sounds.playSound(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f));
-                }
-            }, (float) (clockStart+i*Math.random()*clockRand));
-        }
+        BulletStuff.addRollEffects(amount, firstRoll, false);
 
         for(DiceEntity entity:getActiveEntities()){
             entity.getDie().roll();

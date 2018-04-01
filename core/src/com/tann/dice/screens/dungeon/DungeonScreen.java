@@ -27,12 +27,7 @@ import com.tann.dice.screens.dungeon.panels.Graph;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.Button;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.Screen;
-import com.tann.dice.util.TannFont;
-import com.tann.dice.util.TextWriter;
+import com.tann.dice.util.*;
 
 import java.util.*;
 
@@ -156,7 +151,7 @@ public class DungeonScreen extends Screen {
     }
 
     static {
-//        addLevel(MonsterType.dragon, MonsterType.bird, MonsterType.goblin, MonsterType.archer);
+        addLevel(MonsterType.dragon, MonsterType.dragon, MonsterType.dragon, MonsterType.archer, MonsterType.archer, MonsterType.archer, MonsterType.archer, MonsterType.archer, MonsterType.archer, MonsterType.archer, MonsterType.archer, MonsterType.archer);
 //        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
         addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
         addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);

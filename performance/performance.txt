@@ -1,0 +1,2 @@
+2018-04-01 4d2a8260b206b39bb7af44535a6348347279cef6
+Galaxy S3, 60fps, no noticeable gc for 1 minute

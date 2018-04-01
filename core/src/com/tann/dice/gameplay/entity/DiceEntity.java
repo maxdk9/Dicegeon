@@ -215,7 +215,7 @@ public abstract class DiceEntity {
         die();
     }
 
-    private void die() {
+    protected void die() {
         hp = 0;
         die.removeFromScreen();
         getEntityPanel().setPossibleTarget(false);

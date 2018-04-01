@@ -136,4 +136,13 @@ public class Sounds {
         playSound(strings[((int)(Math.random()* strings.length))], volume, pitch);
     }
 
+	public static void playSoundDelayed(final String[] sound, final float volume, final float pitch, float delay){
+		Tann.delay(new Runnable() {
+			@Override
+			public void run() {
+				Sounds.playSound(sound, volume, pitch);
+			}
+		}, delay);
+	}
+
 }

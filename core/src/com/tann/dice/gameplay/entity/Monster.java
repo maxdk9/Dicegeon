@@ -3,14 +3,13 @@ package com.tann.dice.gameplay.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Tann;
-import com.tann.dice.util.TextureFlasher;
+import com.tann.dice.util.*;
 
 public class Monster extends DiceEntity {
 
@@ -73,6 +72,18 @@ public class Monster extends DiceEntity {
         }
         EntityPanel ep = getDie().entity.getEntityPanel();
         ep.setArrowIntenity(1, .75f);
+    }
+
+    @Override
+    protected void die() {
+        EntityPanel ep = getEntityPanel();
+        Vector2 pos = Tann.getLocalCoordinates(ep);
+        TextWisp tw = new TextWisp("Enemy attack cancelled");
+        tw.setPosition(pos.x+ep.getWidth()/2-tw.getWidth()/2, pos.y+ep.getHeight()/2-tw.getHeight()/2);
+        DungeonScreen.get().addActor(tw);
+        Tann.center(tw);
+        tw.setY(Main.height-tw.getHeight()-13);
+        super.die();
     }
 
     public Color getColour() {

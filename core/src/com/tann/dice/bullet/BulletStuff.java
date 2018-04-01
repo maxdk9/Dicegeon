@@ -32,9 +32,7 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 
 import com.tann.dice.screens.dungeon.TargetingManager;
-import com.tann.dice.util.Actor3d;
-import com.tann.dice.util.InputBlocker;
-import com.tann.dice.util.Pair;
+import com.tann.dice.util.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -338,6 +336,32 @@ public class BulletStuff {
 				}
 			}
 			if(found) return;
+		}
+	}
+
+	public static void addRollEffects(int numDice, boolean firstRoll, boolean jiggle){
+
+		if(jiggle){
+			Sounds.playSound(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f));
+			Sounds.playSoundDelayed(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f), .4f);
+		}
+
+		float clackStart = firstRoll?0:.18f;
+		float clackRand = .1f;
+		for(int i=1;i<numDice;i++){
+			Sounds.playSoundDelayed(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f), (float) (clackStart+i*clackRand*Math.random()));
+		}
+
+		int extraClacks = (int) (Math.pow(numDice, 2)*Math.random()/7);
+		float extraClackStart = .85f;
+		for(int i=0;i<extraClacks;i++){
+			Sounds.playSoundDelayed(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f), (float) (extraClackStart+i*clackRand*Math.random()));
+		}
+
+		float clockStart = .6f;
+		float clockRand = .1f;
+		for(int i=1;i<numDice;i++){
+			Sounds.playSoundDelayed(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f), (float) (clockStart+i*Math.random()*clockRand));
 		}
 	}
 }

@@ -175,6 +175,7 @@ public class Die implements Targetable{
     }
 
     public void jiggle(){
+        BulletStuff.addRollEffects(1, false, true);
         timeInAir=0;
         randomise(4, 0, 3.5f, 0, 1, 0, 0, 0);
     }

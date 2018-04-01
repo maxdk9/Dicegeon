@@ -61,7 +61,7 @@ public class Tann {
     }
 
     public static void delay(Runnable runnable, float delay) {
-        DungeonScreen.get().addAction(Actions.delay(delay, Actions.run(runnable)));
+        Main.getCurrentScreen().addAction(Actions.delay(delay, Actions.run(runnable)));
     }
 
     public static boolean inArray(Object object, Object[] array){

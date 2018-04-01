@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
@@ -83,7 +84,8 @@ public class LevelEndPanel extends Group {
         p.pix();
 
         for (final DiceEntity de : Party.get().getActiveEntities()) {
-            de.getEntityPanel().showLevelUpTick(levelup);
+            de.getEntityPanel().showLevelUpTick(false);
+            de.getEntityPanel().showLevelUpTick(levelup && ((Hero)de).level == 0);
         }
     }
 
