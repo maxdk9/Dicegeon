@@ -152,6 +152,7 @@ public class DungeonScreen extends Screen {
 
     static {
 //        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
+//        addLevel(MonsterType.bird, MonsterType.bird, MonsterType.bird, MonsterType.bird, MonsterType.goblin);
         addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
         addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);
         addLevel(MonsterType.snake, MonsterType.snake, MonsterType.goblin, MonsterType.goblin);
@@ -296,7 +297,7 @@ public class DungeonScreen extends Screen {
             if (d.getUsed()) continue;
             if (!first.needsUsing()) continue;
             if (!first.isTargeted()) return false;
-            if (EntityGroup.getValidTargets(d).size() > 0) return false;
+            if (EntityGroup.getValidTargets(d, true).size() > 0) return false;
         }
         return true;
     }

@@ -12,6 +12,8 @@ import com.tann.dice.util.Tann;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.tann.dice.gameplay.effect.Eff.TargetingType.FriendlySingleOther;
+
 public class EntityGroup {
     List<DiceEntity> entities = new ArrayList<>();
     protected List<DiceEntity> activeEntities = new ArrayList<>();
@@ -92,11 +94,14 @@ public class EntityGroup {
 
     private static List<DiceEntity> targetsTmp = new ArrayList<>();
 
-    public static List<DiceEntity> getValidTargets(Targetable t){
-        return getValidTargets(t.getEffects()[0].targetingType, t.getEffects(), true);
-    }
-
-    public static List<DiceEntity> getValidTargets(TargetingType type, Eff[] effects, boolean player){
+    public static List<DiceEntity> getValidTargets(Targetable t, boolean player){
+        Eff[] effects = t.getEffects();
+        TargetingType type = effects[0].targetingType;
+        DiceEntity source = null;
+        if(t instanceof Die){
+            Die d = (Die) t;
+            source = d.entity;
+        }
         targetsTmp.clear();
         List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
         List<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
@@ -117,6 +122,10 @@ public class EntityGroup {
                 break;
             case FriendlySingle:
                 targetsTmp.addAll(friends);
+                break;
+            case FriendlySingleOther:
+                targetsTmp.addAll(friends);
+                targetsTmp.remove(source);
                 break;
             case AllTargeters:
                 for(DiceEntity de:friends){
@@ -149,6 +158,9 @@ public class EntityGroup {
                     case Shield:
                         good = de.getProfile().unblockedRegularIncoming() > 0;
                         break;
+                    case RedirectIncoming:
+                        good = de.getProfile().getIncomingDamage() > 0;
+                        break;
                     case Healing:
                         good = de.getHp() < de.getMaxHp();
                         break;
@@ -175,6 +187,7 @@ public class EntityGroup {
             case EnemySingle:
             case EnemySingleRanged:
             case FriendlySingle:
+            case FriendlySingleOther:
                 result.add(target);
                 break;
             case Self:

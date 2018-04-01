@@ -182,6 +182,20 @@ public abstract class DiceEntity {
     }
 
     public void hit(Eff e, boolean instant) {
+        switch(e.type){
+            case RedirectIncoming:
+                List<Eff> incomingEffs = getProfile().effs;
+                for(int i=incomingEffs.size()-1;i>=0;i--){
+                    Eff potential = incomingEffs.get(i);
+                    if(!potential.source.isPlayer()){
+                        incomingEffs.remove(potential);
+                        e.source.hit(potential, false);
+                    }
+                }
+                somethingChanged();
+                e.source.somethingChanged();
+                break;
+        }
         getProfile().addEffect(e);
         if (instant || !isPlayer()) getProfile().action();
         if(!isPlayer() && profile.isGoingToDie(false)){

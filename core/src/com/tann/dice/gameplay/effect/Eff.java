@@ -10,14 +10,14 @@ public class Eff {
 
     public enum TargetingType{
         EnemySingle, EnemySingleRanged, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy,
-        FriendlySingle, FriendlyGroup, EnemyAndAdjacents,
+        FriendlySingle, FriendlySingleOther, FriendlyGroup, EnemyAndAdjacents,
         Self, OnRoll, Untargeted, AllTargeters, EnemyAndAdjacentsRanged, DoesNothing
     }
 
     public TargetingType targetingType = TargetingType.EnemySingle;
 
     public enum EffType {
-        Empty, Damage, Shield, Magic, Healing, Buff, Execute, Reroll
+        Empty, Damage, Shield, Magic, Healing, Buff, Execute, Reroll, RedirectIncoming
 	}
 
 
@@ -48,6 +48,8 @@ public class Eff {
                 return "Kills target if they are on exactly "+getValue()+" hp";
             case Reroll:
                 return "gain +1 reroll this turn";
+            case RedirectIncoming:
+                return "Redirect all attacks from a hero to you";
         }
         return "no base for "+type;
     }
@@ -71,16 +73,18 @@ public class Eff {
             case Shield:
                 result = getBaseString();
                 switch(targetingType){
-                    case FriendlySingle: result += " to one hero"; break;
-                    case FriendlyGroup: result += " to everyone"; break;
-                    case Self: result += " to yourself"; break;
-                    default: result += " to ????"+targetingType; break;
+                    case FriendlySingleOther: result += " from one other hero"; break;
+                    case FriendlySingle: result += " from one hero"; break;
+                    case FriendlyGroup: result += " from everyone"; break;
+                    case Self: result += " from yourself"; break;
+                    default: result += " from ????"+targetingType; break;
                 }
                 break;
             case Magic: result = getBaseString(); break;
             case Healing:
                 result = getBaseString();
                 switch(targetingType){
+                    case FriendlySingleOther: result += " another damaged character"; break;
                     case FriendlySingle: result += " a damaged character"; break;
                     case FriendlyGroup: result += " ALL damaged characters"; break;
                     default: result += " Need description: " +targetingType;
@@ -89,7 +93,6 @@ public class Eff {
             case Execute: result = getBaseString(); break;
             case Reroll: result = "When you roll this, "+getBaseString(); break;
             case Buff: result = getBaseString(); break;
-            default: result = "uhoh unknown "+type;
         }
         if(nextTurn){
             result += " next turn";
@@ -104,14 +107,14 @@ public class Eff {
     public Eff heal(int amount) { return type(EffType.Healing, amount); }
     public Eff execute(int amount) { return type(EffType.Execute, amount); }
     public Eff reroll(int amount) { return type(EffType.Reroll, amount); }
-
-
     public Eff buff(Buff buff){this.buff = buff; return type(EffType.Buff); }
+    public Eff redirectIncoming(){return type(EffType.RedirectIncoming); }
 
+    public Eff enemySingle() { return targetType(TargetingType.EnemySingle);} //implicit
     public Eff allTargeters() { return targetType(TargetingType.AllTargeters); }
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
+    public Eff friendlySingleOther() { return targetType(TargetingType.FriendlySingleOther);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}
-    public Eff enemySingle() { return targetType(TargetingType.EnemySingle);}
     public Eff enemyGroup() { return targetType(TargetingType.EnemyGroup);}
     public Eff untargeted() { return targetType(TargetingType.Untargeted);}
     public Eff enemyAndAdjacents() { return targetType(TargetingType.EnemyAndAdjacents);}
@@ -216,6 +219,8 @@ public class Eff {
         switch(type){
             case Shield:
                 return "No incoming damage to block";
+            case RedirectIncoming:
+                return "No incoming damage to redirect";
             case Healing:
                 return "No damaged heroes to heal";
             case Execute:
@@ -229,6 +234,7 @@ public class Eff {
             case EnemySingle:
             case EnemySingleRanged:
             case FriendlySingle:
+            case FriendlySingleOther:
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
                 return true;
@@ -252,6 +258,7 @@ public class Eff {
             case EnemySingle:
             case EnemySingleRanged:
             case FriendlySingle:
+            case FriendlySingleOther:
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
             case EnemyGroup:

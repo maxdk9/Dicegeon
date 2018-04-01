@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.entity.type;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageLimit;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerTotalDamageReduction;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -52,10 +53,9 @@ public class HeroType extends EntityType<HeroType> {
                 .sides(Side.shield2, Side.shieldHeart2, Side.shieldHeart2, Side.sword2, Side.sword1, Side.nothing));
         add(new HeroType().name("Bard").hp(6).tag(defender1)
                 .sides(Side.shield3, Side.wardingchord, Side.wardingchord, Side.reroll, Side.magic2, Side.nothing));
-        add(new HeroType().name("Bouncer").hp(9).tag(defender1)
-                .sides(Side.taunt, Side.taunt, Side.shield2, Side.shield1, Side.sword1, Side.nothing)
-        .trait(new TriggerTotalDamageReduction(1)));
-
+        add(new HeroType().name("Bouncer").hp(8).tag(defender1)
+                .sides(Side.taunt, Side.taunt, Side.shield2, Side.shield2, Side.sword2, Side.nothing).
+                        trait(new TriggerDamageLimit(4)));
 
         add(new HeroType().name("Alchemist").hp(5).tag(healer1)
                 .sides(Side.heal4, Side.magic2, Side.magic1, Side.potionregen, Side.potionregen, Side.nothing)

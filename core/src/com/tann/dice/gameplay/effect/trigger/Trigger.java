@@ -34,6 +34,8 @@ public abstract class Trigger {
 
   public int alterIncomingEffect(EffType type, int value) { return value; }
 
+  public boolean avoidDeath(){ return false; }
+
   protected String noDescription(String extra){
     return "No description for "+this.getClass().getSimpleName()+" ("+extra+")";
   }

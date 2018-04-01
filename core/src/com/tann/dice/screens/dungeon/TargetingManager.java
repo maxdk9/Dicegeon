@@ -128,7 +128,7 @@ public class TargetingManager {
 
         TargetingManager.get().setSelectedTargetable(t);
         t.select();
-        if(t.getEffects()[0].isTargeted() && EntityGroup.getValidTargets(t).size()==0){
+        if(t.getEffects()[0].isTargeted() && EntityGroup.getValidTargets(t, true).size()==0){
             DungeonScreen.get().showDialog(t.getEffects()[0].getNoTargetsString());
             deselectTargetable();
             return;
@@ -163,7 +163,7 @@ public class TargetingManager {
         Eff first = t.getEffects()[0];
         Eff.TargetingType targetingType = first.targetingType;
         EffType effType = first.type;
-        List<DiceEntity> valids = EntityGroup.getValidTargets(targetingType, t.getEffects(), true);
+        List<DiceEntity> valids = EntityGroup.getValidTargets(t, true);
         if (first.isTargeted() && !valids.contains(entity)) {
             String invalidReason = null;
             switch(targetingType){
@@ -172,6 +172,7 @@ public class TargetingManager {
                     if(!entity.isPlayer() && !entity.slidOut) invalidReason = "Target an enemy in the front row";
                     break;
                 case FriendlySingle:
+                case FriendlySingleOther:
                     if(!entity.isPlayer()) invalidReason = "Target a hero";
                     else {
                         switch (effType) {
@@ -268,15 +269,15 @@ public class TargetingManager {
         Targetable t = TargetingManager.get().getSelectedTargetable();
         if (t == null || t.getEffects().length == 0) return;
         Eff.TargetingType tType = t.getEffects()[0].targetingType;
-        for (DiceEntity de : EntityGroup.getValidTargets(tType, t.getEffects(), true)) {
+        for (DiceEntity de : EntityGroup.getValidTargets(t, true)) {
             de.getEntityPanel().setPossibleTarget(true);
         }
     }
 
-    public List<DiceEntity> getRandomTargetForEnemy(Side side) {
-        Eff e = side.getEffects()[0];
+    public List<DiceEntity> getRandomTargetForEnemy(Die d) {
+        Eff e = d.getEffects()[0];
         DiceEntity target = null;
-        List<DiceEntity> validTargets = EntityGroup.getValidTargets(e.targetingType, side.getEffects(), false);
+        List<DiceEntity> validTargets = EntityGroup.getValidTargets(d, false);
         if (validTargets.size() > 0) {
             target = Tann.getRandom(validTargets);
         }

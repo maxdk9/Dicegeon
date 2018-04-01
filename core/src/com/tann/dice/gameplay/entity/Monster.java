@@ -58,7 +58,7 @@ public class Monster extends DiceEntity {
 
     @Override
     public void locked() {
-        targets = TargetingManager.get().getRandomTargetForEnemy(die.getActualSide());
+        targets = TargetingManager.get().getRandomTargetForEnemy(die);
         for(DiceEntity de:targets){
             de.hit(die.getActualSide().getEffects(), false);
             EntityPanel panel = de.getEntityPanel();
