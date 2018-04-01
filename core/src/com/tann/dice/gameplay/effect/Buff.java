@@ -1,7 +1,6 @@
-package com.tann.dice.gameplay.effect.buff;
+package com.tann.dice.gameplay.effect;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
@@ -9,10 +8,10 @@ public class Buff implements Cloneable{
 
     int turns;
     public DiceEntity target;
-    public TextureRegion image;
-    public Trigger trigger;
-    public Buff(int turns, TextureRegion image, Trigger trigger){
-        this.image = image;
+    public final TextureRegion image;
+    public final Trigger trigger;
+    public Buff(int turns, Trigger trigger){
+        this.image = trigger.getImage();
         this.turns = turns;
         this.trigger = trigger;
     }
@@ -27,7 +26,7 @@ public class Buff implements Cloneable{
     }
 
     public Buff copy(){
-        return new Buff(turns, image, trigger);
+        return new Buff(turns, trigger);
     }
 
     public String toNiceString(){

@@ -96,7 +96,7 @@ public class EntityPanel extends Group {
         }
 
 
-        BuffHolder buffHolder = new BuffHolder(entity);
+        TriggerPanel buffHolder = new TriggerPanel(entity);
         addActor(buffHolder);
         dieHolder = new DieHolder(entity);
         addActor(dieHolder);

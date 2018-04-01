@@ -3,12 +3,12 @@ package com.tann.dice.gameplay.effect.trigger.types;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 
-public class IncomingEffectTrigger extends Trigger{
+public class TriggerIncomingEffect extends Trigger{
 
   EffType type;
   int bonus;
 
-  public IncomingEffectTrigger(EffType type, int bonus) {
+  public TriggerIncomingEffect(EffType type, int bonus) {
     this.type = type;
     this.bonus = bonus;
   }
@@ -19,6 +19,11 @@ public class IncomingEffectTrigger extends Trigger{
       return value + bonus;
     }
     return value;
+  }
+
+  @Override
+  public boolean showInPanel() {
+    return true;
   }
 
   @Override

@@ -4,10 +4,10 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.die.Side;
 
-public class EffTypeBonus extends Trigger {
+public class TriggerEffTypeBonus extends Trigger {
     Eff.EffType type;
     int bonus;
-    public EffTypeBonus(Eff.EffType type, int bonus) {
+    public TriggerEffTypeBonus(Eff.EffType type, int bonus) {
         this.type = type;
         this.bonus = bonus;
     }

@@ -4,12 +4,12 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.die.Side;
 
-public class SideChangeTrigger extends Trigger{
+public class TriggerSideChange extends Trigger{
 
     Eff.EffType replace;
     Side replacement;
 
-    public SideChangeTrigger(Eff.EffType replace, Side replacement) {
+    public TriggerSideChange(Eff.EffType replace, Side replacement) {
         this.replace = replace;
         this.replacement = replacement;
     }

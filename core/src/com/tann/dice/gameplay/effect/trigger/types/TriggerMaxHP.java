@@ -2,11 +2,11 @@ package com.tann.dice.gameplay.effect.trigger.types;
 
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 
-public class MaxHPTrigger extends Trigger {
+public class TriggerMaxHP extends Trigger {
 
   int maxHpModifier;
 
-  public MaxHPTrigger(int maxHpModifier) {
+  public TriggerMaxHP(int maxHpModifier) {
     this.maxHpModifier = maxHpModifier;
   }
 

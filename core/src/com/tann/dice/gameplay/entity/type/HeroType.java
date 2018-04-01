@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.entity.type;
 
 import com.badlogic.gdx.graphics.Color;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerTotalDamageReduction;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Colours;
@@ -53,7 +54,7 @@ public class HeroType extends EntityType<HeroType> {
                 .sides(Side.shield3, Side.wardingchord, Side.wardingchord, Side.reroll, Side.magic2, Side.nothing));
         add(new HeroType().name("Bouncer").hp(9).tag(defender1)
                 .sides(Side.taunt, Side.taunt, Side.shield2, Side.shield1, Side.sword1, Side.nothing)
-        .trait());
+        .trait(new TriggerTotalDamageReduction(1)));
 
 
         add(new HeroType().name("Alchemist").hp(5).tag(healer1)
@@ -81,6 +82,15 @@ public class HeroType extends EntityType<HeroType> {
         this.level = lv;
     }
 
+    private HeroType tag(LevelUpClass... tags){
+        this.tags = tags;
+        return this;
+    }
+    private HeroType levelsUpInto(LevelUpClass... tags){
+        this.levelsUpInto = tags;
+        return this;
+    }
+
     private HeroType spells(Spell... spells){
         this.spells= spells;
         return this;
@@ -88,10 +98,6 @@ public class HeroType extends EntityType<HeroType> {
 
     private HeroType colour(Color colour){
         this.colour = colour;
-        return this;
-    }
-
-    private HeroType trait(){
         return this;
     }
 

@@ -1,6 +1,5 @@
 package com.tann.dice.gameplay.effect;
 
-import com.tann.dice.gameplay.effect.buff.Buff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import static com.tann.dice.gameplay.effect.Eff.EffType.*;
@@ -102,7 +101,7 @@ public class DamageProfile {
                 incomingPoison += Math.max(0,t.getIncomingPoisonDamage());
             }
             for(Trigger t:target.getActiveTriggers()){
-                incomingPoison = t.alterIncomingDamage(incomingPoison);
+                incomingPoison = t.alterIncomingPoisonDamage(incomingPoison);
             }
             incomingPoison -= getRegen();
             incomingPoison = Math.max(0, incomingPoison);

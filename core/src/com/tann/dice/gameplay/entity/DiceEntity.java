@@ -4,16 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.effect.buff.Buff;
+import com.tann.dice.gameplay.effect.Buff;
+import com.tann.dice.gameplay.effect.Trait;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
-import com.tann.dice.gameplay.effect.trigger.types.EndOfTurnSelfTrigger;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
@@ -56,11 +55,12 @@ public abstract class DiceEntity {
     public int portraitOffset;
     public ArrayList<Equipment> equipment = new ArrayList<>();
     public int equipmentMaxSize = 1;
+    public final Trait[] traits;
 
     public DiceEntity(EntityType type) {
         this.entityType = type;
         this.name = type.name;
-
+        this.traits = (Trait[]) type.traits.toArray(new Trait[0]);
         this.size = type.size;
         setupLapels(0);
         List<AtlasRegion> portraits = Tann.getRegionsStartingWith("portrait/"+name);
@@ -79,7 +79,7 @@ public abstract class DiceEntity {
 
     public void init(){
         for(int i=0;i<10;i++){
-//         addBuff(new Buff(5, Images.regen, new EndOfTurnSelfTrigger(new Eff().damage(1))));
+//         addBuff(new Buff(5, Images.regen, new TriggerEndOfTurnSelf(new Eff().damage(1))));
         }
     }
 
@@ -141,6 +141,9 @@ public abstract class DiceEntity {
             }
             for (Buff b:getBuffs()){
                 activeTriggers.add(b.trigger);
+            }
+            for (Trait t:traits){
+                activeTriggers.addAll(t.triggers);
             }
         }
         return activeTriggers;

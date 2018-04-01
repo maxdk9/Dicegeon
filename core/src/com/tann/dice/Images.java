@@ -23,12 +23,6 @@ public class Images {
     public static final TextureRegion levelup = Main.atlas.findRegion("ui/levelup");
     public static final TextureRegion skull = Main.atlas.findRegion("icon/skull");
 
-    public static final TextureRegion poison = Main.atlas.findRegion("buff/poison");
-    public static final TextureRegion doubleDamage = Main.atlas.findRegion("buff/doubledamage");
-    public static final TextureRegion stealth = Main.atlas.findRegion("buff/stealth");
-    public static final TextureRegion flameWard = Main.atlas.findRegion("buff/flameWard");
-    public static final TextureRegion regen = Main.atlas.findRegion("buff/regen");
-
 	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("reg/face/sword");
 
     public static final TextureRegion heart = Main.atlas.findRegion("icon/hp");

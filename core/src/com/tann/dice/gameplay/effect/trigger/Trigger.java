@@ -1,5 +1,7 @@
 package com.tann.dice.gameplay.effect.trigger;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -8,6 +10,12 @@ import java.util.List;
 
 public abstract class Trigger {
 
+  private static final TextureRegion unknown = loadImage("unknown");
+
+  protected static TextureRegion loadImage(String name){
+    return Main.atlas.findRegion("trigger/"+name);
+  }
+
   DiceEntity source, target;
 
   public int affectMaxHp(int hp){return hp;}
@@ -15,6 +23,8 @@ public abstract class Trigger {
   public void endOfTurn(DiceEntity target){}
 
   public Integer alterIncomingDamage(Integer incomingDamage) { return incomingDamage; }
+
+  public Integer alterIncomingPoisonDamage(Integer incomingDamage) { return incomingDamage; }
 
   public Integer getIncomingPoisonDamage() { return 0; }
 
@@ -38,7 +48,13 @@ public abstract class Trigger {
 
   public Integer getRegen(){return 0;};
 
-  public abstract String describe();
-
   public void affectSide(Side side) { }
+
+  public boolean showInPanel() { return false; }
+
+  public TextureRegion getImage(){
+    return unknown;
+  }
+
+  public abstract String describe();
 }

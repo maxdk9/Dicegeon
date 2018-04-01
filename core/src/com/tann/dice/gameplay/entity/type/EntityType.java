@@ -1,9 +1,14 @@
 package com.tann.dice.gameplay.entity.type;
 
+import com.tann.dice.gameplay.effect.Trait;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Tann;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityType <t>{
 
@@ -14,21 +19,22 @@ public class EntityType <t>{
     public String name;
     public int hp;
     public Side[] sides;
+    public List<Trait> traits = new ArrayList<>();
     public LevelUpClass[] tags = new LevelUpClass[0];
     public LevelUpClass[] levelsUpInto = new LevelUpClass[0];
     public EntitySize size = DiceEntity.EntitySize.reg;
 
-    public t hp(int amount){
+    protected t hp(int amount){
         this.hp = amount;
         return (t)this;
     }
 
-    public t size(DiceEntity.EntitySize size){
+    protected t size(DiceEntity.EntitySize size){
         this.size = size;
         return (t) this;
     }
 
-    public t sides(Side... sides){
+    protected t sides(Side... sides){
         this.sides = sides;
         Tann.swap(sides, 3, 4);
         Tann.swap(sides, 0, 2);
@@ -36,25 +42,14 @@ public class EntityType <t>{
         return (t) this;
     }
 
+    protected t trait(Trigger... triggers){
+        traits.add(new Trait(triggers));
+        return (t) this;
+    }
 
-
-    public t name(String name){
+    protected t name(String name){
         this.name = name;
         return (t) this;
-    }
-
-    public t tag(LevelUpClass... tags){
-        this.tags = tags;
-        return (t) this;
-    }
-
-    public t levelsUpInto(LevelUpClass... tags){
-        this.levelsUpInto = tags;
-        return (t) this;
-    }
-
-    public void validate(){
-
     }
 
 }

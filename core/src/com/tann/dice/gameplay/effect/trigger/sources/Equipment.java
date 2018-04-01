@@ -10,7 +10,6 @@ import com.tann.dice.gameplay.effect.trigger.types.*;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
-import com.tann.dice.util.Tann;
 
 import java.util.*;
 
@@ -24,35 +23,35 @@ public class Equipment {
   static {
     defaultLevel = 0;
     add(new Equipment().name("Leather Vest").image("leatherVest")
-            .fluff("A [sin]lovely[sin] leather vest").trigger(new MaxHPTrigger(1)));
+            .fluff("A [sin]lovely[sin] leather vest").trigger(new TriggerMaxHP(1)));
     add(new Equipment().name("Heart Pendant").image("heartPendant")
-            .fluff("A ruby carved into a heart").trigger(new IncomingEffectTrigger(EffType.Healing, 1)));
+            .fluff("A ruby carved into a heart").trigger(new TriggerIncomingEffect(EffType.Healing, 1)));
     add(new Equipment().name("Hidden Dagger").image("concealedDagger")
-            .fluff("A slim dagger, tucked away").trigger(new SideChangeTrigger(EffType.Empty, Side.sword2)));
+            .fluff("A slim dagger, tucked away").trigger(new TriggerSideChange(EffType.Empty, Side.sword2)));
     add(new Equipment().name("Casta Root").image("herb")
-            .fluff("A natural cure-all").trigger(new EffTypeBonus(EffType.Healing, 1)));
+            .fluff("A natural cure-all").trigger(new TriggerEffTypeBonus(EffType.Healing, 1)));
 
     defaultLevel = 1;
     add(new Equipment().name("Reinforced Shield").image("shieldReinforce")
-            .fluff("Extra plating is always good").trigger(new EffTypeBonus(EffType.Shield, 1)));
+            .fluff("Extra plating is always good").trigger(new TriggerEffTypeBonus(EffType.Shield, 1)));
     add(new Equipment().name("Gauntlet").image("gauntlet")
-            .fluff("A pair of [sin]chunky[sin] gauntlets").trigger(new EffTypeBonus(EffType.Damage, 1)));
+            .fluff("A pair of [sin]chunky[sin] gauntlets").trigger(new TriggerEffTypeBonus(EffType.Damage, 1)));
     add(new Equipment().name("Chainmail").image("chainmail") // please forward to all your friends
-            .fluff("Please forward to all your friends").trigger(new MaxHPTrigger(3)));
+            .fluff("Please forward to all your friends").trigger(new TriggerMaxHP(3)));
     add(new Equipment().name("Crystal Heart").image("crystalHeart")
-            .fluff("You feel warmth inside").trigger(new EffTypeBonus(EffType.Magic, 1)));
+            .fluff("You feel warmth inside").trigger(new TriggerEffTypeBonus(EffType.Magic, 1)));
 
     defaultLevel = 2;
     add(new Equipment().name("Glow Stone").image("glowStone")
-            .fluff("A glowing purple stone").trigger(new AllSidesBonusTrigger(1)));
+            .fluff("A glowing purple stone").trigger(new TriggerAllSidesBonus(1)));
     add(new Equipment().name("Iron Helmet").image("ironHelmet")
-            .fluff("A visored metal helmet").trigger(new MaxHPTrigger(6)));
+            .fluff("A visored metal helmet").trigger(new TriggerMaxHP(6)));
 //    add(new Equipment().name("Loaded Die").image("dice")
-//            .fluff("It doesn't feel quite right...").trigger(new SideChangeTrigger(EffType.Empty, Side.reroll)));
+//            .fluff("It doesn't feel quite right...").trigger(new TriggerSideChange(EffType.Empty, Side.reroll)));
 
     defaultLevel = 3;
 //    add(new Equipment().name("Savings Book").image("book")
-//            .fluff("A [sin][yellow]high interest[grey][sin] monthly ISA!").trigger(new EndOfTurnSelfTrigger(6)));
+//            .fluff("A [sin][yellow]high interest[grey][sin] monthly ISA!").trigger(new TriggerEndOfTurnSelf(6)));
   }
 
   private static void add(Equipment add){
