@@ -196,6 +196,12 @@ public abstract class DiceEntity {
     }
 
     public void hit(Eff e, boolean instant) {
+        if(e.type == Eff.EffType.Damage && e.targetingType==Eff.TargetingType.Self){
+            //ugh hacky I need to redo the system so it works better for this case
+            damage(e.getValue());
+            somethingChanged();
+            return;
+        }
         switch(e.type){
             case RedirectIncoming:
                 List<Eff> incomingEffs = getProfile().effs;

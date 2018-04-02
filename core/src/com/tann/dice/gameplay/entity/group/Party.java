@@ -53,8 +53,8 @@ public class Party extends EntityGroup{
         HeroType all = HeroType.byName("berserker");
         HeroType all2 = HeroType.byName("druid");
         HeroType[] types = new HeroType[]{
-//                acolyte, herbalist, defender, fighter, fighter2
-                all, all, all, all2, all2
+                acolyte, herbalist, defender, fighter, fighter2
+//                all, all, all, all2, all2
         };
         List<DiceEntity> tmp = new ArrayList<>();
         for(HeroType type: types){
