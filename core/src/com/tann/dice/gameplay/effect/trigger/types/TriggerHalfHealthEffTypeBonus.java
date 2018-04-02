@@ -35,6 +35,6 @@ public class TriggerHalfHealthEffTypeBonus extends Trigger {
 
     @Override
     public String describe() {
-        return "If on half health or less, all "+type.toString().toLowerCase()+" increased by "+bonus;
+        return "If at half health or less, all "+type.toString().toLowerCase()+" increased by "+bonus;
     }
 }
