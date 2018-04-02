@@ -177,19 +177,19 @@ public class Eff {
             Eff e = effects[i];
             result += e.getBaseString() + " and ";
         }
-        result += effects[effects.length-1].toString();
+        result += effects[effects.length-1].toString().toLowerCase();
         return  result;
     }
 
     public int getValue() {
         int actualValue = value; // + bonusFromSide;
-        if(source != null) {
-            List<Trigger> triggers = source.getActiveTriggers();
-            for(int i=0;i<triggers.size();i++){
-                Trigger t = triggers.get(i);
-                actualValue = t.alterOutgoingEffect(type, actualValue);
-            }
-        }
+//        if(source != null) {
+//            List<Trigger> triggers = source.getActiveTriggers();
+//            for(int i=0;i<triggers.size();i++){
+//                Trigger t = triggers.get(i);
+//                actualValue = t.alterOutgoingEffect(type, actualValue, source);
+//            }
+//        }
         return actualValue;
     }
 
@@ -199,6 +199,13 @@ public class Eff {
         for(int i=0;i<triggers.size();i++){
             Trigger t = triggers.get(i);
             actualValue = t.alterIncomingEffect(type, actualValue);
+        }
+        if(source!=null) {
+            triggers = source.getActiveTriggers();
+            for (int i = 0; i < triggers.size(); i++) {
+                Trigger t = triggers.get(i);
+                actualValue = t.alterOutgoingEffect(type, actualValue, source);
+            }
         }
         return actualValue;
     }

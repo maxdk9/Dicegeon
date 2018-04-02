@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 
 public class TextWriter extends Group {
     String[] split;
-    String text;
+    public String text;
     TannFont font = TannFont.font;
 
     int x;

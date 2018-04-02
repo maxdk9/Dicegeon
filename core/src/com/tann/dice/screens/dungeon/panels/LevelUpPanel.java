@@ -104,10 +104,10 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
 
 
     @Override
-    public void repositionExplanel(Explanel p) {
+    public void repositionExplanel(Group g) {
         Vector2 local= Tann.getLocalCoordinates(this);
-        p.setPosition(local.x+basePanel.getX()+basePanel.getWidth()/2-p.getWidth()/2,
-                local.y+basePanel.getY()-p.getHeight()-2);
+        g.setPosition(local.x+basePanel.getX()+basePanel.getWidth()/2-g.getWidth()/2,
+                local.y+basePanel.getY()-g.getHeight()-2);
     }
 
 }

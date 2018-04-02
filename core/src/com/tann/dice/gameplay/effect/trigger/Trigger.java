@@ -30,7 +30,7 @@ public abstract class Trigger {
 
   public void attackedBy(DiceEntity entity) { }
 
-  public int alterOutgoingEffect(EffType type, int value) { return value; }
+  public int alterOutgoingEffect(EffType type, int value, DiceEntity source) { return value; }
 
   public int alterIncomingEffect(EffType type, int value) { return value; }
 
@@ -61,4 +61,5 @@ public abstract class Trigger {
   public String describeForBuffText(){ return describe(); }
 
   public abstract String describe();
+
 }

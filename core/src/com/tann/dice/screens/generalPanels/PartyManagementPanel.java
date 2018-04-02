@@ -118,10 +118,10 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
 
 
   @Override
-  public void repositionExplanel(Explanel p) {
+  public void repositionExplanel(Group g) {
     Vector2 local= Tann.getLocalCoordinates(this);
     InventoryPanel panel = InventoryPanel.get();
-    p.setPosition((int) Math.min(Main.width-p.getWidth()-2, local.x+panel.getX()+panel.getWidth()/2-p.getWidth()/2),
+    g.setPosition((int) Math.min(Main.width-g.getWidth()-2, local.x+panel.getX()+panel.getWidth()/2-g.getWidth()/2),
             (int)(local.y+panel.getY()+panel.getHeight()+2));
 }
 }

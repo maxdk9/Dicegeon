@@ -8,14 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.Trait;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.panels.DieSidePanel;
-import com.tann.dice.screens.dungeon.panels.EquipmentPanel;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EquipmentPanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
+import com.tann.dice.screens.dungeon.panels.entityPanel.TraitPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Tann;
 
@@ -37,6 +39,12 @@ public class NetPanel extends Group {
         place(setup(de.getSides()[4]), 1, 1);
         place(setup(de.getSides()[3]), 2, 1);
         place(setup(de.getSides()[5]), 3, 1);
+
+        for(int i=0;i<de.traits.length;i++){
+            Trait t = de.traits[i];
+            TraitPanel tp = new TraitPanel(de, t, false);
+            place(tp, 2+i, 0);
+        }
 
         if(de instanceof Hero){
             Hero h  = (Hero) de;

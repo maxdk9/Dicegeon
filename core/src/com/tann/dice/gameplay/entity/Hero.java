@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.Trait;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.type.HeroType;
@@ -34,6 +35,7 @@ public class Hero extends DiceEntity {
         this.entityType = type;
         this.name = type.name;
         this.level = type.level;
+        this.traits = (Trait[]) type.traits.toArray(new Trait[0]);
         setupLapels(level);
         setMaxHp(type.hp);
         setSides(type.sides);

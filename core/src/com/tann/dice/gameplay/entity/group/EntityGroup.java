@@ -244,4 +244,9 @@ public class EntityGroup {
         return true;
     }
 
+    public void somethingChanged() {
+        for(DiceEntity de:entities){
+            de.somethingChanged();
+        }
+    }
 }

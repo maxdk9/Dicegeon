@@ -55,7 +55,7 @@ public abstract class DiceEntity {
     public int portraitOffset;
     public ArrayList<Equipment> equipment = new ArrayList<>();
     public int equipmentMaxSize = 1;
-    public final Trait[] traits;
+    public Trait[] traits;
 
     public DiceEntity(EntityType type) {
         this.entityType = type;
@@ -150,14 +150,14 @@ public abstract class DiceEntity {
     public List<Trigger> getActiveTriggers(){
         if(activeTriggers == null) {
             activeTriggers = new ArrayList<>();
+            for (Trait t:traits){
+                activeTriggers.addAll(t.triggers);
+            }
             for (Equipment e : equipment) {
                 activeTriggers.addAll(e.getTriggers());
             }
             for (Buff b:getBuffs()){
                 activeTriggers.add(b.trigger);
-            }
-            for (Trait t:traits){
-                activeTriggers.addAll(t.triggers);
             }
         }
         return activeTriggers;
@@ -239,7 +239,7 @@ public abstract class DiceEntity {
     }
 
     public boolean aboveHalfHealth(){
-        return getHp()>getMaxHp()/2;
+        return getProfile().getTopHealth()>getMaxHp()/2;
     }
 
     public void kill() {

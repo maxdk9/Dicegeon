@@ -91,7 +91,7 @@ public class DebugScreen extends Screen implements ExplanelReposition{
     }
 
     @Override
-    public void repositionExplanel(Explanel p) {
-        p.setPosition(Main.stage.getCamera().position.x-p.getWidth()/2, Main.stage.getCamera().position.y+getHeight()/2-p.getHeight());
+    public void repositionExplanel(Group g) {
+        g.setPosition(Main.stage.getCamera().position.x-g.getWidth()/2, Main.stage.getCamera().position.y+getHeight()/2-g.getHeight());
     }
 }

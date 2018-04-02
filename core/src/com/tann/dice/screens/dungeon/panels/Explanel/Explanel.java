@@ -14,6 +14,8 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
+import com.tann.dice.gameplay.effect.Trait;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
@@ -39,19 +41,21 @@ public class Explanel extends InfoPanel implements OnPop {
     public Side side;
     public Equipment equipment;
     public Spell spell;
+    public Trigger trigger;
 
     public static Explanel get(){
         if(self == null) self = new Explanel();
         return self;
     }
 
-    private Explanel(){
+    public Explanel(){
     }
 
     private void reset() {
         this.side = null;
         this.equipment = null;
         this.spell = null;
+        this.trigger = null;
         clearChildren();
     }
 
@@ -93,6 +97,15 @@ public class Explanel extends InfoPanel implements OnPop {
                 .row()
                 .actor(new TextWriter(equipment.getDescription(), textWidth));
         finalise(p);
+    }
+
+    public void setup(final Trigger trigger, float width, DiceEntity entity){
+        reset();
+        this.trigger= trigger;
+        TextWriter tw = new TextWriter("[image][h]: "+trigger.describeForBuffText(), (int) width, entity.getColour(), 2, trigger.getImage());
+        tw.setWidth(width);
+        addActor(tw);
+        setSize(tw.getWidth(), tw.getHeight());
     }
 
 
@@ -163,7 +176,9 @@ public class Explanel extends InfoPanel implements OnPop {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
+        if(trigger == null) {
+            Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
+        }
         super.draw(batch, parentAlpha);
     }
 

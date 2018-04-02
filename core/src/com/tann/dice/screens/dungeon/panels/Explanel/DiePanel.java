@@ -2,6 +2,7 @@ package com.tann.dice.screens.dungeon.panels.Explanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
@@ -10,6 +11,7 @@ import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.type.EntityType;
+import com.tann.dice.gameplay.phase.LevelEndPhase;
 import com.tann.dice.gameplay.phase.Phase;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.DieSpinner;
@@ -49,14 +51,15 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
         p.actor(new NetPanel(entity));
         p.pix();
 
-        int displayIndex = 0;
-        for(Trigger t:entity.getDescribableTriggers()){
-            int border = 2;
-            TextWriter trigger = new TextWriter("[image][h]: "+t.describeForBuffText(), (int) getWidth()-border*2, entity.getColour(), border, t.getImage());
-            addActor(trigger);
-            trigger.setWidth(getWidth());
-            trigger.setPosition(0, -(trigger.getHeight()-1)*(displayIndex+1));
-            displayIndex++;
+        int y = 0;
+        if(!(PhaseManager.get().getPhase() instanceof LevelEndPhase)) {
+            for (Trigger t : entity.getDescribableTriggers()) {
+                Explanel e= new Explanel();
+                e.setup(t, getWidth(), entity);
+                addActor(e);
+                y -= (e.getHeight() - 1);
+                e.setPosition(0, y);
+            }
         }
     }
 
@@ -102,8 +105,8 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
     }
 
     @Override
-    public void repositionExplanel(Explanel p) {
+    public void repositionExplanel(Group g) {
         Vector2 local = Tann.getLocalCoordinates(this);
-        p.setPosition((int)(local.x+getWidth()/2-p.getWidth()/2), (int)(local.y-p.getHeight()+1));
+        g.setPosition((int)(local.x+getWidth()/2-g.getWidth()/2), (int)(local.y-g.getHeight()+1));
     }
 }

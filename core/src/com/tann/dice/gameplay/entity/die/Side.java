@@ -67,7 +67,10 @@ public class Side {
         return this;
     }
 
+
     // REGULAR
+
+    public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing());
 
 //    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(5).enemyGroup());
     public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(1));
@@ -75,9 +78,6 @@ public class Side {
     public static final Side sword3 = sword1.withValue(3);
     public static final Side sword4 = sword1.withValue(4);
     public static final Side sword5 = sword1.withValue(5);
-
-
-    public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing());
 
     public static final Side shield1 = new Side().image("shield").effect(new Eff().shield(1).friendlySingle());
     public static final Side shield2 = shield1.withValue(2);
@@ -94,6 +94,10 @@ public class Side {
 
     public static final Side swordShield1 = new Side().image("swordShield").effect(new Eff().damage(1), new Eff().shield(1).self());
     public static final Side swordShield2 = swordShield1.withValue(2);
+
+    public static final Side sword1SelfDamage1 = new Side().image("swordSelfDamage").effect(new Eff().damage(1), new Eff().damage(1).self());
+    public static final Side sword2SelfDamage2 = sword1SelfDamage1.withValue(2);
+    public static final Side sword3SelfDamage3 = sword1SelfDamage1.withValue(3);
 
     public static final Side shieldHeart1 = new Side().image("shieldHeart").effect(new Eff().heal(1).friendlySingle(), new Eff().shield(1).friendlySingle());
     public static final Side shieldHeart2 = shieldHeart1.withValue(2);

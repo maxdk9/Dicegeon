@@ -44,7 +44,7 @@ public class LevelEndPanel extends Group {
             p.gap(4);
             p.actor(new TextWriter("You got: "));
             p.gap(4);
-            p.actor(new EquipmentPanel(e, false, false));
+            p.actor(new com.tann.dice.screens.dungeon.panels.entityPanel.EquipmentPanel(e, false, false));
             p.gap(4);
             p.row();
         }

@@ -1,4 +1,4 @@
-package com.tann.dice.screens.dungeon.panels;
+package com.tann.dice.screens.dungeon.panels.entityPanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -8,6 +8,7 @@ import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
+import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -59,7 +60,6 @@ public class EquipmentPanel extends Actor {
     }
     Draw.drawScaled(batch, Images.spellBorder, getX(), getY(), scale, scale);
     if(equipment!=null) {
-      int imageSize = equipment.image.getRegionHeight();
       batch.setColor(Colours.z_white);
       Draw.drawScaled(batch, equipment.image, getX(), getY(), scale, scale);
     }

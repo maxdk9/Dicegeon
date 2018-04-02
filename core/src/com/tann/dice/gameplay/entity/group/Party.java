@@ -50,9 +50,11 @@ public class Party extends EntityGroup{
     }
 
     public void addHeroes(){
+        HeroType all = HeroType.byName("berserker");
+        HeroType all2 = HeroType.byName("druid");
         HeroType[] types = new HeroType[]{
 //                acolyte, herbalist, defender, fighter, fighter2
-                HeroType.byName("bouncer"), HeroType.byName("bouncer"), HeroType.byName("bouncer"), HeroType.byName("bouncer"), HeroType.byName("bouncer")
+                all, all, all, all2, all2
         };
         List<DiceEntity> tmp = new ArrayList<>();
         for(HeroType type: types){
@@ -234,5 +236,6 @@ public class Party extends EntityGroup{
         for(DiceEntity de: getEntities()){
             de.startOfFight();
         }
+        somethingChanged();
     }
 }

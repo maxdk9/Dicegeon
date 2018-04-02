@@ -1,20 +1,15 @@
 package com.tann.dice.screens.generalPanels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
-import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
-import com.tann.dice.screens.dungeon.panels.EquipmentPanel;
-import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
-import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EquipmentPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
-import com.tann.dice.util.Tann;
 
 import java.util.List;
 

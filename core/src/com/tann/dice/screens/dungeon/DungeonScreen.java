@@ -130,7 +130,6 @@ public class DungeonScreen extends Screen {
         addActor(spellButt);
         float gap = 12;
         spellButt.setPosition(EntityContainer.width + friendly.getX() + gap, Main.height - spellButt.getHeight() - gap);
-        PartyManagementPanel.get();
     }
 
     public int level = 0;
@@ -183,12 +182,15 @@ public class DungeonScreen extends Screen {
         }
 
         if (level > 1) {
-            Party.get().reset();
             PhaseManager.get().pushPhase(new LevelEndPhase());
+            Party.get().reset();
         }
         PhaseManager.get().pushPhase(new EnemyRollingPhase());
 //        PhaseManager.get().pushPhase(new LevelEndPhase());
         PhaseManager.get().kickstartPhase();
+
+        PartyManagementPanel.get();
+        Party.get().somethingChanged();
     }
 
     public void restart() {
