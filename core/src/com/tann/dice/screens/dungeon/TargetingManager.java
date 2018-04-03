@@ -191,7 +191,6 @@ public class TargetingManager {
             }
             return false;
         }
-        Main.getCurrentScreen().popAllLight();
         boolean containsDamage = false;
         if (t.use()) {
             for (Eff e : t.getEffects()) {
@@ -205,6 +204,7 @@ public class TargetingManager {
             Sounds.playSound(Sounds.fwips, 4, 1);
         }
         if(!t.repeat()) {
+            Main.getCurrentScreen().popAllLight();
             deselectTargetable();
         }
         DungeonScreen.get().checkDoneTargeting();
