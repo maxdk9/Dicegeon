@@ -11,6 +11,7 @@ import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 
 import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageImmunity;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerEndOfTurnSelf;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -124,6 +125,8 @@ public class Side {
 
     public static final Side magic1NextTurn = new Side().image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
     public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
+
+    public static final Side powerSelf = new Side().image("powerSelf").effect(new Eff().self().buff(new Buff(-1, new TriggerAllSidesBonus(1))).justValue(1));
 
     //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
 
@@ -241,7 +244,7 @@ public class Side {
     }
 
     public String toString(){
-        if(description != null) return description;
+//        if(description != null) return description;
         return Eff.describe(effects);
     }
 

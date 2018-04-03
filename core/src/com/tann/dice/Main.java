@@ -225,12 +225,13 @@ public class Main extends ApplicationAdapter {
 
 
   public void update(float delta) {
-
-    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-      delta *= .1f;
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
-      delta *= 3;
+    if(debug) {
+      if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+        delta *= .1f;
+      }
+      if (Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
+        delta *= 3;
+      }
     }
     BulletStuff.update(delta);
     stage.act(delta);

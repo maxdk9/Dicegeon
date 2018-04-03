@@ -15,8 +15,13 @@ public class TriggerAllSidesBonus extends Trigger{
     public void affectSide(Side side) {
         for(Eff e:side.getEffects()){
             if(e.getValue()==0) continue;
-            e.justValue(e.getValue()+amount);
+            e.setValue(e.getValue()+amount);
         }
+    }
+
+    @Override
+    public void setValue(int value) {
+        this.amount = value;
     }
 
     @Override

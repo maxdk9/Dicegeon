@@ -43,6 +43,10 @@ public class Eff {
             case Healing:
                 return "Restore "+getValue()+" missing health ([purple][heartEmpty][light])";
             case Buff:
+                buff.setValue(getValue());
+                if(targetingType == TargetingType.Self){
+                    return "Get "+buff.toNiceString()+" this battle";
+                }
                 return buff.toNiceString();
             case Execute:
                 return "Kills target if they are on exactly "+getValue()+" hp";
@@ -126,6 +130,10 @@ public class Eff {
     public Eff randomEnemy() { return targetType(TargetingType.RandomEnemy);}
     public Eff justValue(int amount) {this.value = amount; return this;}
 
+    public void setValue(int val) {
+        this.value = value;
+    }
+
     public Eff nextTurn() {
         this.nextTurn = true;
         return this;
@@ -183,13 +191,13 @@ public class Eff {
 
     public int getValue() {
         int actualValue = value; // + bonusFromSide;
-//        if(source != null) {
-//            List<Trigger> triggers = source.getActiveTriggers();
-//            for(int i=0;i<triggers.size();i++){
-//                Trigger t = triggers.get(i);
-//                actualValue = t.alterOutgoingEffect(type, actualValue, source);
-//            }
-//        }
+        if(source != null) {
+            List<Trigger> triggers = source.getActiveTriggers();
+            for(int i=0;i<triggers.size();i++){
+                Trigger t = triggers.get(i);
+                actualValue = t.alterOutgoingEffect(type, actualValue, source);
+            }
+        }
         return actualValue;
     }
 
