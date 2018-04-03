@@ -62,6 +62,4 @@ public abstract class Trigger {
 
   public abstract String describe();
 
-  public void setValue(int value) {
-  }
 }
