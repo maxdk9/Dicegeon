@@ -20,6 +20,11 @@ public class TriggerAllSidesBonus extends Trigger{
     }
 
     @Override
+    public void setValue(int value) {
+        this.amount = value;
+    }
+
+    @Override
     public String describe() {
         return "+"+amount+" to all sides";
     }

@@ -22,7 +22,7 @@ public class Eff {
 
 
     public EffType type;
-    public Buff buff;
+    private Buff buff;
     public int buffDuration;
     private int value;
     public DiceEntity source;
@@ -43,7 +43,7 @@ public class Eff {
             case Healing:
                 return "Restore "+getValue()+" missing health ([purple][heartEmpty][light])";
             case Buff:
-                return buff.toNiceString();
+                return getBuff().toNiceString();
             case Execute:
                 return "Kills target if they are on exactly "+getValue()+" hp";
             case Reroll:
@@ -177,7 +177,9 @@ public class Eff {
             Eff e = effects[i];
             result += e.getBaseString() + " and ";
         }
-        result += effects[effects.length-1].toString().toLowerCase();
+        String lastEff = effects[effects.length-1].toString();
+        if(effects.length==1) lastEff = lastEff.toLowerCase();
+        result += lastEff;
         return  result;
     }
 
@@ -282,6 +284,12 @@ public class Eff {
                 return false;
         }
         return false;
+    }
+
+    public Buff getBuff(){
+        Buff b = buff.copy();
+        b.setValue(getValue());
+        return b;
     }
 
 }
