@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 
-public class Buff implements Cloneable{
+public class Buff {
 
     int turns;
     public DiceEntity target;
@@ -13,7 +13,7 @@ public class Buff implements Cloneable{
     public Buff(int turns, Trigger trigger){
         this.image = trigger.getImage();
         this.turns = turns;
-        this.trigger = trigger;
+        this.trigger = trigger.copy();
     }
 
     public void turn(){

@@ -131,9 +131,9 @@ public class Main extends ApplicationAdapter {
       }
     });
     BulletStuff.init();
-    setScreen(DungeonScreen.get());
-    DungeonScreen.get().nextLevel();
-//    setScreen(new DebugScreen());
+//    setScreen(DungeonScreen.get());
+//    DungeonScreen.get().nextLevel();
+    setScreen(new DebugScreen());
 //    setScreen(MapScreen.get());
 
     String ex = Prefs.getString("lastException", "");

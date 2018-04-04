@@ -36,6 +36,7 @@ public class Side {
             for(int i=0;i<max;i++){
                 arr[i]= Main.atlas_3d.findRegion(es.name()+"/bar/"+i);
             }
+            arr[7] =Main.atlas_3d.findRegion(es.name()+"/bar/x");
             sizeToPips.put(es, arr);
         }
     }
@@ -124,9 +125,10 @@ public class Side {
     public static final Side flameWard = new Side().image("flameWard").effect(new Eff().damage(2).allTargeters());
 
     public static final Side magic1NextTurn = new Side().image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
+    public static final Side magic2NextTurn = magic1NextTurn.withValue(2);
     public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
 
-    public static final Side powerSelf = new Side().image("powerSelf").effect(new Eff().self().buff(new Buff(-1, new TriggerAllSidesBonus(1))).justValue(1));
+    public static final Side powerSelf = new Side().image("powerSelf").effect(new Eff().self().buff(new Buff(-1, new TriggerAllSidesBonus(1, true))).justValue(1));
 
     //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
 
@@ -223,7 +225,7 @@ public class Side {
         }
         batch.setColor(Colours.z_white);
         Draw.drawScaled(batch, getTexture(), (int)x, (int)y, scale, scale);
-        Draw.drawScaled(batch, Side.sizeToPips.get(size)[getEffects()[0].getValue()], (int)x, (int)y, scale, scale);
+        Draw.drawScaled(batch, Side.sizeToPips.get(size)[Math.min(7,getEffects()[0].getValue())], (int)x, (int)y, scale, scale);
         Draw.drawScaled(batch, lapel2D, (int)x, (int)y, scale, scale);
     }
 

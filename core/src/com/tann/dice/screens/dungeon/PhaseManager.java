@@ -25,6 +25,8 @@ public class PhaseManager {
     private List<Phase> phaseStack = new ArrayList<>();
 
     public Phase getPhase() {
+        if(phaseStack.size()==0) return null;
+
         return phaseStack.get(0);
     }
 

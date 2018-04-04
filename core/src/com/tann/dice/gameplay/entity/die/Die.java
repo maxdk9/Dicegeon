@@ -305,7 +305,7 @@ public class Die implements Targetable{
             TextureRegion face = s.getTexture();
             texLocs[4*i] = face.getRegionX()/width;
             texLocs[4*i+1] = face.getRegionY()/height;
-            TextureRegion pips = Side.sizeToPips.get(entity.getSize())[s.getEffects()[0].getValue()];
+            TextureRegion pips = Side.sizeToPips.get(entity.getSize())[Math.min(7,s.getEffects()[0].getValue())];
             if(pips == null){
                 System.out.println("no pip texture: "+entity.getSize()+":"+s.getEffects()[0].getValue());
             }

@@ -76,11 +76,11 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Pyro").hp(6).tag(magic1)
                 .sides(Side.flameWard, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
                 .spells(Spell.inferno));
-        add(new HeroType().name("Arcanist").hp(5).tag(magic1)
-                .sides(Side.magic3NextTurn, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
-                .spells(Spell.arcaneMissile));
+        add(new HeroType().name("Arcanist").hp(7).tag(magic1)
+                .sides(Side.magic3NextTurn, Side.magic2NextTurn, Side.magic2, Side.magic2, Side.nothing, Side.nothing)
+                .spells(Spell.deathSpike));
         add(new HeroType().name("Channeler").hp(6).tag(magic1)
-                .sides(Side.powerSelf, Side.powerSelf, Side.powerSelf, Side.magic1, Side.magic1, Side.nothing)
+                .sides(Side.powerSelf, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
                 .spells(Spell.arcaneMissile));
 
     }

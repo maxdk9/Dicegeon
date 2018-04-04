@@ -8,7 +8,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 
 import java.util.List;
 
-public abstract class Trigger {
+public abstract class Trigger implements Cloneable{
 
   private static final TextureRegion unknown = loadImage("unknown");
 
@@ -64,4 +64,14 @@ public abstract class Trigger {
 
   public void setValue(int value) {
   }
+
+  public Trigger copy(){
+    try{
+      return (Trigger) this.clone();
+    } catch (CloneNotSupportedException e) {
+      System.out.println("fuck you java");
+    }
+    return null;
+  }
+
 }

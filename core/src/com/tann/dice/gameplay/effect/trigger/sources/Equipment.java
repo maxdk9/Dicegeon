@@ -43,7 +43,7 @@ public class Equipment {
 
     defaultLevel = 2;
     add(new Equipment().name("Glow Stone").image("glowStone")
-            .fluff("A glowing purple stone").trigger(new TriggerAllSidesBonus(1)));
+            .fluff("A glowing purple stone").trigger(new TriggerAllSidesBonus(1, false)));
     add(new Equipment().name("Iron Helmet").image("ironHelmet")
             .fluff("A visored metal helmet").trigger(new TriggerMaxHP(6)));
 //    add(new Equipment().name("Loaded Die").image("dice")

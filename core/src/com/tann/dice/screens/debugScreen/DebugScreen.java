@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.entity.type.MonsterType;
@@ -34,9 +35,11 @@ public class DebugScreen extends Screen implements ExplanelReposition{
         {
             Group heroGroup = new Group();
             Pixl p = new Pixl(heroGroup, 0);
-            for (int i = 0; i < HeroType.ALL_HEROES.size(); i++) {
-                p.actor(HeroType.ALL_HEROES.get(i).buildHero().getDiePanel());
+            int i=0;
+            for(HeroType ht:HeroType.ALL_HEROES.values()){
+                p.actor(ht.buildHero().getDiePanel());
                 if ((i+1) % row == 0) p.row();
+                i++;
             }
             p.pix();
             heroGroup.setPosition(Gdx.graphics.getWidth()/3*2-heroGroup.getWidth()/2,Gdx.graphics.getHeight()/2-heroGroup.getHeight()/2);
