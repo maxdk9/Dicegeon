@@ -18,7 +18,7 @@ public class EquipmentPanel extends Actor {
   Equipment equipment;
   boolean doubleSize;
   boolean onPlayer;
-  public EquipmentPanel(Equipment equipment, boolean doubleSize, boolean onPlayer){
+  public EquipmentPanel(final Equipment equipment, boolean doubleSize, boolean onPlayer){
     this.doubleSize = doubleSize;
     this.onPlayer = onPlayer;
     int size = Images.spellBorder.getRegionHeight()*(doubleSize?2:1);
@@ -37,9 +37,17 @@ public class EquipmentPanel extends Actor {
           PartyManagementPanel.get().selectEquipment(EquipmentPanel.this.equipment);
         }
         else{
-          Explanel.get().setup(EquipmentPanel.this.equipment);
-          Main.getCurrentScreen().push(Explanel.get());
           Actor a = Main.getCurrentScreen().getTopActor();
+          if (a instanceof Explanel){
+            Main.getCurrentScreen().popSingleLight();
+            Explanel old = (Explanel) a;
+            if(old.equipment==equipment){
+              return true;
+            }
+          }
+          Explanel.get().setup(EquipmentPanel.this.equipment);
+          a = Main.getCurrentScreen().getTopActor();
+          Main.getCurrentScreen().push(Explanel.get(), false, false, true, true, 0, null);
           if(a != null && a instanceof ExplanelReposition){
             ((ExplanelReposition)a).repositionExplanel(Explanel.get());
           }

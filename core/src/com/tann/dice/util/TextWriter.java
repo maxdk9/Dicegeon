@@ -118,6 +118,7 @@ public class TextWriter extends Group {
                 switch(s){
                     case "h": x += font.getSpaceWidth()/2; break;
                     case "n": nextLine(); break;
+                    case "nh": nextLine(); y -= font.getLineHeight()/3; break;
                     case "wiggle": wiggle=!wiggle; break;
                     case "sin": sin=!sin; break;
                     default: image = true;

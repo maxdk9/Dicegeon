@@ -93,9 +93,7 @@ public class Explanel extends InfoPanel implements OnPop {
                 .row()
                 .actor(equipDraw)
                 .row()
-                .actor(new TextWriter("[grey]"+equipment.fluff, textWidth))
-                .row()
-                .actor(new TextWriter(equipment.getDescription(), textWidth));
+                .actor(new TextWriter("[grey]"+equipment.fluff+"[nh][light]"+equipment.getDescription(), textWidth));
         finalise(p);
     }
 

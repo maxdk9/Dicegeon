@@ -113,7 +113,7 @@ public class Side {
             buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged())
             .customDescription("1 damage each turn to any enemy");
     public static final Side vanish = new Side().image("vanish").effect(new Eff().self().
-            buff(new Buff(1, new TriggerDamageImmunity())));
+            buff(new Buff(1, new TriggerDamageImmunity(true, true))));
 
     public static final Side wardingchord = new Side().image("wardingChord").effect(new Eff().shield(1).friendlyGroup());
     public static final Side wardingchord2 = wardingchord.withValue(2);

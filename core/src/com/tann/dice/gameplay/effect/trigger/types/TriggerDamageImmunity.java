@@ -6,16 +6,23 @@ import com.tann.dice.gameplay.effect.trigger.Trigger;
 
 public class TriggerDamageImmunity extends Trigger{
 
-    private static final TextureRegion stealth = Main.atlas.findRegion("stealth");
+    private static final TextureRegion stealth = loadImage("stealth");
+
+    boolean poison, regular;
+
+    public TriggerDamageImmunity(boolean poison, boolean regular) {
+        this.poison = poison;
+        this.regular = regular;
+    }
 
     @Override
     public Integer alterIncomingDamage(Integer incomingDamage) {
-        return 0;
+        return regular?0:incomingDamage;
     }
 
     @Override
     public Integer alterIncomingPoisonDamage(Integer incomingDamage) {
-        return 0;
+        return poison?0:incomingDamage;
     }
 
     @Override
@@ -25,11 +32,13 @@ public class TriggerDamageImmunity extends Trigger{
 
     @Override
     public boolean showInPanel() {
-        return true;
+        return regular;
     }
 
     @Override
     public String describe() {
-        return "Immune to damage";
+        if(poison&&regular) return "Immune to damage";
+        if(poison&&!regular) return "Immune to poison damage";
+        return "Damage immunity gone wrong!";
     }
 }

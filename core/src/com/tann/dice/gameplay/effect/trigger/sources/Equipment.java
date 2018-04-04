@@ -24,12 +24,14 @@ public class Equipment {
     defaultLevel = 0;
     add(new Equipment().name("Leather Vest").image("leatherVest")
             .fluff("A [sin]lovely[sin] leather vest").trigger(new TriggerMaxHP(1)));
-    add(new Equipment().name("Heart Pendant").image("heartPendant")
-            .fluff("A ruby carved into a heart").trigger(new TriggerIncomingEffect(EffType.Healing, 1)));
+    add(new Equipment().name("Ruby Pendant").image("heartPendant")
+            .fluff("It feels warm").trigger(new TriggerIncomingEffect(EffType.Healing, 1)));
     add(new Equipment().name("Hidden Dagger").image("concealedDagger")
             .fluff("A slim dagger, tucked away").trigger(new TriggerSideChange(EffType.Empty, Side.sword2)));
     add(new Equipment().name("Casta Root").image("herb")
             .fluff("A natural cure-all").trigger(new TriggerEffTypeBonus(EffType.Healing, 1)));
+    add(new Equipment().name("Antivenom").image("antivenom")
+            .fluff("Weird trick discovered by a mum, snakes hate her!").trigger(new TriggerDamageImmunity(true, false)));
 
     defaultLevel = 1;
     add(new Equipment().name("Reinforced Shield").image("shieldReinforce")
@@ -94,8 +96,9 @@ public class Equipment {
   }
 
   public static Equipment byName(String name){
+    name = name.toLowerCase();
     for(Equipment e:all){
-      if(e.name.equals(name)){
+      if(e.name.toLowerCase().equals(name)){
         return e.copy();
       }
     }
