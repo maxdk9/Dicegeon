@@ -93,9 +93,13 @@ public class Side {
     public static final Side heal2 = new Side().image("heal").effect(new Eff().heal(2).friendlySingle());
     public static final Side heal3 = heal2.withValue(3);
     public static final Side heal4 = heal2.withValue(4);
+    public static final Side heal5 = heal2.withValue(5);
 
     public static final Side healAll1 = new Side().image("healAll").effect(new Eff().heal(1).friendlyGroup());
     public static final Side healAll2 = healAll1.withValue(2);
+
+    public static final Side healBuff1 = new Side().image("healBuff").effect(new Eff().heal(1).friendlySingle(),
+            new Eff().buff(new Buff(1, new TriggerAllSidesBonus(1, true))).friendlySingle().justValue(1));
 
     public static final Side cure1 = new Side().image("cure").effect(new Eff().heal(1).friendlySingle(), new Eff().decurse().friendlySingle());
     public static final Side cure2 = cure1.withValue(2);
@@ -116,8 +120,7 @@ public class Side {
     public static final Side execute3 = new Side().image("execute").effect(new Eff().execute(3).ranged());
 
     public static final Side poison1 = new Side().image("poison").effect(new Eff().justValue(1).
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged())
-            .customDescription("1 damage each turn to any enemy");
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged());
     public static final Side vanish = new Side().image("vanish").effect(new Eff().self().
             buff(new Buff(1, new TriggerDamageImmunity(true, true))));
 
@@ -176,14 +179,11 @@ public class Side {
     public static final Side huge_flame3 = huge_flame.withValue(3);
 
     public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1)))))
-            .customDescription("1 damage now and 1 poison damage each turn to an enemy");
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1)))));
     public static final Side huge_posionChomp2 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(2), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(2)))))
-            .customDescription("2 damage now and 2 poison damage each turn to an enemy");
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(2)))));
     public static final Side huge_posionChomp3 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(3), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(3)))))
-            .customDescription("3 damage now and 3 poison damage each turn to an enemy");
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(3)))));
 
 
 	public Side copy(){

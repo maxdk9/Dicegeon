@@ -50,7 +50,7 @@ public class Party extends EntityGroup{
     }
 
     public void addHeroes(){
-        HeroType all = HeroType.byName("medic");
+        HeroType all = HeroType.byName("witch");
         HeroType all2 = HeroType.byName("druid");
         HeroType[] types = new HeroType[]{
 //                acolyte, herbalist, defender, fighter, fighter2

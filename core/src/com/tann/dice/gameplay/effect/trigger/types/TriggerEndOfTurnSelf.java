@@ -73,4 +73,9 @@ public class TriggerEndOfTurnSelf extends Trigger {
     public boolean isNegative() {
         return eff.type== Eff.EffType.Damage;
     }
+
+    @Override
+    public void setValue(int value) {
+        eff.justValue(value);
+    }
 }
