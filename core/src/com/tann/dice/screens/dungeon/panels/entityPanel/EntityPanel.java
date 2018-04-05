@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.DamageProfile;
+import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.screens.dungeon.TargetingManager;
@@ -23,7 +24,7 @@ import java.util.List;
 public class EntityPanel extends Group {
 
     public DiceEntity entity;
-    boolean holdsDie;
+    public boolean holdsDie;
     DamageProfile profile;
     HeartsHolder heartsHolder;
     float startX;
@@ -53,6 +54,9 @@ public class EntityPanel extends Group {
                 }
                 if (entity.isDead()) return false;
                 boolean dieSide = isClickOnDie(x);
+                if (TargetingManager.get().targetsDie()) {
+                    dieSide = false;
+                }
                 TargetingManager.get().clicked(EntityPanel.this.entity, dieSide && holdsDie && entity.isPlayer());
                 return true;
             }
@@ -199,11 +203,15 @@ public class EntityPanel extends Group {
             panelBorderLeft.draw(batch, getX()-npWiggle, getY()-npWiggle, borderX+npWiggle*2, getHeight()+npWiggle*2);
             if(possibleTarget){
                 batch.setColor(Colours.light);
-                if(entity.isPlayer()) {
-                    panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, borderX + npWiggle * 2, getHeight() + npWiggle * 2);
+                if (TargetingManager.get().targetsDie()) {
+                    Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), 1);
                 }
-                else{
-                    panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, getWidth() + npWiggle * 2, getHeight() + npWiggle * 2);
+                else {
+                    if (entity.isPlayer()) {
+                        panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, borderX + npWiggle * 2, getHeight() + npWiggle * 2);
+                    } else {
+                        panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, getWidth() + npWiggle * 2, getHeight() + npWiggle * 2);
+                    }
                 }
             }
         }

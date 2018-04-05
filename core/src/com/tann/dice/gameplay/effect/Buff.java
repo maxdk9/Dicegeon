@@ -37,4 +37,8 @@ public class Buff {
     public void setValue(int value) {
         trigger.setValue(value);
     }
+
+    public boolean isNegative() {
+        return trigger.isNegative();
+    }
 }

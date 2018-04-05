@@ -7,6 +7,7 @@ import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
@@ -162,10 +163,20 @@ public class EntityGroup {
                         good = de.getProfile().getIncomingDamage() > 0;
                         break;
                     case Healing:
-                        good = de.getHp() < de.getMaxHp();
+                        good = de.getProfile().getTopHealth() < de.getMaxHp();
                         break;
                     case Execute:
                         good = de.getHp() == e.getValue();
+                        break;
+                    case CopyAbility:
+                        good = false;
+                        if (de.getEntityPanel().holdsDie){
+                            Side theirSide = de.getDie().getActualSide();
+                            good= theirSide!= null && theirSide.getEffects()[0].type != Eff.EffType.CopyAbility;
+                        }
+                        break;
+                    case Decurse:
+                        good = de.hasNegativeBuffs();
                         break;
                 }
                 if(good) break;

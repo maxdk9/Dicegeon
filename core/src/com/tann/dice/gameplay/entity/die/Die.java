@@ -227,11 +227,17 @@ public class Die implements Targetable{
     }
 
     public Side getActualSide(){
+        if(override != null) return override;
         int side = getSide();
         if(side>=0){
             return entity.getSides()[side];
         }
         return null;
+    }
+
+    Side override;
+    public void setSide(Side copy) {
+        this.override = copy;
     }
 
     private float getFloat(TextureRegion tr){
@@ -562,6 +568,9 @@ public class Die implements Targetable{
 
     @Override
     public boolean use() {
+        if(getActualSide().getEffects()[0].type== Eff.EffType.CopyAbility){
+            return true;
+        }
         removeFromScreen();
         flatDraw = false;
         entity.getEntityPanel().useDie();

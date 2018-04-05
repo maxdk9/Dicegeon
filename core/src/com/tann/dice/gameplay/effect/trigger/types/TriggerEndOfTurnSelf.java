@@ -68,4 +68,9 @@ public class TriggerEndOfTurnSelf extends Trigger {
     public String describe() {
         return describeForBuffText();
     }
+
+    @Override
+    public boolean isNegative() {
+        return eff.type== Eff.EffType.Damage;
+    }
 }

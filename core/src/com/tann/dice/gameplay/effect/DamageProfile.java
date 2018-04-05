@@ -189,4 +189,12 @@ public class DamageProfile {
         else return getIncomingPoisonDamage() + Math.min(0, regularOverkill);
     }
 
+    public void decurse() {
+        for(int i=effs.size()-1;i>=0;i--){
+            Eff e = effs.get(i);
+            if(e.type==Buff && e.getBuff().isNegative()){
+                effs.remove(e);
+            }
+        }
+    }
 }

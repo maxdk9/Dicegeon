@@ -94,6 +94,12 @@ public class Side {
     public static final Side heal3 = heal2.withValue(3);
     public static final Side heal4 = heal2.withValue(4);
 
+    public static final Side healAll1 = new Side().image("healAll").effect(new Eff().heal(1).friendlyGroup());
+    public static final Side healAll2 = healAll1.withValue(2);
+
+    public static final Side cure1 = new Side().image("cure").effect(new Eff().heal(1).friendlySingle(), new Eff().decurse().friendlySingle());
+    public static final Side cure2 = cure1.withValue(2);
+
     public static final Side swordShield1 = new Side().image("swordShield").effect(new Eff().damage(1), new Eff().shield(1).self());
     public static final Side swordShield2 = swordShield1.withValue(2);
 
@@ -129,6 +135,7 @@ public class Side {
     public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
 
     public static final Side powerSelf = new Side().image("powerSelf").effect(new Eff().self().buff(new Buff(-1, new TriggerAllSidesBonus(1, true))).justValue(1));
+    public static final Side copy = new Side().image("copy").effect(new Eff().friendlySingleOther().copyAbility());
 
     //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
 

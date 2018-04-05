@@ -196,13 +196,18 @@ public abstract class DiceEntity {
     }
 
     public void hit(Eff e, boolean instant) {
-        if(e.type == Eff.EffType.Damage && e.targetingType==Eff.TargetingType.Self){
-            //ugh hacky I need to redo the system so it works better for this case
-            damage(e.getValue());
-            somethingChanged();
-            return;
-        }
         switch(e.type){
+            case Damage:
+                if(e.targetingType==Eff.TargetingType.Self){
+                    //ugh hacky I need to redo the system so it works better for this case
+                    damage(e.getValue());
+                    somethingChanged();
+                    return;
+                }
+                break;
+            case Decurse:
+                decurse();
+                break;
             case RedirectIncoming:
                 List<Eff> incomingEffs = getProfile().effs;
                 for(int i=incomingEffs.size()-1;i>=0;i--){
@@ -215,11 +220,32 @@ public abstract class DiceEntity {
                 somethingChanged();
                 e.source.somethingChanged();
                 break;
+            case CopyAbility:
+                e.source.setCurrentSide(getDie().getActualSide().copy());
+                return;
         }
         getProfile().addEffect(e);
         if (instant || !isPlayer()) getProfile().action();
         if(!isPlayer() && profile.isGoingToDie(false)){
             getDie().removeFromScreen();
+        }
+        somethingChanged();
+    }
+
+    private void decurse() {
+        getProfile().decurse();
+        for(Buff b:getBuffs()){
+            if(b.isNegative()){
+                removeBuff(b);
+            }
+        }
+        somethingChanged();
+    }
+
+    private void setCurrentSide(Side copy) {
+        getDie().setSide(copy);
+        for(Eff e:copy.getEffects()){
+            e.source = this;
         }
         somethingChanged();
     }
@@ -492,6 +518,13 @@ public abstract class DiceEntity {
 
     public void imposeMaximumHealth() {
       hp = Math.min(hp, getMaxHp());
+    }
+
+    public boolean hasNegativeBuffs() {
+      for(Buff b:getBuffs()){
+          if(b.isNegative()) return true;
+      }
+      return false;
     }
 
     public enum EntitySize {

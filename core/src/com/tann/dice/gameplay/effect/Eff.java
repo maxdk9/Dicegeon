@@ -17,7 +17,7 @@ public class Eff {
     public TargetingType targetingType = TargetingType.EnemySingle;
 
     public enum EffType {
-        Empty, Damage, Shield, Magic, Healing, Buff, Execute, Reroll, RedirectIncoming
+        Empty, Damage, Shield, Magic, Healing, Buff, Execute, Reroll, RedirectIncoming, CopyAbility, Decurse
 	}
 
 
@@ -41,7 +41,7 @@ public class Eff {
             case Magic:
                 return "Gain "+getValue()+" magic to spend on spells";
             case Healing:
-                return "Restore "+getValue()+" missing health ([purple][heartEmpty][light])";
+                return "Restore "+getValue()+" missing health ([purple][heartempty][light])";
             case Buff:
                 return getBuff().toNiceString();
             case Execute:
@@ -50,6 +50,11 @@ public class Eff {
                 return "gain +1 reroll this turn";
             case RedirectIncoming:
                 return "Redirect all attacks from a hero to you";
+            case CopyAbility:
+                return "Copy a side from another hero";
+            case Decurse:
+                return "Remove all negative effects";
+
         }
         return "no base for "+type;
     }
@@ -110,6 +115,8 @@ public class Eff {
     public Eff reroll(int amount) { return type(EffType.Reroll, amount); }
     public Eff buff(Buff buff){this.buff = buff; return type(EffType.Buff); }
     public Eff redirectIncoming(){return type(EffType.RedirectIncoming); }
+    public Eff copyAbility() { return type(EffType.CopyAbility); }
+    public Eff decurse() {return type(EffType.Decurse); }
 
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);} //implicit
     public Eff allTargeters() { return targetType(TargetingType.AllTargeters); }
@@ -235,8 +242,10 @@ public class Eff {
                 return "No damaged heroes to heal";
             case Execute:
                 return "Can only target monsters on exactly "+getValue()+" hp";
+            case CopyAbility:
+                return "No sides left to copy";
         }
-        return "I dunno";
+        return "Invalid no target string";
     }
 
     public boolean isTargeted() {

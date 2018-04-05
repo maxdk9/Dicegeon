@@ -284,4 +284,7 @@ public class TargetingManager {
         return EntityGroup.getActualTargets(e, false, target);
     }
 
+    public boolean targetsDie() {
+        return getSelectedTargetable()!=null && getSelectedTargetable().getEffects()[0].type == Eff.EffType.CopyAbility;
+    }
 }

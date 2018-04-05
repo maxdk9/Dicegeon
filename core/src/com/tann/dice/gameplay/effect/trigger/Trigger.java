@@ -74,4 +74,7 @@ public abstract class Trigger implements Cloneable{
     return null;
   }
 
+  public boolean isNegative() {
+    return false;
+  }
 }

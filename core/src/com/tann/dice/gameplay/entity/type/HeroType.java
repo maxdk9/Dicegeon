@@ -69,8 +69,8 @@ public class HeroType extends EntityType<HeroType> {
                 .sides(Side.heal4, Side.heal4, Side.sword2, Side.magic1, Side.magic2, Side.nothing)
                 .spells(Spell.balance));
         add(new HeroType().name("Medic").hp(6).tag(healer1)
-                .sides(Side.heal4, Side.heal4, Side.sword2, Side.magic1, Side.magic2, Side.nothing)
-                .spells(Spell.balance));
+                .sides(Side.healAll2, Side.cure2, Side.cure2, Side.magic1, Side.magic1, Side.nothing)
+                .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
 
 
         add(new HeroType().name("Pyro").hp(6).tag(magic1)
@@ -82,6 +82,10 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Channeler").hp(6).tag(magic1)
                 .sides(Side.powerSelf, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
                 .spells(Spell.arcaneMissile));
+        add(new HeroType().name("Trickster").hp(7).tag(magic1)
+                .sides(Side.copy, Side.copy, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
+                .spells(Spell.arcaneMissile));//TODO new spell here (enemy reroll!??)
+
 
     }
 
