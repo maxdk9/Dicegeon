@@ -150,7 +150,7 @@ public class DamageProfile {
         target.heal(getHeals());
         target.damage(Math.max(0, getIncomingDamage() - getBlockedDamage()));
         for(Eff e:effs){
-            if(e.source!=null) {
+            if(e.source!=null && e.type == Damage) {
                 target.attackedBy(e.source);
             }
         }

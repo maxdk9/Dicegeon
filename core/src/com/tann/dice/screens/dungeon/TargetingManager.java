@@ -18,6 +18,7 @@ import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TargetingManager {
@@ -146,7 +147,10 @@ public class TargetingManager {
     }
 
     public boolean target(DiceEntity entity) {
-        Targetable t = getSelectedTargetable();
+        return target(entity, getSelectedTargetable(), true);
+    }
+
+    public boolean target(DiceEntity entity, Targetable t, boolean player) {
         if (!PhaseManager.get().getPhase().canTarget()) return false;
         if (t == null) return false;
         if (t.getEffects() == null) return false;
@@ -187,7 +191,7 @@ public class TargetingManager {
         boolean containsDamage = false;
         if (t.use()) {
             for (Eff e : t.getEffects()) {
-                hitEntities(EntityGroup.getActualTargets(e, true, entity), e);
+                hitEntities(EntityGroup.getActualTargets(e, player, entity), e);
                 if (e.type == Eff.EffType.Damage) {
                     containsDamage = true;
                 }
@@ -269,6 +273,7 @@ public class TargetingManager {
 
     public List<DiceEntity> getRandomTargetForEnemy(Die d) {
         Eff e = d.getEffects()[0];
+        if(e.type==EffType.Healing) return new ArrayList<>();
         DiceEntity target = null;
         List<DiceEntity> validTargets = EntityGroup.getValidTargets(d, false);
         if (validTargets.size() > 0) {

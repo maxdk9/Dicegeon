@@ -238,6 +238,18 @@ public class EntityGroup {
                     if(de.slidOut) result.add(de);
                 }
                 break;
+            case FriendlyMostDamaged:
+                int mostDamage = -1;
+                DiceEntity record = null;
+                for(DiceEntity de:friends){
+                    int damage = de.getMaxHp()-de.getHp();
+                    if(damage>mostDamage){
+                        mostDamage = damage;
+                        record = de;
+                    }
+                }
+                result.add(record);
+            break;
             case Untargeted:
                 break;
         }

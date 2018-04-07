@@ -101,10 +101,6 @@ public class Equipment {
     return list.remove(0).copy();
   }
 
-  public static Equipment recent() {
-    return all.get(all.size()-1).copy();
-  }
-
   public static Equipment byName(String name){
     name = name.toLowerCase();
     for(Equipment e:all){

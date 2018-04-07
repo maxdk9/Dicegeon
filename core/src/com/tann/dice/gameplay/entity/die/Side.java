@@ -202,7 +202,7 @@ public class Side {
     public static final Side big_punch3 = big_punch1.withValue(3);
     public static final Side big_punch5 = big_punch1.withValue(5);
 
-    public static final Side big_heal1 = new Side().size(big).image("heal").effect(new Eff().heal(1).friendlySingle());
+    public static final Side big_heal1 = new Side().size(big).image("heal").effect(new Eff().heal(1).friendlyMostDamaged());
     public static final Side big_heal3 = big_heal1.withValue(3);
     public static final Side big_heal5 = big_heal1.withValue(5);
 

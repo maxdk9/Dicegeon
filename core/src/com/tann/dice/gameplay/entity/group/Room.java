@@ -1,8 +1,11 @@
 package com.tann.dice.gameplay.entity.group;
 
 import com.badlogic.gdx.utils.Array;
+import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
+import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.util.Tann;
 
@@ -82,5 +85,18 @@ public class Room extends EntityGroup {
             monster.slide(false);
             TargetingManager.get().showTargetingHighlights();
         }
+    }
+
+    public boolean activateDelayedRolls() {
+        boolean found = false;
+        for(DiceEntity de:getActiveEntities()){
+            Die d = de.getDie();
+            Side s = d.getActualSide();
+            if(s.getEffects()[0].type== Eff.EffType.Healing){
+                found = true;
+                TargetingManager.get().target(null, d, false);
+            }
+        }
+        return found;
     }
 }

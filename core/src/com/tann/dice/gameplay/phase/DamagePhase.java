@@ -1,7 +1,7 @@
 package com.tann.dice.gameplay.phase;
 
-import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
+import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.util.Sounds;
@@ -15,9 +15,18 @@ public class DamagePhase extends Phase {
             public void run() {
                 Sounds.playSound(Sounds.fwips, 4, 1);
                 EntityGroup.activateDamage();
-                if(!DungeonScreen.get().checkEnd()){
-                    PhaseManager.get().popPhase();
-                }
+                boolean activated = Room.get().activateDelayedRolls();
+
+                Tann.delay(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!DungeonScreen.get().checkEnd()){
+                            PhaseManager.get().popPhase();
+                        }
+                    }
+                }, activated?.5f:0);
+
+
             }
         }, .3f);
 
@@ -26,6 +35,11 @@ public class DamagePhase extends Phase {
     @Override
     public void deactivate() {
         PhaseManager.get().pushPhase(new EnemyRollingPhase());
+    }
+
+    @Override
+    public boolean canTarget() {
+        return true;
     }
 
     @Override

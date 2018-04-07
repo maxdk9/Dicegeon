@@ -1,7 +1,6 @@
 package com.tann.dice.gameplay.phase;
 
 
-import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.group.Party;

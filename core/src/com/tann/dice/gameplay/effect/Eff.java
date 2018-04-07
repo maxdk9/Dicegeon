@@ -10,7 +10,7 @@ public class Eff {
 
     public enum TargetingType{
         EnemySingle, EnemySingleRanged, EnemyAndAdjacents, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy, EnemyAndAdjacentsRanged,
-        FriendlySingle, FriendlySingleOther, FriendlyGroup, FriendlySingleAndAdjacents,
+        FriendlySingle, FriendlySingleOther, FriendlyGroup, FriendlySingleAndAdjacents, FriendlyMostDamaged,
         Self, OnRoll, Untargeted, AllTargeters,
         TopEnemy, BottomEnemy, TopBottomEnemy, AllFront,
         DoesNothing
@@ -103,6 +103,7 @@ public class Eff {
                     case FriendlySingleOther: result += " another damaged character"; break;
                     case FriendlySingle: result += " a damaged character"; break;
                     case FriendlyGroup: result += " ALL damaged characters"; break;
+                    case FriendlyMostDamaged: result += " the most-damaged friendly character"; break;
                     case Self: result += " yourself"; break;
                     default: result += " Need description: " +targetingType;
                 }
@@ -148,6 +149,7 @@ public class Eff {
     public Eff botEnemy() { return targetType(TargetingType.BottomEnemy);}
     public Eff topBotEnemy() { return targetType(TargetingType.TopBottomEnemy);}
     public Eff allFront() { return targetType(TargetingType.AllFront);}
+    public Eff friendlyMostDamaged() { return targetType(TargetingType.FriendlyMostDamaged);}
 
     public Eff justValue(int amount) {this.value = amount; return this;}
 
@@ -265,6 +267,7 @@ public class Eff {
             case EnemySingleRanged:
             case FriendlySingle:
             case FriendlySingleOther:
+            case FriendlySingleAndAdjacents:
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
                 return true;
@@ -281,6 +284,7 @@ public class Eff {
             case BottomEnemy:
             case TopBottomEnemy:
             case AllFront:
+            case FriendlyMostDamaged:
                 return false;
             default:
         }
@@ -294,6 +298,7 @@ public class Eff {
             case FriendlySingle:
             case FriendlySingleOther:
             case FriendlySingleAndAdjacents:
+            case FriendlyMostDamaged:
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
             case TopEnemy:
