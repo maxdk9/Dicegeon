@@ -13,17 +13,17 @@ import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
-import com.tann.dice.gameplay.entity.type.MonsterType;
+import static com.tann.dice.gameplay.entity.type.MonsterType.*;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
+import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
-import com.tann.dice.screens.dungeon.panels.Graph;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
@@ -150,20 +150,20 @@ public class DungeonScreen extends Screen {
     }
 
     static {
-        addLevel(MonsterType.archer, MonsterType.goblin, MonsterType.bird, MonsterType.dragon);
-//        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
+//        addLevel(archer, goblin, bird, dragon);
+        addLevel(MonsterType.spikeGolem, MonsterType.spikeGolem, MonsterType.spikeGolem);
 //        addLevel(MonsterType.bird, MonsterType.bird, MonsterType.bird, MonsterType.bird, MonsterType.goblin);
 //        addLevel(MonsterType.archer, MonsterType.goblin, MonsterType.bird, MonsterType.dragon);
-        addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
-        addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);
-        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.goblin, MonsterType.goblin);
-        addLevel(MonsterType.spikeGolem, MonsterType.snake, MonsterType.spikeGolem);
-        addLevel(MonsterType.archer, MonsterType.bird, MonsterType.bird, MonsterType.archer);
-        addLevel(MonsterType.bird, MonsterType.bird, MonsterType.bird);
-        addLevel(MonsterType.archer, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.archer);
-        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
-        addLevel(MonsterType.bird, MonsterType.spikeGolem, MonsterType.goblin, MonsterType.spikeGolem, MonsterType.bird);
-        addLevel(MonsterType.bird, MonsterType.dragon, MonsterType.goblin);
+        addLevel(goblin, goblin, goblin, goblin);
+        addLevel(goblin, archer, goblin, archer, goblin);
+        addLevel(snake, snake, goblin, goblin);
+        addLevel(spikeGolem, snake, spikeGolem);
+        addLevel(archer, bird, bird, archer);
+        addLevel(bird, bird, bird);
+        addLevel(archer, archer, goblin, goblin, goblin, archer, archer);
+        addLevel(snake, snake, snake, snake);
+        addLevel(bird, spikeGolem, goblin, spikeGolem, bird);
+        addLevel(bird, dragon, goblin);
     }
 
     public void nextLevel() {

@@ -1,13 +1,13 @@
 package com.tann.dice.gameplay.entity.type;
 
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageAttackers;
-import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Side;
-import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize.*;
 
 public class MonsterType extends EntityType<MonsterType>{
 
@@ -25,8 +25,8 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType snake = new MonsterType().name("Snake").hp(7)
             .sides(Side.snakePoison1, Side.snakePoison1, Side.snakePoison1, Side.sword3, Side.sword3, Side.sword4);
 
-    public static final MonsterType spikeGolem = new MonsterType().name("Spike Golem").hp(9).size(big)
-            .sides(Side.big_punch3, Side.big_punch3, Side.big_punch5, Side.big_punch5, Side.big_punch5, Side.big_punch5)//, Side.big_heal3, Side.big_heal3)
+    public static final MonsterType spikeGolem = new MonsterType().name("Spiker").hp(9).size(big)
+            .sides(Side.big_punch3, Side.big_punch3, Side.big_punch5, Side.big_punch5, Side.big_heal3, Side.big_heal3)//, Side.big_heal3, Side.big_heal3)
             .trait(new TriggerDamageAttackers(1));
     public static final MonsterType bird = new MonsterType().name("Awk").hp(10).size(big)
         .sides(Side.big_claw2, Side.big_claw2, Side.big_peck3, Side.big_peck3, Side.big_peck5, Side.big_peck5);
