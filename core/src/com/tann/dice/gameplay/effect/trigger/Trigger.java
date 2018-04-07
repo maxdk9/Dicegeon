@@ -16,11 +16,11 @@ public abstract class Trigger implements Cloneable{
     return Main.atlas.findRegion("trigger/"+name);
   }
 
-  DiceEntity source, target;
+  protected DiceEntity entity;
 
   public int affectMaxHp(int hp){return hp;}
 
-  public void endOfTurn(DiceEntity target){}
+  public void endOfTurn(){}
 
   public Integer alterIncomingDamage(Integer incomingDamage) { return incomingDamage; }
 
@@ -30,11 +30,13 @@ public abstract class Trigger implements Cloneable{
 
   public void attackedBy(DiceEntity entity) { }
 
-  public int alterOutgoingEffect(EffType type, int value, DiceEntity source) { return value; }
+  public int alterOutgoingEffect(EffType type, int value) { return value; }
 
   public int alterIncomingEffect(EffType type, int value) { return value; }
 
   public boolean avoidDeath(){ return false; }
+
+  public void onKill(){};
 
   protected String noDescription(String extra){
     return "No description for "+this.getClass().getSimpleName()+" ("+extra+")";
@@ -61,6 +63,10 @@ public abstract class Trigger implements Cloneable{
   public String describeForBuffText(){ return describe(); }
 
   public abstract String describe();
+
+  public void setEntity(DiceEntity entity){
+    this.entity = entity;
+  }
 
   public void setValue(int value) {
   }

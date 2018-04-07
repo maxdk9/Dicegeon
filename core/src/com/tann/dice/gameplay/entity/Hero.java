@@ -23,7 +23,7 @@ public class Hero extends DiceEntity {
             setColour(type.colour);
         }
         this.spells = Arrays.asList(type.spells);
-//        addEquipment(Equipment.byName("antivenom"));
+        addEquipment(Equipment.byName("Blood Vial"));
     }
 
     @Override

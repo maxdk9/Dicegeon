@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.types.*;
@@ -32,6 +33,8 @@ public class Equipment {
             .fluff("A natural cure-all").trigger(new TriggerEffTypeBonus(EffType.Healing, 1)));
     add(new Equipment().name("Antivenom").image("antivenom")
             .fluff("Weird trick discovered by a mum, snakes hate her!").trigger(new TriggerDamageImmunity(true, false)));
+    add(new Equipment().name("Blood Vial").image("bloodVial")
+            .fluff("Something description").trigger(new TriggerOnKill(new Eff().heal(1).self())));
 
     defaultLevel = 1;
     add(new Equipment().name("Reinforced Shield").image("shieldReinforce")

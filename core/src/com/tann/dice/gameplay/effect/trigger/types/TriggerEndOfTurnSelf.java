@@ -17,8 +17,8 @@ public class TriggerEndOfTurnSelf extends Trigger {
     }
 
     @Override
-    public void endOfTurn(DiceEntity target) {
-        target.hit(eff, false);
+    public void endOfTurn() {
+        entity.hit(eff, false);
     }
 
     @Override

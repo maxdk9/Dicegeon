@@ -103,6 +103,7 @@ public class Eff {
                     case FriendlySingleOther: result += " another damaged character"; break;
                     case FriendlySingle: result += " a damaged character"; break;
                     case FriendlyGroup: result += " ALL damaged characters"; break;
+                    case Self: result += " yourself"; break;
                     default: result += " Need description: " +targetingType;
                 }
                 break;
@@ -230,7 +231,7 @@ public class Eff {
             triggers = source.getActiveTriggers();
             for (int i = 0; i < triggers.size(); i++) {
                 Trigger t = triggers.get(i);
-                actualValue = t.alterOutgoingEffect(type, actualValue, source);
+                actualValue = t.alterOutgoingEffect(type, actualValue);
             }
         }
         return actualValue;

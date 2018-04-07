@@ -159,6 +159,9 @@ public abstract class DiceEntity {
             for (Buff b:getBuffs()){
                 activeTriggers.add(b.trigger);
             }
+            for(Trigger t:activeTriggers){
+                t.setEntity(this);
+            }
         }
         return activeTriggers;
     }
@@ -196,6 +199,7 @@ public abstract class DiceEntity {
     }
 
     public void hit(Eff e, boolean instant) {
+        boolean tempDead = dead;
         switch(e.type){
             case Damage:
                 if(e.targetingType==Eff.TargetingType.Self){
@@ -231,6 +235,9 @@ public abstract class DiceEntity {
         if (instant || !isPlayer()) getProfile().action();
         if(!isPlayer() && profile.isGoingToDie(false)){
             getDie().removeFromScreen();
+        }
+        if(!tempDead && dead){
+            e.source.killedEnemy();
         }
         somethingChanged();
     }
@@ -312,6 +319,12 @@ public abstract class DiceEntity {
     public void removeEffectsIfDead(){
         if(!isPlayer() && die.getActualSide() != null && isDead()) {
             TargetingManager.get().cancelEffects(this);
+        }
+    }
+
+    public void killedEnemy(){
+        for(Trigger t:getActiveTriggers()){
+            t.onKill();
         }
     }
 
@@ -446,7 +459,7 @@ public abstract class DiceEntity {
     public void upkeep() {
         List<Trigger> activeTriggers = getActiveTriggers();
         for(Trigger t:activeTriggers){
-            t.endOfTurn(this);
+            t.endOfTurn();
         }
         getProfile().action();
         for(int i=buffs.size()-1; i>=0; i--){
