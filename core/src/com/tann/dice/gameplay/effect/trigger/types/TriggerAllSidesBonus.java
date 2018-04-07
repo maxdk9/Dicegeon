@@ -8,7 +8,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 public class TriggerAllSidesBonus extends Trigger{
     int amount;
     boolean show;
-    private static final TextureRegion image = loadImage("allSidesBonus");
+    public static final TextureRegion image = loadImage("allSidesBonus");
     public TriggerAllSidesBonus(int amount, boolean show) {
         this.amount = amount;
         this.show = show;

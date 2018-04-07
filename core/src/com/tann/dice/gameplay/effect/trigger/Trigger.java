@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.effect.trigger;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -38,7 +39,9 @@ public abstract class Trigger implements Cloneable{
 
   public boolean avoidDeathPenalty(){ return false; }
 
-  public void onKill(){};
+  public void onKill(){}
+
+  public void onHitWithEff(Eff e){}
 
   protected String noDescription(String extra){
     return "No description for "+this.getClass().getSimpleName()+" ("+extra+")";
@@ -81,6 +84,16 @@ public abstract class Trigger implements Cloneable{
     }
     return null;
   }
+
+  public static Trigger[] copy(Trigger[] triggers){
+    Trigger[] result = new Trigger[triggers.length];
+    for(int i=0;i<triggers.length;i++){
+      result[i]=triggers[i].copy();
+    }
+    return result;
+  }
+
+
 
   public boolean isNegative() {
     return false;

@@ -210,13 +210,13 @@ public class Eff {
 
     public int getValue() {
         int actualValue = value; // + bonusFromSide;
-//        if(source != null) {
-//            List<Trigger> triggers = source.getActiveTriggers();
-//            for(int i=0;i<triggers.size();i++){
-//                Trigger t = triggers.get(i);
-//                actualValue = t.alterOutgoingEffect(type, actualValue, source);
-//            }
-//        }
+        if(source != null) {
+            List<Trigger> triggers = source.getActiveTriggers();
+            for(int i=0;i<triggers.size();i++){
+                Trigger t = triggers.get(i);
+                actualValue = t.alterOutgoingEffect(type, actualValue);
+            }
+        }
         return actualValue;
     }
 
@@ -226,13 +226,6 @@ public class Eff {
         for(int i=0;i<triggers.size();i++){
             Trigger t = triggers.get(i);
             actualValue = t.alterIncomingEffect(type, actualValue);
-        }
-        if(source!=null) {
-            triggers = source.getActiveTriggers();
-            for (int i = 0; i < triggers.size(); i++) {
-                Trigger t = triggers.get(i);
-                actualValue = t.alterOutgoingEffect(type, actualValue);
-            }
         }
         return actualValue;
     }

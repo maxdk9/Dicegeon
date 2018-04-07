@@ -23,7 +23,7 @@ public class Hero extends DiceEntity {
             setColour(type.colour);
         }
         this.spells = Arrays.asList(type.spells);
-        if(Math.random()>.5) addEquipment(Equipment.byName("Thorns"));
+        if(Math.random()>.3) addEquipment(Equipment.byName("Relic"));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Hero extends DiceEntity {
         this.entityType = type;
         this.name = type.name;
         this.level = type.level;
-        this.traits = (Trait[]) type.traits.toArray(new Trait[0]);
+        this.traits = type.traits.toArray(new Trait[0]);
         setupLapels(level);
         setMaxHp(type.hp);
         setSides(type.sides);

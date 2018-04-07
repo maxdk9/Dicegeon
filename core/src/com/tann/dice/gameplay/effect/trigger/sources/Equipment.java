@@ -49,6 +49,9 @@ public class Equipment {
             .fluff("You feel warmth inside").trigger(new TriggerEffTypeBonus(EffType.Magic, 1)));
     add(new Equipment().name("Thorns").image("thorns")
             .fluff("Something description").trigger(new TriggerDamageAttackers(1)));
+    add(new Equipment().name("Relic").image("relic")
+            .fluff("Something description").trigger(new TriggerOneHealthBonusOutgoing(2)));
+
 
     defaultLevel = 2;
     add(new Equipment().name("Glow Stone").image("glowStone")
@@ -162,7 +165,10 @@ public class Equipment {
   public Equipment copy(){
     Equipment copy = new Equipment().name(name).fluff(fluff);
     copy.image = image;
-    copy.triggers = triggers;
+    copy.triggers = new ArrayList<>();
+    for(Trigger t:triggers){
+      copy.triggers.add(t.copy());
+    }
     return copy;
   }
 
