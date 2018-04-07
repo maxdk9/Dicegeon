@@ -74,6 +74,8 @@ public class Side {
 
     public static final Side nothing = new Side().image("nothing").effect(new Eff().nothing());
 
+    // damage stuff
+
 //    public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(5).enemyGroup());
     public static final Side sword1 = new Side().image("sword").effect(new Eff().damage(1));
     public static final Side sword2 = sword1.withValue(2);
@@ -81,14 +83,63 @@ public class Side {
     public static final Side sword4 = sword1.withValue(4);
     public static final Side sword5 = sword1.withValue(5);
 
+    public static final Side whirlwind1 = new Side().image("whirlwind").effect(new Eff().damage(1).enemyGroup());
+
+    public static final Side trident1 = new Side().image("trident").effect(new Eff().damage(1).enemyAndAdjacents());
+
+    public static final Side top1 = new Side().image("top").effect(new Eff().damage(1).topEnemy());
+    public static final Side top2 = top1.withValue(2);
+    public static final Side top3 = top1.withValue(3);
+
+    public static final Side bot1 = new Side().image("bot").effect(new Eff().damage(1).botEnemy());
+    public static final Side bot2 = bot1.withValue(2);
+    public static final Side bot3 = bot1.withValue(3);
+
+    public static final Side topbot1 = new Side().image("topbot").effect(new Eff().damage(1).topBotEnemy());
+    public static final Side topbot2 = topbot1.withValue(2);
+
+    public static final Side front1 = new Side().image("front").effect(new Eff().damage(1).allFront());
+    public static final Side front2 = front1.withValue(2);
+
+    public static final Side hook1 = new Side().image("hook").effect(new Eff().damage(1).ranged(), new Eff().hook());
+
+    public static final Side arrow1 = new Side().image("arrow").effect(new Eff().damage(1).ranged());
+    public static final Side arrow2 = arrow1.withValue(2);
+
+    public static final Side swordShield1 = new Side().image("swordShield").effect(new Eff().damage(1), new Eff().shield(1).self());
+    public static final Side swordShield2 = swordShield1.withValue(2);
+
+    public static final Side sword1SelfDamage1 = new Side().image("swordSelfDamage").effect(new Eff().damage(1), new Eff().damage(1).self());
+    public static final Side sword2SelfDamage2 = sword1SelfDamage1.withValue(2);
+    public static final Side sword3SelfDamage3 = sword1SelfDamage1.withValue(3);
+
+    public static final Side poison1 = new Side().image("poison").effect(new Eff().justValue(1).
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged());
+
+    public static final Side flameWard = new Side().image("flameWard").effect(new Eff().damage(2).allTargeters());
+
+    // shield stuff
+
     public static final Side shield1 = new Side().image("shield").effect(new Eff().shield(1).friendlySingle());
     public static final Side shield2 = shield1.withValue(2);
     public static final Side shield3 = shield1.withValue(3);
 
-    public static final Side taunt = new Side().image("taunt").effect(new Eff().redirectIncoming().friendlySingle());
+    public static final Side wardingchord = new Side().image("wardingChord").effect(new Eff().shield(1).friendlyGroup());
+    public static final Side wardingchord2 = wardingchord.withValue(2);
+
+    public static final Side shieldHeart1 = new Side().image("shieldHeart").effect(new Eff().heal(1).friendlySingle(), new Eff().shield(1).friendlySingle());
+    public static final Side shieldHeart2 = shieldHeart1.withValue(2);
+
+    // magic stuff
 
     public static final Side magic1 = new Side().image("magic").effect(new Eff().magic(1).untargeted());
     public static final Side magic2 = magic1.withValue(2);
+
+    public static final Side magic1NextTurn = new Side().image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
+    public static final Side magic2NextTurn = magic1NextTurn.withValue(2);
+    public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
+
+    // heal stuff
 
     public static final Side heal2 = new Side().image("heal").effect(new Eff().heal(2).friendlySingle());
     public static final Side heal3 = heal2.withValue(3);
@@ -104,40 +155,22 @@ public class Side {
     public static final Side cure1 = new Side().image("cure").effect(new Eff().heal(1).friendlySingle(), new Eff().decurse().friendlySingle());
     public static final Side cure2 = cure1.withValue(2);
 
-    public static final Side swordShield1 = new Side().image("swordShield").effect(new Eff().damage(1), new Eff().shield(1).self());
-    public static final Side swordShield2 = swordShield1.withValue(2);
-
-    public static final Side sword1SelfDamage1 = new Side().image("swordSelfDamage").effect(new Eff().damage(1), new Eff().damage(1).self());
-    public static final Side sword2SelfDamage2 = sword1SelfDamage1.withValue(2);
-    public static final Side sword3SelfDamage3 = sword1SelfDamage1.withValue(3);
-
-    public static final Side shieldHeart1 = new Side().image("shieldHeart").effect(new Eff().heal(1).friendlySingle(), new Eff().shield(1).friendlySingle());
-    public static final Side shieldHeart2 = shieldHeart1.withValue(2);
-
-    public static final Side arrow1 = new Side().image("arrow").effect(new Eff().damage(1).ranged());
-    public static final Side arrow2 = arrow1.withValue(2);
-
-    public static final Side execute3 = new Side().image("execute").effect(new Eff().execute(3).ranged());
-
-    public static final Side poison1 = new Side().image("poison").effect(new Eff().justValue(1).
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged());
-    public static final Side vanish = new Side().image("vanish").effect(new Eff().self().
-            buff(new Buff(1, new TriggerDamageImmunity(true, true))));
-
-    public static final Side wardingchord = new Side().image("wardingChord").effect(new Eff().shield(1).friendlyGroup());
-    public static final Side wardingchord2 = wardingchord.withValue(2);
-    public static final Side reroll = new Side().image("reroll").effect(new Eff().reroll(0).onRoll());
-
     public static final Side potionregen = new Side().image("potionOfRegen").effect(new Eff()
             .buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().heal(1)))).friendlySingle().justValue(1));
 
-    public static final Side flameWard = new Side().image("flameWard").effect(new Eff().damage(2).allTargeters());
+    // weird stuff
 
-    public static final Side magic1NextTurn = new Side().image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
-    public static final Side magic2NextTurn = magic1NextTurn.withValue(2);
-    public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
+    public static final Side taunt = new Side().image("taunt").effect(new Eff().redirectIncoming().friendlySingle());
+
+    public static final Side execute3 = new Side().image("execute").effect(new Eff().execute(3).ranged());
+
+    public static final Side vanish = new Side().image("vanish").effect(new Eff().self().
+            buff(new Buff(1, new TriggerDamageImmunity(true, true))));
+
+    public static final Side reroll = new Side().image("reroll").effect(new Eff().reroll(0).onRoll());
 
     public static final Side powerSelf = new Side().image("powerSelf").effect(new Eff().self().buff(new Buff(-1, new TriggerAllSidesBonus(1, true))).justValue(1));
+
     public static final Side copy = new Side().image("copy").effect(new Eff().friendlySingleOther().copyAbility());
 
     //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());

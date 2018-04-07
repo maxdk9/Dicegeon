@@ -223,6 +223,21 @@ public class EntityGroup {
             case AllTargeters:
                 result.addAll(target.getAllTargeters());
                 break;
+            case TopEnemy:
+                result.add(enemies.get(enemies.size()-1));
+                break;
+            case BottomEnemy:
+                result.add(enemies.get(0));
+                break;
+            case TopBottomEnemy:
+                result.add(enemies.get(0));
+                result.add(enemies.get(enemies.size()-1));
+                break;
+            case AllFront:
+                for(DiceEntity de:enemies){
+                    if(de.slidOut) result.add(de);
+                }
+                break;
             case Untargeted:
                 break;
         }

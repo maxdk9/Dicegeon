@@ -223,6 +223,9 @@ public abstract class DiceEntity {
             case CopyAbility:
                 e.source.setCurrentSide(getDie().getActualSide().copy());
                 return;
+            case Hook:
+                slide(true);
+                return;
         }
         getProfile().addEffect(e);
         if (instant || !isPlayer()) getProfile().action();

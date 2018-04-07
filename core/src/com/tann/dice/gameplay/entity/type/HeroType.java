@@ -53,6 +53,13 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Berserker").hp(9).tag(fighter1)
                 .sides(Side.sword3SelfDamage3, Side.sword3SelfDamage3, Side.sword2SelfDamage2, Side.sword2, Side.sword2, Side.nothing)
         .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
+        add(new HeroType().name("Whirl").hp(6).tag(fighter1)
+                .sides(Side.whirlwind1, Side.trident1, Side.trident1, Side.sword2, Side.shield2, Side.nothing));
+        add(new HeroType().name("Crusher").hp(6).tag(fighter1)
+                .sides(Side.topbot2, Side.topbot1, Side.top3, Side.bot3, Side.shield2, Side.nothing));
+        add(new HeroType().name("Bruiser").hp(6).tag(fighter1)
+                .sides(Side.front2, Side.front2, Side.hook1, Side.hook1, Side.shield2, Side.nothing));
+
 
         add(new HeroType().name("Paladin").hp(7).tag(defender1)
                 .sides(Side.shieldHeart2, Side.shieldHeart2, Side.shield2,  Side.sword2, Side.sword1, Side.nothing));

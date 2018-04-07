@@ -9,15 +9,18 @@ import java.util.List;
 public class Eff {
 
     public enum TargetingType{
-        EnemySingle, EnemySingleRanged, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy,
-        FriendlySingle, FriendlySingleOther, FriendlyGroup, EnemyAndAdjacents,
-        Self, OnRoll, Untargeted, AllTargeters, EnemyAndAdjacentsRanged, DoesNothing
+        EnemySingle, EnemySingleRanged, EnemyAndAdjacents, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy, EnemyAndAdjacentsRanged,
+        FriendlySingle, FriendlySingleOther, FriendlyGroup,
+        Self, OnRoll, Untargeted, AllTargeters,
+        TopEnemy, BottomEnemy, TopBottomEnemy, AllFront,
+        DoesNothing
     }
 
     public TargetingType targetingType = TargetingType.EnemySingle;
 
     public enum EffType {
-        Empty, Damage, Shield, Magic, Healing, Buff, Execute, Reroll, RedirectIncoming, CopyAbility, Decurse
+        Damage, Shield, Magic, Healing,
+        Empty, Buff, Execute, Reroll, RedirectIncoming, CopyAbility, Decurse, Hook
 	}
 
 
@@ -54,6 +57,8 @@ public class Eff {
                 return "Copy a side from another hero";
             case Decurse:
                 return "Remove all negative effects";
+            case Hook:
+                return "Pull an enemy forwards";
 
         }
         return "no base for "+type;
@@ -71,6 +76,10 @@ public class Eff {
                     case EnemyGroup: result += " to ALL enemies"; break;
                     case EnemyAndAdjacents: result += " to an enemy and both adjacent enemies"; break;
                     case EnemyAndAdjacentsRanged: result += " to ANY enemy and both adjacent enemies"; break;
+                    case TopEnemy: result += " to the top enemy"; break;
+                    case BottomEnemy: result += " to the bottom enemy"; break;
+                    case TopBottomEnemy: result += " to the top and bottom enemy"; break;
+                    case AllFront: result += " to all forward enemies"; break;
                     case AllTargeters: result += " to all enemies who have targeted the hero of your choice"; break;
                     case Self: result = "Take "+value+" damage"; break;
                     default: result = "ahh help damage"; break;
@@ -117,6 +126,7 @@ public class Eff {
     public Eff redirectIncoming(){return type(EffType.RedirectIncoming); }
     public Eff copyAbility() { return type(EffType.CopyAbility); }
     public Eff decurse() {return type(EffType.Decurse); }
+    public Eff hook() {return type(EffType.Hook); }
 
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);} //implicit
     public Eff allTargeters() { return targetType(TargetingType.AllTargeters); }
@@ -131,6 +141,11 @@ public class Eff {
     public Eff self() { return targetType(TargetingType.Self);}
     public Eff onRoll() { return targetType(TargetingType.OnRoll);}
     public Eff randomEnemy() { return targetType(TargetingType.RandomEnemy);}
+    public Eff topEnemy() { return targetType(TargetingType.TopEnemy);}
+    public Eff botEnemy() { return targetType(TargetingType.BottomEnemy);}
+    public Eff topBotEnemy() { return targetType(TargetingType.TopBottomEnemy);}
+    public Eff allFront() { return targetType(TargetingType.AllFront);}
+
     public Eff justValue(int amount) {this.value = amount; return this;}
 
     public Eff nextTurn() {
@@ -266,6 +281,10 @@ public class Eff {
             case Untargeted:
             case AllTargeters:
             case DoesNothing:
+            case TopEnemy:
+            case BottomEnemy:
+            case TopBottomEnemy:
+            case AllFront:
                 return false;
             default:
         }
@@ -280,6 +299,10 @@ public class Eff {
             case FriendlySingleOther:
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
+            case TopEnemy:
+            case BottomEnemy:
+            case TopBottomEnemy:
+            case AllFront:
             case EnemyGroup:
             case EnemyOnlyAdjacents:
             case RandomEnemy:

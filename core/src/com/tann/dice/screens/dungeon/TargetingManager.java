@@ -54,19 +54,14 @@ public class TargetingManager {
         Eff first = d.getEffects()[0];
         switch (first.targetingType) {
             case EnemyGroup:
-                hitMultiple(Room.get().getActiveEntities(), d.getEffects(), false);
-                d.use();
-                break;
             case FriendlyGroup:
-                hitMultiple(Party.get().getActiveEntities(), d.getEffects(), false);
-                d.use();
-                break;
             case Self:
-                d.entity.hit(d.getEffects(), false);
-                d.use();
-                break;
             case RandomEnemy:
-                Tann.getRandom(Room.get().getActiveEntities()).hit(d.getEffects(), false);
+            case TopEnemy:
+            case BottomEnemy:
+            case TopBottomEnemy:
+            case AllFront:
+                hitMultiple(EntityGroup.getActualTargets(first, true, null), d.getEffects(), false);
                 d.use();
                 break;
             case Untargeted:
