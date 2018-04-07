@@ -9,9 +9,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.util.Tann;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Room extends EntityGroup {
 
@@ -21,17 +19,31 @@ public class Room extends EntityGroup {
         return self;
     }
 
+    static Comparator<Monster> monCom = new Comparator<Monster>() {
+        @Override
+        public int compare(Monster o1, Monster o2) {
+            if(o1.willSwap() == o2.willSwap()) return 0;
+            if(o1.willSwap()) return -1;
+            if(o2.willSwap()) return 1;
+            return 0;
+        }
+    };
+
     public void updateSlids(boolean keepSlids) {
         List<DiceEntity> active = getActiveEntities();
         int numberToSlide = (active.size() - 1) / 3 + 1;
 
-        List<DiceEntity> alreadySlid = new ArrayList<>();
-        List<DiceEntity> notAlreadySlid = new ArrayList<>();
+        List<Monster> alreadySlid = new ArrayList<>();
+        List<Monster> notAlreadySlid = new ArrayList<>();
 
         for (DiceEntity m : active) {
-            if (m.slidOut) alreadySlid.add(m);
-            else notAlreadySlid.add(m);
+            if (m.slidOut) alreadySlid.add((Monster) m);
+            else notAlreadySlid.add((Monster) m);
         }
+        Collections.shuffle(notAlreadySlid);
+        Collections.shuffle(alreadySlid);
+        Collections.sort(notAlreadySlid, monCom);
+        Collections.sort(alreadySlid, monCom);
 
         if (alreadySlid.size() == 1 && active.size() == 1) {
             return;
@@ -42,23 +54,23 @@ public class Room extends EntityGroup {
         if (keepSlids) {
             int slideDelta = numberToSlide - alreadySlid.size();
             if (slideDelta > 0) {
-                for (DiceEntity de : Tann.pickNRandomElements(notAlreadySlid, slideDelta)) {
-                    de.slide(true);
+                for (int i=0;i<slideDelta;i++) {
+                    notAlreadySlid.get(i).slide(true);
                 }
             } else if (slideDelta < 0) {
-                for (DiceEntity de : Tann.pickNRandomElements(alreadySlid, -slideDelta)) {
-                    de.slide(false);
+                for (int i=0;i<-slideDelta;i++) {
+                    alreadySlid.get(i).slide(false);
                 }
             }
         }
         else {
-            List<DiceEntity> toSlide = new ArrayList<>();
-            List<DiceEntity> toUnSlide = new ArrayList<>(alreadySlid);
+            List<Monster> toSlide = new ArrayList<>();
+            List<Monster> toUnSlide = new ArrayList<>(alreadySlid);
             if (notAlreadySlid.size() >= numberToSlide) {
-                toSlide = Tann.pickNRandomElements(notAlreadySlid, Math.max(numberToSlide, 0));
+                toSlide = notAlreadySlid.subList(0, numberToSlide);
             } else {
                 toSlide.addAll(notAlreadySlid);
-                toSlide.addAll(Tann.pickNRandomElements(alreadySlid, numberToSlide - toSlide.size()));
+                toSlide.addAll(alreadySlid.subList(0, numberToSlide - toSlide.size()));
             }
             toUnSlide.removeAll(toSlide);
 
@@ -74,9 +86,11 @@ public class Room extends EntityGroup {
     public void requestSwap(Monster monster) {
         DiceEntity volunteer = null;
         for(DiceEntity de:Tann.iterandom(activeEntities)){
-            if(de == monster) continue;
-            if(de.slidOut) continue;
-            if(!de.aboveHalfHealth()) continue;
+            Monster m = (Monster) de;
+            if(m == monster) continue;
+            if(m.slidOut) continue;
+            if(!m.aboveHalfHealth()) continue;
+            if(m.willSwap())
             volunteer = de;
             break;
         }

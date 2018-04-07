@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.entity.type;
 
+import com.tann.dice.gameplay.effect.trigger.types.TriggerCowardly;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageAttackers;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -18,7 +19,8 @@ public class MonsterType extends EntityType<MonsterType>{
     }
 
     public static final MonsterType archer = new MonsterType().name("Archer").hp(3).size(smol)
-            .sides(Side.smol_arrow3, Side.smol_arrow3, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2);
+            .sides(Side.smol_arrow3, Side.smol_arrow3, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2)
+            .trait(new TriggerCowardly());
 
     public static final MonsterType goblin = new MonsterType().name("Goblin").hp(5)
         .sides(Side.sword2, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1);
@@ -30,7 +32,6 @@ public class MonsterType extends EntityType<MonsterType>{
             .trait(new TriggerDamageAttackers(1));
     public static final MonsterType bird = new MonsterType().name("Awk").hp(10).size(big)
         .sides(Side.big_claw2, Side.big_claw2, Side.big_peck3, Side.big_peck3, Side.big_peck5, Side.big_peck5);
-
 
     public static final MonsterType dragon = new MonsterType().name("Lizard").hp(30).size(huge)
         .sides(Side.huge_flame2, Side.huge_flame2, Side.huge_flame3, Side.huge_posionChomp2, Side.huge_posionChomp2, Side.huge_posionChomp3);

@@ -39,6 +39,8 @@ public abstract class Trigger implements Cloneable{
 
   public boolean avoidDeathPenalty(){ return false; }
 
+  public boolean cancelVolunteerForwards(){ return false; }
+
   public void onKill(){}
 
   public void onHitWithEff(Eff e){}

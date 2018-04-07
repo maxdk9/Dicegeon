@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -90,4 +91,10 @@ public class Monster extends DiceEntity {
         return Colours.purple;
     }
 
+    public boolean willSwap() {
+        for(Trigger t:getActiveTriggers()){
+            if(t.cancelVolunteerForwards()) return false;
+        }
+        return true;
+    }
 }
