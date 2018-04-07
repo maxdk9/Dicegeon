@@ -54,7 +54,7 @@ public class HeroType extends EntityType<HeroType> {
                 .sides(Side.sword3SelfDamage3, Side.sword3SelfDamage3, Side.sword2SelfDamage2, Side.sword2, Side.sword2, Side.nothing)
         .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
         add(new HeroType().name("Whirl").hp(6).tag(fighter1)
-                .sides(Side.whirlwind1, Side.trident1, Side.trident1, Side.sword2, Side.shield2, Side.nothing));
+                .sides(Side.whirlwind1, Side.trident1, Side.trident1, Side.sword2, Side.shieldPlusAdjacent1, Side.nothing));
         add(new HeroType().name("Crusher").hp(6).tag(fighter1)
                 .sides(Side.topbot2, Side.topbot1, Side.top3, Side.bot3, Side.shield2, Side.nothing));
         add(new HeroType().name("Bruiser").hp(6).tag(fighter1)
@@ -68,6 +68,9 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Bouncer").hp(9).tag(defender1)
                 .sides(Side.taunt, Side.taunt, Side.shield2, Side.shield2, Side.sword2, Side.nothing).
                         trait(new TriggerDamageLimit(4)));
+        add(new HeroType().name("Guardian").hp(7).tag(defender1)
+                .sides(Side.shieldPlusAdjacent2, Side.shieldPlusAdjacent2, Side.shield3, Side.shield3, Side.trident1, Side.nothing));
+
 
         add(new HeroType().name("Alchemist").hp(5).tag(healer1)
                 .sides(Side.heal4, Side.magic2, Side.magic1, Side.potionregen, Side.potionregen, Side.nothing)

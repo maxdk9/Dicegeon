@@ -124,6 +124,10 @@ public class Side {
     public static final Side shield2 = shield1.withValue(2);
     public static final Side shield3 = shield1.withValue(3);
 
+    public static final Side shieldPlusAdjacent1 = new Side().image("shieldPlusAdjacent").effect(new Eff().shield(1).friendlyAndAdjacents());
+    public static final Side shieldPlusAdjacent2 = shieldPlusAdjacent1.withValue(2);
+    public static final Side shieldPlusAdjacent3 = shieldPlusAdjacent1.withValue(3);
+
     public static final Side wardingchord = new Side().image("wardingChord").effect(new Eff().shield(1).friendlyGroup());
     public static final Side wardingchord2 = wardingchord.withValue(2);
 

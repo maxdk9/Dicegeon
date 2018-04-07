@@ -13,8 +13,6 @@ import com.tann.dice.util.Tann;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tann.dice.gameplay.effect.Eff.TargetingType.FriendlySingleOther;
-
 public class EntityGroup {
     List<DiceEntity> entities = new ArrayList<>();
     protected List<DiceEntity> activeEntities = new ArrayList<>();
@@ -122,6 +120,7 @@ public class EntityGroup {
                 }
                 break;
             case FriendlySingle:
+            case getFriendlySingleAndAdjacents:
                 targetsTmp.addAll(friends);
                 break;
             case FriendlySingleOther:
@@ -206,6 +205,7 @@ public class EntityGroup {
                 break;
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
+            case getFriendlySingleAndAdjacents:
                 result.addAll(target.getAdjacents(true));
                 break;
             case EnemyOnlyAdjacents:

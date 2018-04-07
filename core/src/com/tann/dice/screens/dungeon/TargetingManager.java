@@ -168,6 +168,7 @@ public class TargetingManager {
                     break;
                 case FriendlySingle:
                 case FriendlySingleOther:
+                case getFriendlySingleAndAdjacents:
                     if(!entity.isPlayer()) invalidReason = "Target a hero";
                     else {
                         switch (effType) {
