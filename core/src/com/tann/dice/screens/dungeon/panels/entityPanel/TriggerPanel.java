@@ -20,7 +20,7 @@ public class TriggerPanel extends Actor {
     int itemsPerColumn = 2;
     public TriggerPanel(DiceEntity entity) {
         this.entity = entity;
-        if(entity.getSize() == EntitySize.smol){
+        if(entity.getSize() == EntitySize.smol || entity.getSize() == EntitySize.big){
             itemsPerColumn = 1;
         }
         setSize(WIDTH, itemsPerColumn * BUFFSIZE + (itemsPerColumn-1)*GAP);

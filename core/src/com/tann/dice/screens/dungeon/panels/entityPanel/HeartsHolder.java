@@ -18,13 +18,19 @@ public class HeartsHolder extends Group{
     public static final int heartGap = 1;
     int heartsPerRow = 5;
     boolean huge;
+    boolean big;
     public HeartsHolder(DiceEntity e) {
         setTransform(false);
         this.entity =e;
-        huge = e.getSize() == DiceEntity.EntitySize.huge || e.getSize() == DiceEntity.EntitySize.big;
+        huge = e.getSize() == DiceEntity.EntitySize.huge;
+        big = e.getSize() == DiceEntity.EntitySize.big;
         if(huge){
             heartsPerRow = 10;
         }
+        if(big){
+            heartsPerRow=7;
+        }
+        heartsPerRow = Math.min(heartsPerRow, e.getMaxHp());
         this.profile = e.getProfile();
 
         setSize(heartWidth*heartsPerRow + heartGap*(heartsPerRow-1), ((e.getMaxHp()+(heartsPerRow-1))/heartsPerRow)*(heartHeight+heartGap)-heartGap);

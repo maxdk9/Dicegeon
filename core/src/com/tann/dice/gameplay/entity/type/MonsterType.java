@@ -20,7 +20,7 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType archer = new MonsterType().name("Archer").hp(3).size(smol)
             .sides(Side.smol_arrow3, Side.smol_arrow3, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2, Side.smol_arrow2);
 
-    public static final MonsterType goblin = new MonsterType().name("Goblin").hp(1)
+    public static final MonsterType goblin = new MonsterType().name("Goblin").hp(5)
         .sides(Side.sword2, Side.sword2, Side.sword2, Side.sword1, Side.sword1, Side.sword1);
     public static final MonsterType snake = new MonsterType().name("Snake").hp(7)
             .sides(Side.snakePoison1, Side.snakePoison1, Side.snakePoison1, Side.sword3, Side.sword3, Side.sword4);

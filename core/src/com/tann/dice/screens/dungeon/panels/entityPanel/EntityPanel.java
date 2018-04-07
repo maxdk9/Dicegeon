@@ -34,15 +34,22 @@ public class EntityPanel extends Group {
     static NinePatch panelBorderRight = new NinePatch(Images.panelBorderRight, n,n,n,n);
     static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
     public static final float WIDTH = EntityContainer.width;
-    static int borderSize = 4;
-    private static final int gap = 2;
+    int borderSize = 4;
+    private final int gap;
     boolean huge;
+    boolean big;
 
     Button tick;
     public EntityPanel(final DiceEntity entity) {
         setTransform(false);
         this.entity = entity;
-        huge = entity.getSize() == DiceEntity.EntitySize.huge || entity.getSize() == DiceEntity.EntitySize.big;
+        if(entity.getSize()== DiceEntity.EntitySize.smol){
+            gap =1;
+            borderSize=3;
+        }
+        else gap=2;
+        huge = entity.getSize() == DiceEntity.EntitySize.huge;// || entity.getSize() == DiceEntity.EntitySize.big;
+        big = entity.getSize() == DiceEntity.EntitySize.big;
         profile = entity.getProfile();
         layout();
 
@@ -124,6 +131,12 @@ public class EntityPanel extends Group {
             else {
                 heartsMiddley = Tann.between(dieHolder.getX() + dieHolder.getWidth() + borderSize, getWidth() - portraitWidth);
             }
+
+            if(big){
+                dieHolder.setX(33);
+                heartsMiddley = Tann.between(gap, dieHolder.getX());
+            }
+
         }
 
         title.setX((int)(heartsMiddley-(title.getWidth()/2f-.5f)));
@@ -131,6 +144,10 @@ public class EntityPanel extends Group {
         buffHolder.setX(heartsHolder.getX() + heartsHolder.getWidth() + 1);
         buffHolder.setY(title.getY()-gap-buffHolder.getHeight());
 
+
+        if(big){
+            buffHolder.setPosition(heartsHolder.getX(), borderSize);
+        }
 
         if(entity instanceof Hero){
             tick = new Button(dieHolder.getWidth(), dieHolder.getHeight(), 1, Images.tick, Colours.dark, new Runnable() {
@@ -192,9 +209,10 @@ public class EntityPanel extends Group {
 
 
         batch.setColor(Colours.z_white);
+
         int npWiggle = 1;
 
-        if(huge){
+        if(big||huge){
             panelBorder.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
         }
         else{
@@ -216,12 +234,8 @@ public class EntityPanel extends Group {
             }
         }
 
-
-
-        if(!huge) {
-            // draw holder border
-//            Draw.fillRectangle(batch, getX() + dieHolder.getX() + (entity.isPlayer() ? -borderSize : dieHolder.getWidth() + borderSize - 1), getY(), 1, getHeight());
-        }
+        drawArrows(batch);
+        super.draw(batch, parentAlpha);
 
         batch.setColor(Colours.z_white);
         if(entity.portrait != null) {
@@ -231,9 +245,6 @@ public class EntityPanel extends Group {
                 Draw.drawScaled(batch, entity.portrait, getX() + getWidth() + entity.portraitOffset, getY()+1, -1, 1);
             }
         }
-
-        drawArrows(batch);
-        super.draw(batch, parentAlpha);
     }
 
     private void drawNoise(Batch batch) {
