@@ -47,6 +47,8 @@ public class Equipment {
             .fluff("Please forward to all your friends").trigger(new TriggerMaxHP(3)));
     add(new Equipment().name("Crystal Heart").image("crystalHeart")
             .fluff("You feel warmth inside").trigger(new TriggerEffTypeBonus(EffType.Magic, 1)));
+    add(new Equipment().name("Thorns").image("thorns")
+            .fluff("Something description").trigger(new TriggerDamageAttackers(1)));
 
     defaultLevel = 2;
     add(new Equipment().name("Glow Stone").image("glowStone")

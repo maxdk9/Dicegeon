@@ -23,7 +23,7 @@ public class Hero extends DiceEntity {
             setColour(type.colour);
         }
         this.spells = Arrays.asList(type.spells);
-        if(Math.random()>.5) addEquipment(Equipment.byName("Bone Charm"));
+        if(Math.random()>.5) addEquipment(Equipment.byName("Thorns"));
     }
 
     @Override
