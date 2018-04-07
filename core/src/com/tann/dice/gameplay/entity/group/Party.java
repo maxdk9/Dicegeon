@@ -17,7 +17,7 @@ import java.util.List;
 
 import static com.tann.dice.gameplay.entity.type.HeroType.*;
 
-public class Party extends EntityGroup{
+public class Party extends EntityGroup<Hero>{
 
     private static final int BASE_ROLLS = 200;
 
@@ -55,7 +55,7 @@ public class Party extends EntityGroup{
                 acolyte, herbalist, defender, fighter, fighter2
 //                all, all, all, all2, all2
         };
-        List<DiceEntity> tmp = new ArrayList<>();
+        List<Hero> tmp = new ArrayList<>();
         for(HeroType type: types){
             tmp.add(type.buildHero());
         }

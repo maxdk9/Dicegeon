@@ -13,34 +13,34 @@ import com.tann.dice.util.Tann;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityGroup {
-    List<DiceEntity> entities = new ArrayList<>();
-    protected List<DiceEntity> activeEntities = new ArrayList<>();
+public class EntityGroup <T extends DiceEntity>{
+    List<T> entities = new ArrayList<>();
+    protected List<T> activeEntities = new ArrayList<>();
     private List<Buff> buffs;
 
-    public void die(DiceEntity de){
+    public void die(T de){
         activeEntities.remove(de);
     }
 
-    public DiceEntity getRandomActive(boolean targetRestriction){
+    public T getRandomActive(boolean targetRestriction){
         if(!targetRestriction) return activeEntities.get((int)(Math.random()*activeEntities.size()));
         int mod = (int) (Math.random()*activeEntities.size());
         for(int i=mod;i<mod+activeEntities.size();i++){
-            DiceEntity de = activeEntities.get(i%activeEntities.size());
+            T de = activeEntities.get(i%activeEntities.size());
             return de;
         }
         return null;
     }
 
-    public List<DiceEntity> getEntities() {
+    public List<T> getEntities() {
         return entities;
     }
 
-    public List<DiceEntity> getActiveEntities() {
+    public List<T> getActiveEntities() {
         return activeEntities;
     }
 
-    public void setEntities(List<? extends DiceEntity> intialEntities) {
+    public void setEntities(List<? extends T> intialEntities) {
         entities.clear();
         activeEntities.clear();
         entities.addAll(intialEntities);
@@ -58,7 +58,7 @@ public class EntityGroup {
 
     public void roll(boolean firstRoll){
         if(firstRoll){
-            for(DiceEntity entity:getActiveEntities()){
+            for(T entity:getActiveEntities()){
                 entity.getDie().addToScreen();
                 entity.getDie().resetForRoll();
             }
@@ -66,7 +66,7 @@ public class EntityGroup {
         int amount = getActiveEntities().size();
         BulletStuff.addRollEffects(amount, firstRoll, false);
 
-        for(DiceEntity entity:getActiveEntities()){
+        for(T entity:getActiveEntities()){
             entity.getDie().roll();
         }
     }
@@ -102,8 +102,8 @@ public class EntityGroup {
             source = d.entity;
         }
         targetsTmp.clear();
-        List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
-        List<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        List<? extends DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        List<? extends DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
         switch(type){
             case EnemySingle:
             case EnemyOnlyAdjacents:
@@ -190,8 +190,8 @@ public class EntityGroup {
 
     public static List<DiceEntity> getActualTargets(Eff eff, boolean player, DiceEntity target){
         List<DiceEntity> result = new ArrayList<>();
-        List<DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
-        List<DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        List<? extends DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        List<? extends DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
         Eff.TargetingType type = eff.targetingType;
         switch(type){
             case EnemySingle:

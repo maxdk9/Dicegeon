@@ -445,7 +445,7 @@ public abstract class DiceEntity {
 
     public List<DiceEntity> getAdjacents(boolean includeSelf) {
         tmp.clear();
-        List<DiceEntity> mine = isPlayer() ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        List<? extends DiceEntity> mine = isPlayer() ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
         int index = mine.indexOf(this);
         for (int i = Math.max(index - 1, 0); i <= index + 1 && i < mine.size(); i++) {
             if (i == index && !includeSelf) continue;

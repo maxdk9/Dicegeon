@@ -319,7 +319,7 @@ public class DungeonScreen extends Screen {
         return false;
     }
 
-    private boolean checkDead(List<DiceEntity> entities, boolean testGoingToDie) {
+    private boolean checkDead(List<? extends DiceEntity> entities, boolean testGoingToDie) {
         for (DiceEntity de : entities) {
             if (testGoingToDie) {
                 if (!de.getProfile().isGoingToDie(false)) {

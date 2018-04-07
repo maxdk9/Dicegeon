@@ -11,7 +11,7 @@ import com.tann.dice.util.Tann;
 
 import java.util.*;
 
-public class Room extends EntityGroup {
+public class Room extends EntityGroup<Monster> {
 
     private static Room self;
     public static Room get(){
@@ -30,15 +30,15 @@ public class Room extends EntityGroup {
     };
 
     public void updateSlids(boolean keepSlids) {
-        List<DiceEntity> active = getActiveEntities();
+        List<Monster> active = getActiveEntities();
         int numberToSlide = (active.size() - 1) / 3 + 1;
 
         List<Monster> alreadySlid = new ArrayList<>();
         List<Monster> notAlreadySlid = new ArrayList<>();
 
-        for (DiceEntity m : active) {
-            if (m.slidOut) alreadySlid.add((Monster) m);
-            else notAlreadySlid.add((Monster) m);
+        for (Monster m : active) {
+            if (m.slidOut) alreadySlid.add(m);
+            else notAlreadySlid.add(m);
         }
         Collections.shuffle(notAlreadySlid);
         Collections.shuffle(alreadySlid);
