@@ -150,7 +150,9 @@ public class DamageProfile {
         target.heal(getHeals());
         target.damage(Math.max(0, getIncomingDamage() - getBlockedDamage()));
         for(Eff e:effs){
-            target.attackedBy(e.source);
+            if(e.source!=null) {
+                target.attackedBy(e.source);
+            }
         }
         for(Buff b: getIncomingBuffs()){
             target.addBuff(b);

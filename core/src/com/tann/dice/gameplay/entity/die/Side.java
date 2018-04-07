@@ -198,6 +198,14 @@ public class Side {
 
     // BIG
 
+    public static final Side big_punch1 = new Side().size(big).image("punch").effect(new Eff().damage(1));
+    public static final Side big_punch3 = big_punch1.withValue(3);
+    public static final Side big_punch5 = big_punch1.withValue(5);
+
+    public static final Side big_heal1 = new Side().size(big).image("heal").effect(new Eff().heal(1).friendlySingle());
+    public static final Side big_heal3 = big_heal1.withValue(3);
+    public static final Side big_heal5 = big_heal1.withValue(5);
+
     public static final Side big_claw = new Side().size(big).image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side big_claw2 = big_claw.withValue(2);
 

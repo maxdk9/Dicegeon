@@ -243,7 +243,7 @@ public abstract class DiceEntity {
             getDie().removeFromScreen();
         }
         if(!tempDead && dead){
-            e.source.killedEnemy();
+            if(e.source!=null) e.source.killedEnemy();
         }
         somethingChanged();
     }

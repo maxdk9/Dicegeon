@@ -150,18 +150,19 @@ public class DungeonScreen extends Screen {
     }
 
     static {
-        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
+        addLevel(MonsterType.archer, MonsterType.goblin, MonsterType.bird, MonsterType.dragon);
+//        addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
 //        addLevel(MonsterType.bird, MonsterType.bird, MonsterType.bird, MonsterType.bird, MonsterType.goblin);
 //        addLevel(MonsterType.archer, MonsterType.goblin, MonsterType.bird, MonsterType.dragon);
         addLevel(MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin);
         addLevel(MonsterType.goblin, MonsterType.archer, MonsterType.goblin, MonsterType.archer, MonsterType.goblin);
         addLevel(MonsterType.snake, MonsterType.snake, MonsterType.goblin, MonsterType.goblin);
-        addLevel(MonsterType.spikeBat, MonsterType.snake, MonsterType.spikeBat);
+        addLevel(MonsterType.spikeGolem, MonsterType.snake, MonsterType.spikeGolem);
         addLevel(MonsterType.archer, MonsterType.bird, MonsterType.bird, MonsterType.archer);
         addLevel(MonsterType.bird, MonsterType.bird, MonsterType.bird);
         addLevel(MonsterType.archer, MonsterType.archer, MonsterType.goblin, MonsterType.goblin, MonsterType.goblin, MonsterType.archer, MonsterType.archer);
         addLevel(MonsterType.snake, MonsterType.snake, MonsterType.snake, MonsterType.snake);
-        addLevel(MonsterType.bird, MonsterType.spikeBat, MonsterType.goblin, MonsterType.spikeBat, MonsterType.bird);
+        addLevel(MonsterType.bird, MonsterType.spikeGolem, MonsterType.goblin, MonsterType.spikeGolem, MonsterType.bird);
         addLevel(MonsterType.bird, MonsterType.dragon, MonsterType.goblin);
     }
 
