@@ -66,7 +66,7 @@ public class HeartsHolder extends Group{
         if(!entity.isDead()) {
             int overkill = profile.getOverkill(false);
             int poisonOverkill = profile.getOverkill(true);
-            int overkillY = (int) (getY() + getHeight() / 2 - TannFont.font.getHeight() / 2);
+            int overkillY = (int) (getY() + getHeight() - TannFont.font.getHeight());
             if (overkill > 0){
                 batch.setColor(Colours.yellow);
                 String overkillText = "+" + overkill;
