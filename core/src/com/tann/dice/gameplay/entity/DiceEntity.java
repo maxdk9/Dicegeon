@@ -100,7 +100,13 @@ public abstract class DiceEntity {
 
     public void fullHeal() {
         calculatedMaxHp = null;
-        hp = diedLastRound?getMaxHp()/2:getMaxHp();
+        boolean half = diedLastRound;
+        for(Trigger t:getActiveTriggers()){
+            if(t.avoidDeathPenalty()){
+                half = false;
+            }
+        }
+        hp = half?getMaxHp()/2:getMaxHp();
     }
 
     protected void resetPanels() {

@@ -10,13 +10,10 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
-import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
-import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
-import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
@@ -168,7 +165,7 @@ public class TargetingManager {
                     break;
                 case FriendlySingle:
                 case FriendlySingleOther:
-                case getFriendlySingleAndAdjacents:
+                case FriendlySingleAndAdjacents:
                     if(!entity.isPlayer()) invalidReason = "Target a hero";
                     else {
                         switch (effType) {

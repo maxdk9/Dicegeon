@@ -184,11 +184,8 @@ public class Side {
     // REG
 
     public static final Side snakePoison1 = new Side().image("snakeBite").effect(new Eff().damage(1), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))))
-            .customDescription("1 damage now and 1 poison damage each turn to an enemy");
-    public static final Side snakePoison2 = new Side().image("snakeBite").effect(new Eff().damage(2), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(2).self()))))
-            .customDescription("2 damage now and 2 poison damage each turn to an enemy");
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0).self()))).justValue(1));
+    public static final Side snakePoison2 = snakePoison1.withValue(2);
 
     public static final Side claw = new Side().image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side claw_2 = claw.withValue(2);
@@ -216,11 +213,9 @@ public class Side {
     public static final Side huge_flame3 = huge_flame.withValue(3);
 
     public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1)))));
-    public static final Side huge_posionChomp2 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(2), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(2)))));
-    public static final Side huge_posionChomp3 = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(3), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(3)))));
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
+    public static final Side huge_posionChomp2 = huge_posionChomp.withValue(2);
+    public static final Side huge_posionChomp3 = huge_posionChomp.withValue(3);
 
 
 	public Side copy(){

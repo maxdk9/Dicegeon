@@ -42,6 +42,7 @@ public class EquipmentPanel extends Actor {
             Main.getCurrentScreen().popSingleLight();
             Explanel old = (Explanel) a;
             if(old.equipment==equipment){
+              event.cancel();
               return true;
             }
           }

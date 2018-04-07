@@ -36,6 +36,8 @@ public abstract class Trigger implements Cloneable{
 
   public boolean avoidDeath(){ return false; }
 
+  public boolean avoidDeathPenalty(){ return false; }
+
   public void onKill(){};
 
   protected String noDescription(String extra){

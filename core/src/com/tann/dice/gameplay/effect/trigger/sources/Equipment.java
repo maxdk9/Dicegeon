@@ -35,6 +35,8 @@ public class Equipment {
             .fluff("Weird trick discovered by a mum, snakes hate her!").trigger(new TriggerDamageImmunity(true, false)));
     add(new Equipment().name("Blood Vial").image("bloodVial")
             .fluff("Something description").trigger(new TriggerOnKill(new Eff().heal(1).self())));
+    add(new Equipment().name("Bone Charm").image("bone")
+            .fluff("Something description").trigger(new TriggerNoDeathPenalty()));
 
     defaultLevel = 1;
     add(new Equipment().name("Reinforced Shield").image("shieldReinforce")

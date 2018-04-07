@@ -10,7 +10,7 @@ public class Eff {
 
     public enum TargetingType{
         EnemySingle, EnemySingleRanged, EnemyAndAdjacents, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy, EnemyAndAdjacentsRanged,
-        FriendlySingle, FriendlySingleOther, FriendlyGroup, getFriendlySingleAndAdjacents,
+        FriendlySingle, FriendlySingleOther, FriendlyGroup, FriendlySingleAndAdjacents,
         Self, OnRoll, Untargeted, AllTargeters,
         TopEnemy, BottomEnemy, TopBottomEnemy, AllFront,
         DoesNothing
@@ -89,7 +89,7 @@ public class Eff {
                 result = getBaseString();
                 switch(targetingType){
                     case FriendlySingleOther: result += " from one other hero"; break;
-                    case getFriendlySingleAndAdjacents: result += " from one hero and both adjacents"; break;
+                    case FriendlySingleAndAdjacents: result += " from one hero and both adjacents"; break;
                     case FriendlySingle: result += " from one hero"; break;
                     case FriendlyGroup: result += " from everyone"; break;
                     case Self: result += " from yourself"; break;
@@ -133,7 +133,7 @@ public class Eff {
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);} //implicit
     public Eff allTargeters() { return targetType(TargetingType.AllTargeters); }
     public Eff friendlySingle() { return targetType(TargetingType.FriendlySingle);}
-    public Eff friendlyAndAdjacents() { return targetType(TargetingType.getFriendlySingleAndAdjacents);}
+    public Eff friendlyAndAdjacents() { return targetType(TargetingType.FriendlySingleAndAdjacents);}
     public Eff friendlySingleOther() { return targetType(TargetingType.FriendlySingleOther);}
     public Eff friendlyGroup() { return targetType(TargetingType.FriendlyGroup);}
     public Eff enemyGroup() { return targetType(TargetingType.EnemyGroup);}
@@ -300,6 +300,7 @@ public class Eff {
             case EnemySingleRanged:
             case FriendlySingle:
             case FriendlySingleOther:
+            case FriendlySingleAndAdjacents:
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
             case TopEnemy:

@@ -120,7 +120,7 @@ public class EntityGroup {
                 }
                 break;
             case FriendlySingle:
-            case getFriendlySingleAndAdjacents:
+            case FriendlySingleAndAdjacents:
                 targetsTmp.addAll(friends);
                 break;
             case FriendlySingleOther:
@@ -205,7 +205,7 @@ public class EntityGroup {
                 break;
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
-            case getFriendlySingleAndAdjacents:
+            case FriendlySingleAndAdjacents:
                 result.addAll(target.getAdjacents(true));
                 break;
             case EnemyOnlyAdjacents:
