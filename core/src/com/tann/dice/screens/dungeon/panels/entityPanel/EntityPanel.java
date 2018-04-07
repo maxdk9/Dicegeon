@@ -212,24 +212,24 @@ public class EntityPanel extends Group {
 
         int npWiggle = 1;
 
+        int borderX = (int) (dieHolder.getX() + (entity.isPlayer() ? -borderSize : dieHolder.getWidth() + borderSize - 1));
         if(big||huge){
             panelBorder.draw(batch, getX()-npWiggle, getY()-npWiggle, getWidth()+npWiggle*2, getHeight()+npWiggle*2);
         }
         else{
-            int borderX = (int) (dieHolder.getX() + (entity.isPlayer() ? -borderSize : dieHolder.getWidth() + borderSize - 1));
             panelBorderRight.draw(batch, getX()+borderX, getY()-npWiggle, getWidth()-borderX+npWiggle, getHeight()+npWiggle*2);
             panelBorderLeft.draw(batch, getX()-npWiggle, getY()-npWiggle, borderX+npWiggle*2, getHeight()+npWiggle*2);
-            if(possibleTarget){
-                batch.setColor(Colours.light);
-                if (TargetingManager.get().targetsDie()) {
-                    Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), 1);
-                }
-                else {
-                    if (entity.isPlayer()) {
-                        panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, borderX + npWiggle * 2, getHeight() + npWiggle * 2);
-                    } else {
-                        panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, getWidth() + npWiggle * 2, getHeight() + npWiggle * 2);
-                    }
+        }
+        if(possibleTarget){
+            batch.setColor(Colours.light);
+            if (TargetingManager.get().targetsDie()) {
+                Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), 1);
+            }
+            else {
+                if (entity.isPlayer()) {
+                    panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, borderX + npWiggle * 2, getHeight() + npWiggle * 2);
+                } else {
+                    panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, getWidth() + npWiggle * 2, getHeight() + npWiggle * 2);
                 }
             }
         }
