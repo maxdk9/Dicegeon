@@ -3,7 +3,6 @@ package com.tann.dice.gameplay.entity.die;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import static com.tann.dice.gameplay.entity.DiceEntity.EntitySize.*;
@@ -15,7 +14,6 @@ import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageImmunity;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerEndOfTurnSelf;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
@@ -151,6 +149,8 @@ public class Side {
     public static final Side heal4 = heal2.withValue(4);
     public static final Side heal5 = heal2.withValue(5);
 
+
+
     public static final Side healAll1 = new Side().image("healAll").effect(new Eff().heal(1).friendlyGroup());
     public static final Side healAll2 = healAll1.withValue(2);
 
@@ -201,6 +201,9 @@ public class Side {
     public static final Side smol_slime = new Side().size(smol).image("slime").effect(new Eff().damage(1));
     public static final Side smol_slime2 = smol_slime.withValue(2);
 
+    public static final Side smol_healMostDamaged1 = new Side().size(smol).image("heal").effect(new Eff().heal(1).friendlyMostDamaged());
+    public static final Side smol_healMostDamaged2 = smol_healMostDamaged1.withValue(2);
+
 
     // REG
 
@@ -217,6 +220,9 @@ public class Side {
     public static final Side slime_triple = new Side().image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side slime_triple2 = slime_triple.withValue(2);
 
+    public static final Side healMostDamaged1 = new Side().image("heal").effect(new Eff().heal(1).friendlyMostDamaged());
+    public static final Side healMostDamaged3 = healMostDamaged1.withValue(3);
+
 
     // BIG
 
@@ -224,9 +230,9 @@ public class Side {
     public static final Side big_punch3 = big_punch1.withValue(3);
     public static final Side big_punch5 = big_punch1.withValue(5);
 
-    public static final Side big_heal1 = new Side().size(big).image("heal").effect(new Eff().heal(1).friendlyMostDamaged());
-    public static final Side big_heal3 = big_heal1.withValue(3);
-    public static final Side big_heal5 = big_heal1.withValue(5);
+    public static final Side big_healMostDamaged1 = new Side().size(big).image("heal").effect(new Eff().heal(1).friendlyMostDamaged());
+    public static final Side big_healMostDamaged3 = big_healMostDamaged1.withValue(3);
+    public static final Side big_healMostDamaged5 = big_healMostDamaged1.withValue(5);
 
     public static final Side big_claw = new Side().size(big).image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side big_claw2 = big_claw.withValue(2);

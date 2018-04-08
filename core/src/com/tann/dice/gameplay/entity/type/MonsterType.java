@@ -33,7 +33,7 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType zombie = new MonsterType().name("Zombie").hp(5).size(smol)
             .sides(smol_nip3, smol_nip2, smol_nip2, smol_nip2, smol_nip2, smol_nip1);
     public static final MonsterType slimie = new MonsterType().name("Slimie").hp(3).size(smol)
-            .sides(smol_slime2, smol_slime2, smol_slime2, smol_slime, smol_slime, smol_slime);
+            .sides(smol_slime2, smol_slime2, smol_slime2, smol_slime, smol_slime, smol_healMostDamaged2);
 
     //reg
 
@@ -42,20 +42,20 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType snake = new MonsterType().name("Snake").hp(7)
             .sides(snakePoison1, snakePoison1, snakePoison1, sword3, sword3, sword4);
     public static final MonsterType slime = new MonsterType().name("Slime").hp(6)
-            .sides(slime_triple, slime_triple, slime_triple, slimeUpDown1, slimeUpDown1, slimeUpDown1)
+            .sides(slime_triple, slime_triple, slime_triple, slimeUpDown1, slimeUpDown1, healMostDamaged3)
             .trait(new TriggerOnDeathEffect(new Eff().summon("Slimie", 2)));
 
     //big
 
     public static final MonsterType spikeGolem = new MonsterType().name("Spiker").hp(9).size(big)
-            .sides(big_punch3, big_punch3, big_punch5, big_punch5, big_heal3, big_heal3)//, big_heal3, big_heal3)
+            .sides(big_punch3, big_punch3, big_punch5, big_punch5, big_healMostDamaged3, big_healMostDamaged3)//, big_heal3, big_heal3)
             .trait(new TriggerDamageAttackers(1));
     public static final MonsterType bird = new MonsterType().name("Awk").hp(10).size(big)
             .sides(big_claw2, big_claw2, big_peck3, big_peck3, big_peck5, big_peck5);
     public static final MonsterType summoner = new MonsterType().name("Lich").hp(12).size(big)
             .sides(big_summonSkeleton2, big_summonSkeleton2, big_summonSkeleton2, big_summonZombie1, big_summonZombie1, big_summonZombie1);
     public static final MonsterType slimoBig = new MonsterType().name("Slimer").hp(12).size(big)
-            .sides(big_slimeTriple2, big_slimeTriple2, big_slimeTriple2, big_slimeUpDown3, big_slimeUpDown3, big_slimeUpDown3)
+            .sides(big_slimeTriple2, big_slimeTriple2, big_slimeTriple2, big_slimeUpDown3, big_slimeUpDown3, big_healMostDamaged5)
             .trait(new TriggerOnDeathEffect(new Eff().summon("Slime", 2)));
 
     //huge
