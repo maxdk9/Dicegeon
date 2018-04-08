@@ -190,11 +190,18 @@ public class Side {
     public static final Side claw = new Side().image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side claw_2 = claw.withValue(2);
 
-    // SMOLE
+    // SMOL
 
-    public static final Side smol_arrow = new Side().size(smol).image("arrow").effect(new Eff().damage(1).ranged());
+    public static final Side smol_arrow = new Side().size(smol).image("arrow").effect(new Eff().damage(1));
     public static final Side smol_arrow2 = smol_arrow.withValue(2);
     public static final Side smol_arrow3 = smol_arrow.withValue(3);
+
+    public static final Side smol_nip1 = new Side().size(smol).image("nip").effect(new Eff().damage(1));
+    public static final Side smol_nip2 = smol_nip1.withValue(2);
+    public static final Side smol_nip3 = smol_nip1.withValue(3);
+
+    public static final Side smol_nipPoison1 = new Side().size(smol).image("nipPoison").effect(new Eff().damage(1), new Eff().
+            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
 
     // BIG
 
