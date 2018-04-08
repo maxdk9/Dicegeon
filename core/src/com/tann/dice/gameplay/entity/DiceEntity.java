@@ -558,9 +558,10 @@ public abstract class DiceEntity {
         smol(12), reg(16), big(24), huge(32);
 
         public final float dieSize;
-        public final int pixels;
+        public final int pixels, maximumPips;
         EntitySize(int pixels) {
             this.pixels = pixels;
+            this.maximumPips = (pixels-4)/2;
             this.dieSize = BASE_SIZE * pixels;
         }
     }

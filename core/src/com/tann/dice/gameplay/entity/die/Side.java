@@ -30,12 +30,11 @@ public class Side {
     public static final HashMap<EntitySize, TextureRegion[]> sizeToPips = new HashMap<>();
     static{
         for(EntitySize es:EntitySize.values()){
-            int max = 20;
-            TextureRegion[] arr = new TextureRegion[max];
-            for(int i=0;i<max;i++){
+            TextureRegion[] arr = new TextureRegion[es.maximumPips+1];
+            for(int i=0;i<arr.length-1;i++){
                 arr[i]= Main.atlas_3d.findRegion(es.name()+"/bar/"+i);
             }
-            arr[7] =Main.atlas_3d.findRegion(es.name()+"/bar/x");
+            arr[arr.length-1]=Main.atlas_3d.findRegion(es.name()+"/bar/x");
             sizeToPips.put(es, arr);
         }
     }
@@ -258,14 +257,20 @@ public class Side {
 
     // HUGE
 
+    public static final Side huge_chomp1 = new Side().size(huge).image("chomp").effect(new Eff().damage(1));
+    public static final Side huge_chomp7 = huge_chomp1.withValue(7);
+
     public static final Side huge_flame = new Side().size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
     public static final Side huge_flame2 = huge_flame.withValue(2);
     public static final Side huge_flame3 = huge_flame.withValue(3);
 
-    public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
-    public static final Side huge_posionChomp2 = huge_posionChomp.withValue(2);
-    public static final Side huge_posionChomp3 = huge_posionChomp.withValue(3);
+    public static final Side huge_poisonBreath1 = new Side().size(huge).image("poisonBreath").effect(new Eff().damage(1).enemyAndAdjacents(),
+            new Eff().buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
+
+//    public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
+//            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
+//    public static final Side huge_posionChomp2 = huge_posionChomp.withValue(2);
+//    public static final Side huge_posionChomp3 = huge_posionChomp.withValue(3);
 
     public static final Side huge_slimeUpDown1 = new Side().size(huge).image("upDownBlob").effect(new Eff().damage(1).topBotEnemy());
     public static final Side huge_slimeUpDown2 = huge_slimeUpDown1.withValue(2);

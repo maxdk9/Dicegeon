@@ -161,7 +161,7 @@ public class Explanel extends InfoPanel implements OnPop {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if(trigger == null) {
-            Draw.fillActor(batch, this, Colours.dark, Colours.purple, 1);
+            Draw.fillActor(batch, this, Colours.dark, Colours.light, 1);
         }
         super.draw(batch, parentAlpha);
     }
