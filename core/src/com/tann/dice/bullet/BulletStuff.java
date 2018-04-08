@@ -340,13 +340,12 @@ public class BulletStuff {
 	}
 
 	public static void addRollEffects(int numDice, boolean firstRoll, boolean jiggle){
-
 		if(jiggle){
 			Sounds.playSound(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f));
 			Sounds.playSoundDelayed(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f), .4f);
 		}
 
-		float clackStart = firstRoll?0:.18f;
+		float clackStart = firstRoll?0:.13f;
 		float clackRand = .1f;
 		for(int i=1;i<numDice;i++){
 			Sounds.playSoundDelayed(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f), (float) (clackStart+i*clackRand*Math.random()));
@@ -358,8 +357,8 @@ public class BulletStuff {
 			Sounds.playSoundDelayed(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f), (float) (extraClackStart+i*clackRand*Math.random()));
 		}
 
-		float clockStart = .6f;
-		float clockRand = .1f;
+		float clockStart = .65f;
+		float clockRand = .22f;
 		for(int i=1;i<numDice;i++){
 			Sounds.playSoundDelayed(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f), (float) (clockStart+i*Math.random()*clockRand));
 		}

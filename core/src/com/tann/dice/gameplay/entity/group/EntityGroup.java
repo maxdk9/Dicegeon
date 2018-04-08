@@ -72,7 +72,12 @@ public class EntityGroup <T extends DiceEntity>{
                 entity.getDie().resetForRoll();
             }
         }
-        int amount = getActiveEntities().size();
+        int amount = 0;
+        for(DiceEntity de:getActiveEntities()){
+            if(de.getDie().getState()== Die.DieState.Stopped){
+                amount++;
+            }
+        }
         BulletStuff.addRollEffects(amount, firstRoll, false);
 
         for(T entity:getActiveEntities()){
