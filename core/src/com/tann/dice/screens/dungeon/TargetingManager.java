@@ -276,6 +276,13 @@ public class TargetingManager {
         if(e.type==EffType.Healing || e.type == EffType.Summon) return new ArrayList<>();
         DiceEntity target = null;
         List<DiceEntity> validTargets = EntityGroup.getValidTargets(d, false);
+        if(e.targetingType == Eff.TargetingType.EnemyAndAdjacents || e.targetingType== Eff.TargetingType.EnemyAndAdjacentsRanged){
+            // stop enemy from targeting top/bottom with andAdjacents
+            if(validTargets.size()>=3){
+                validTargets.remove(0);
+                validTargets.remove(validTargets.get(validTargets.size()-1));
+            }
+        }
         if (validTargets.size() > 0) {
             target = Tann.getRandom(validTargets);
         }
