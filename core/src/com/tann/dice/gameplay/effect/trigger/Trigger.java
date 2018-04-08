@@ -49,6 +49,10 @@ public abstract class Trigger implements Cloneable{
 
   public void onHitWithEff(Eff e){}
 
+  public Integer getRegen(){return 0;};
+
+  public void affectSide(Side side) { }
+
   protected String noDescription(String extra){
     return "No description for "+this.getClass().getSimpleName()+" ("+extra+")";
   }
@@ -60,10 +64,6 @@ public abstract class Trigger implements Cloneable{
     }
     return result;
   }
-
-  public Integer getRegen(){return 0;};
-
-  public void affectSide(Side side) { }
 
   public boolean showInPanel() { return false; }
 

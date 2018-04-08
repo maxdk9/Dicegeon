@@ -50,6 +50,17 @@ public class TargetingManager {
             return;
         }
         Eff first = d.getEffects()[0];
+        for(Eff e:d.getEffects()){
+            switch(e.targetingType){
+                case Self:
+                    if(e.type==EffType.Damage){
+                        e.source.damage(e.getValue());
+                    } else {
+                        e.source.hit(e, false);
+                    }
+                    break;
+            }
+        }
         switch (first.targetingType) {
             case EnemyGroup:
             case FriendlyGroup:
@@ -277,7 +288,6 @@ public class TargetingManager {
         DiceEntity target = null;
         List<DiceEntity> validTargets = EntityGroup.getValidTargets(d, false);
         if(e.targetingType == Eff.TargetingType.EnemyAndAdjacents || e.targetingType== Eff.TargetingType.EnemyAndAdjacentsRanged){
-            // stop enemy from targeting top/bottom with andAdjacents
             if(validTargets.size()>=3){
                 validTargets.remove(0);
                 validTargets.remove(validTargets.get(validTargets.size()-1));

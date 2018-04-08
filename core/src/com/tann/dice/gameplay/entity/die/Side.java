@@ -107,9 +107,8 @@ public class Side {
     public static final Side swordShield1 = new Side().image("swordShield").effect(new Eff().damage(1), new Eff().shield(1).self());
     public static final Side swordShield2 = swordShield1.withValue(2);
 
-    public static final Side sword1SelfDamage1 = new Side().image("swordSelfDamage").effect(new Eff().damage(1), new Eff().damage(1).self());
-    public static final Side sword2SelfDamage2 = sword1SelfDamage1.withValue(2);
-    public static final Side sword3SelfDamage3 = sword1SelfDamage1.withValue(3);
+    public static final Side sword1AllSelfDamage1 = new Side().image("swordSelfDamage").effect(new Eff().damage(1).enemyGroup(), new Eff().damage(1).self());
+    public static final Side sword2AllSelfDamage2 = sword1AllSelfDamage1.withValue(2);
 
     public static final Side poison1 = new Side().image("poison").effect(new Eff().justValue(1).
             buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged());
@@ -147,8 +146,6 @@ public class Side {
     public static final Side heal3 = heal2.withValue(3);
     public static final Side heal4 = heal2.withValue(4);
     public static final Side heal5 = heal2.withValue(5);
-
-
 
     public static final Side healAll1 = new Side().image("healAll").effect(new Eff().heal(1).friendlyGroup());
     public static final Side healAll2 = healAll1.withValue(2);

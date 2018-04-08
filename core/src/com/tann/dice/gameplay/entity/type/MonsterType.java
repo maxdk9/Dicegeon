@@ -47,7 +47,7 @@ public class MonsterType extends EntityType<MonsterType>{
 
     //big
 
-    public static final MonsterType spikeGolem = new MonsterType().name("Spiker").hp(9).size(big)
+    public static final MonsterType spikeGolem = new MonsterType().name("Spiker").hp(12).size(big)
             .sides(big_punch3, big_punch3, big_punch5, big_punch5, big_healMostDamaged3, big_healMostDamaged3)//, big_heal3, big_heal3)
             .trait(new TriggerDamageAttackers(1));
     public static final MonsterType bird = new MonsterType().name("Awk").hp(10).size(big)

@@ -86,7 +86,7 @@ public class Eff {
                     case TopBottomEnemy: result += " to the top and bottom enemy"; break;
                     case AllFront: result += " to all forward enemies"; break;
                     case AllTargeters: result += " to all enemies who have targeted the hero of your choice"; break;
-                    case Self: result = "Take "+value+" damage"; break;
+                    case Self: result = "Take "+getValue()+" damage"; break;
                     default: result = "ahh help damage"; break;
                 }
                 break;
@@ -209,10 +209,13 @@ public class Eff {
         String result = "";
         for(int i=0;i<effects.length-1;i++){
             Eff e = effects[i];
-            result += e.getBaseString() + " and ";
+
+            if(i!=0) result += e.getBaseString();
+            else result += e.getBaseString().toLowerCase();
+            result += " and ";
         }
         String lastEff = effects[effects.length-1].toString();
-        if(effects.length==1) lastEff = lastEff.toLowerCase();
+        if(effects.length>1) lastEff = lastEff.toLowerCase();
         result += lastEff;
         return  result;
     }

@@ -40,6 +40,7 @@ public class HeroType extends EntityType<HeroType> {
                 .sides(heal3, heal2, magic1, magic1, magic1, nothing).colour(Colours.red)
                 .spells(Spell.healAll));
 
+
         lv = 1;
         add(new HeroType().name("Rogue").hp(5).tag(fighter1)
                 .sides(poison1, poison1, sword2, arrow1, vanish, nothing));
@@ -49,8 +50,8 @@ public class HeroType extends EntityType<HeroType> {
                 .sides(swordShield2, swordShield2, swordShield1, swordShield1, shield2, nothing));
         add(new HeroType().name("Jack").hp(6).tag(fighter1)
                 .sides(sword2, arrow2, heal2, shield2, magic2, nothing));
-        add(new HeroType().name("Berserker").hp(9).tag(fighter1)
-                .sides(sword3SelfDamage3, sword3SelfDamage3, sword2SelfDamage2, sword2, sword2, nothing)
+        add(new HeroType().name("Berserker").hp(7).tag(fighter1)
+                .sides(sword1AllSelfDamage1, sword1AllSelfDamage1, sword2, sword2, shield2, nothing)
                 .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
         add(new HeroType().name("Whirl").hp(6).tag(fighter1)
                 .sides(whirlwind1, trident1, trident1, sword2, shieldPlusAdjacent1, nothing));
@@ -97,8 +98,6 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Trickster").hp(7).tag(wizard1)
                 .sides(copy, copy, magic2, magic1, magic1, nothing)
                 .spells(Spell.arcaneMissile));//TODO new spell here (enemy reroll!??)
-
-
     }
 
     public static HeroType fighter = byName("fighter");

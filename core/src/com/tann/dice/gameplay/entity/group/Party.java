@@ -44,13 +44,13 @@ public class Party extends EntityGroup<Hero>{
         addHeroes();
         equipment.clear();
         for(int i=0;i<2;i++){
-            addEquipment(Equipment.random());
+//            addEquipment(Equipment.random());
         }
     }
 
     public void addHeroes(){
-        HeroType all = HeroType.byName("crusher");
-        HeroType all2 = HeroType.byName("crusher");
+        HeroType all = HeroType.byName("berserker");
+        HeroType all2 = HeroType.byName("berserker");
         HeroType[] types = new HeroType[]{
                 acolyte, herbalist, defender, fighter, fighter2
 //                all, all, all, all2, all2

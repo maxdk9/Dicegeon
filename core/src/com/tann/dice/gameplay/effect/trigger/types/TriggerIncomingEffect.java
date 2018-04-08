@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.effect.trigger.types;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 
@@ -7,6 +8,7 @@ public class TriggerIncomingEffect extends Trigger{
 
   EffType type;
   int bonus;
+  public static final TextureRegion image = loadImage("bonusHealing");
 
   public TriggerIncomingEffect(EffType type, int bonus) {
     this.type = type;
@@ -19,6 +21,11 @@ public class TriggerIncomingEffect extends Trigger{
       return value + bonus;
     }
     return value;
+  }
+
+  @Override
+  public TextureRegion getImage() {
+    return image;
   }
 
   @Override

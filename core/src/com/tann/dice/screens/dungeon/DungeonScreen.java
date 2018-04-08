@@ -150,11 +150,12 @@ public class DungeonScreen extends Screen {
     }
 
     static {
-//        addLevel(archer, goblin, bird, dragon); // all sizes
+        addLevel(bird, slimoBig);
+        addLevel(archer, goblin, bird, dragon); // all sizes
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
-        addLevel(slime, slime, rat, rat);
-        addLevel(goblin, spikeGolem, spikeGolem, goblin);
+        addLevel(slime, slime, goblin, goblin);
+        addLevel(goblin, spikeGolem, goblin);
         addLevel(bird, slimoBig);
         addLevel(skeleton, summoner, zombie);
         addLevel(spikeGolem, spikeGolem, snake, snake);

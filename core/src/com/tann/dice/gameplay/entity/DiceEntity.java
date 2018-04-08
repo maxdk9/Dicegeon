@@ -60,7 +60,10 @@ public abstract class DiceEntity {
     public DiceEntity(EntityType type) {
         this.entityType = type;
         this.name = type.name;
-        this.traits = (Trait[]) type.traits.toArray(new Trait[0]);
+        this.traits = new Trait[type.traits.size()];
+        for(int i=0;i<traits.length;i++){
+            this.traits[i]=((Trait)type.traits.get(i)).copy();
+        }
         this.size = type.size;
         setupLapels(0);
         List<AtlasRegion> portraits = Tann.getRegionsStartingWith("portrait/"+name);
@@ -210,8 +213,9 @@ public abstract class DiceEntity {
             case Damage:
                 if(e.targetingType==Eff.TargetingType.Self){
                     //ugh hacky I need to redo the system so it works better for this case
-                    damage(e.getValue());
-                    somethingChanged();
+//                    e.source.damage(e.getValue());
+//                    e.source.somethingChanged();
+                    // commented out because it breaks multihits with self damage todo be better
                     return;
                 }
                 break;
