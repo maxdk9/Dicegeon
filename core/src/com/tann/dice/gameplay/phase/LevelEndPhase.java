@@ -17,7 +17,7 @@ public class LevelEndPhase extends Phase {
         int level = DungeonScreen.get().level;
         List<Equipment> gainedEquipment = new ArrayList<>();
         if(level%2==1){
-            gainedEquipment.add(Equipment.random(DungeonScreen.get().level/4));
+            gainedEquipment.add(Equipment.random(DungeonScreen.get().level/5));
         }
         for(Equipment e:gainedEquipment){
             Party.get().addEquipment(e);

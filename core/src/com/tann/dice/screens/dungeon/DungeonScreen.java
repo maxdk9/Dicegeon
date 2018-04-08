@@ -150,22 +150,17 @@ public class DungeonScreen extends Screen {
     }
 
     static {
-        addLevel(dragon);
 //        addLevel(archer, goblin, bird, dragon); // all sizes
-//        addLevel(summoner, summoner);
-//        addLevel(MonsterType.spikeGolem, MonsterType.spikeGolem, MonsterType.spikeGolem);
-//        addLevel(MonsterType.bird, MonsterType.bird, MonsterType.bird, MonsterType.bird, MonsterType.goblin);
-//        addLevel(MonsterType.archer, MonsterType.goblin, MonsterType.bird, MonsterType.dragon);
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
-        addLevel(snake, snake, goblin, goblin);
-        addLevel(spikeGolem, snake, spikeGolem);
-        addLevel(archer, bird, bird, archer);
-        addLevel(bird, bird, bird);
-        addLevel(archer, archer, goblin, goblin, goblin, archer, archer);
-        addLevel(snake, snake, snake, snake);
+        addLevel(slime, slime, rat, rat);
+        addLevel(goblin, spikeGolem, spikeGolem, goblin);
+        addLevel(bird, slimoBig);
+        addLevel(skeleton, summoner, zombie);
+        addLevel(spikeGolem, spikeGolem, snake, snake);
+        addLevel(slimoHuge);
         addLevel(bird, spikeGolem, goblin, spikeGolem, bird);
-        addLevel(bird, dragon, goblin);
+        addLevel(archer, dragon, bird);
     }
 
     public void nextLevel() {

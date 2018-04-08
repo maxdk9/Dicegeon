@@ -19,7 +19,7 @@ import static com.tann.dice.gameplay.entity.type.HeroType.*;
 
 public class Party extends EntityGroup<Hero>{
 
-    private static final int BASE_ROLLS = 200;
+    private static final int BASE_ROLLS = 2;
 
     private List<Equipment> equipment = new ArrayList<>();
     private int gold; // wow I wonder if this will ever do anything! I hope so
