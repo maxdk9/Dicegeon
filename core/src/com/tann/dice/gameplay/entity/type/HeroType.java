@@ -5,6 +5,7 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageLimit;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerHalfHealthEffTypeBonus;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import static com.tann.dice.gameplay.entity.die.Side.*;
 import com.tann.dice.util.Colours;
@@ -39,7 +40,6 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Herbalist").hp(4).levelsUpInto(healer1)
                 .sides(heal3, heal2, magic1, magic1, magic1, nothing).colour(Colours.red)
                 .spells(Spell.healAll));
-
 
         lv = 1;
         add(new HeroType().name("Rogue").hp(5).tag(fighter1)
@@ -98,6 +98,13 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Trickster").hp(7).tag(wizard1)
                 .sides(copy, copy, magic2, magic1, magic1, nothing)
                 .spells(Spell.arcaneMissile));//TODO new spell here (enemy reroll!??)
+
+
+
+        // novelty huge die
+
+        add(new HeroType().size(DiceEntity.EntitySize.huge).name("RogueHuge").hp(5).tag(fighter1)
+                .sides(huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1));
     }
 
     public static HeroType fighter = byName("fighter");

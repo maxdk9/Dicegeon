@@ -260,15 +260,13 @@ public class Die implements Targetable{
         float r2 = (rot + Maths.factor(rotRand))*Maths.mult();
         float r3 = (rot + Maths.factor(rotRand))*Maths.mult();
         float mult = getForceMultiplier();
-
+        float rotMult = 1+(float) (Math.pow(entity.getSize().pixels/12f, 5)/80f);
         float totalCentering =Maths.factor(centeringRand) + centeringMult;
         Vector3 pos = new Vector3();
         getPosition(pos);
         x += -pos.x*totalCentering;
         z += -pos.z*totalCentering;
-
-
-        applyForces(x*mult, y*mult, z*mult, r1*mult, r2*mult, r3*mult);
+        applyForces(x*mult, y*mult, z*mult, r1*mult*rotMult, r2*mult*rotMult, r3*mult*rotMult);
     }
 
     private void applyForces(float x, float y, float z, float r1, float r2, float r3){
@@ -535,27 +533,11 @@ public class Die implements Targetable{
     }
 
     public float getMass() {
-        switch(entity.getSize()){
-            case smol:
-            case reg:
-            case big:
-                return 1;
-            case huge:
-                return 2;
-        }
-        return 1;
+        return (float) Math.pow(entity.getSize().pixels, 3);
     }
 
     public float getForceMultiplier(){
-        switch(entity.getSize()){
-            case smol:
-            case reg:
-            case big:
-                return 1;
-            case huge:
-                return 3;
-        }
-        return 1;
+       return getMass();
     }
 
     public void dispose() {

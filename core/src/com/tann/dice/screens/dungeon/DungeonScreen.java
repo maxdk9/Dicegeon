@@ -150,8 +150,10 @@ public class DungeonScreen extends Screen {
     }
 
     static {
-        addLevel(bird, slimoBig);
+//        addLevel(bird, slimoBig);
         addLevel(archer, goblin, bird, dragon); // all sizes
+
+
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
         addLevel(slime, slime, goblin, goblin);
@@ -165,6 +167,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void nextLevel() {
+
         spellButt.removeAllHovers();
         Explanel.get().remove();
         Party.get().rejig();
