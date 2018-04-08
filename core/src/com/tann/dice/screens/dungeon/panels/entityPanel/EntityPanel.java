@@ -83,6 +83,13 @@ public class EntityPanel extends Group {
                 super.exit(event, x, y, pointer, toActor);
             }
         });
+
+        if(entity.isPlayer()){
+            setPosition(-getWidth(), Main.height/2);
+        }
+        else{
+            setPosition(Main.width, Main.height/2);
+        }
     }
 
     public void layout(){

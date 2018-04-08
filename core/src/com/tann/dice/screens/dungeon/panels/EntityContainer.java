@@ -62,7 +62,7 @@ public class EntityContainer extends Group {
     for(DiceEntity de:entities){
         addActor(de.getEntityPanel());
     }
-    layout(false);
+    layout(true);
   }
 
 

@@ -17,6 +17,7 @@ public class Colours {
     public static final Color blue;
     public static final Color grey;
     public static final Color purple;
+	public static final Color green;
 
     public static final Color z_white = new Color(1,1,1,1);
     public static final Color z_black = new Color(0,0,0,1);
@@ -33,6 +34,7 @@ public class Colours {
 		blue = palette(5, 0);
 		grey = palette(6, 0);
 		purple = palette(7, 0);
+		green = palette(8, 0);
 	}
 	
 	

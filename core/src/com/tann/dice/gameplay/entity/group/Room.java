@@ -1,10 +1,13 @@
 package com.tann.dice.gameplay.entity.group;
 
+import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.gameplay.entity.type.MonsterType;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.util.Tann;
 
@@ -105,13 +108,33 @@ public class Room extends EntityGroup<Monster> {
 
     public boolean activateDelayedRolls() {
         boolean found = false;
-        for(DiceEntity de:getActiveEntities()){
+
+        List<DiceEntity> entities = new ArrayList<DiceEntity>(getActiveEntities());
+        boolean summoned = false;
+        for(DiceEntity de:entities){
             Die d = de.getDie();
             Side s = d.getActualSide();
-            if(s.getEffects()[0].type== Eff.EffType.Healing){
-                found = true;
-                TargetingManager.get().target(null, d, false);
+            if(s==null) continue; //(newly summoned probably //TODO better
+            Eff e = s.getEffects()[0];
+            switch(e.type){
+                case Healing:
+                    found = true;
+                    TargetingManager.get().target(null, d, false);
+                    break;
+                case Summon:
+                    found = true;
+                    summoned = true;
+                    for(int i=0;i<e.getValue();i++) {
+                        Room.get().addEntity(MonsterType.byName(e.summonType).buildMonster());
+                    }
+                    break;
             }
+        }
+        if(summoned){
+            DungeonScreen.get().enemy.setEntities(getActiveEntities());
+            DungeonScreen.get().enemy.layout(true);
+            updateSlids(true);
+            BulletStuff.refresh(getAllActive());
         }
         return found;
     }

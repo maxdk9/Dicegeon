@@ -94,7 +94,6 @@ public abstract class Screen extends Lay{
 	final InputListener SELF_POP = new InputListener(){
 		@Override
 		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			popAllLight();
 			pop(event.getListenerActor());
 			return true;
 		}

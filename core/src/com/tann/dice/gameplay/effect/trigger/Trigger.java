@@ -41,7 +41,11 @@ public abstract class Trigger implements Cloneable{
 
   public boolean cancelVolunteerForwards(){ return false; }
 
+  public boolean stayForwards(){ return false; }
+
   public void onKill(){}
+
+  public void onDeath(){}
 
   public void onHitWithEff(Eff e){}
 
@@ -94,8 +98,6 @@ public abstract class Trigger implements Cloneable{
     }
     return result;
   }
-
-
 
   public boolean isNegative() {
     return false;

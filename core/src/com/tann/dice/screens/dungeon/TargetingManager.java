@@ -273,7 +273,7 @@ public class TargetingManager {
 
     public List<DiceEntity> getRandomTargetForEnemy(Die d) {
         Eff e = d.getEffects()[0];
-        if(e.type==EffType.Healing) return new ArrayList<>();
+        if(e.type==EffType.Healing || e.type == EffType.Summon) return new ArrayList<>();
         DiceEntity target = null;
         List<DiceEntity> validTargets = EntityGroup.getValidTargets(d, false);
         if (validTargets.size() > 0) {

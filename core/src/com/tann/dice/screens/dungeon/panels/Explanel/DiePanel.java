@@ -48,7 +48,9 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
         Pixl p = new Pixl(this, gap);
         p.actor(new TextWriter(entity.name+"  ("+entity.getHp()+"/"+entity.getMaxHp()+"[h][red][heart][h][light])"));
         p.row(gap+2);
-        p.actor(new DieSpinner(entity.getDie(), entity.getSize().pixels*1.5f));
+        if(entity.getSize()== DiceEntity.EntitySize.smol || entity.getSize() == DiceEntity.EntitySize.reg) {
+            p.actor(new DieSpinner(entity.getDie(), entity.getSize().pixels * 1.5f));
+        }
         p.actor(new NetPanel(entity));
         p.pix();
 
@@ -107,7 +109,17 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
 
     @Override
     public void repositionExplanel(Group g) {
-        Vector2 local = Tann.getLocalCoordinates(this);
-        g.setPosition((int)(local.x+getWidth()/2-g.getWidth()/2), (int)(local.y-g.getHeight()+1));
+        switch(entity.getSize()){
+            case smol:
+            case reg:
+                Vector2 local = Tann.getLocalCoordinates(this);
+                g.setPosition((int)(local.x+getWidth()/2-g.getWidth()/2), (int)(local.y-g.getHeight()+1));
+                break;
+            case big:
+            case huge:
+                g.setPosition(Main.width/2-g.getWidth()/2, Main.height/2-g.getHeight()/2);
+                break;
+        }
+
     }
 }

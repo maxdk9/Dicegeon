@@ -15,6 +15,7 @@ import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageImmunity;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerEndOfTurnSelf;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
@@ -181,6 +182,26 @@ public class Side {
 
     // MONSTER
 
+    // SMOL
+
+    public static final Side smol_arrow = new Side().size(smol).image("arrow").effect(new Eff().damage(1));
+    public static final Side smol_arrow2 = smol_arrow.withValue(2);
+    public static final Side smol_arrow3 = smol_arrow.withValue(3);
+
+    public static final Side smol_sword1 = new Side().size(smol).image("sword").effect(new Eff().damage(1));
+    public static final Side smol_sword2 = smol_sword1.withValue(2);
+
+    public static final Side smol_nip1 = new Side().size(smol).image("nip").effect(new Eff().damage(1));
+    public static final Side smol_nip2 = smol_nip1.withValue(2);
+    public static final Side smol_nip3 = smol_nip1.withValue(3);
+
+    public static final Side smol_nipPoison1 = new Side().size(smol).image("nipPoison").effect(
+            new Eff().buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
+
+    public static final Side smol_slime = new Side().size(smol).image("slime").effect(new Eff().damage(1));
+    public static final Side smol_slime2 = smol_slime.withValue(2);
+
+
     // REG
 
     public static final Side snakePoison1 = new Side().image("snakeBite").effect(new Eff().damage(1), new Eff().
@@ -190,18 +211,12 @@ public class Side {
     public static final Side claw = new Side().image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side claw_2 = claw.withValue(2);
 
-    // SMOL
+    public static final Side slimeUpDown1 = new Side().image("upDownBlob").effect(new Eff().damage(1).topBotEnemy());
+    public static final Side slimeUpDown2 = slimeUpDown1.withValue(2);
 
-    public static final Side smol_arrow = new Side().size(smol).image("arrow").effect(new Eff().damage(1));
-    public static final Side smol_arrow2 = smol_arrow.withValue(2);
-    public static final Side smol_arrow3 = smol_arrow.withValue(3);
+    public static final Side slime_triple = new Side().image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side slime_triple2 = slime_triple.withValue(2);
 
-    public static final Side smol_nip1 = new Side().size(smol).image("nip").effect(new Eff().damage(1));
-    public static final Side smol_nip2 = smol_nip1.withValue(2);
-    public static final Side smol_nip3 = smol_nip1.withValue(3);
-
-    public static final Side smol_nipPoison1 = new Side().size(smol).image("nipPoison").effect(new Eff().damage(1), new Eff().
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
 
     // BIG
 
@@ -221,6 +236,20 @@ public class Side {
     public static final Side big_peck4 = big_peck.withValue(4);
     public static final Side big_peck5 = big_peck.withValue(5);
 
+    public static final Side big_summonSkeleton1 = new Side().size(big).image("summonSkeleton").effect(new Eff().summon("Skeleton",1));
+    public static final Side big_summonSkeleton2 = big_summonSkeleton1.withValue(2);
+
+    public static final Side big_summonZombie1 = new Side().size(big).image("summonZombie").effect(new Eff().summon("Zombie",1));
+    public static final Side big_summonZombie2 = big_summonZombie1.withValue(2);
+
+    public static final Side big_slimeUpDown1 = new Side().size(big).image("upDownBlob").effect(new Eff().damage(1).topBotEnemy());
+    public static final Side big_slimeUpDown2 = big_slimeUpDown1.withValue(2);
+    public static final Side big_slimeUpDown3 = big_slimeUpDown1.withValue(3);
+
+    public static final Side big_slimeTriple1 = new Side().size(big).image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side big_slimeTriple2 = big_slimeTriple1.withValue(2);
+    public static final Side big_slimeTriple3 = big_slimeTriple1.withValue(3);
+
     // HUGE
 
     public static final Side huge_flame = new Side().size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
@@ -231,6 +260,18 @@ public class Side {
             buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
     public static final Side huge_posionChomp2 = huge_posionChomp.withValue(2);
     public static final Side huge_posionChomp3 = huge_posionChomp.withValue(3);
+
+    public static final Side huge_slimeUpDown1 = new Side().size(huge).image("upDownBlob").effect(new Eff().damage(1).topBotEnemy());
+    public static final Side huge_slimeUpDown2 = huge_slimeUpDown1.withValue(2);
+    public static final Side huge_slimeUpDown3 = huge_slimeUpDown1.withValue(3);
+    public static final Side huge_slimeUpDown4 = huge_slimeUpDown1.withValue(4);
+    public static final Side huge_slimeUpDown5 = huge_slimeUpDown1.withValue(5);
+
+    public static final Side huge_slimeTriple1 = new Side().size(huge).image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side huge_slimeTriple2 = huge_slimeTriple1.withValue(2);
+    public static final Side huge_slimeTriple3 = huge_slimeTriple1.withValue(3);
+    public static final Side huge_slimeTriple4 = huge_slimeTriple1.withValue(4);
+
 
 
 	public Side copy(){

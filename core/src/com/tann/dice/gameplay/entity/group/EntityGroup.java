@@ -6,6 +6,7 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Tann;
@@ -45,6 +46,14 @@ public class EntityGroup <T extends DiceEntity>{
         activeEntities.clear();
         entities.addAll(intialEntities);
         activeEntities.addAll(intialEntities);
+    }
+
+    public void addEntity(T entity){
+        entities.add(0, entity);
+        activeEntities.add(0, entity);
+        if(entity instanceof Monster) {
+            Room.get().updateSlids(true);
+        }
     }
 
     public void firstRoll(){

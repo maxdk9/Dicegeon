@@ -5,9 +5,8 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageLimit;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerHalfHealthEffTypeBonus;
-import com.tann.dice.gameplay.effect.trigger.types.TriggerTotalDamageReduction;
 import com.tann.dice.gameplay.entity.Hero;
-import com.tann.dice.gameplay.entity.die.Side;
+import static com.tann.dice.gameplay.entity.die.Side.*;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
 
@@ -29,74 +28,74 @@ public class HeroType extends EntityType<HeroType> {
     static{
         lv = 0;
         add(new HeroType().name("Fighter").hp(5).levelsUpInto(fighter1).colour(Colours.yellow)
-                .sides( Side.sword2, Side.sword2, Side.sword1, Side.sword1,Side.shield1, Side.nothing));
+                .sides( sword2, sword2, sword1, sword1,shield1, nothing));
         add(new HeroType().name("Fighter2").hp(5).levelsUpInto(fighter1).colour(Colours.orange)
-                .sides( Side.sword2, Side.sword2, Side.sword1, Side.sword1,Side.shield1, Side.nothing));
+                .sides( sword2, sword2, sword1, sword1,shield1, nothing));
         add(new HeroType().name("Defender").hp(5).levelsUpInto(defender1).colour(Colours.grey)
-                .sides(Side.shield2, Side.shield2, Side.shield1, Side.sword1, Side.sword1, Side.nothing));
-        add(new HeroType().name("Acolyte").hp(4).levelsUpInto(magic1).colour(Colours.blue)
-                .sides(Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing, Side.nothing)
+                .sides(shield2, shield2, shield1, sword1, sword1, nothing));
+        add(new HeroType().name("Acolyte").hp(4).levelsUpInto(wizard1).colour(Colours.blue)
+                .sides(magic2, magic2, magic1, magic1, nothing, nothing)
                 .spells(Spell.fireWave));
         add(new HeroType().name("Herbalist").hp(4).levelsUpInto(healer1)
-                .sides(Side.heal3, Side.heal2, Side.magic1, Side.magic1, Side.magic1, Side.nothing).colour(Colours.red)
+                .sides(heal3, heal2, magic1, magic1, magic1, nothing).colour(Colours.red)
                 .spells(Spell.healAll));
 
         lv = 1;
         add(new HeroType().name("Rogue").hp(5).tag(fighter1)
-                .sides(Side.poison1, Side.poison1, Side.sword2, Side.arrow1, Side.vanish, Side.nothing));
+                .sides(poison1, poison1, sword2, arrow1, vanish, nothing));
         add(new HeroType().name("Ranger").hp(6).tag(fighter1)
-                .sides(Side.execute3, Side.arrow2, Side.arrow2, Side.arrow1, Side.arrow1,Side.nothing));
+                .sides(execute3, arrow2, arrow2, arrow1, arrow1,nothing));
         add(new HeroType().name("Gladiator").hp(7).tag(fighter1)
-                .sides(Side.swordShield2, Side.swordShield2, Side.swordShield1, Side.swordShield1, Side.shield2, Side.nothing));
+                .sides(swordShield2, swordShield2, swordShield1, swordShield1, shield2, nothing));
         add(new HeroType().name("Jack").hp(6).tag(fighter1)
-                .sides(Side.sword2, Side.arrow2, Side.heal2, Side.shield2, Side.magic2, Side.nothing));
+                .sides(sword2, arrow2, heal2, shield2, magic2, nothing));
         add(new HeroType().name("Berserker").hp(9).tag(fighter1)
-                .sides(Side.sword3SelfDamage3, Side.sword3SelfDamage3, Side.sword2SelfDamage2, Side.sword2, Side.sword2, Side.nothing)
+                .sides(sword3SelfDamage3, sword3SelfDamage3, sword2SelfDamage2, sword2, sword2, nothing)
                 .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
         add(new HeroType().name("Whirl").hp(6).tag(fighter1)
-                .sides(Side.whirlwind1, Side.trident1, Side.trident1, Side.sword2, Side.shieldPlusAdjacent1, Side.nothing));
+                .sides(whirlwind1, trident1, trident1, sword2, shieldPlusAdjacent1, nothing));
         add(new HeroType().name("Crusher").hp(6).tag(fighter1)
-                .sides(Side.topbot2, Side.topbot1, Side.top3, Side.bot3, Side.shield2, Side.nothing));
+                .sides(topbot2, topbot1, top3, bot3, shield2, nothing));
         add(new HeroType().name("Bruiser").hp(6).tag(fighter1)
-                .sides(Side.front2, Side.front2, Side.hook1, Side.hook1, Side.shield2, Side.nothing));
+                .sides(front2, front2, hook1, hook1, shield2, nothing));
 
 
         add(new HeroType().name("Paladin").hp(7).tag(defender1)
-                .sides(Side.shieldHeart2, Side.shieldHeart2, Side.shield2,  Side.sword2, Side.sword1, Side.nothing));
+                .sides(shieldHeart2, shieldHeart2, shield2,  sword2, sword1, nothing));
         add(new HeroType().name("Bard").hp(6).tag(defender1)
-                .sides(Side.shield3, Side.wardingchord, Side.wardingchord, Side.reroll, Side.magic2, Side.nothing));
+                .sides(shield3, wardingchord, wardingchord, reroll, magic2, nothing));
         add(new HeroType().name("Bouncer").hp(9).tag(defender1)
-                .sides(Side.taunt, Side.taunt, Side.shield2, Side.shield2, Side.sword2, Side.nothing).
+                .sides(taunt, taunt, shield2, shield2, sword2, nothing).
                         trait(new TriggerDamageLimit(4)));
         add(new HeroType().name("Guardian").hp(7).tag(defender1)
-                .sides(Side.shieldPlusAdjacent2, Side.shieldPlusAdjacent2, Side.shield3, Side.shield3, Side.trident1, Side.nothing));
+                .sides(shieldPlusAdjacent2, shieldPlusAdjacent2, shield3, shield3, trident1, nothing));
 
 
         add(new HeroType().name("Alchemist").hp(5).tag(healer1)
-                .sides(Side.heal4, Side.magic2, Side.magic1, Side.potionregen, Side.potionregen, Side.nothing)
+                .sides(heal4, magic2, magic1, potionregen, potionregen, nothing)
                 .spells(Spell.stoneSkin));
         add(new HeroType().name("Druid").hp(7).tag(healer1)
-                .sides(Side.heal4, Side.heal4, Side.sword2, Side.magic1, Side.magic2, Side.nothing)
+                .sides(heal4, heal4, sword2, magic1, magic2, nothing)
                 .spells(Spell.balance));
         add(new HeroType().name("Witch").hp(6).tag(healer1)
-                .sides(Side.healBuff1, Side.healBuff1, Side.poison1, Side.heal5, Side.heal3, Side.magic2)
+                .sides(healBuff1, healBuff1, poison1, heal5, heal3, magic2)
                 .spells(Spell.balance)); //TODO some kinda coolie spell
         add(new HeroType().name("Medic").hp(6).tag(healer1)
-                .sides(Side.healAll2, Side.cure2, Side.cure2, Side.magic1, Side.magic1, Side.nothing)
+                .sides(healAll2, cure2, cure2, magic1, magic1, nothing)
                 .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
 
 
-        add(new HeroType().name("Pyro").hp(6).tag(magic1)
-                .sides(Side.flameWard, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
+        add(new HeroType().name("Pyro").hp(6).tag(wizard1)
+                .sides(flameWard, magic2, magic2, magic1, magic1, nothing)
                 .spells(Spell.inferno));
-        add(new HeroType().name("Arcanist").hp(7).tag(magic1)
-                .sides(Side.magic3NextTurn, Side.magic2NextTurn, Side.magic2, Side.magic2, Side.nothing, Side.nothing)
+        add(new HeroType().name("Arcanist").hp(7).tag(wizard1)
+                .sides(magic3NextTurn, magic2NextTurn, magic2, magic2, nothing, nothing)
                 .spells(Spell.deathSpike));
-        add(new HeroType().name("Channeler").hp(6).tag(magic1)
-                .sides(Side.powerSelf, Side.magic2, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
+        add(new HeroType().name("Channeler").hp(6).tag(wizard1)
+                .sides(powerSelf, magic2, magic2, magic1, magic1, nothing)
                 .spells(Spell.arcaneMissile));
-        add(new HeroType().name("Trickster").hp(7).tag(magic1)
-                .sides(Side.copy, Side.copy, Side.magic2, Side.magic1, Side.magic1, Side.nothing)
+        add(new HeroType().name("Trickster").hp(7).tag(wizard1)
+                .sides(copy, copy, magic2, magic1, magic1, nothing)
                 .spells(Spell.arcaneMissile));//TODO new spell here (enemy reroll!??)
 
 

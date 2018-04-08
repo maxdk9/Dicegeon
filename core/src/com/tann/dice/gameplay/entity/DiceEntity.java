@@ -278,7 +278,7 @@ public abstract class DiceEntity {
         }
         boolean above = aboveHalfHealth();
         hp -= value;
-        if(above && !aboveHalfHealth()){
+        if(!aboveHalfHealth()){
             reduceToHalfHP();
         }
         if (hp <= 0) {
@@ -320,6 +320,10 @@ public abstract class DiceEntity {
         DungeonScreen.get().layoutSidePanels();
         removeEffectsIfDead();
         TargetingManager.get().showTargetingHighlights();
+
+        for(Trigger t:getActiveTriggers()){
+            t.onDeath();
+        }
     }
 
     public void removeEffectsIfDead(){

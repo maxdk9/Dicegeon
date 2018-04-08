@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.effect;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.gameplay.entity.type.MonsterType;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ public class Eff {
 
     public enum EffType {
         Damage, Shield, Magic, Healing,
-        Empty, Buff, Execute, Reroll, RedirectIncoming, CopyAbility, Decurse, Hook
+        Empty, Buff, Execute, Reroll, RedirectIncoming,
+        CopyAbility, Decurse, Hook, Summon
 	}
 
 
@@ -30,6 +32,7 @@ public class Eff {
     private int value;
     public DiceEntity source;
     boolean nextTurn;
+    public String summonType;
 
     public Eff(){}
 
@@ -59,6 +62,8 @@ public class Eff {
                 return "Remove all negative effects";
             case Hook:
                 return "Pull an enemy forwards";
+            case Summon:
+                return "Summon "+getValue()+" "+summonType+(getValue()==1?"":"s");
 
         }
         return "no base for "+type;
@@ -130,6 +135,7 @@ public class Eff {
     public Eff copyAbility() { return type(EffType.CopyAbility); }
     public Eff decurse() {return type(EffType.Decurse); }
     public Eff hook() {return type(EffType.Hook); }
+    public Eff summon(String monsterType, int value) {this.summonType=monsterType; return type(EffType.Summon, value); }
 
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);} //implicit
     public Eff allTargeters() { return targetType(TargetingType.AllTargeters); }
@@ -186,6 +192,7 @@ public class Eff {
         e.type = type;
         e.value = value;
         e.source = source;
+        e.summonType = summonType;
         if(buff!=null){
             e.buff = buff.copy();
         }

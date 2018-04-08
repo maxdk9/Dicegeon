@@ -13,7 +13,7 @@ import java.util.List;
 public class EntityType <t>{
 
     public enum LevelUpClass {
-        fighter1, defender1, magic1, healer1,
+        fighter1, defender1, wizard1, healer1,
     }
 
     public String name;
