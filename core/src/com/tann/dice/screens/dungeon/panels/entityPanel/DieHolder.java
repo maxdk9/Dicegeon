@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
 
 public class DieHolder extends Actor {
     static final int extraGap = 0;
@@ -20,7 +21,11 @@ public class DieHolder extends Actor {
         if(entity.getDie().flatDraw){
             Side side = entity.getDie().getActualSide();
             if(side!=null){
-                side.draw(batch, getX(), getY(), 1, entity.getColour(), entity.get2DLapel());
+                side.draw(batch, getX(), getY(), 1, entity.getColour(), entity.get2DLapel(), entity.getDie().getUsed());
+            }
+            if(entity.getDie().getUsed()){
+                batch.setColor(Colours.withAlpha(Colours.dark, .7f));
+                Draw.fillActor(batch, this);
             }
         }
         else{

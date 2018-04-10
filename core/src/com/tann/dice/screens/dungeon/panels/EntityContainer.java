@@ -33,7 +33,12 @@ public class EntityContainer extends Group {
       float duration = slide?.5f:0;
       Interpolation terp = Interpolation.pow2Out;
       for(EntityPanel ep : dead){
-          ep.addAction(Actions.moveTo(ep.getPreferredX(), ep.getY(), duration, terp));
+          if(slide) {
+              ep.addAction(Actions.moveTo(ep.getPreferredX(), ep.getY(), duration, terp));
+          }
+          else{
+              ep.setPosition(ep.getPreferredX(), ep.getY());
+          }
       }
       int totalHeight = 0;
       for(EntityPanel ep:alive){
@@ -43,7 +48,12 @@ public class EntityContainer extends Group {
       float y = gap;
       for(int i=0;i<alive.size();i++){
           EntityPanel ep = alive.get(i);
-          ep.addAction(Actions.moveTo(ep.getPreferredX(), y, duration, terp));
+          if(slide) {
+              ep.addAction(Actions.moveTo(ep.getPreferredX(), y, duration, terp));
+          }
+          else{
+              ep.setPosition(ep.getPreferredX(), y);
+          }
           y += gap +ep.getHeight();
       }
   }

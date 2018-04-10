@@ -19,7 +19,7 @@ public class DieSidePanel extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        side.draw(batch, getX(), getY(), scale, entity.getColour(), entity.get2DLapel());
+        side.draw(batch, getX(), getY(), scale, entity.getColour(), entity.get2DLapel(), entity.getDie().getUsed());
         super.draw(batch, parentAlpha);
     }
 }

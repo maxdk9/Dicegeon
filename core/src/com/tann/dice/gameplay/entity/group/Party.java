@@ -132,8 +132,11 @@ public class Party extends EntityGroup<Hero>{
 
     @Override
     public void firstRoll() {
-        rolls = BASE_ROLLS;
         super.firstRoll();
+    }
+
+    public void resetRolls(){
+        rolls = BASE_ROLLS;
     }
 
     public void addRolls(int amount){

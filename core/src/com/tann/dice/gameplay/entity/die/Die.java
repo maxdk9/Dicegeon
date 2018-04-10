@@ -21,7 +21,6 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 
@@ -30,7 +29,9 @@ import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 public class Die implements Targetable{
 
     private static final float MAX_AIRTIME = 2.7f;
-    private static final float INTERP_SPEED = .3f;
+    public static final float INTERP_SPEED = .35f;
+    public static final float INTERP_SPEED_SLOW = .7f;
+    private float currentInterpSpeed;
 
     public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
 
@@ -41,7 +42,7 @@ public class Die implements Targetable{
     private DieState state = DieState.Stopped;
     private int lockedSide=-1;
     private float dist = 0;
-    private boolean used;
+    public boolean used;
 
     public boolean getUsed(){
         return used;
@@ -60,7 +61,7 @@ public class Die implements Targetable{
                 break;
             case Locked:
                 entity.getEntityPanel().unlockDie();
-                returnToPlay();
+                returnToPlay(null, INTERP_SPEED);
                 break;
         }
     }
@@ -76,7 +77,7 @@ public class Die implements Targetable{
     private static Material MATERIAL;
     private float timeInAir;
     private Runnable moveRunnable;
-    public boolean flatDraw = false;
+    public boolean flatDraw = true;
     public void update(float delta){
         switch(state){
             case Stopped:
@@ -84,7 +85,7 @@ public class Die implements Targetable{
                 break;
             case Locking:
             case Unlocking:
-                dist += delta/INTERP_SPEED;
+                dist += delta/currentInterpSpeed;
                 if(dist >= 1){
                     dist = 1;
                     if(state==Unlocking){
@@ -161,7 +162,7 @@ public class Die implements Targetable{
         setState(Rolling);
         undamp();
         timeInAir=0;
-        physical.body.clearForces();
+        resetSpeeed();
         randomise(15, 3, 0, 0, 1.3f, 0, 1, 2);
     }
 
@@ -340,7 +341,7 @@ public class Die implements Targetable{
     // interpolation stuff
 
     private Vector3 startPos = new Vector3();
-    private Vector3 targetPos;
+    private Vector3 targetPos = new Vector3();
     private Quaternion startQuat = new Quaternion();
     private Quaternion targetQuat = new Quaternion();
     private Quaternion originalRotation = new Quaternion();
@@ -353,36 +354,50 @@ public class Die implements Targetable{
         new Quaternion().setEulerAngles(180,0,90)
     };
 
-    private void returnToPlay() {
+    public void returnToPlay(Runnable runnable, float interpSpeed) {
+//        physical.update();
         setState(Unlocking);
+        addToScreen();
+        Vector2 dHol = entity.getEntityPanel().getDieHolderLocation();
+        Quaternion temp = new Quaternion();
+        physical.transform.getRotation(temp);
+        physical.transform.setToTranslation(screenTo3D(dHol.x, dHol.y)); // starting position
+        physical.transform.rotate(temp);
+        physical.body.setWorldTransform(physical.transform);
+
         Vector3 best = getBestSpot();
-        moveTo(best, originalRotation, null);
+        moveTo(best, originalRotation, runnable, interpSpeed);
         flatDraw = false;
         undamp();
     }
 
-    public void moveTo(Vector2 position, Runnable runnable){
+    public void moveTo(Vector2 position, Runnable runnable, float interpSpeed){
         this.moveRunnable = runnable;
-        moveTo(position.x, position.y, runnable);
+        moveTo(position.x, position.y, runnable, interpSpeed);
     }
 
-    private void moveTo(float screenX, float screenY, Runnable runnable){
+    private void moveTo(float screenX, float screenY, Runnable runnable, float interpSpeed){
         setState(Locking);
-        float factor = BulletStuff.srcWidth/Main.width;
-        moveTo(new Vector3(
-                screenX*factor-BulletStuff.srcWidth/2+physical.dimensions.y/2,
-                -BulletStuff.height - physical.dimensions.y/2,
-                (Main.height-screenY)*factor-BulletStuff.heightFactor/2-physical.dimensions.y/2),
-            d6Quats[lockedSide], runnable);
+        moveTo(screenTo3D(screenX, screenY), d6Quats[lockedSide], runnable, interpSpeed);
     }
 
-    private void moveTo(Vector3 position, Quaternion rotation, Runnable runnable){
+    private void moveTo(Vector3 position, Quaternion rotation, Runnable runnable, float interpSpeed){
+        this.currentInterpSpeed = interpSpeed;
         this.moveRunnable = runnable;
         dist=0;
+        physical.update();
         startPos = physical.transform.getTranslation(startPos);
         targetPos = position;
         physical.transform.getRotation(startQuat);
         targetQuat = rotation;
+    }
+
+    private Vector3 screenTo3D(float screenX, float screenY){
+        float factor = BulletStuff.srcWidth/Main.width;
+        return new Vector3(
+                screenX*factor-BulletStuff.srcWidth/2+physical.dimensions.y/2,
+                -BulletStuff.height - physical.dimensions.y/2,
+                (Main.height-screenY)*factor-BulletStuff.heightFactor/2-physical.dimensions.y/2);
     }
 
     private Vector3 getBestSpot() {
@@ -424,6 +439,7 @@ public class Die implements Targetable{
     }
 
     public void addToScreen() {
+        if(BulletStuff.instances.contains(physical)) return;
         lockedSide=-1;
         BulletStuff.instances.add(physical);
         resetSpeeed();
@@ -530,6 +546,7 @@ public class Die implements Targetable{
         dieIndex = dieIndex + 1;
         co.body.userData=this;
         physical.userData = this;
+        physical.updateBounds();
     }
 
     public float getMass() {
@@ -557,7 +574,6 @@ public class Die implements Targetable{
             return true;
         }
         removeFromScreen();
-        flatDraw = false;
         entity.getEntityPanel().useDie();
         used= true;
         return true;

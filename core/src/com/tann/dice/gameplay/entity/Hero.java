@@ -8,6 +8,7 @@ import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.util.Tann;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +68,13 @@ public class Hero extends DiceEntity {
             }
         }
         if(Party.get().getRolls() == 0 && Party.get().allDiceStopped()){
-            DungeonScreen.get().confirmDice(true);
+            Tann.delay(new Runnable() {
+                @Override
+                public void run() {
+                    DungeonScreen.get().confirmDice(true);
+                }
+            }, .3f);
+
         }
     }
 

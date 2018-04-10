@@ -10,7 +10,8 @@ import com.tann.dice.screens.dungeon.PhaseManager;
 public class PlayerRollingPhase extends Phase {
     @Override
     public void activate() {
-        Party.get().firstRoll();
+        Party.get().resetForRoll();
+        Party.get().resetRolls();
         DungeonScreen.get().slideConfirmButton(true);
         DungeonScreen.get().slideRollButton(true);
         DungeonScreen.get().setConfirmText("Confirm Dice");

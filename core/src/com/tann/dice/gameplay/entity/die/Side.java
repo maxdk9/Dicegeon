@@ -319,7 +319,7 @@ public class Side {
 	    this.calculatedEffects = other.effects;
     }
 
-    public void draw(Batch batch, float x, float y, int scale, Color colour, TextureRegion lapel2D) {
+    public void draw(Batch batch, float x, float y, int scale, Color colour, TextureRegion lapel2D, boolean used) {
 	    int sz = size.pixels;
 
 	    if(colour != null){

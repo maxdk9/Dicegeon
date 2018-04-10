@@ -151,7 +151,7 @@ public class DungeonScreen extends Screen {
 
     static {
 //        addLevel(bird, slimoBig);
-        addLevel(archer, goblin, bird, dragon); // all sizes
+//        addLevel(archer, goblin, bird, dragon); // all sizes
 
 
         addLevel(goblin, goblin, goblin, goblin);
@@ -257,7 +257,7 @@ public class DungeonScreen extends Screen {
 
     public void enemyCombat() {
         Room.get().updateSlids(true);
-        Room.get().roll(true);
+        Room.get().resetForRoll();
     }
 
 

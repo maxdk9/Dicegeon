@@ -189,7 +189,7 @@ public abstract class DiceEntity {
         dead = false;
         fullHeal();
         targeted = null;
-        getDie().flatDraw = false;
+        getDie().flatDraw = true;
         buffs.clear();
         if(targets != null){
             targets.clear();

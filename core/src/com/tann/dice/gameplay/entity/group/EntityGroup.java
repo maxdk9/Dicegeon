@@ -66,12 +66,6 @@ public class EntityGroup <T extends DiceEntity>{
     }
 
     public void roll(boolean firstRoll){
-        if(firstRoll){
-            for(T entity:getActiveEntities()){
-                entity.getDie().addToScreen();
-                entity.getDie().resetForRoll();
-            }
-        }
         int amount = 0;
         for(DiceEntity de:getActiveEntities()){
             if(de.getDie().getState()== Die.DieState.Stopped){
@@ -299,6 +293,19 @@ public class EntityGroup <T extends DiceEntity>{
     public void somethingChanged() {
         for(DiceEntity de:entities){
             de.somethingChanged();
+        }
+    }
+
+    public void resetForRoll() {
+        for(final DiceEntity de:activeEntities){
+            de.getDie().used=false;
+            de.getDie().returnToPlay(new Runnable(){
+                @Override
+                public void run() {
+                    firstRoll();
+                    de.getDie().roll();
+                }
+            }, Die.INTERP_SPEED_SLOW);
         }
     }
 }

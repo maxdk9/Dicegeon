@@ -14,6 +14,7 @@ import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
 import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
@@ -24,7 +25,7 @@ import java.util.List;
 public class EntityPanel extends Group {
 
     public DiceEntity entity;
-    public boolean holdsDie;
+    public boolean holdsDie =true;
     DamageProfile profile;
     HeartsHolder heartsHolder;
     float startX;
@@ -88,7 +89,7 @@ public class EntityPanel extends Group {
             setPosition(-getWidth(), Main.height/2);
         }
         else{
-            setPosition(Main.width, Main.height/2);
+            setPosition(getWidth(), Main.height/2);
         }
     }
 
@@ -172,11 +173,6 @@ public class EntityPanel extends Group {
             addActor(tick);
             tick.setVisible(false);
         }
-    }
-
-
-    public void lockStartX(){
-        this.startX = getX();
     }
 
     public boolean isClickOnDie(float x){
@@ -306,7 +302,7 @@ public class EntityPanel extends Group {
             public void run() {
                 entity.getDie().flatDraw = true;
             }
-        });
+        }, Die.INTERP_SPEED);
     }
 
     public void unlockDie(){
