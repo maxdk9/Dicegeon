@@ -94,7 +94,10 @@ public class Tann {
 
     public static void center(Actor child) {
         Actor parent = child.getParent();
-        child.setPosition((int)(parent.getWidth()/2-child.getWidth()/2), (int)(parent.getHeight()/2-child.getHeight()/2));
+        child.setPosition(
+            (int)(parent.getWidth()/2-child.getWidth()/2),
+            (int)(parent.getHeight()/2-child.getHeight()/2)
+        );
     }
 
     public static void swap(Object[] array, int i1, int i2){

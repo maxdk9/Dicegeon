@@ -103,8 +103,8 @@ public class HeroType extends EntityType<HeroType> {
 
         // novelty huge die
 
-        add(new HeroType().size(DiceEntity.EntitySize.huge).name("RogueHuge").hp(5).tag(fighter1)
-                .sides(huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1));
+//        add(new HeroType().size(DiceEntity.EntitySize.huge).name("RogueHuge").hp(5).tag(fighter1)
+//                .sides(huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1));
     }
 
     public static HeroType fighter = byName("fighter");

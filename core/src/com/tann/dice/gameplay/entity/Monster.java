@@ -33,6 +33,7 @@ public class Monster extends DiceEntity {
     static long nextLockTime = 0;
     static final long lockDelay = 500;
     static final long firstLockDelay = 250;
+
     @Override
     public void stopped() {
         long now = System.currentTimeMillis();
@@ -43,8 +44,7 @@ public class Monster extends DiceEntity {
             @Override
             public void run() {
                 getDie().removeFromPhysics();
-                EntityPanel ep = getDie().entity.getEntityPanel();
-                ep.lockDie();
+                getDie().slideToPanel();
             }
         }, (nextLockTime-now)/1000f);
         nextLockTime += lockDelay;

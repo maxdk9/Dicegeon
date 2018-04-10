@@ -42,7 +42,7 @@ public class Die implements Targetable{
     private DieState state = DieState.Stopped;
     private int lockedSide=-1;
     private float dist = 0;
-    public boolean used;
+    public boolean used = true;
 
     public boolean getUsed(){
         return used;
@@ -233,7 +233,8 @@ public class Die implements Targetable{
         if(side>=0){
             return entity.getSides()[side];
         }
-        return null;
+        return entity.getSides()[3];
+//        return null;
     }
 
     Side override;
@@ -547,6 +548,7 @@ public class Die implements Targetable{
         co.body.userData=this;
         physical.userData = this;
         physical.updateBounds();
+        physical.transform.rotate(d6Quats[3]);
     }
 
     public float getMass() {
