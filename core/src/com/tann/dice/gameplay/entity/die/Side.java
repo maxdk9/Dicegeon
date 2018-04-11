@@ -163,7 +163,7 @@ public class Side {
 
     public static final Side taunt = new Side().image("taunt").effect(new Eff().redirectIncoming().friendlySingle());
 
-    public static final Side execute3 = new Side().image("execute").effect(new Eff().execute(3).ranged());
+    public static final Side execute4 = new Side().image("execute").effect(new Eff().execute(4).ranged());
 
     public static final Side vanish = new Side().image("vanish").effect(new Eff().self().
             buff(new Buff(1, new TriggerDamageImmunity(true, true))));

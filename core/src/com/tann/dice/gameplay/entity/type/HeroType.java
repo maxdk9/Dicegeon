@@ -5,7 +5,6 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageLimit;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerHalfHealthEffTypeBonus;
-import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import static com.tann.dice.gameplay.entity.die.Side.*;
 import com.tann.dice.util.Colours;
@@ -45,7 +44,7 @@ public class HeroType extends EntityType<HeroType> {
         add(new HeroType().name("Rogue").hp(5).tag(fighter1)
                 .sides(poison1, poison1, sword2, arrow1, vanish, nothing));
         add(new HeroType().name("Ranger").hp(6).tag(fighter1)
-                .sides(execute3, arrow2, arrow2, arrow1, arrow1,nothing));
+                .sides(execute4, arrow2, arrow2, arrow1, arrow1,nothing));
         add(new HeroType().name("Gladiator").hp(7).tag(fighter1)
                 .sides(swordShield2, swordShield2, swordShield1, swordShield1, shield2, nothing));
         add(new HeroType().name("Jack").hp(6).tag(fighter1)

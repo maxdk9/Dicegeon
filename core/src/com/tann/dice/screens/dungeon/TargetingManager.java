@@ -55,9 +55,10 @@ public class TargetingManager {
                 case Self:
                     if(e.type==EffType.Damage){
                         e.source.damage(e.getValue());
-                    } else {
-                        e.source.hit(e, false);
                     }
+//                    else {
+//                        e.source.hit(e, false);
+//                    }
                     break;
             }
         }

@@ -195,6 +195,7 @@ public abstract class DiceEntity {
             targets.clear();
         }
         profile.reset();
+        getDie().clearOverride();
         resetPanels();
         somethingChanged();
     }
@@ -480,6 +481,7 @@ public abstract class DiceEntity {
             buffs.get(i).turn();
         }
         somethingChanged();
+        getDie().clearOverride();
     }
 
     public void attackedBy(DiceEntity entity) {

@@ -28,12 +28,13 @@ import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 
 public class Die implements Targetable{
 
+    public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
+
     private static final float MAX_AIRTIME = 2.7f;
     public static final float INTERP_SPEED = .35f;
     public static final float INTERP_SPEED_SLOW = .7f;
-    private float currentInterpSpeed;
 
-    public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
+    private float currentInterpSpeed;
 
 
     // gameplay stuff
@@ -166,15 +167,6 @@ public class Die implements Targetable{
         randomise(15, 3, 0, 0, 1.3f, 0, 1, 2);
     }
 
-    public void resetForRoll() {
-        randomiseStart();
-        removeFromPhysics();
-        addToPhysics();
-        undamp();
-        used = false;
-        this.state = Stopped;
-    }
-
     public void jiggle(){
         BulletStuff.addRollEffects(1, false, true);
         timeInAir=0;
@@ -238,6 +230,12 @@ public class Die implements Targetable{
     }
 
     Side override;
+
+
+    public void clearOverride() {
+        override = null;
+    }
+
     public void setSide(Side copy) {
         this.override = copy;
     }
@@ -579,6 +577,10 @@ public class Die implements Targetable{
         entity.getEntityPanel().useDie();
         used= true;
         return true;
+    }
+
+    public void reset() {
+        used= true;
     }
 
     @Override

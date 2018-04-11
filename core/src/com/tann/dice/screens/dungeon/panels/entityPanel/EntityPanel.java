@@ -371,4 +371,9 @@ public class EntityPanel extends Group {
     public void resetDieHolding() {
         holdsDie = false;
     }
+
+    public void reset() {
+        holdsDie = true;
+
+    }
 }
