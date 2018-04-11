@@ -67,7 +67,14 @@ public class HeartsHolder extends Group{
                 }
             }
             batch.draw(tr, x, y);
+
+            if(!entity.isPlayer() && i<profile.getTopHealth() && i==(entity.getMaxHp()-1)/2 && entity.slidOut && entity.hasVolunteer()){
+                batch.setColor(Colours.orange);
+                Draw.fillRectangle(batch, x+1, y, 1, 3);
+            }
+
             x += heartSize + heartGap;
+
         }
         if(!entity.isDead()) {
             int overkill = profile.getOverkill(false);

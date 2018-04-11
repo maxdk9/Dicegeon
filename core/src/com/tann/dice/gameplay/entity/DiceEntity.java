@@ -559,6 +559,13 @@ public abstract class DiceEntity {
       return false;
     }
 
+    public boolean hasVolunteer() {
+      for(DiceEntity de: Room.get().getActiveEntities()){
+          if(!de.slidOut && de.aboveHalfHealth()) return true;
+      }
+      return false;
+    }
+
     public enum EntitySize {
 
         smol(12), reg(16), big(24), huge(32);
