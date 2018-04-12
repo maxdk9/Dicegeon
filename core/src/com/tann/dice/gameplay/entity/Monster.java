@@ -1,7 +1,6 @@
 package com.tann.dice.gameplay.entity;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
@@ -16,6 +15,9 @@ public class Monster extends DiceEntity {
 
     public Monster(MonsterType type) {
         super(type);
+        if(startsAtTheBack()){
+            slide(false);
+        }
     }
 
     @Override
@@ -52,9 +54,20 @@ public class Monster extends DiceEntity {
 
     @Override
     public void reduceToHalfHP() {
-        if(slidOut){
-            Room.get().requestSwap(this);
+        slide(false);
+    }
+
+    @Override
+    public boolean canBeTargeted() {
+        if(slidOut) return true;
+        boolean anySlidOut = false;
+        for(Monster m:Room.get().getActiveEntities()){
+            if(m.slidOut){
+                anySlidOut=true;
+                break;
+            }
         }
+        return !anySlidOut;
     }
 
     @Override
@@ -83,10 +96,10 @@ public class Monster extends DiceEntity {
         return Colours.purple;
     }
 
-    public boolean willSwap() {
+    public boolean startsAtTheBack() {
         for(Trigger t:getActiveTriggers()){
-            if(t.cancelVolunteerForwards()) return false;
+            if(t.startsAtTheBack()) return true;
         }
-        return true;
+        return false;
     }
 }

@@ -319,7 +319,7 @@ public abstract class DiceEntity {
             Party.get().getActiveEntities().remove(this);
         }
         if(!isPlayer()){
-            Room.get().updateSlids(true);
+            DungeonScreen.get().layoutSidePanels();
         }
         getDie().flatDraw = false;
         DungeonScreen.get().layoutSidePanels();
@@ -436,7 +436,7 @@ public abstract class DiceEntity {
         this.shaderState = shaderState;
     }
 
-    public boolean slidOut;
+    public boolean slidOut = true;
 
     public void slide(boolean slid) {
         slidOut = slid;
@@ -564,6 +564,10 @@ public abstract class DiceEntity {
           if(!de.slidOut && de.aboveHalfHealth()) return true;
       }
       return false;
+    }
+
+    public boolean canBeTargeted() {
+      return true;
     }
 
     public enum EntitySize {

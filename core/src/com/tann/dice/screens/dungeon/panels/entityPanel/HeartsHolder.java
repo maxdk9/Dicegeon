@@ -3,6 +3,7 @@ package com.tann.dice.screens.dungeon.panels.entityPanel;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -65,13 +66,11 @@ public class HeartsHolder extends Group{
                 else{
                     batch.setColor(Colours.red);
                 }
+                if(!entity.isPlayer() && i<profile.getTopHealth() && i==(entity.getMaxHp()-1)/2){
+                    tr = Images.heart_arrow;
+                }
             }
             batch.draw(tr, x, y);
-
-            if(!entity.isPlayer() && i<profile.getTopHealth() && i==(entity.getMaxHp()-1)/2 && entity.slidOut && entity.hasVolunteer()){
-                batch.setColor(Colours.orange);
-                Draw.fillRectangle(batch, x+1, y, 1, 3);
-            }
 
             x += heartSize + heartGap;
 

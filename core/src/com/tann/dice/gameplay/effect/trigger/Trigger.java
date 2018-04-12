@@ -39,7 +39,7 @@ public abstract class Trigger implements Cloneable{
 
   public boolean avoidDeathPenalty(){ return false; }
 
-  public boolean cancelVolunteerForwards(){ return false; }
+  public boolean startsAtTheBack(){ return false; }
 
   public boolean stayForwards(){ return false; }
 

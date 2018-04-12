@@ -9,6 +9,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class EntityGroup <T extends DiceEntity>{
         entities.add(0, entity);
         activeEntities.add(0, entity);
         if(entity instanceof Monster) {
-            Room.get().updateSlids(true);
+            DungeonScreen.get().layoutSidePanels();
         }
     }
 
@@ -117,7 +118,7 @@ public class EntityGroup <T extends DiceEntity>{
             case EnemyOnlyAdjacents:
             case EnemyAndAdjacents:
                 for(DiceEntity de:enemies){
-                    if(!de.slidOut && player) continue;
+                    if(!de.canBeTargeted() && player) continue;
                     targetsTmp.add(de);
                 }
                 break;

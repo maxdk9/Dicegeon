@@ -182,11 +182,12 @@ public class EntityPanel extends Group {
     public DieHolder dieHolder;
 
     public float getPreferredX() {
-        int slideAmount = 14;
         int deadAmount = (int) (getWidth() + 8);
         if(entity.isDead()){
             return entity.isPlayer()?-deadAmount:deadAmount;
         }
+        if(entity.isPlayer()) return startX;
+        int slideAmount = 14;
         return startX + (entity.slidOut?-slideAmount:0);
     }
 

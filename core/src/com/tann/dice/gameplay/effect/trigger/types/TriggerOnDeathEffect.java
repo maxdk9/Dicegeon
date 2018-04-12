@@ -34,8 +34,7 @@ public class TriggerOnDeathEffect extends Trigger {
                     newPan.setPosition(sourcePan.getX() + sourcePan.getWidth()/2 - newPan.getWidth()/2, sourcePan.getY()+sourcePan.getHeight()/2-newPan.getHeight()/2);
                 }
                 DungeonScreen.get().enemy.setEntities(Room.get().getActiveEntities());
-                DungeonScreen.get().enemy.layout(true);
-                Room.get().updateSlids(true);
+                DungeonScreen.get().layoutSidePanels();
                 BulletStuff.refresh(Room.get().getAllActive());
                 break;
         }

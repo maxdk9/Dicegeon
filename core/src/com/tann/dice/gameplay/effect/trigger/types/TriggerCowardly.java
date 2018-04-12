@@ -8,7 +8,7 @@ public class TriggerCowardly extends Trigger {
     public static final TextureRegion image = loadImage("cowardly");
 
     @Override
-    public boolean cancelVolunteerForwards() {
+    public boolean startsAtTheBack() {
         return true;
     }
 
@@ -24,6 +24,6 @@ public class TriggerCowardly extends Trigger {
 
     @Override
     public String describe() {
-        return "Stays at the back if possible";
+        return "Starts at the back";
     }
 }

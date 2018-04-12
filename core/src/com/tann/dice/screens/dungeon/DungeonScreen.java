@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
@@ -256,7 +257,7 @@ public class DungeonScreen extends Screen {
     }
 
     public void enemyCombat() {
-        Room.get().updateSlids(true);
+        DungeonScreen.get().layoutSidePanels();
         Room.get().resetForRoll();
     }
 
@@ -398,5 +399,10 @@ public class DungeonScreen extends Screen {
     public void activatePhase(Phase phase) {
         turnPhaseWriter.setText(phase.describe());
         turnPhaseWriter.setPosition((int) (getWidth() / 2 - turnPhaseWriter.getWidth() / 2), (int) (getHeight() - turnPhaseWriter.getHeight() - 1));
+    }
+
+    public void layoutEntityGroups(){
+        enemy.layout(true);
+        friendly.layout(true);
     }
 }
