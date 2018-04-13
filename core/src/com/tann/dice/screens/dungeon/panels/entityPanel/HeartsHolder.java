@@ -66,7 +66,7 @@ public class HeartsHolder extends Group{
                 else{
                     batch.setColor(Colours.red);
                 }
-                if(!entity.isPlayer() && i<profile.getTopHealth() && i==(entity.getMaxHp()-1)/2){
+                if(!entity.isPlayer() && i<profile.getTopHealth() && i==entity.fleePip){
                     tr = Images.heart_arrow;
                 }
             }

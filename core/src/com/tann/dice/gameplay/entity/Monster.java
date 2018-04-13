@@ -18,6 +18,7 @@ public class Monster extends DiceEntity {
         if(startsAtTheBack()){
             slide(false);
         }
+        fleePip = type.fleePip;
     }
 
     @Override
@@ -50,11 +51,6 @@ public class Monster extends DiceEntity {
             }
         }, (nextLockTime-now)/1000f);
         nextLockTime += lockDelay;
-    }
-
-    @Override
-    public void reduceToHalfHP() {
-        slide(false);
     }
 
     @Override

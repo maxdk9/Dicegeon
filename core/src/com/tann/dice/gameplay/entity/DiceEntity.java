@@ -32,6 +32,7 @@ import java.util.List;
 
 public abstract class DiceEntity {
 
+    public int fleePip=-42069;
     protected Die die;
     // gameplay vars
     protected Side[] sides;
@@ -183,8 +184,6 @@ public abstract class DiceEntity {
         this.hp += amount;
     }
 
-    public void reduceToHalfHP(){}
-
     public void reset(){
         dead = false;
         fullHeal();
@@ -212,7 +211,7 @@ public abstract class DiceEntity {
         boolean tempDead = dead;
         switch(e.type){
             case Damage:
-                if(e.targetingType==Eff.TargetingType.Self){
+                if(e.targetingType==Eff.TargetingType.Self && e.source==this){
                     //ugh hacky I need to redo the system so it works better for this case
 //                    e.source.damage(e.getValue());
 //                    e.source.somethingChanged();
@@ -281,10 +280,10 @@ public abstract class DiceEntity {
         if(value > 0){
             getEntityPanel().addDamageFlib(value);
         }
-        boolean above = aboveHalfHealth();
+        boolean aboveFlee = hp > fleePip;
         hp -= value;
-        if(!aboveHalfHealth()){
-            reduceToHalfHP();
+        if(aboveFlee && hp <= fleePip){
+            slide(false);
         }
         if (hp <= 0) {
             die();
