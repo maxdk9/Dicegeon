@@ -359,7 +359,7 @@ public class BulletStuff {
 
 		float clockStart = .65f;
 		float clockRand = .22f;
-		for(int i=1;i<numDice;i++){
+		for(int i=0;i<numDice;i++){
 			Sounds.playSoundDelayed(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f), (float) (clockStart+i*Math.random()*clockRand));
 		}
 	}

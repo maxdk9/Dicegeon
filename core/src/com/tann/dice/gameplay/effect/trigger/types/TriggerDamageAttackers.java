@@ -30,6 +30,6 @@ public class TriggerDamageAttackers extends Trigger {
 
     @Override
     public String describe() {
-        return "Deal "+amount+" back whenever an enemy hits you";
+        return "Return "+amount+" damage whenever an enemy hits you";
     }
 }

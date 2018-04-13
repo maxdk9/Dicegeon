@@ -101,7 +101,7 @@ public class TextWriter extends Group {
                     TextBox tb = new TextBox(word, wiggle, sin);
                     tb.setTextColour(currentColour);
                     addActor(tb);
-                    if(x + tb.getWidth()>getWidth()){
+                    if(x + tb.getWidth()>=getWidth()){
                         nextLine();
                     }
                     tb.setPosition(x, y);

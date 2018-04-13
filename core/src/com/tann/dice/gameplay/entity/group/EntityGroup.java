@@ -300,13 +300,13 @@ public class EntityGroup <T extends DiceEntity>{
     public void resetForRoll() {
         for(final DiceEntity de:activeEntities){
             de.getDie().used=false;
-            de.getDie().returnToPlay(new Runnable(){
-                @Override
-                public void run() {
-                    firstRoll();
-                    de.getDie().roll();
-                }
-            }, Die.INTERP_SPEED_SLOW);
+            de.getDie().returnToPlay(null, Die.INTERP_SPEED_SLOW);
         }
+        Tann.delay(new Runnable() {
+            @Override
+            public void run() {
+                firstRoll();
+            }
+        }, Die.INTERP_SPEED_SLOW+.03f); //todo better
     }
 }
