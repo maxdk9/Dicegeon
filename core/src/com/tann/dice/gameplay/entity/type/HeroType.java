@@ -47,21 +47,21 @@ public class HeroType extends EntityType<HeroType> {
                 .sides(execute4, arrow2, arrow2, arrow1, arrow1,nothing));
         add(new HeroType().name("Gladiator").hp(7).tag(fighter1)
                 .sides(swordShield2, swordShield2, swordShield1, swordShield1, shield2, nothing));
-        add(new HeroType().name("Jack").hp(6).tag(fighter1)
-                .sides(sword2, arrow2, heal2, shield2, magic2, nothing));
-        add(new HeroType().name("Berserker").hp(7).tag(fighter1)
-                .sides(sword1AllSelfDamage1, sword1AllSelfDamage1, sword2, sword2, shield2, nothing)
-                .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
+        add(new HeroType().name("Dabbler").hp(6).tag(fighter1)
+                .sides(sword3, heal3, shield3, arrow2, magic2, nothing));
+//        add(new HeroType().name("Berserker").hp(7).tag(fighter1)
+//                .sides(sword1AllSelfDamage1, sword1AllSelfDamage1, sword2, sword2, shield2, nothing)
+//                .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
         add(new HeroType().name("Whirl").hp(6).tag(fighter1)
                 .sides(whirlwind1, trident1, trident1, sword2, shieldPlusAdjacent1, nothing));
         add(new HeroType().name("Crusher").hp(6).tag(fighter1)
                 .sides(topbot2, topbot1, top3, bot3, shield2, nothing));
         add(new HeroType().name("Bruiser").hp(6).tag(fighter1)
-                .sides(front2, front2, hook1, hook1, shield2, nothing));
+                .sides(sword3, front1, front1, hook1, shield2, nothing));
 
 
         add(new HeroType().name("Paladin").hp(7).tag(defender1)
-                .sides(shieldHeart2, shieldHeart2, shield2,  sword2, sword1, nothing));
+                .sides(shieldHeart2, shieldHeart2, shield2,  sword2, sword2, nothing));
         add(new HeroType().name("Bard").hp(6).tag(defender1)
                 .sides(shield3, wardingchord, wardingchord, reroll, magic2, nothing));
         add(new HeroType().name("Bouncer").hp(9).tag(defender1)
@@ -81,7 +81,7 @@ public class HeroType extends EntityType<HeroType> {
                 .sides(healBuff1, healBuff1, poison1, heal5, heal3, magic2)
                 .spells(Spell.balance)); //TODO some kinda coolie spell
         add(new HeroType().name("Medic").hp(6).tag(healer1)
-                .sides(healAll2, cure2, cure2, magic1, magic1, nothing)
+                .sides(healAll2, cure3, cure3, magic2, magic2, nothing)
                 .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
 
 

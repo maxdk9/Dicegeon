@@ -155,6 +155,7 @@ public class Side {
 
     public static final Side cure1 = new Side().image("cure").effect(new Eff().heal(1).friendlySingle(), new Eff().decurse().friendlySingle());
     public static final Side cure2 = cure1.withValue(2);
+    public static final Side cure3 = cure1.withValue(3);
 
     public static final Side potionregen = new Side().image("potionOfRegen").effect(new Eff()
             .buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().heal(1)))).friendlySingle().justValue(1));
@@ -187,7 +188,7 @@ public class Side {
     public static final Side smol_sword1 = new Side().size(smol).image("sword").effect(new Eff().damage(1));
     public static final Side smol_sword2 = smol_sword1.withValue(2);
     public static final Side smol_sword3 = smol_sword1.withValue(3);
-    public static final Side smol_sword4 = smol_sword1.withValue(4);
+    public static final Side smol_sword4 = smol_sword1.withValue(3);
 
     public static final Side smol_nip1 = new Side().size(smol).image("nip").effect(new Eff().damage(1));
     public static final Side smol_nip2 = smol_nip1.withValue(2);
@@ -330,7 +331,8 @@ public class Side {
         }
         batch.setColor(Colours.z_white);
         Draw.drawScaled(batch, getTexture(), (int)x, (int)y, scale, scale);
-        Draw.drawScaled(batch, Side.sizeToPips.get(size)[Math.min(7,getEffects()[0].getValue())], (int)x, (int)y, scale, scale);
+        TextureRegion[] regions = Side.sizeToPips.get(size);
+        Draw.drawScaled(batch, regions[Math.min(regions.length-1, getEffects()[0].getValue())], (int)x, (int)y, scale, scale);
         Draw.drawScaled(batch, lapel2D, (int)x, (int)y, scale, scale);
     }
 

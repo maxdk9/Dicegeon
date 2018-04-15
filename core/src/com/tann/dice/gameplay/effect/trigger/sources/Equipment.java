@@ -36,7 +36,7 @@ public class Equipment {
     add(new Equipment().name("Blood Vial").image("bloodVial")
             .fluff("Something description").trigger(new TriggerOnKill(new Eff().heal(1).self())));
     add(new Equipment().name("Bone Idol").image("bone")
-            .fluff("Something description").trigger(new TriggerNoDeathPenalty()));
+            .fluff("Something something lazybones").trigger(new TriggerNoDeathPenalty()));
 
     defaultLevel = 1;
     add(new Equipment().name("Reinforced Shield").image("shieldReinforce")

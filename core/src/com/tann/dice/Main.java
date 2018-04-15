@@ -33,7 +33,7 @@ public class Main extends ApplicationAdapter {
   public static int scale;
   public static int SCREEN_WIDTH, SCREEN_HEIGHT;
   public static int width, height;
-  public static String version = "0.2.1";
+  public static String version = "0.3.0";
   public static String versionName = "v" + version;
   SpriteBatch batch;
   SpriteBatch bufferDrawer;

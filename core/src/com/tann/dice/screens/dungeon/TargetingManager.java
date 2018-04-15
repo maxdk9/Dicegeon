@@ -14,6 +14,7 @@ import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
+import com.tann.dice.util.Colours;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
@@ -196,7 +197,12 @@ public class TargetingManager {
                 if(Main.getCurrentScreen().getTopActor() instanceof TextWriter){
                     Main.getCurrentScreen().popAllLight();
                 }
-                DungeonScreen.get().showDialog(invalidReason);
+                TextWriter tw = new TextWriter(invalidReason, Integer.MAX_VALUE, Colours.purple, 2);
+                Explanel.get().addActor(tw);
+                tw.setPosition(Explanel.get().getWidth()/2-tw.getWidth()/2, -tw.getHeight()-5);
+//                tw.setPosition((int) (Main.width / 2 - tw.getWidth() / 2), (int) (Main.height / 3 - tw.getHeight() / 2));
+//                DungeonScreen.get().push(tw, false, false, false, false, 1, null);
+//                DungeonScreen.get().showDialog(invalidReason);
             }
             return false;
         }

@@ -47,7 +47,7 @@ public class Eff {
             case Magic:
                 return "Gain "+getValue()+" magic to spend on spells";
             case Healing:
-                return "Restore "+getValue()+" missing health ([purple][heartempty][light])";
+                return "Restore "+getValue()+" missing health ([purple][heartempty][light]) to ";
             case Buff:
                 return getBuff().toNiceString();
             case Execute:
@@ -86,6 +86,7 @@ public class Eff {
                     case TopBottomEnemy: result += " to the top and bottom enemy"; break;
                     case AllFront: result += " to all forward enemies"; break;
                     case AllTargeters: result += " to all enemies who have targeted the hero of your choice"; break;
+                    case RandomEnemy: result += " to a random enemy"; break;
                     case Self: result = "Take "+getValue()+" damage"; break;
                     default: result = "ahh help damage"; break;
                 }
