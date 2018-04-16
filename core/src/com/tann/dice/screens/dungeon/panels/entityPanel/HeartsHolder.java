@@ -47,6 +47,7 @@ public class HeartsHolder extends Group{
         int x = (int) getX();
         TextureRegion tr;
         for(int i=0;i<entity.getMaxHp();i++){
+            boolean poison = false;
             if (i % (heartsPerRow)==0 && i!=0){
                 y -= heartSize + heartGap;
                 x = (int) getX();
@@ -61,13 +62,17 @@ public class HeartsHolder extends Group{
                     batch.setColor(Colours.yellow);
                 }
                 else if(i>=profile.getTopHealth()-profile.unblockedRegularIncoming()-profile.getIncomingPoisonDamage()){
-                    batch.setColor(Colours.purple);
+                    batch.setColor(Colours.green);
+                    poison = true;
                 }
                 else{
                     batch.setColor(Colours.red);
                 }
                 if(!entity.isPlayer() && i<profile.getTopHealth() && i==entity.fleePip){
                     tr = Images.heart_arrow;
+                    if(!poison){
+                        batch.setColor(Colours.grey);
+                    }
                 }
             }
             batch.draw(tr, x, y);

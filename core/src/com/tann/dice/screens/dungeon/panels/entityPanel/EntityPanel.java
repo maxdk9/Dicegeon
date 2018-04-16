@@ -203,7 +203,7 @@ public class EntityPanel extends Group {
         batch.setColor(Colours.dark);
         drawCutout(batch);
         if(entity.getProfile().isGoingToDie(true)){
-            batch.setColor(Colours.withAlpha(Colours.red, (float) (.2f+Math.sin(Main.ticks*5f)*.2f)));
+            batch.setColor(Colours.withAlpha(Colours.red, (float) (.2f+Math.sin(Main.ticks*5f)*.25f)));
             drawCutout(batch);
         }
         if(entity.isDead()){

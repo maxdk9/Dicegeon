@@ -54,7 +54,7 @@ public class LevelEndPanel extends Group {
         }
         p.row(4);
         if(!levelup) {
-            TextButton inventory = new TextButton("Inventory", 2);
+            TextButton inventory = new TextButton("Inventory", 10);
             p.actor(inventory);
             inventory.setRunnable(new Runnable() {
                 @Override
@@ -70,7 +70,7 @@ public class LevelEndPanel extends Group {
             });
         }
         if(action) {
-            TextButton cont = new TextButton("Continue", 2);
+            TextButton cont = new TextButton("Continue", 10);
             p.actor(cont);
             cont.setRunnable(new Runnable() {
                 @Override
@@ -80,7 +80,7 @@ public class LevelEndPanel extends Group {
                 }
             });
         }
-        p.row(3);
+//        p.row(3);
         p.pix();
 
         for (final DiceEntity de : Party.get().getActiveEntities()) {

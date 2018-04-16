@@ -2,6 +2,7 @@ package com.tann.dice.screens.dungeon.panels.Explanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -19,6 +20,8 @@ import com.tann.dice.screens.dungeon.panels.DieSpinner;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
+
+import java.util.ArrayList;
 
 public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
     public DiceEntity entity;
@@ -56,12 +59,22 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
 
         int y = 0;
         if(!(PhaseManager.get().getPhase() instanceof LevelEndPhase)) {
+            ArrayList<Actor> actors = new ArrayList<>();
             for (Trigger t : entity.getDescribableTriggers()) {
                 Explanel e= new Explanel();
                 e.setup(t, getWidth(), entity);
-                addActor(e);
-                y -= (e.getHeight() - 1);
-                e.setPosition(0, y);
+                actors.add(e);
+            }
+            if(entity.fleePip>0){
+                TextWriter tw = new TextWriter("[grey][heartArrow][light][h]: Withdraws after taking enough damage to covers this symbol",
+                        (int) getWidth(), entity.getColour(), 2);
+                tw.setWidth(getWidth());
+                actors.add(tw);
+            }
+            for(Actor a:actors){
+                addActor(a);
+                y -= (a.getHeight() - 1);
+                a.setPosition(0, y);
             }
         }
     }

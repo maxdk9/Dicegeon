@@ -47,7 +47,7 @@ public class Eff {
             case Magic:
                 return "Gain "+getValue()+" magic to spend on spells";
             case Healing:
-                return "Restore "+getValue()+" missing health ([purple][heartempty][light]) to ";
+                return "Restore "+getValue()+" missing health ([purple][heartempty][light]) to";
             case Buff:
                 return getBuff().toNiceString();
             case Execute:
@@ -96,7 +96,7 @@ public class Eff {
                 switch(targetingType){
                     case FriendlySingleOther: result += " from one other hero"; break;
                     case FriendlySingleAndAdjacents: result += " from one hero and both adjacents"; break;
-                    case FriendlySingle: result += " from one hero"; break;
+                    case FriendlySingle: result += " from any hero"; break;
                     case FriendlyGroup: result += " from everyone"; break;
                     case Self: result += " from yourself"; break;
                     default: result += " from ????"+targetingType; break;
@@ -107,7 +107,7 @@ public class Eff {
                 result = getBaseString();
                 switch(targetingType){
                     case FriendlySingleOther: result += " another damaged character"; break;
-                    case FriendlySingle: result += " a damaged character"; break;
+                    case FriendlySingle: result += " any damaged character"; break;
                     case FriendlyGroup: result += " ALL damaged characters"; break;
                     case FriendlyMostDamaged: result += " the most-damaged friendly character"; break;
                     case Self: result += " yourself"; break;

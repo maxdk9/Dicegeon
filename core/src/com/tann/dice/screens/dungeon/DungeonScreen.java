@@ -151,7 +151,7 @@ public class DungeonScreen extends Screen {
     }
 
     static {
-//        addLevel(bird, slimoBig);
+        addLevel(bird, slimoBig);
 //        addLevel(spikeGolem, goblin, bird, dragon); // all sizes
 
 

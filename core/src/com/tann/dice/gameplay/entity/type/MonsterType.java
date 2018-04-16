@@ -32,18 +32,19 @@ public class MonsterType extends EntityType<MonsterType>{
             .sides(smol_sword4, smol_sword4, smol_sword4, smol_sword3, smol_sword3, smol_sword3);
     public static final MonsterType zombie = new MonsterType().name("Zombie").hp(6).size(smol)
             .sides(smol_nipPoison1, smol_nipPoison1, smol_nip2, smol_nip2, smol_nip2, smol_nip2);
-    public static final MonsterType slimie = new MonsterType().name("Slimie").hp(3).size(smol)
+    public static final MonsterType slimie = new MonsterType().name("Slimelet").hp(3).size(smol)
             .sides(smol_slime2, smol_slime2, smol_slime2, smol_slime2, smol_slime, smol_slime);
 
     //reg
 
-    public static final MonsterType goblin = new MonsterType().name("Goblin").hp(4).fleePip(1)
+    public static final MonsterType goblin = new MonsterType().name("Goblin").hp(4).fleePip(2)
         .sides(sword2, sword2, sword2, sword1, sword1, sword1);
+//            .sides(sword4, sword4, sword4, sword4, sword4, sword4);
     public static final MonsterType snake = new MonsterType().name("Snake").hp(7).fleePip(2)
             .sides(snakePoison1, snakePoison1, snakePoison1, sword3, sword3, sword4);
     public static final MonsterType slime = new MonsterType().name("Slime").hp(6)
-            .sides(slime_triple, slime_triple, slime_triple, slimeUpDown1, slimeUpDown1, healMostDamaged3)
-            .trait(new TriggerOnDeathEffect(new Eff().summon("Slimie", 3)));
+            .sides(slimeUpDown2, slimeUpDown2, slimeUpDown2, slime_triple, slime_triple, slime_triple)
+            .trait(new TriggerOnDeathEffect(new Eff().summon("Slimelet", 3)));
 
     //big
 
@@ -56,7 +57,7 @@ public class MonsterType extends EntityType<MonsterType>{
             .sides(big_summonSkeleton1, big_summonSkeleton1, big_summonZombie1, big_summonZombie1, big_healMostDamaged5, big_healMostDamaged5);
     public static final MonsterType slimoBig = new MonsterType().name("Slimer").hp(12).size(big)
             .sides(big_slimeTriple2, big_slimeTriple2, big_slimeTriple2, big_slimeTriple2, big_slimeUpDown3, big_slimeUpDown3)
-            .trait(new TriggerOnDeathEffect(new Eff().summon("Slimie", 6)));
+            .trait(new TriggerOnDeathEffect(new Eff().summon("Slimelet", 6)));
 
     //huge
 
@@ -64,7 +65,7 @@ public class MonsterType extends EntityType<MonsterType>{
             .sides(huge_flame2, huge_flame2, huge_poisonBreath1, huge_poisonBreath1, huge_chomp7, huge_chomp7);
     public static final MonsterType slimoHuge = new MonsterType().name("Slimo").hp(24).size(huge)
             .sides(huge_slimeUpDown4, huge_slimeUpDown4, huge_slimeUpDown4, huge_slimeTriple3, huge_slimeTriple3, huge_slimeTriple3)
-            .trait(new TriggerOnDeathEffect(new Eff().summon("Slimie", 10)));
+            .trait(new TriggerOnDeathEffect(new Eff().summon("Slimelet", 10)));
 
     private MonsterType fleePip(int fleePip){
         this.fleePip = fleePip;
