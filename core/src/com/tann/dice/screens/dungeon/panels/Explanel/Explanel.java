@@ -133,16 +133,15 @@ public class Explanel extends InfoPanel implements OnPop {
                 case RandomEnemy:
                 case Untargeted:
                     if(enoughMagic) {
-                        Button confirmButton = new Button(20, 20, Images.tick, Colours.dark, new Runnable() {
+                        TextButton confirmButton = new TextButton(40, 18, "Cast");
+                        confirmButton.setRunnable( new Runnable() {
                             @Override
                             public void run() {
                                 TargetingManager.get().target(null);
                             }
                         });
-                        confirmButton.setBorder(Colours.dark, Colours.light, 1);
-                        confirmButton.setColor(Colours.blue);
                         addActor(confirmButton);
-                        confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 2);
+                        confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 0);
                     }
                     break;
             }
@@ -154,7 +153,7 @@ public class Explanel extends InfoPanel implements OnPop {
                 TextWriter tw = new TextWriter(text, Integer.MAX_VALUE, Colours.red, 2);
                 tw.setColor(Colours.red);
                 addActor(tw);
-                tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(-tw.getHeight()-5));
+                tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(-tw.getHeight()-2));
             }
         }
     }

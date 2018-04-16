@@ -3,6 +3,8 @@ package com.tann.dice.screens.dungeon;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -25,6 +27,7 @@ import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
+import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
@@ -32,7 +35,7 @@ import com.tann.dice.util.*;
 
 import java.util.*;
 
-public class DungeonScreen extends Screen {
+public class DungeonScreen extends Screen implements ExplanelReposition{
 
     private static DungeonScreen self;
 
@@ -129,7 +132,7 @@ public class DungeonScreen extends Screen {
 
         spellButt = new SpellButt();
         addActor(spellButt);
-        float gap = 12;
+        float gap = 5;
         spellButt.setPosition(EntityContainer.width + friendly.getX() + gap, Main.height - spellButt.getHeight() - gap);
     }
 
@@ -151,7 +154,7 @@ public class DungeonScreen extends Screen {
     }
 
     static {
-        addLevel(bird, slimoBig);
+//        addLevel(bird, slimoBig);
 //        addLevel(spikeGolem, goblin, bird, dragon); // all sizes
 
 
@@ -335,9 +338,8 @@ public class DungeonScreen extends Screen {
     }
 
     public void positionExplanel() {
-        Explanel.get().setPosition(Explanel.get().getNiceX(true), Explanel.get().getNiceY());
         push(Explanel.get(), false, false, true, true, 0, null);
-//        addActor(Explanel.get());
+        repositionExplanel(Explanel.get());
     }
 
     public void removeLeftoverDice() {
@@ -404,5 +406,16 @@ public class DungeonScreen extends Screen {
     public void layoutEntityGroups(){
         enemy.layout(true);
         friendly.layout(true);
+    }
+
+    @Override
+    public void repositionExplanel(Group g) {
+        if(spellButt.shown){
+            Vector2 bounds = Tann.getLocalCoordinates(spellHolder);
+            g.setPosition(Main.width/2-g.getWidth()/2, bounds.y-g.getHeight()-2);
+        }
+        else{
+            g.setPosition(Main.width/2-g.getWidth()/2, Main.height/2-g.getHeight()/2);
+        }
     }
 }

@@ -440,6 +440,7 @@ public abstract class DiceEntity {
     public void slide(boolean slid) {
         slidOut = slid;
         DungeonScreen.get().layoutSidePanels();
+        TargetingManager.get().showTargetingHighlights();
     }
 
     private DiePanel panel;

@@ -117,6 +117,7 @@ public class TargetingManager {
             }
             a = Main.getCurrentScreen().getTopActor();
             Explanel.get().setup(t, false);
+            if(a==null) a=Main.getCurrentScreen();
             if(a != null && a instanceof ExplanelReposition){
                 ((ExplanelReposition)a).repositionExplanel(Explanel.get());
             }
@@ -126,7 +127,7 @@ public class TargetingManager {
         for (DiceEntity de : Party.get().getActiveEntities()) {
             de.setShaderState(DieShader.DieShaderState.Nothing);
         }
-        if (TargetingManager.get().getSelectedTargetable() != null) {
+        if (TargetingManager.get().getSelectedTargetable() == t) {
             deselectTargetable();
             return;
         }

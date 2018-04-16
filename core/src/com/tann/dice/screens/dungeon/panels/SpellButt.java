@@ -41,7 +41,7 @@ public class SpellButt extends Group {
         });
     }
 
-    boolean shown;
+    public boolean shown;
     public void toggleButt(){
         float speed = .3f;
         Interpolation terp = Interpolation.pow2Out;

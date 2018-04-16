@@ -66,8 +66,10 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
                 actors.add(e);
             }
             if(entity.fleePip>0){
-                TextWriter tw = new TextWriter("[grey][heartArrow][light][h]: Withdraws after taking enough damage to covers this symbol",
-                        (int) getWidth(), entity.getColour(), 2);
+                int borderSize = 2;
+                int width = (int) getWidth()-borderSize*2;
+                TextWriter tw = new TextWriter("[grey][heartArrow][light][h]: Withdraws after taking enough damage to cover this symbol",
+                        width, entity.getColour(), 2);
                 tw.setWidth(getWidth());
                 actors.add(tw);
             }
