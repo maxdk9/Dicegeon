@@ -125,7 +125,7 @@ public class Party extends EntityGroup<Hero>{
         List<Spell> spells = new ArrayList<>();
         spells.add(Spell.slice);
         spells.add(Spell.resist);
-        spells.add(Spell.dart);
+//        spells.add(Spell.dart);
         for(DiceEntity de:getEntities()){
             spells.addAll(((Hero)(de)).getSpells());
         }
