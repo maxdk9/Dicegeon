@@ -15,11 +15,14 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.group.EntityGroup;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
 import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
 import com.tann.dice.util.*;
 
+import java.lang.annotation.Target;
 import java.util.List;
 
 public class EntityPanel extends Group {
@@ -33,6 +36,7 @@ public class EntityPanel extends Group {
     static NinePatch panelBorder = new NinePatch(Images.panelBorder, n,n,n,n);
     static NinePatch panelBorderLeft = new NinePatch(Images.panelBorderLeft, n,n,n,n);
     static NinePatch panelBorderRight = new NinePatch(Images.panelBorderRight, n,n,n,n);
+    static NinePatch panelBorderRightHighlight = new NinePatch(Images.panelBorderRightHighlight, n,n,n,n);
     static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
     public static final float WIDTH = EntityContainer.width;
     int borderSize = 4;
@@ -62,6 +66,10 @@ public class EntityPanel extends Group {
                 }
                 if (entity.isDead()) return false;
                 boolean dieSide = isClickOnDie(x);
+                if(PhaseManager.get().getPhase().canRoll() && dieSide){
+                    entity.getDie().toggleLock();
+                    return true;
+                }
                 if (TargetingManager.get().targetsDie()) {
                     dieSide = false;
                 }
@@ -236,6 +244,13 @@ public class EntityPanel extends Group {
                     panelBorderColour.draw(batch, getX() - npWiggle, getY() - npWiggle, getWidth() + npWiggle * 2, getHeight() + npWiggle * 2);
                 }
             }
+        } else if(entity.isPlayer() &&
+                PhaseManager.get().getPhase().canTarget() &&
+                TargetingManager.get().getSelectedTargetable()==null &&
+                !entity.getDie().used &&
+                TargetingManager.get().isUsable(entity.getDie())){
+            batch.setColor(Colours.light);
+            panelBorderRightHighlight.draw(batch, getX()+borderX, getY()-npWiggle, getWidth()-borderX+npWiggle, getHeight()+npWiggle*2);
         }
 
         drawArrows(batch);

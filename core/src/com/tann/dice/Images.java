@@ -33,6 +33,7 @@ public class Images {
     public static final TextureRegion panelBorder = Main.atlas.findRegion("patch/panelBorder");
     public static final TextureRegion panelBorderLeft = Main.atlas.findRegion("patch/panelBorderLeft");
     public static final TextureRegion panelBorderRight = Main.atlas.findRegion("patch/panelBorderRight");
+    public static final TextureRegion panelBorderRightHighlight = Main.atlas.findRegion("patch/panelBorderRightHighlight");
     public static final TextureRegion panelBorderColour = Main.atlas.findRegion("patch/panelBorderColour");
 
 

@@ -124,9 +124,7 @@ public class EntityGroup <T extends DiceEntity>{
                 break;
             case EnemySingleRanged:
             case EnemyAndAdjacentsRanged:
-                for(DiceEntity de:enemies){
-                    targetsTmp.add(de);
-                }
+                targetsTmp.addAll(enemies);
                 break;
             case FriendlySingle:
             case FriendlySingleAndAdjacents:
@@ -144,8 +142,13 @@ public class EntityGroup <T extends DiceEntity>{
                 }
                 break;
             case EnemyGroup:
+                targetsTmp.addAll(enemies);
+                break;
             case FriendlyGroup:
+                targetsTmp.addAll(friends);
+                break;
             case Self:
+                targetsTmp.add(source);
             case RandomEnemy:
             case Untargeted:
                 break;

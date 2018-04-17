@@ -7,10 +7,17 @@ import com.badlogic.gdx.utils.Align;
 public class TextWisp extends BasicLay{
 	public String text;
 	Color c = Colours.light;
-	final float initialDuration = .6f;
-	float duration = initialDuration;
+	static final float defaultDuration = .6f;
+	float initialDuration;
+	float duration;
 	public TextWisp(String text) {
+		this(text, defaultDuration);
+	}
+
+	public TextWisp(String text, float initialDuration) {
 		this.text=text;
+		this.initialDuration = initialDuration;
+		this.duration = initialDuration;
 		setSize(TannFont.font.getWidth(text), TannFont.font.getHeight());
 	}
 
@@ -31,8 +38,8 @@ public class TextWisp extends BasicLay{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 	    float alp = duration/initialDuration;
-	    alp = (float) (1- Math.pow(1-alp, 5));
-        batch.setColor(Colours.withAlpha(Colours.light, alp));
+	    alp = (float) (1- Math.pow(1-alp, 4));
+		batch.setColor(Colours.withAlpha(Colours.light, alp));
 		TannFont.font.drawString(batch, text, (int)getX(), (int) getY());
 	}
 	

@@ -58,9 +58,11 @@ public class Die implements Targetable{
     public void toggleLock() {
         switch(getState()){
             case Stopped:
+            case Unlocking:
                 slideToPanel();
                 break;
             case Locked:
+            case Locking:
                 entity.getEntityPanel().unlockDie();
                 returnToPlay(null, INTERP_SPEED);
                 break;

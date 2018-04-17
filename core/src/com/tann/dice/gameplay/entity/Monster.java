@@ -80,7 +80,7 @@ public class Monster extends DiceEntity {
     protected void die() {
         EntityPanel ep = getEntityPanel();
         Vector2 pos = Tann.getLocalCoordinates(ep);
-        TextWisp tw = new TextWisp("Enemy attack cancelled");
+        TextWisp tw = new TextWisp("Enemy attack cancelled", 1.0f);
         tw.setPosition(pos.x+ep.getWidth()/2-tw.getWidth()/2, pos.y+ep.getHeight()/2-tw.getHeight()/2);
         DungeonScreen.get().addActor(tw);
         Tann.center(tw);

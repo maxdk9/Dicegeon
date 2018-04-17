@@ -37,7 +37,7 @@ public class MonsterType extends EntityType<MonsterType>{
 
     //reg
 
-    public static final MonsterType goblin = new MonsterType().name("Goblin").hp(4).fleePip(2)
+    public static final MonsterType goblin = new MonsterType().name("Goblin").hp(4)
         .sides(sword2, sword2, sword2, sword1, sword1, sword1);
 //            .sides(sword4, sword4, sword4, sword4, sword4, sword4);
     public static final MonsterType snake = new MonsterType().name("Snake").hp(7).fleePip(2)

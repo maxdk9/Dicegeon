@@ -14,6 +14,7 @@ import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
@@ -137,7 +138,7 @@ public class TargetingManager {
                         case RandomEnemy:
                         case FriendlyGroup:
                         case Untargeted:
-                            TargetingManager.get().target(null);
+                            if(!TargetingManager.get().target(null)) return;
                             break;
                     }
                 }
@@ -155,11 +156,10 @@ public class TargetingManager {
             return;
         }
 
-        boolean usable = true;
-        if(usable) {
+        if(t.isUsable()) {
             showTargetingHighlights();
         }
-        Explanel.get().setup(t, usable);
+        Explanel.get().setup(t, true);
         DungeonScreen.get().positionExplanel();
     }
 
@@ -188,8 +188,17 @@ public class TargetingManager {
         Eff.TargetingType targetingType = first.targetingType;
         EffType effType = first.type;
         List<DiceEntity> valids = EntityGroup.getValidTargets(t, true);
+
+        String invalidReason = null;
+
+        if(entity!=null && !first.isTargeted()){
+            if(Main.getCurrentScreen().getTopActor() instanceof TextWriter){
+                Main.getCurrentScreen().popAllLight();
+            }
+            invalidReason = "No target required, tap spell again to cast";
+        }
+
         if (first.isTargeted() && !valids.contains(entity)) {
-            String invalidReason = null;
             switch(targetingType){
                 case EnemySingle:
                     if(entity.isPlayer()) invalidReason = "Target an enemy";
@@ -208,19 +217,23 @@ public class TargetingManager {
                     break;
                 default: break;
             }
-            if(invalidReason != null){
-                if(Main.getCurrentScreen().getTopActor() instanceof TextWriter){
-                    Main.getCurrentScreen().popAllLight();
-                }
-                TextWriter tw = new TextWriter(invalidReason, Integer.MAX_VALUE, Colours.purple, 2);
-                Explanel.get().addActor(tw);
-                tw.setPosition(Explanel.get().getWidth()/2-tw.getWidth()/2, -tw.getHeight()-5);
-//                tw.setPosition((int) (Main.width / 2 - tw.getWidth() / 2), (int) (Main.height / 3 - tw.getHeight() / 2));
-//                DungeonScreen.get().push(tw, false, false, false, false, 1, null);
-//                DungeonScreen.get().showDialog(invalidReason);
+        }
+
+        if(t.getEffects()[0].targetingType != Eff.TargetingType.Untargeted && EntityGroup.getValidTargets(t, true).size()==0) {
+            // if not good targets
+            invalidReason = t.getEffects()[0].getNoTargetsString();
+        }
+
+        if(invalidReason != null){
+            if(Main.getCurrentScreen().getTopActor() instanceof TextWriter){
+                Main.getCurrentScreen().popAllLight();
             }
+            TextWriter tw = new TextWriter(invalidReason, Integer.MAX_VALUE, Colours.purple, 2);
+            Explanel.get().addActor(tw);
+            tw.setPosition(Explanel.get().getWidth()/2-tw.getWidth()/2, -tw.getHeight()-1);
             return false;
         }
+
         boolean containsDamage = false;
         if (t.use()) {
             for (Eff e : t.getEffects()) {
@@ -323,5 +336,10 @@ public class TargetingManager {
 
     public boolean targetsDie() {
         return getSelectedTargetable()!=null && getSelectedTargetable().getEffects()[0].type == Eff.EffType.CopyAbility;
+    }
+
+    public boolean isUsable(Targetable t) {
+        //TODO this
+        return true;
     }
 }
