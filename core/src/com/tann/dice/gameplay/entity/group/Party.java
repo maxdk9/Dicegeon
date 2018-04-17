@@ -69,7 +69,7 @@ public class Party extends EntityGroup<Hero>{
     public void addMagic(int add){
         this.magic += add;
         DungeonScreen.get().spellButt.show();
-        DungeonScreen.get().spellButt.addSpellHover(add);
+//        DungeonScreen.get().spellButt.addSpellHover(add);
     }
 
     @Override
@@ -108,9 +108,9 @@ public class Party extends EntityGroup<Hero>{
 
     public void spendMagic(int cost) {
         magic -= cost;
-        for(int i=0;i<cost;i++){
-            DungeonScreen.get().spellButt.removeHover();
-        }
+//        for(int i=0;i<cost;i++){
+//            DungeonScreen.get().spellButt.removeHover();
+//        }
     }
 
     public int getRolls() {

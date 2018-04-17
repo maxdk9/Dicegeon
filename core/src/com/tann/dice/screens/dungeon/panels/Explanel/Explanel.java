@@ -116,35 +116,32 @@ public class Explanel extends InfoPanel implements OnPop {
             }
         };
         spellDraw.setSize(spell.getImage().getRegionWidth()*scale, spell.getImage().getRegionHeight()*scale);
+        boolean enoughMagic = Party.get().getAvaliableMagic()>=spell.getCost();
 
         Pixl p = getPixl();
         p.actor(new TextWriter(spell.getName()))
         .row()
         .actor(spellDraw)
         .row()
-        .actor(new TextWriter(spell.getDescription(), textWidth))
-        .pix();
+        .actor(new TextWriter(spell.getDescription(), textWidth));
 
-        boolean enoughMagic = Party.get().getAvaliableMagic()>=spell.getCost();
-        if(usable) {
+        if(usable && enoughMagic){
             switch (spell.getEffects()[0].targetingType) {
                 case EnemyGroup:
                 case FriendlyGroup:
                 case RandomEnemy:
                 case Untargeted:
                     if(enoughMagic) {
-                        TextButton confirmButton = new TextButton(40, 18, "Cast");
-                        confirmButton.setRunnable( new Runnable() {
-                            @Override
-                            public void run() {
-                                TargetingManager.get().target(null);
-                            }
-                        });
-                        addActor(confirmButton);
-                        confirmButton.setPosition(getWidth() / 2 - confirmButton.getWidth() / 2, -confirmButton.getHeight() - 0);
+                        p.row().actor(new TextWriter("[blue]Tap again to cast", textWidth));
                     }
                     break;
             }
+        }
+
+        p.pix();
+
+
+        if(usable) {
             if(PhaseManager.get().getPhase().canTarget() && !enoughMagic){
                 String text = "[red]Not enough magic";
                 if(Party.get().getTotalTotalTotalAvailableMagic() >= spell.getCost()){

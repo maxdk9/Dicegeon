@@ -12,7 +12,6 @@ public class Images {
     public static final TextureRegion spellTab = Main.atlas.findRegion("spellTab");
 
     public static final TextureRegion magic = Main.atlas.findRegion("icon/magic");
-    public static final TextureRegion magicBigger = Main.atlas.findRegion("icon/magicBigger");
     public static final TextureRegion magicHover = Main.atlas.findRegion("ui/magicHover");
     public static final TextureRegion magicButt = Main.atlas.findRegion("ui/magicButton");
     public static final TextureRegion spellBorder = Main.atlas.findRegion("spell/border");

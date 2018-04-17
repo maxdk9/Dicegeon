@@ -5,8 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Images;
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Colours;
@@ -16,7 +18,9 @@ public class SpellPanel extends Actor{
 
     final Spell spell;
     boolean big;
+    boolean targetable;
     public SpellPanel(final Spell spell, boolean big, final boolean targetable){
+        this.targetable = targetable;
         this.big = big;
         int size = big?Images.spellBorderBig.getRegionHeight():Images.spellBorder.getRegionHeight();
         setSize(size, size);
@@ -37,6 +41,9 @@ public class SpellPanel extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.blue);
+        if(targetable && spell.isUsable() && PhaseManager.get().getPhase().canTarget()){
+            batch.setColor(Colours.light);
+        }
         batch.draw(big?Images.spellBorderBig:Images.spellBorder, getX(), getY());
         int imageSize = spell.getImage().getRegionHeight();
         batch.setColor(Colours.z_white);

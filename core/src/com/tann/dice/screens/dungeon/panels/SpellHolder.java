@@ -6,12 +6,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.util.*;
-
+import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
+import com.tann.dice.util.Layoo;
+import com.tann.dice.util.TannFont;
+import com.tann.dice.util.TextWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,8 +86,13 @@ public class SpellHolder extends Group {
     public void layout(){
         clearChildren();
         WIDTH = Images.spellBorderBig.getRegionWidth()*getMaxSpells() + GAP*(getMaxSpells()+2) + SpellCostPanel.WIDTH;
-        setSize(WIDTH, BAR_HEIGHT*getSpellLevels()+1);
+
+        TextWriter spellsText = new TextWriter("Spell List");
+        setSize(WIDTH, BAR_HEIGHT*getSpellLevels()+spellsText.getHeight()+2);
         Layoo l = new Layoo(this);
+        l.row(1);
+        l.abs(GAP*2);
+        l.actor(spellsText);
         l.row(1);
         for(int i=1;i<=getMaxSpellLevel();i++){
             List<Spell> spells = spellMap.get(i);
@@ -139,14 +149,11 @@ public class SpellHolder extends Group {
         @Override
         public void draw(Batch batch, float parentAlpha) {
             super.draw(batch, parentAlpha);
-            batch.setColor(Colours.z_white);
-            int between = (int) (getHeight() - Images.magic.getRegionHeight() * cost) / (cost+1);
-            int extra = (int) (getHeight() - ((between * (cost+1)) + (cost*Images.magic.getRegionHeight())));
-            int startGap = extra/2;
-
-            for(int i=0;i<cost;i++){
-                batch.draw(Images.magic, getX()+gap, getY()+startGap+between*(i+1) + (Images.magic.getRegionHeight()*i));
+            batch.setColor(Colours.blue);
+            if(Party.get().getAvaliableMagic()>=cost){
+                batch.setColor(Colours.light);
             }
+            TannFont.font.drawString(batch, cost+"", (int)(getX()+getWidth()/2), (int) (getY()+getHeight()/2), Align.center);
         }
     }
 }

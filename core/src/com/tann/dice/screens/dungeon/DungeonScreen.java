@@ -172,7 +172,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
     public void nextLevel() {
 
-        spellButt.removeAllHovers();
+//        spellButt.removeAllHovers();
         Explanel.get().remove();
         Party.get().rejig();
         spellButt.setSpellHolder(spellHolder);

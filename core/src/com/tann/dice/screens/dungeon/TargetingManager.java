@@ -19,6 +19,7 @@ import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
 
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,6 +129,19 @@ public class TargetingManager {
             de.setShaderState(DieShader.DieShaderState.Nothing);
         }
         if (TargetingManager.get().getSelectedTargetable() == t) {
+            if(t instanceof Spell){
+                Spell s = (Spell) t;
+                if(s.isUsable()) {
+                    switch  (s.getEffects()[0].targetingType){
+                        case EnemyGroup:
+                        case RandomEnemy:
+                        case FriendlyGroup:
+                        case Untargeted:
+                            TargetingManager.get().target(null);
+                            break;
+                    }
+                }
+            }
             deselectTargetable();
             return;
         }
