@@ -119,12 +119,18 @@ public class Explanel extends InfoPanel implements OnPop {
         boolean enoughMagic = Party.get().getAvaliableMagic()>=spell.getCost();
 
         Pixl p = getPixl();
-        p.actor(new TextWriter(spell.getName()))
-        .row()
-        .actor(spellDraw)
-        .row()
-        .actor(new TextWriter(spell.getDescription(), textWidth));
-
+        int picWidth = Images.spellBorder.getRegionWidth()*2;
+        int gap = 2;
+        p.gap(picWidth+gap*2);
+        p.actor(new TextWriter(spell.getName()));
+        p.gap(5);
+        for(int i=0;i<spell.getCost();i++) {
+            p.actor(new ImageActor(Images.magic));
+        }
+        p.row();
+        p.gap(picWidth+gap*2);
+        int textWidth = panelWidth - gap*3 - picWidth;
+        p.actor(new TextWriter(spell.getDescription(), textWidth));
         if(usable && enoughMagic){
             switch (spell.getEffects()[0].targetingType) {
                 case EnemyGroup:
@@ -132,12 +138,12 @@ public class Explanel extends InfoPanel implements OnPop {
                 case RandomEnemy:
                 case Untargeted:
                     if(enoughMagic) {
-                        p.row().actor(new TextWriter("[blue]Tap again to cast", textWidth));
+                        p.row().gap(picWidth+gap*2).actor(new TextWriter("[blue]Tap again to cast", textWidth));
                     }
                     break;
             }
         }
-
+        p.row(gap+1);
         p.pix();
 
 
@@ -153,6 +159,19 @@ public class Explanel extends InfoPanel implements OnPop {
                 tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(-tw.getHeight()-2));
             }
         }
+
+        int diff = (int) (picWidth+gap*2-getHeight());
+        if(diff>0){
+            for(Actor a:getChildren()){
+                a.setY(a.getY()+diff);
+            }
+        }
+        setHeight(Math.max(getHeight(), picWidth+gap*2));
+
+        ImageActor ia = new ImageActor(spell.getImage(), picWidth, picWidth);
+        addActor(ia);
+        ia.setPosition(gap, gap);
+
     }
 
     @Override
