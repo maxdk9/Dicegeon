@@ -11,6 +11,7 @@ import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.InventoryPanel;
+import com.tann.dice.util.Colours;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class Party extends EntityGroup<Hero>{
         HeroType all = HeroType.byName("rogue");
         HeroType all2 = HeroType.byName("rogue");
         HeroType[] types = new HeroType[]{
-                acolyte, herbalist, defender, fighter, fighter2
+                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.red)
 //                all, all, all, all2, all2
         };
         List<Hero> tmp = new ArrayList<>();

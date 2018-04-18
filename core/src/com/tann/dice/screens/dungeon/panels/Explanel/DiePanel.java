@@ -49,7 +49,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
     public void layout(){
         clearChildren();
         Pixl p = new Pixl(this, gap);
-        p.actor(new TextWriter(entity.name+"  ("+entity.getHp()+"/"+entity.getMaxHp()+"[h][red][heart][h][light])"));
+        p.actor(new TextWriter(entity.name+"  "+entity.getHp()+"/"+entity.getMaxHp()+"[h][red][heart][h][light]"));
         p.row(gap+2);
         if(entity.getSize()== DiceEntity.EntitySize.smol || entity.getSize() == DiceEntity.EntitySize.reg) {
             p.actor(new DieSpinner(entity.getDie(), entity.getSize().pixels * 1.5f));

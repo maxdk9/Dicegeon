@@ -17,7 +17,7 @@ import java.util.Map;
 
 import static com.tann.dice.gameplay.entity.type.EntityType.LevelUpClass.*;
 
-public class HeroType extends EntityType<HeroType> {
+public class HeroType extends EntityType<HeroType> implements Cloneable {
 
     public Color colour;
     public Spell[] spells = new Spell[0];
@@ -28,8 +28,6 @@ public class HeroType extends EntityType<HeroType> {
     static{
         lv = 0;
         add(new HeroType().name("Fighter").hp(5).levelsUpInto(fighter1).colour(Colours.yellow)
-                .sides( sword2, sword2, sword1, sword1,shield1, nothing));
-        add(new HeroType().name("Fighter2").hp(5).levelsUpInto(fighter1).colour(Colours.orange)
                 .sides( sword2, sword2, sword1, sword1,shield1, nothing));
         add(new HeroType().name("Defender").hp(5).levelsUpInto(defender1).colour(Colours.grey)
                 .sides(shield2, shield2, shield1, sword1, sword1, nothing));
@@ -107,7 +105,6 @@ public class HeroType extends EntityType<HeroType> {
     }
 
     public static HeroType fighter = byName("fighter");
-    public static HeroType fighter2 = byName("fighter2");
     public static HeroType defender = byName("defender");
     public static HeroType herbalist = byName("herbalist");
     public static HeroType acolyte = byName("acolyte");
@@ -151,6 +148,17 @@ public class HeroType extends EntityType<HeroType> {
             }
         }
         return results;
+    }
+
+    public HeroType withColour(Color col){
+        try {
+            HeroType copy = (HeroType) clone();
+            copy.colour = col;
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            System.err.println("bloody java");
+        }
+        return null;
     }
 
     public Hero buildHero(){
