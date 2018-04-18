@@ -74,7 +74,6 @@ public class Hero extends DiceEntity {
                     DungeonScreen.get().confirmDice(true);
                 }
             }, .3f);
-
         }
     }
 

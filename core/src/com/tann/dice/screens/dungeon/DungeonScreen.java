@@ -1,5 +1,6 @@
 package com.tann.dice.screens.dungeon;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
@@ -105,7 +106,11 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.tick, Colours.dark) {
             @Override
             public void draw(Batch batch, float parentAlpha) {
-                Draw.fillActor(batch, this, Colours.dark, Colours.grey, 1);
+                Color border = Colours.grey;
+                if(PhaseManager.get().getPhase() instanceof PlayerRollingPhase && Party.get().allDiceLockedOrLocking()){
+                    border = Colours.light;
+                }
+                Draw.fillActor(batch, this, Colours.dark, border, 1);
                 batch.setColor(Colours.light);
                 batch.draw(Images.tick, (int) (this.getX() + this.getWidth() / 2 - Images.tick.getRegionWidth() / 2), (int) (this.getY() + this.getHeight() / 2 - Images.tick.getRegionHeight() / 2));
             }
@@ -217,6 +222,8 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         }
     }
 
+
+
     public void confirmDice(boolean force) {
         if (PhaseManager.get().getPhase() instanceof PlayerRollingPhase) {
             boolean allGood = true;
@@ -229,7 +236,9 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
                 }
             }
             if (allGood) {
-                PhaseManager.get().popPhase(PlayerRollingPhase.class);
+                if(force) {
+                    PhaseManager.get().popPhase(PlayerRollingPhase.class);
+                }
             }
         } else if (PhaseManager.get().getPhase() instanceof TargetingPhase) {
             if (Party.get().getAvaliableMagic() > 0) {

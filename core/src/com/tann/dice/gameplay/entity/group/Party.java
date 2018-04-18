@@ -243,4 +243,14 @@ public class Party extends EntityGroup<Hero>{
         }
         somethingChanged();
     }
+
+    public boolean allDiceLockedOrLocking() {
+        for(DiceEntity de:getAllActive()){
+            Die.DieState state =  de.getDie().getState();
+            if(state!=Die.DieState.Locked && state !=Die.DieState.Locking) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
