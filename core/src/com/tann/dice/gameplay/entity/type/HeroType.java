@@ -63,8 +63,8 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
         add(new HeroType().name("Bard").hp(6).tag(defender1)
                 .sides(shield3, wardingchord, wardingchord, reroll, magic2, nothing));
         add(new HeroType().name("Bouncer").hp(9).tag(defender1)
-                .sides(taunt, taunt, shield2, shield2, sword2, nothing).
-                        trait(new TriggerDamageLimit(4)));
+                .sides(taunt, taunt, shield2, shield2, sword2, nothing)
+                .trait(new TriggerDamageLimit(4)));
         add(new HeroType().name("Guardian").hp(7).tag(defender1)
                 .sides(shieldPlusAdjacent2, shieldPlusAdjacent2, shield3, shield3, trident1, nothing));
 
@@ -78,7 +78,7 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
         add(new HeroType().name("Witch").hp(6).tag(healer1)
                 .sides(healBuff1, healBuff1, poison1, heal5, heal3, magic2)
                 .spells(Spell.balance)); //TODO some kinda coolie spell
-        add(new HeroType().name("Medic").hp(6).tag(healer1)
+        add(new HeroType().name("Medic").hp(7).tag(healer1)
                 .sides(healAll2, cure3, cure3, magic2, magic2, nothing)
                 .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
 

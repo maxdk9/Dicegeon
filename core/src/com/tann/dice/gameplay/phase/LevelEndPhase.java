@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.phase;
 
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
@@ -25,6 +26,7 @@ public class LevelEndPhase extends Phase {
         levelEndPanel = new LevelEndPanel(gainedEquipment, level%2==0);
         DungeonScreen.get().addActor(levelEndPanel);
         Tann.center(levelEndPanel);
+        levelEndPanel.setY(Main.height*3/4f-levelEndPanel.getHeight()/2);
         for(DiceEntity de:Party.get().getActiveEntities()){
             de.slide(false);
         }

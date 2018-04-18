@@ -1,0 +1,90 @@
+package com.tann.dice.screens.dungeon.panels;
+
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.tann.dice.Main;
+import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
+import com.tann.dice.util.Pixl;
+import com.tann.dice.util.TextWriter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class TipOfTheDay extends Group {
+
+    private static int index = 0;
+    private static List<String> jokes = new ArrayList<>();
+    private static List<String> tips = new ArrayList<>();
+
+    private static String getRare(){
+        if(jokes.isEmpty()){
+            jokes.addAll(Arrays.asList(
+                    "Take off your socks before bed",
+                    "What do you call a rich goblin?[n][n][light][sin]A gobling!",
+                    "The dragon has a poison attack",
+                    "It's probably fine",
+                    "If you find a bug, send an email to tann@tann.space for a prize"
+            ));
+            Collections.shuffle(jokes);
+        }
+        return jokes.remove(0);
+    }
+    private static String getCommon(){
+        if(tips.isEmpty()){
+            tips.addAll(Arrays.asList(
+                    "[red][heart][light][h]:[h]current hp[n]" +
+                            "[purple][heartempty][light][h]:[h]missing hp[n]" +
+                            "[yellow][heart][light][h]:[h]incoming damage[n]" +
+                            "[green][heart][light][h]:[h]incoming poison damage",
+                    "If an enemy has a [grey][heartArrow][light] somewhere in their hp, they will retreat to the back away when they lose it",
+                    "Use ranged damage and area-of-effect abilities to kill enemies at the back",
+                    "You can kill an enemy to cancel their attack",
+                    "You can swap around your equipment after each fight",
+                    "Heroes return on half health next fight if they die",
+                    "Lock dice by clicking on them before rolling the rest"
+
+            ));
+            Collections.shuffle(tips);
+        }
+        return tips.remove(0);
+    }
+
+    private String string;
+    public TipOfTheDay() {
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                layout();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+    }
+
+    public void layout(){
+        clearChildren();
+        Pixl p = new Pixl(this, 2);
+        p.row(3);
+        p.actor(new TextWriter("[green]Tip of the day"));
+        p.row();
+        if(Math.random()>.8){
+            string = "[grey]"+ getRare();
+        } else {
+            string = getCommon();
+        }
+        p.actor(new TextWriter(string, 94));
+        p.row(3);
+        p.pix();
+        setPosition((int)(Main.width/2-getWidth()/2), (int)(Main.height/3-getHeight()/2));
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        Draw.fillActor(batch, this, Colours.dark, Colours.green, 1);
+        super.draw(batch, parentAlpha);
+    }
+}

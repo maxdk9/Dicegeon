@@ -43,11 +43,11 @@ public class Eff {
             case Damage:
                 return getValue() +" damage";
             case Shield:
-                return "Block "+getValue()+" incoming damage ([yellow][heart][light])";
+                return "Block "+getValue()+" incoming damage [yellow][heart][light]";
             case Magic:
                 return "Gain "+getValue()+" magic to spend on spells";
             case Healing:
-                return "Restore "+getValue()+" missing health ([purple][heartempty][light]) to";
+                return "Restore "+getValue()+" missing health [purple][heartempty][light] to";
             case Buff:
                 return getBuff().toNiceString();
             case Execute:

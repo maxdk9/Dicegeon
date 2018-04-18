@@ -22,7 +22,7 @@ public class TriggerOneHealthBonusOutgoing extends Trigger {
 
     @Override
     public boolean showInPanel() {
-        return entity.getProfile().getTopHealth()==1;
+        return true;
     }
 
     @Override

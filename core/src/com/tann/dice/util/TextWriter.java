@@ -65,6 +65,7 @@ public class TextWriter extends Group {
         colorMap.put("yellow", Colours.yellow);
         colorMap.put("orange", Colours.orange);
         colorMap.put("grey", Colours.grey);
+        colorMap.put("green", Colours.green);
     }
 
     public static String getColourTagForColour(Color c){

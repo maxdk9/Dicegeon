@@ -24,6 +24,7 @@ public class LevelEndPanel extends Group {
     boolean action;
     boolean levelup;
     String congrat;
+    public TipOfTheDay tipOfTheDay;
     public LevelEndPanel(List<Equipment> gainedEquipment, boolean levelup) {
         setTransform(false);
         this.gainedEquipment = gainedEquipment;
@@ -36,9 +37,9 @@ public class LevelEndPanel extends Group {
         clearChildren();
         Pixl p = new Pixl(this, 2);
         p.row(4);
-        p.actor(new TextWriter("[orange]"+ congrat));
-        p.row();
         p.actor(new TextWriter("[purple]Level "+ DungeonScreen.get().level+"/"+DungeonScreen.levels.size()));
+        p.row();
+        p.actor(new TextWriter("[orange]"+ congrat));
         p.row(4);
         for(Equipment e:gainedEquipment){
             p.gap(4);
@@ -76,6 +77,7 @@ public class LevelEndPanel extends Group {
                 @Override
                 public void run() {
                 remove();
+                tipOfTheDay.remove();
                 PhaseManager.get().popPhase();
                 }
             });
@@ -87,6 +89,10 @@ public class LevelEndPanel extends Group {
             de.getEntityPanel().showLevelUpTick(false);
             de.getEntityPanel().showLevelUpTick(levelup && ((Hero)de).level == 0);
         }
+
+        tipOfTheDay = new TipOfTheDay();
+        Main.getCurrentScreen().addActor(tipOfTheDay);
+        tipOfTheDay.layout();
     }
 
     @Override

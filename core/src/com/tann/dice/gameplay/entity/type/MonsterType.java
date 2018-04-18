@@ -26,7 +26,7 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType archer = new MonsterType().name("Archer").hp(2).size(smol)
             .sides(smol_arrow3, smol_arrow3, smol_arrow2, smol_arrow2, smol_arrow2, smol_arrow2)
             .trait(new TriggerCowardly());
-    public static final MonsterType rat = new MonsterType().name("Rattie").hp(3).size(smol).fleePip(1)
+    public static final MonsterType rat = new MonsterType().name("Rattie").hp(3).size(smol)
             .sides(smol_nip3, smol_nip3, smol_nip2, smol_nip2, smol_nipPoison1, smol_nipPoison1);
     public static final MonsterType skeleton = new MonsterType().name("Skeleton").hp(4).size(smol)
             .sides(smol_sword4, smol_sword4, smol_sword4, smol_sword3, smol_sword3, smol_sword3);
