@@ -57,7 +57,7 @@ public class DebugScreen extends Screen implements ExplanelReposition{
             monsterGroup.setPosition(Gdx.graphics.getWidth() / 3-monsterGroup.getWidth()/2, Gdx.graphics.getHeight() / 2-monsterGroup.getHeight()/2);
         }
 
-        push(parent);
+        push(parent, false, false, false, false, 0, null);
 
 
     }

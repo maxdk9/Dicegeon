@@ -24,7 +24,7 @@ public class TipOfTheDay extends Group {
     private static String getRare(){
         if(jokes.isEmpty()){
             jokes.addAll(Arrays.asList(
-                    "Take off your socks before bed",
+                    "Take off your socks before you go to bed",
                     "What do you call a rich goblin?[n][n][light][sin]A gobling!",
                     "The dragon has a poison attack",
                     "It's probably fine",
@@ -76,7 +76,7 @@ public class TipOfTheDay extends Group {
         } else {
             string = getCommon();
         }
-        p.actor(new TextWriter(string, 94));
+        p.actor(new TextWriter(string, 100));
         p.row(3);
         p.pix();
         setPosition((int)(Main.width/2-getWidth()/2), (int)(Main.height/3-getHeight()/2));
