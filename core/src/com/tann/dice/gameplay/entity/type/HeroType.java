@@ -169,4 +169,13 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
         h.init();
         return h;
     }
+
+    public static HeroType getLevelsUpInto(LevelUpClass luc){
+        for(HeroType ht:ALL_HEROES.values()){
+            if(ht.levelsUpInto.length>0 && ht.levelsUpInto[0]==luc){
+                return ht;
+            }
+        }
+        return null;
+    }
 }

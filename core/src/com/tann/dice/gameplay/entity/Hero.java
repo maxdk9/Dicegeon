@@ -1,6 +1,5 @@
 package com.tann.dice.gameplay.entity;
 
-import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Trait;
@@ -20,11 +19,13 @@ public class Hero extends DiceEntity {
     public Hero(HeroType type) {
         super(type);
         setupLapels(type.level);
-        if(type.colour!=null){
-            setColour(type.colour);
+        setColour(type.colour);
+        HeroType t = type;
+        while(col == null){
+            t = HeroType.getLevelsUpInto(t.tags[0]);
+            col = t.colour;
         }
         this.spells = Arrays.asList(type.spells);
-        addEquipment(Equipment.byName("blood vial"));
 //        if(Math.random()>.3) addEquipment(Equipment.byName("Relic"));
     }
 
@@ -85,4 +86,5 @@ public class Hero extends DiceEntity {
     public HeroType getHeroType() {
         return (HeroType) entityType;
     }
+
 }
