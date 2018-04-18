@@ -5,6 +5,7 @@ import com.tann.dice.Main;
 import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffType;
+import com.tann.dice.gameplay.effect.Eff.TargetingType;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -339,7 +340,9 @@ public class TargetingManager {
     }
 
     public boolean isUsable(Targetable t) {
-        //TODO this
-        return true;
+        Eff e = t.getEffects()[0];
+        if(!e.needsUsing()) return false;
+        if(e.targetingType==TargetingType.RandomEnemy || e.targetingType==TargetingType.Untargeted) return true;
+        return EntityGroup.getValidTargets(t, true).size()>0;
     }
 }
