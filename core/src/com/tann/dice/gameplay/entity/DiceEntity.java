@@ -48,7 +48,6 @@ public abstract class DiceEntity {
     protected TextureRegion lapel;
     protected TextureRegion lapel2d;
     private EntityPanel ep;
-    // temp junky variables
     public String name;
     EntitySize size;
     public EntityType entityType;

@@ -41,12 +41,13 @@ public class TipOfTheDay extends Group {
                             "[purple][heartempty][light][h]:[h]missing hp[n]" +
                             "[yellow][heart][light][h]:[h]incoming damage[n]" +
                             "[green][heart][light][h]:[h]incoming poison damage",
-                    "If an enemy has a [grey][heartArrow][light] somewhere in their hp, they will retreat to the back away when they lose it",
+                    "If an enemy has a [grey][heartArrow][light] somewhere in their hp, they will retreat to the back when they lose it",
                     "Use ranged damage and area-of-effect abilities to kill enemies at the back",
                     "You can kill an enemy to cancel their attack",
                     "You can swap around your equipment after each fight",
                     "Heroes return on half health next fight if they die",
-                    "Lock dice by clicking on them before rolling the rest"
+                    "Lock dice by clicking on them before rolling the rest",
+                    "Blue and red heroes come with new spells to use"
 
             ));
             Collections.shuffle(tips);
