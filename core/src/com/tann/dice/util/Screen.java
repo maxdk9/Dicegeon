@@ -181,18 +181,19 @@ public abstract class Screen extends Lay{
 		return false;
 	}
 
-	public void pop(Actor a) {
+	public boolean pop(Actor a) {
 		if(modalStack.size()==0){
 			System.err.println("Trying to pop with nothing to pop");
-			return;
+      return false;
 		}
 		Pair p = modalStack.get(modalStack.size()-1);
 		if(p.a!=a){
 			System.err.println("Popping wrong panel. Expected "+a.getClass().getSimpleName()+", found "+p.a.getClass().getSimpleName());
-			return;
+      return false;
 		}
 		pop();
-	}
+    return true;
+  }
 
 	public Actor getTopActor() {
 		if(modalStack.size()==0) return null;

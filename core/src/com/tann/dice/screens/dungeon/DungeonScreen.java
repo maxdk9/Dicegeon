@@ -1,5 +1,7 @@
 package com.tann.dice.screens.dungeon;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
@@ -25,6 +27,7 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.gameplay.phase.*;
+import com.tann.dice.screens.EscMenu;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
@@ -139,6 +142,18 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         addActor(spellButt);
         float gap = 5;
         spellButt.setPosition(EntityContainer.width + friendly.getX() + gap, Main.height - spellButt.getHeight() - gap);
+
+        ImageActor cog = new ImageActor(Images.cog);
+        addActor(cog);
+        cog.setPosition(EntityContainer.width+gap, gap);
+        cog.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                toggleMenu();
+                return false;
+            }
+        });
+
     }
 
     public int level = 0;
@@ -159,9 +174,8 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     }
 
     static {
-//        addLevel(bird, slimoBig);
 //        addLevel(spikeGolem, goblin, bird, dragon); // all sizes
-        addLevel(rat);
+//        addLevel(rat); // ezpz
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
         addLevel(slime, slime, goblin, goblin);
@@ -299,7 +313,18 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
     @Override
     public void keyPress(int keycode) {
+        switch(keycode){
+            case Keys.ESCAPE:
+                toggleMenu();
+                break;
+        }
+    }
 
+    private void toggleMenu() {
+        if(pop(EscMenu.get())){
+            return;
+        }
+        push(EscMenu.get(), true, true, true, false, .8f, null);
     }
 
     @Override

@@ -9,11 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Align;
+import com.tann.dice.Main;
 
 
 public class Slider extends Actor{
 	final static int defaultWidth=80, defaultHeight=9;
-	final static int gap=2;
+	final static int gap=1;
 	
 	//preset sliders//
 	public static Slider SFX=  new Slider("sfx", .5f, Colours.light, Colours.dark);
@@ -68,7 +69,7 @@ public class Slider extends Actor{
 	}
 
 	private float getValueFromPosition(float x){
-        float retn = (x-getX()-getParent().getX()-gap)/(getWidth()-gap*2);
+        float retn = ((x/Main.scale)-getX()-getParent().getX()-gap)/(getWidth()-gap*2);
         retn=Math.max(0, Math.min(1, retn));
         return retn;
     }
@@ -86,18 +87,18 @@ public class Slider extends Actor{
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		batch.setColor(backGround);
 		Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), gap);
-		Draw.fillRectangle(batch, getX()+gap, getY()+gap, (getWidth()-gap*2)*value, getHeight()-gap*2);
+		Draw.fillRectangle(batch, getX()+gap, getY()+gap, (int)((getWidth()-gap*2)*value), getHeight()-gap*2);
         batch.setColor(Colours.purple);
-        TannFont.font.drawString(batch, title, (int)(getX()), (int)(getY()+getHeight()/2+TannFont.font.getHeight()/2));
+        TannFont.font.drawString(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2f), Align.center);
         batch.flush();
 		clip.x=getParent().getX()+getX();
 		clip.y=getParent().getY()+getY();
-		clip.width=getWidth()*value;
+		clip.width=gap+(int)((getWidth()-gap*2)*value);
 		clip.height=getHeight();
 		boolean added =(ScissorStack.pushScissors(clip));
 		if(added){
-			batch.setColor(foreGround);
-            TannFont.font.drawString(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2));
+			batch.setColor(Colours.blue);
+            TannFont.font.drawString(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2f), Align.center);
 			batch.flush();
 			ScissorStack.popScissors();
 		}
