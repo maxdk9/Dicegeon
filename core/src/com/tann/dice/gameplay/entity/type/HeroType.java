@@ -46,14 +46,14 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
         add(new HeroType().name("Gladiator").hp(7).tag(fighter1)
                 .sides(swordShield2, swordShield2, swordShield1, swordShield1, shield2, nothing));
         add(new HeroType().name("Dabbler").hp(6).tag(fighter1)
-                .sides(sword3, heal3, shield3, arrow2, magic2, nothing));
+                .sides(sword3, heal3, shield2, arrow2, magic2, nothing));
 //        add(new HeroType().name("Berserker").hp(7).tag(fighter1)
 //                .sides(sword1AllSelfDamage1, sword1AllSelfDamage1, sword2, sword2, shield2, nothing)
 //                .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
         add(new HeroType().name("Whirl").hp(6).tag(fighter1)
                 .sides(whirlwind1, trident1, trident1, sword2, shieldPlusAdjacent1, nothing));
         add(new HeroType().name("Crusher").hp(6).tag(fighter1)
-                .sides(topbot2, topbot1, top3, bot3, shield2, nothing));
+                .sides(topbot2, topbot1, topbot1, sword2, shield2, nothing));
         add(new HeroType().name("Bruiser").hp(6).tag(fighter1)
                 .sides(sword3, front1, front1, hook1, shield2, nothing));
 

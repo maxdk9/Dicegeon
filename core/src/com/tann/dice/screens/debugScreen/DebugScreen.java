@@ -2,6 +2,7 @@ package com.tann.dice.screens.debugScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -19,6 +20,12 @@ import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.util.Pixl;
 import com.tann.dice.util.Screen;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DebugScreen extends Screen implements ExplanelReposition{
     @Override
@@ -26,20 +33,40 @@ public class DebugScreen extends Screen implements ExplanelReposition{
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                popAllLight();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
         int row = 4;
         Group parent = new Group();
         {
+            Map<Color, List<Hero>> heroMap = new HashMap<>();
+            for(HeroType ht:HeroType.ALL_HEROES.values()){
+                Hero h = ht.buildHero();
+                List<Hero> heroes = heroMap.get(h.getColour());
+                if(heroes == null){
+                    heroes = new ArrayList<>();
+                    heroMap.put(h.getColour(), heroes);
+                }
+                heroes.add(h);
+            }
+
             Group heroGroup = new Group();
             Pixl p = new Pixl(heroGroup, 0);
             int i=0;
-            for(HeroType ht:HeroType.ALL_HEROES.values()){
-                p.actor(ht.buildHero().getDiePanel());
-                if ((i+1) % row == 0) p.row();
-                i++;
+            for(Color c: heroMap.keySet()){
+                int index = 0;
+                Collections.sort(heroMap.get(c), new Comparator<Hero>() {
+                    @Override
+                    public int compare(Hero o1, Hero o2) {
+                        return o1.level-o2.level;
+                    }
+                });
+                for(Hero h:heroMap.get(c)){
+                    index++;
+                    p.actor(h.getDiePanel());
+                    if(index%row==0) p.row();
+                }
+                p.row();
             }
             p.pix();
             heroGroup.setPosition(Gdx.graphics.getWidth()/3*2-heroGroup.getWidth()/2,Gdx.graphics.getHeight()/2-heroGroup.getHeight()/2);

@@ -25,6 +25,7 @@ public class Hero extends DiceEntity {
             t = HeroType.getLevelsUpInto(t.tags[0]);
             col = t.colour;
         }
+        this.level = type.level;
         this.spells = Arrays.asList(type.spells);
 //        if(Math.random()>.3) addEquipment(Equipment.byName("Relic"));
     }

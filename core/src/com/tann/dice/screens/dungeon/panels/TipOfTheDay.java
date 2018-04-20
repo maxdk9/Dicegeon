@@ -37,11 +37,11 @@ public class TipOfTheDay extends Group {
     private static String getCommon(){
         if(tips.isEmpty()){
             tips.addAll(Arrays.asList(
-                    "[red][heart][light][h]:[h]current hp[n]" +
-                            "[purple][heartempty][light][h]:[h]missing hp[n]" +
-                            "[yellow][heart][light][h]:[h]incoming damage[n]" +
-                            "[green][heart][light][h]:[h]incoming poison damage",
-                    "If an enemy has a [grey][heartArrow][light] somewhere in their hp, they will retreat to the back when they lose it",
+                    "[red][heart][grey][h]:[h]current hp[n]" +
+                            "[purple][heartempty][grey][h]:[h]missing hp[n]" +
+                            "[yellow][heart][grey][h]:[h]incoming damage[n]" +
+                            "[green][heart][grey][h]:[h]incoming poison damage",
+                    "If an enemy has a [grey][heartArrow][grey] somewhere in their hp, they will retreat to the back when they lose it",
                     "Use ranged damage and area-of-effect abilities to kill enemies at the back",
                     "You can kill an enemy to cancel their attack",
                     "You can swap around your equipment after each fight",
@@ -75,7 +75,7 @@ public class TipOfTheDay extends Group {
         if(Math.random()>.8){
             string = "[grey]"+ getRare();
         } else {
-            string = getCommon();
+            string = "[grey]"+ getCommon();
         }
         p.actor(new TextWriter(string, 100));
         p.row(3);

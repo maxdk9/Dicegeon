@@ -14,6 +14,7 @@ import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.type.EntityType;
 import com.tann.dice.gameplay.phase.LevelEndPhase;
 import com.tann.dice.gameplay.phase.Phase;
+import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.DieSpinner;
@@ -35,6 +36,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
                 if(e!=null){
                     PartyManagementPanel.get().equip(entity);
                 }
+                if(Main.getCurrentScreen() instanceof DebugScreen) return true;
                 Main.getCurrentScreen().popAllLight();
                 event.cancel();
                 event.stop();
