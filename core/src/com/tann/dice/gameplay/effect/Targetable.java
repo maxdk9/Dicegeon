@@ -9,4 +9,5 @@ public interface Targetable {
     void select();
     boolean isUsable();
     boolean repeat();
+    void afterUse();
 }

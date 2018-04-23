@@ -580,6 +580,10 @@ public class Die implements Targetable{
         used= true;
         return true;
     }
+    @Override
+    public void afterUse() {
+        entity.afterUse(getActualSide());
+    }
 
     public void reset() {
         used= true;
@@ -604,4 +608,5 @@ public class Die implements Targetable{
     public boolean repeat() {
         return false;
     }
+
 }

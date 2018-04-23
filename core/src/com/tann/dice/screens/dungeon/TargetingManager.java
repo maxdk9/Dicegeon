@@ -77,12 +77,14 @@ public class TargetingManager {
             case AllFront:
                 hitMultiple(EntityGroup.getActualTargets(first, true, null), d.getEffects(), false);
                 d.use();
+                d.afterUse();
                 break;
             case Untargeted:
                 for (Eff e : d.getEffects()) {
                     e.untargetedUse(false);
                 }
                 d.use();
+                d.afterUse();
                 break;
             default:
                 DungeonScreen.get().spellButt.hide();
@@ -251,6 +253,7 @@ public class TargetingManager {
             Main.getCurrentScreen().popAllLight();
             deselectTargetable();
         }
+        t.afterUse();
         DungeonScreen.get().checkDoneTargeting();
 
         if (Party.get().getAvaliableMagic() == 0) {

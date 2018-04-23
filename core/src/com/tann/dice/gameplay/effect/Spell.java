@@ -126,6 +126,11 @@ public class Spell implements Targetable{
         return repeatable && Party.get().getAvaliableMagic()>=getCost();
     }
 
+    @Override
+    public void afterUse() {
+
+    }
+
     public boolean canCast() {
         return Party.get().getAvaliableMagic() >= cost;
     }

@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.entity.type;
 import com.badlogic.gdx.graphics.Color;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerBoostOnRoll;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageLimit;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerHalfHealthEffTypeBonus;
 import com.tann.dice.gameplay.entity.Hero;
@@ -55,7 +56,10 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
         add(new HeroType().name("Crusher").hp(6).tag(fighter1)
                 .sides(topbot2, topbot1, topbot1, sword2, shield2, nothing));
         add(new HeroType().name("Bruiser").hp(6).tag(fighter1)
-                .sides(sword3, front1, front1, hook1, shield2, nothing));
+            .sides(sword3, front1, front1, hook1, shield2, nothing));
+        add(new HeroType().name("Combo").hp(6).tag(fighter1)
+            .sides(trident1, sword2, sword2, shield2, nothing, nothing)
+        .trait(new TriggerBoostOnRoll(1)));
 
 
         add(new HeroType().name("Paladin").hp(7).tag(defender1)

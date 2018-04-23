@@ -23,6 +23,8 @@ public abstract class Trigger implements Cloneable{
 
   public void endOfTurn(){}
 
+  public void reset(){}
+
   public Integer alterIncomingDamage(Integer incomingDamage) { return incomingDamage; }
 
   public Integer alterIncomingPoisonDamage(Integer incomingDamage) { return incomingDamage; }
@@ -72,6 +74,8 @@ public abstract class Trigger implements Cloneable{
   }
 
   public String describeForBuffText(){ return describe(); }
+
+  public boolean afterUse(Side side){ return false; };
 
   public abstract String describe();
 
