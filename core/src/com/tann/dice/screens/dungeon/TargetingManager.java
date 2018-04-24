@@ -76,7 +76,9 @@ public class TargetingManager {
             case BottomEnemy:
             case TopBottomEnemy:
             case AllFront:
-                hitMultiple(EntityGroup.getActualTargets(first, true, null), d.getEffects(), false);
+                for(Eff e:d.getEffects()){
+                    hitMultiple(EntityGroup.getActualTargets(e, true, null), e, false);
+                }
                 d.use();
                 d.afterUse();
                 break;
@@ -104,6 +106,12 @@ public class TargetingManager {
     private void hitMultiple(List<DiceEntity> entities, Eff[] effects, boolean instant) {
         for (int i = entities.size() - 1; i >= 0; i--) {
             entities.get(i).hit(effects, instant);
+        }
+    }
+
+    private void hitMultiple(List<DiceEntity> entities, Eff e, boolean instant) {
+        for (int i = entities.size() - 1; i >= 0; i--) {
+            entities.get(i).hit(e, instant);
         }
     }
 

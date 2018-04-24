@@ -2,10 +2,12 @@ package com.tann.dice.screens;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
+import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -41,8 +43,19 @@ public class EscMenu extends Group {
         .row().actor(Slider.music)
         .row().actor(Slider.SFX);
     TextButton Continue = new TextButton(40, 11, "Continue");
+    TextButton stats = new TextButton(40, 11, "Stats");
     TextButton restart = new TextButton(40, 11, "Restart");
-    p.row().actor(restart).actor(Continue).pix();
+    p.row().actor(restart).actor(stats).actor(Continue).pix();
+
+
+    stats.setRunnable(new Runnable() {
+      @Override
+      public void run() {
+        DebugScreen dbs = new DebugScreen();
+        dbs.layout();
+        Main.self.setScreen(dbs, Main.TransitionType.LEFT, Interpolation.pow2Out, 1);
+      }
+    });
     Continue.setRunnable(new Runnable() {
       @Override
       public void run() {

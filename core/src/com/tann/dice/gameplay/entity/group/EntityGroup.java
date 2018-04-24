@@ -147,11 +147,13 @@ public class EntityGroup <T extends DiceEntity>{
             case Allies:
                 targetsTmp.addAll(friends);
                 targetsTmp.remove(source);
+                break;
             case FriendlyGroup:
                 targetsTmp.addAll(friends);
                 break;
             case Self:
                 targetsTmp.add(source);
+                break;
             case RandomEnemy:
             case Untargeted:
                 break;

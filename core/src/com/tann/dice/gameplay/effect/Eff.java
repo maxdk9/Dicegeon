@@ -23,7 +23,6 @@ public class Eff {
         Damage, Shield, Magic, Healing,
         Empty, Buff, Execute, Reroll, RedirectIncoming,
         CopyAbility, Decurse, Hook, Summon,
-        MaxHealth
 	}
 
 
@@ -40,7 +39,7 @@ public class Eff {
     public String getBaseString(){
         switch(type){
             case Empty:
-                return "Nothing!";
+                return "Does nothing, better hope you have a reroll left";
             case Damage:
                 return getValue() +" damage";
             case Shield:
@@ -209,10 +208,13 @@ public class Eff {
 
     public static String describe(Eff[] effects) {
         String result = "";
+        TargetingType previousTarget;
         for(int i=0;i<effects.length-1;i++){
             Eff e = effects[i];
-
-            if(i!=0) result += e.getBaseString();
+            if (i < effects.length-1 && effects[i+1].targetingType!=e.targetingType){
+                result += e.toString();
+            }
+            else if(i!=0) result += e.getBaseString();
             else result += e.getBaseString().toLowerCase();
             result += " and ";
         }
