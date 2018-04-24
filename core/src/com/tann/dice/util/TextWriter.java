@@ -81,6 +81,7 @@ public class TextWriter extends Group {
     public void layout() {
         split = text.split("[\\[\\]]");
         Color currentColour = Colours.light;
+        Color previousColour = Colours.light;
         clearChildren();
         int index = 0;
         int max = 0;
@@ -127,7 +128,14 @@ public class TextWriter extends Group {
                 }
                 Color c = colorMap.get(s);
                 if(c!=null){
-                    currentColour = c;
+                    if(c == currentColour){
+                        currentColour = previousColour;
+                        previousColour = c;
+                    }
+                    else {
+                        previousColour = currentColour;
+                        currentColour = c;
+                    }
                     image = false;
                 }
                 if(image) {

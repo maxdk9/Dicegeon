@@ -27,7 +27,7 @@ public class Side {
 	private Eff[] effects;
 	private String description;
 	private String title = "unnamed";
-	DiceEntity.EntitySize size = reg;
+	public DiceEntity.EntitySize size = reg;
 
     public static final HashMap<EntitySize, TextureRegion[]> sizeToPips = new HashMap<>();
     static{

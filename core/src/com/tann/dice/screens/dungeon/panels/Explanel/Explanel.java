@@ -97,10 +97,13 @@ public class Explanel extends InfoPanel implements OnPop {
     public void setup(Side side, boolean usable, DiceEntity entity){
         reset();
         this.side = side;
-        Pixl p = getPixl();
+        int gap = 3;
+        int textWidth = 60;
+        int width = side.size.pixels*2 + gap*3 + textWidth;
+        Pixl p = new Pixl(this, 3, width);
         p.actor(new TextWriter("[light]"+side.getTitle())).row(4)
-                .actor(new DieSidePanel(side, entity, 2)).gap(5).actor(new TextWriter("[grey]"+side.toString(), 60));
-        finalise(p);
+                .actor(new DieSidePanel(side, entity, 2)).gap(gap).actor(new TextWriter("[grey]"+side.toString(), textWidth));
+        p.pix();
     }
 
 

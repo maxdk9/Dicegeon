@@ -57,7 +57,7 @@ public class TriggerEndOfTurnSelf extends Trigger {
     public String describeForBuffText() {
         switch (eff.type){
             case Damage:
-                return eff.getValue() + " poison damage ([purple][heart][light]) each turn";
+                return eff.getValue() + " poison damage ([purple][heart][purple]) each turn";
             case Healing:
                 return "Regenerate "+eff.getValue() + " health each turn";
             default: return "missing buff text: "+eff.type;
