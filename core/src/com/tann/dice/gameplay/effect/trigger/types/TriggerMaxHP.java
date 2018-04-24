@@ -11,6 +11,11 @@ public class TriggerMaxHP extends Trigger {
   }
 
   @Override
+  public void setValue(int value) {
+    this.maxHpModifier= value;
+  }
+
+  @Override
   public int affectMaxHp(int hp) {
     return hp + maxHpModifier;
   }

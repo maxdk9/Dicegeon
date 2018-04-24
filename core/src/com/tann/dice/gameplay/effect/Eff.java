@@ -14,7 +14,7 @@ public class Eff {
         FriendlySingle, FriendlySingleOther, FriendlyGroup, FriendlySingleAndAdjacents, FriendlyMostDamaged,
         Self, OnRoll, Untargeted, AllTargeters,
         TopEnemy, BottomEnemy, TopBottomEnemy, AllFront,
-        DoesNothing
+        DoesNothing, Allies
     }
 
     public TargetingType targetingType = TargetingType.EnemySingle;
@@ -22,7 +22,8 @@ public class Eff {
     public enum EffType {
         Damage, Shield, Magic, Healing,
         Empty, Buff, Execute, Reroll, RedirectIncoming,
-        CopyAbility, Decurse, Hook, Summon
+        CopyAbility, Decurse, Hook, Summon,
+        MaxHealth
 	}
 
 
@@ -64,7 +65,6 @@ public class Eff {
                 return "Pull an enemy forwards";
             case Summon:
                 return "Summon "+getValue()+" "+summonType+(getValue()==1?"":"s");
-
         }
         return "no base for "+type;
     }
@@ -157,6 +157,7 @@ public class Eff {
     public Eff topBotEnemy() { return targetType(TargetingType.TopBottomEnemy);}
     public Eff allFront() { return targetType(TargetingType.AllFront);}
     public Eff friendlyMostDamaged() { return targetType(TargetingType.FriendlyMostDamaged);}
+    public Eff allies() { return targetType(TargetingType.Allies);}
 
     public Eff justValue(int amount) {this.value = amount; return this;}
 
@@ -286,6 +287,7 @@ public class Eff {
             case EnemyOnlyAdjacents:
             case RandomEnemy:
             case FriendlyGroup:
+            case Allies:
             case Self:
             case OnRoll:
             case Untargeted:
@@ -320,6 +322,7 @@ public class Eff {
             case EnemyOnlyAdjacents:
             case RandomEnemy:
             case FriendlyGroup:
+            case Allies:
             case Self:
             case Untargeted:
             case AllTargeters:

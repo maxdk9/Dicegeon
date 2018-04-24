@@ -83,8 +83,12 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .sides(healBuff1, healBuff1, poison1, heal5, heal3, magic2)
                 .spells(Spell.balance)); //TODO some kinda coolie spell
         add(new HeroType().name("Medic").hp(7).tag(healer1)
-                .sides(healAll2, cure3, cure3, magic2, magic2, nothing)
-                .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
+            .sides(healAll2, cure3, cure3, magic2, magic2, nothing)
+            .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
+        add(new HeroType().name("Vampire").hp(6).tag(healer1)
+            .sides(bloodPact2, swordHeal2, heal3, heal3, magic2, nothing)
+            .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
+
 
 
         add(new HeroType().name("Pyro").hp(6).tag(wizard1)

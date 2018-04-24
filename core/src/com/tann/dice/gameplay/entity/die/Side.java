@@ -13,6 +13,7 @@ import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageImmunity;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerEndOfTurnSelf;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerMaxHP;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
@@ -106,6 +107,12 @@ public class Side {
 
     public static final Side swordShield1 = new Side().image("swordShield").effect(new Eff().damage(1), new Eff().shield(1).self());
     public static final Side swordShield2 = swordShield1.withValue(2);
+
+    public static final Side swordHeal1 = new Side().image("swordHeal").effect(new Eff().damage(1), new Eff().heal(1).self());
+    public static final Side swordHeal2 = swordHeal1.withValue(2);
+
+    public static final Side bloodPact1 = new Side().image("bloodPact").effect(new Eff().damage(1).self(), new Eff().allies().buff(new Buff(-1, new TriggerMaxHP(1))));
+    public static final Side bloodPact2 = bloodPact1.withValue(2);
 
     public static final Side sword1AllSelfDamage1 = new Side().image("swordSelfDamage").effect(new Eff().damage(1).enemyGroup(), new Eff().damage(1).self());
     public static final Side sword2AllSelfDamage2 = sword1AllSelfDamage1.withValue(2);

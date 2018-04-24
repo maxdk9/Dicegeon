@@ -144,6 +144,9 @@ public class EntityGroup <T extends DiceEntity>{
             case EnemyGroup:
                 targetsTmp.addAll(enemies);
                 break;
+            case Allies:
+                targetsTmp.addAll(friends);
+                targetsTmp.remove(source);
             case FriendlyGroup:
                 targetsTmp.addAll(friends);
                 break;
@@ -225,6 +228,10 @@ public class EntityGroup <T extends DiceEntity>{
                 break;
             case EnemyGroup:
                 result.addAll(enemies);
+                break;
+            case Allies:
+                result.addAll(friends);
+                result.remove(eff.source);
                 break;
             case FriendlyGroup:
                 result.addAll(friends);

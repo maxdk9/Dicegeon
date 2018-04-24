@@ -69,6 +69,7 @@ public class TargetingManager {
         switch (first.targetingType) {
             case EnemyGroup:
             case FriendlyGroup:
+            case Allies:
             case Self:
             case RandomEnemy:
             case TopEnemy:
