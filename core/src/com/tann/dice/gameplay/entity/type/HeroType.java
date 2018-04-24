@@ -1,11 +1,9 @@
 package com.tann.dice.gameplay.entity.type;
 
 import com.badlogic.gdx.graphics.Color;
-import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerBoostOnRoll;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageLimit;
-import com.tann.dice.gameplay.effect.trigger.types.TriggerHalfHealthEffTypeBonus;
 import com.tann.dice.gameplay.entity.Hero;
 import static com.tann.dice.gameplay.entity.die.Side.*;
 import com.tann.dice.util.Colours;
@@ -92,7 +90,7 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
 
 
         add(new HeroType().name("Pyro").hp(6).tag(wizard1)
-                .sides(flameWard, magic2, magic2, magic1, magic1, nothing)
+                .sides(flameWard2, magic2, magic2, magic1, magic1, nothing)
                 .spells(Spell.inferno));
         add(new HeroType().name("Arcanist").hp(7).tag(wizard1)
                 .sides(magic3NextTurn, magic2NextTurn, magic2, magic2, nothing, nothing)
