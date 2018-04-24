@@ -182,7 +182,7 @@ public abstract class DiceEntity {
   }
 
   public void heal(int amount) {
-    this.hp += amount;
+    this.hp = Math.min(getMaxHp(), hp+amount);
   }
 
   public void reset() {
