@@ -54,7 +54,7 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
         add(new HeroType().name("Crusher").hp(6).tag(fighter1)
                 .sides(topbot2, topbot1, topbot1, sword2, shield2, nothing));
         add(new HeroType().name("Bruiser").hp(6).tag(fighter1)
-            .sides(sword3, front1, front1, hook1, shield2, nothing));
+            .sides(sword3, hook1, hook1, sword2, shield2, nothing));
         add(new HeroType().name("Combo").hp(6).tag(fighter1)
             .sides(trident1, sword2, sword2, shield2, nothing, nothing)
         .trait(new TriggerBoostOnRoll(1)));
@@ -79,13 +79,13 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .spells(Spell.balance));
         add(new HeroType().name("Witch").hp(6).tag(healer1)
                 .sides(healBuff1, healBuff1, poison1, heal5, heal3, magic2)
-                .spells(Spell.balance)); //TODO some kinda coolie spell
+                .spells(Spell.lifeSpark));
         add(new HeroType().name("Medic").hp(7).tag(healer1)
             .sides(healAll2, cure3, cure3, magic2, magic2, nothing)
-            .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
+            .spells(Spell.rejuvenate));
         add(new HeroType().name("Vampire").hp(6).tag(healer1)
             .sides(bloodPact1, swordHeal2, heal3, heal3, magic2, nothing)
-            .spells(Spell.balance)); //TODO new spell-> 2 to full heal?
+            .spells(Spell.healingMist));
 
 
 
@@ -96,11 +96,11 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .sides(magic3NextTurn, magic2NextTurn, magic2, magic2, nothing, nothing)
                 .spells(Spell.deathSpike));
         add(new HeroType().name("Channeler").hp(6).tag(wizard1)
-                .sides(powerSelf, magic2, magic2, magic1, magic1, nothing)
+                .sides(buff2, buff1, magic2, magic2, magic1, nothing)
                 .spells(Spell.arcaneMissile));
         add(new HeroType().name("Trickster").hp(7).tag(wizard1)
                 .sides(copy, copy, magic2, magic1, magic1, nothing)
-                .spells(Spell.arcaneMissile));//TODO new spell here (enemy reroll!??)
+                .spells(Spell.lightningStrike));//TODO new spell here (enemy reroll!??)
 
 
 

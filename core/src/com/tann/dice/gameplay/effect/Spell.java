@@ -22,8 +22,8 @@ public class Spell implements Targetable{
 
     public static final Spell inferno = new Spell().name("Inferno").image("inferno").cost(3).effs(new Eff().damage(2).enemyAndAdjacentsRanged());
     public static final Spell deathSpike = new Spell().name("Death Spike").image("deathSpike").cost(5).effs(new Eff().damage(10).ranged());
-    public static final Spell arcaneMissile = new Spell().name("Arcane Missile").image("arcaneMissile").cost(3).effs(new Eff().damage(4).ranged()).repeatable();
-    public static final Spell blast = new Spell().name("Blast").image("blase").cost(2).effs(new Eff().damage(3)).repeatable();
+    public static final Spell lightningStrike = new Spell().name("Lightning Strike").image("lightningStrike").cost(3).effs(new Eff().damage(4).ranged()).repeatable();
+    public static final Spell arcaneMissile = new Spell().name("Arcane Missile").image("arcaneMissile").cost(2).effs(new Eff().damage(3)).repeatable();
 
     public static final Spell fireWave = new Spell().name("Fire Wave").image("firewave").cost(3).effs(new Eff().damage(1).enemyGroup());
     public static final Spell healAll = new Spell().name("Mass Heal").image("healall").cost(2).effs(new Eff().heal(1).friendlyGroup());

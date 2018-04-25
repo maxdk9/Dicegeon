@@ -103,8 +103,8 @@ public class Side {
     public static final Side topbot1 = new Side().title("Crush").image("topbot").effect(new Eff().damage(1).topBotEnemy());
     public static final Side topbot2 = topbot1.withValue(2);
 
-    public static final Side front1 = new Side().image("Shove").effect(new Eff().damage(1).allFront());
-    public static final Side front2 = front1.withValue(2);
+//    public static final Side front1 = new Side().image("Shove").effect(new Eff().damage(1).allFront());
+//    public static final Side front2 = front1.withValue(2);
 
     public static final Side hook1 = new Side().title("Hook").image("hook").effect(new Eff().damage(1).ranged(), new Eff().hook());
 
@@ -190,6 +190,10 @@ public class Side {
             .effect(new Eff().self().buff(new Buff(-1, new TriggerAllSidesBonus(1, true))).justValue(1));
 
     public static final Side copy = new Side().title("Copy").image("copy").effect(new Eff().friendlySingleOther().copyAbility());
+
+    public static final Side buff1 = new Side().title("Concentration").image("concentration").effect(
+        new Eff().buff(new Buff(1, new TriggerAllSidesBonus(1, true))).friendlySingle().justValue(1));
+    public static final Side buff2 = buff1.withValue(2);
 
     //    public static final Side potionHeroism = new Side(Images.get("potionofheroism"), new Eff().buff(new DamageMultiplier(2, 1)).friendlySingle());
 

@@ -244,7 +244,7 @@ public class Die implements Targetable{
 
     private float getFloat(TextureRegion tr){
         if(tr==null){
-            System.out.println("oh no!");
+            System.out.println("oh no! "+entity.entityType.name);
         }
         return getFloat(tr.getRegionX()/128, tr.getRegionY()/128);
     }
