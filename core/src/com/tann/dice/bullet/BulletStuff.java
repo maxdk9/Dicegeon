@@ -71,8 +71,9 @@ public class BulletStuff {
 	public static Rectangle playerArea;
 
 	public static float sides = .30f;
+  public static boolean stopRender;
 
-	public static void init(){
+  public static void init(){
 
 		Bullet.init();
 		spinCam= new PerspectiveCamera(fov, Main.width, Main.height);
@@ -195,6 +196,7 @@ public class BulletStuff {
 	}
 	
 	public static void render() {
+		if(stopRender) return;
         camController.update();
 		modelBatch.begin(cam);
 		modelBatch.render(instances, shader);
@@ -207,7 +209,7 @@ public class BulletStuff {
 	}
 
 	public static void drawSpinnyDie3(Die die, float x, float y, float size){
-
+		if(stopRender) return;
 		spinCam.position.set(-2.5f, 5, -2.5f);
 		spinCam.lookAt(-1, 2.0f, -1);
 		spinCam.update();
