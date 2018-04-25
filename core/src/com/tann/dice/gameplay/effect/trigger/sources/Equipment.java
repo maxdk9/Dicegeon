@@ -16,7 +16,7 @@ import java.util.*;
 
 public class Equipment {
 
-  private static final List<Equipment> all = new ArrayList<>();
+  public static final List<Equipment> all = new ArrayList<>();
   private static int defaultLevel = 0;
   {
     level = defaultLevel;

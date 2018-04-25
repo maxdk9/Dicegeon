@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.type.HeroType;
@@ -21,6 +22,7 @@ import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EquipmentPanel;
 import com.tann.dice.util.Pixl;
 import com.tann.dice.util.Screen;
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class DebugScreen extends Screen implements ExplanelReposition{
         });
         int row = 4;
         Group parent = new Group();
+        int gap = 20;
+        int x = 350;
         {
             Map<Color, List<Hero>> heroMap = new HashMap<>();
             for(HeroType ht:HeroType.ALL_HEROES.values()){
@@ -55,7 +59,6 @@ public class DebugScreen extends Screen implements ExplanelReposition{
 
             Group heroGroup = new Group();
             Pixl p = new Pixl(heroGroup, 0);
-            int i=0;
             for(Color c: heroMap.keySet()){
                 int index = 0;
                 Collections.sort(heroMap.get(c), new Comparator<Hero>() {
@@ -72,8 +75,10 @@ public class DebugScreen extends Screen implements ExplanelReposition{
                 p.row();
             }
             p.pix();
-            heroGroup.setPosition(Gdx.graphics.getWidth()/3*2-heroGroup.getWidth()/2,Gdx.graphics.getHeight()/2-heroGroup.getHeight()/2);
+            heroGroup.setPosition(x,(int)(Gdx.graphics.getHeight()/2-heroGroup.getHeight()/2));
             parent.addActor(heroGroup);
+            x+= heroGroup.getWidth() +gap;
+
         }
         {
             Group monsterGroup = new Group();
@@ -84,7 +89,25 @@ public class DebugScreen extends Screen implements ExplanelReposition{
             }
             p.pix();
             parent.addActor(monsterGroup);
-            monsterGroup.setPosition(Gdx.graphics.getWidth() / 3-monsterGroup.getWidth()/2, Gdx.graphics.getHeight() / 2-monsterGroup.getHeight()/2);
+            monsterGroup.setPosition(x, (int)(Gdx.graphics.getHeight() / 2-monsterGroup.getHeight()/2));
+            x+=monsterGroup.getWidth() +gap;
+        }
+
+        {
+            Group equipmentGroup = new Group();
+            Pixl p = new Pixl(equipmentGroup, 0);
+            for(int i=0;i<Equipment.all.size();i++){
+                Equipment e = Equipment.all.get(i);
+                EquipmentPanel ep = new EquipmentPanel(e, false, false);
+                p.actor(ep);
+                if((i+1)%5==0){
+                    p.row();
+                }
+            }
+            p.pix();
+            parent.addActor(equipmentGroup);
+            equipmentGroup.setPosition(x, (int)(Gdx.graphics.getHeight() / 2-equipmentGroup.getHeight()/2));
+            x+=equipmentGroup.getWidth()+gap;
         }
 
         push(parent, false, false, false, false, 0, null);
@@ -129,6 +152,6 @@ public class DebugScreen extends Screen implements ExplanelReposition{
 
     @Override
     public void repositionExplanel(Group g) {
-        g.setPosition(Main.stage.getCamera().position.x-g.getWidth()/2, Main.stage.getCamera().position.y+getHeight()/2-g.getHeight());
+        g.setPosition((int)(Main.stage.getCamera().position.x-g.getWidth()/2), (int)(Main.stage.getCamera().position.y+getHeight()/2-g.getHeight()));
     }
 }

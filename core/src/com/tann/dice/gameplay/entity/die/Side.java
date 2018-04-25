@@ -128,7 +128,8 @@ public class Side {
     public static final Side poison1 = new Side().title("Poison").image("poison").effect(new Eff().justValue(1).
             buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged());
 
-    public static final Side flameWard2 = new Side().title("Flame Wall").image("flameWard").effect(new Eff().damage(2).allTargeters());
+    public static final Side flameWard1 = new Side().title("Flame Wall").image("flameWard").effect(new Eff().damage(1).allTargeters());
+    public static final Side flameWard2 = flameWard1.withValue(2);
 
     // shield stuff
 

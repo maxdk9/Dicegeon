@@ -131,7 +131,7 @@ public class TargetingManager {
             }
             a = Main.getCurrentScreen().getTopActor();
             Explanel.get().setup(t, false);
-            if(a==null) a=Main.getCurrentScreen();
+            if(a==null ||  !(a instanceof ExplanelReposition)) a=Main.getCurrentScreen();
             if(a != null && a instanceof ExplanelReposition){
                 ((ExplanelReposition)a).repositionExplanel(Explanel.get());
             }
