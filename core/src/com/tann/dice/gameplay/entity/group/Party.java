@@ -14,7 +14,9 @@ import com.tann.dice.screens.generalPanels.InventoryPanel;
 import com.tann.dice.util.Colours;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.tann.dice.gameplay.entity.type.HeroType.*;
 
@@ -53,8 +55,8 @@ public class Party extends EntityGroup<Hero>{
         HeroType all = HeroType.byName("vampire");
         HeroType all2 = HeroType.byName("combo");
         HeroType[] types = new HeroType[]{
-                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
-//                all, all, all, all2, all2
+//                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
+                all, all, all, all2, all2
         };
         List<Hero> tmp = new ArrayList<>();
         for(HeroType type: types){
@@ -122,8 +124,8 @@ public class Party extends EntityGroup<Hero>{
         return maxRolls;
     }
 
-    public List<Spell> getSpells(){
-        List<Spell> spells = new ArrayList<>();
+    public Set<Spell> getSpells(){
+        Set<Spell> spells = new HashSet<>();
         spells.add(Spell.slice);
         spells.add(Spell.resist);
 //        spells.add(Spell.dart);

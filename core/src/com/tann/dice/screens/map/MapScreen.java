@@ -1,25 +1,14 @@
 package com.tann.dice.screens.map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
-import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.DieSpinner;
-import com.tann.dice.screens.dungeon.panels.LevelEndPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import com.tann.dice.util.Screen;
+import com.tann.dice.util.TextButton;
 
 public class MapScreen extends Screen {
 

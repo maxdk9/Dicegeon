@@ -17,10 +17,8 @@ import com.tann.dice.util.Draw;
 import com.tann.dice.util.Layoo;
 import com.tann.dice.util.TannFont;
 import com.tann.dice.util.TextWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class SpellHolder extends Group {
 
@@ -40,7 +38,7 @@ public class SpellHolder extends Group {
         });
     }
 
-    public void setup(List<Spell> spells) {
+    public void setup(Set<Spell> spells) {
         spellMap.clear();
         for(Spell spell:spells){
             addSpell(spell);
