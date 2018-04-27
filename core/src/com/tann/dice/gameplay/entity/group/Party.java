@@ -1,5 +1,6 @@
 package com.tann.dice.gameplay.entity.group;
 
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
@@ -22,7 +23,7 @@ import static com.tann.dice.gameplay.entity.type.HeroType.*;
 
 public class Party extends EntityGroup<Hero>{
 
-    private static final int BASE_ROLLS = 20;
+    private static final int BASE_ROLLS = Main.debug?20:2;
 
     private List<Equipment> equipment = new ArrayList<>();
     private int gold; // wow I wonder if this will ever do anything! I hope so
@@ -55,8 +56,8 @@ public class Party extends EntityGroup<Hero>{
         HeroType all = HeroType.byName("vampire");
         HeroType all2 = HeroType.byName("combo");
         HeroType[] types = new HeroType[]{
-//                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
-                all, all, all, all2, all2
+                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
+//                all, all, all, all2, all2
         };
         List<Hero> tmp = new ArrayList<>();
         for(HeroType type: types){

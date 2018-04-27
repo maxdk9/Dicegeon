@@ -24,7 +24,7 @@ public class LevelEndPanel extends Group {
     boolean action;
     boolean levelup;
     String congrat;
-    public TipOfTheDay tipOfTheDay;
+    public TipOfTheDay tipOfTheDay = new TipOfTheDay();
     public LevelEndPanel(List<Equipment> gainedEquipment, boolean levelup) {
         setTransform(false);
         this.gainedEquipment = gainedEquipment;
@@ -54,8 +54,9 @@ public class LevelEndPanel extends Group {
             p.row();
         }
         p.row(4);
+        int buttonGap = 6;
         if(!levelup) {
-            TextButton inventory = new TextButton("Inventory", 10);
+            TextButton inventory = new TextButton("Inventory", buttonGap);
             p.actor(inventory);
             inventory.setRunnable(new Runnable() {
                 @Override
@@ -71,7 +72,7 @@ public class LevelEndPanel extends Group {
             });
         }
         if(action) {
-            TextButton cont = new TextButton("Continue", 10);
+            TextButton cont = new TextButton("Continue", buttonGap);
             p.actor(cont);
             cont.setRunnable(new Runnable() {
                 @Override
@@ -90,9 +91,9 @@ public class LevelEndPanel extends Group {
             de.getEntityPanel().showLevelUpTick(levelup && ((Hero)de).level == 0);
         }
 
-        tipOfTheDay = new TipOfTheDay();
         Main.getCurrentScreen().addActor(tipOfTheDay);
         tipOfTheDay.layout();
+        setX((int)(Main.width/2-getWidth()/2));
     }
 
     @Override

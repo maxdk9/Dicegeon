@@ -26,7 +26,7 @@ public class LevelEndPhase extends Phase {
         levelEndPanel = new LevelEndPanel(gainedEquipment, level%2==0);
         DungeonScreen.get().addActor(levelEndPanel);
         Tann.center(levelEndPanel);
-        levelEndPanel.setY(Main.height*3/4f-levelEndPanel.getHeight()/2);
+        levelEndPanel.setY((int)(Main.height*2/3f-levelEndPanel.getHeight()/2));
         for(DiceEntity de:Party.get().getActiveEntities()){
             de.slide(false);
         }

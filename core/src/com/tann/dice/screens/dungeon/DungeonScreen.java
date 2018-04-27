@@ -174,7 +174,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     }
 
     static {
-        addLevel(rat, goblin, bird, dragon); // all sizes
+//        addLevel(rat, goblin, bird, dragon); // all sizes
 //        addLevel(rat); // ezpz
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
@@ -445,10 +445,10 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     public void repositionExplanel(Group g) {
         if(spellButt.shown){
             Vector2 bounds = Tann.getLocalCoordinates(spellHolder);
-            g.setPosition(Main.width/2-g.getWidth()/2, bounds.y-g.getHeight()-2);
+            g.setPosition((int)(Main.width/2-g.getWidth()/2), (int)(bounds.y-g.getHeight()-2));
         }
         else{
-            g.setPosition(Main.width/2-g.getWidth()/2, Main.height/2-g.getHeight()/2);
+            g.setPosition((int)(Main.width/2-g.getWidth()/2), (int)(Main.height/2-g.getHeight()/2));
         }
     }
 }
