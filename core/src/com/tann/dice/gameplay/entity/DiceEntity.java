@@ -23,6 +23,7 @@ import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.util.Colours;
+import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 
 import com.tann.dice.util.TextWriter;
@@ -213,6 +214,7 @@ public abstract class DiceEntity {
 
   public void hit(Eff e, boolean instant) {
     boolean tempDead = dead;
+    if(instant || e.source == null || e.source.isPlayer()) e.playSound();
     switch (e.type) {
       case Damage:
         if (e.targetingType == Eff.TargetingType.Self && e.source == this) {
@@ -288,6 +290,7 @@ public abstract class DiceEntity {
   }
 
   public void damage(int value) {
+    new Eff().damage(value).playSound();
     if (value > 0) {
       getEntityPanel().addDamageFlib(value);
     }
@@ -339,6 +342,8 @@ public abstract class DiceEntity {
     for (Trigger t : getActiveTriggers()) {
       t.onDeath();
     }
+
+    Sounds.playSound(Sounds.death, 1, 1);
   }
 
   public void removeEffectsIfDead() {

@@ -4,6 +4,7 @@ import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.type.MonsterType;
+import com.tann.dice.util.Sounds;
 
 import java.util.List;
 
@@ -249,6 +250,7 @@ public class Eff {
     public void untargetedUse(boolean delayed) {
         switch(type) {
             case Magic:
+                playSound();
                 if(nextTurn && !delayed){
                     Party.get().addNextTurnEffect(this);
                 }
@@ -340,6 +342,28 @@ public class Eff {
         Buff b = buff.copy();
         b.setValue(getValue());
         return b;
+    }
+
+    public void playSound(){
+        switch (type) {
+            case Shield:
+                Sounds.playSound(Sounds.blocks, 1, 1);
+                break;
+            case Healing:
+                Sounds.playSound(Sounds.heals, 1, 1);
+                break;
+            case Damage:
+                if(source==null || source.isPlayer()) {
+                    Sounds.playSound(Sounds.punches, 1, 1);
+                }
+                else{
+                    Sounds.playSound(Sounds.hits, 1, 1);
+                }
+                break;
+            case Magic:
+                Sounds.playSound(Sounds.magic, 1, 1);
+                break;
+        }
     }
 
 }

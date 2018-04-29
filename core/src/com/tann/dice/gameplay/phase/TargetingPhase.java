@@ -1,6 +1,5 @@
 package com.tann.dice.gameplay.phase;
 
-import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;

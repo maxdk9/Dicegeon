@@ -13,7 +13,6 @@ public class DamagePhase extends Phase {
         Tann.delay(new Runnable(){
             @Override
             public void run() {
-                Sounds.playSound(Sounds.fwips, 4, 1);
                 EntityGroup.activateDamage();
                 boolean activated = Room.get().activateDelayedRolls();
 
@@ -28,7 +27,7 @@ public class DamagePhase extends Phase {
 
 
             }
-        }, .3f);
+        }, .45f);
 
     }
 

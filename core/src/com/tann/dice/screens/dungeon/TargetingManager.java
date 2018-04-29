@@ -1,6 +1,7 @@
 package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
@@ -246,17 +247,10 @@ public class TargetingManager {
             return false;
         }
 
-        boolean containsDamage = false;
         if (t.use()) {
             for (Eff e : t.getEffects()) {
                 hitEntities(EntityGroup.getActualTargets(e, player, entity), e);
-                if (e.type == Eff.EffType.Damage) {
-                    containsDamage = true;
-                }
             }
-        }
-        if (containsDamage) {
-            Sounds.playSound(Sounds.fwips, 4, 1);
         }
         if(!t.repeat()) {
             Main.getCurrentScreen().popAllLight();

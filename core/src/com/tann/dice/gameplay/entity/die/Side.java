@@ -209,7 +209,8 @@ public class Side {
     public static final Side smol_sword1 = new Side().title("Thwack").size(smol).image("sword").effect(new Eff().damage(1));
     public static final Side smol_sword2 = smol_sword1.withValue(2);
     public static final Side smol_sword3 = smol_sword1.withValue(3);
-    public static final Side smol_sword4 = smol_sword1.withValue(3);
+    public static final Side smol_sword4 = smol_sword1.withValue(4);
+    public static final Side smol_sword5 = smol_sword1.withValue(5);
 
     public static final Side smol_nip1 = new Side().title("Nibble").size(smol).image("nip").effect(new Eff().damage(1));
     public static final Side smol_nip2 = smol_nip1.withValue(2);

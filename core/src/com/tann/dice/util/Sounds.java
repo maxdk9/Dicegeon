@@ -16,13 +16,23 @@ public class Sounds {
 
     public static String[] clacks;
     public static String[] clocks;
-    public static String[] fwips;
+	public static String[] punches;
+	public static String[] hits;
+	public static String[] blocks;
+	public static String[] heals;
+	public static String[] magic;
+	public static String[] death;
 
 	public static void setup(){
 		//sfx//
         clacks = makeSounds("clack", 4);
         clocks = makeSounds("clock", 4);
-        fwips = makeSounds("combat/fwip", 5);
+		hits = makeSounds("combat/hit", 6);
+		punches = makeSounds("combat/punch", 5);
+		blocks = makeSounds("combat/block", 4);
+		heals = makeSounds("combat/heal", 4);
+		magic = makeSounds("combat/mystic", 4);
+		death = makeSounds("combat/death", 1);
 
 
 		//stuff to attempt to load sounds properly//
@@ -132,8 +142,16 @@ public class Sounds {
 		s.play(Slider.SFX.getValue()*2*volume, pitch, 0);
 	}
 
+	static HashMap<String[], Long> timeLastPlayedMap = new HashMap<>();
+	private static final long repeatTime = 50;
 	public static void playSound(String[] strings, float volume, float pitch){
-        playSound(strings[((int)(Math.random()* strings.length))], volume, pitch);
+        Long l = timeLastPlayedMap.get(strings);
+        long now = System.currentTimeMillis();
+        if(l!=null && now-l<repeatTime){
+        	return;
+		}
+		timeLastPlayedMap.put(strings, now);
+		playSound(strings[((int)(Math.random()* strings.length))], volume, pitch);
     }
 
 	public static void playSoundDelayed(final String[] sound, final float volume, final float pitch, float delay){
