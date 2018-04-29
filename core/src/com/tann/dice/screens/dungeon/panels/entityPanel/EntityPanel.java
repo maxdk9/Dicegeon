@@ -172,6 +172,7 @@ public class EntityPanel extends Group {
                     LevelUpPanel lup = new LevelUpPanel((Hero) entity);
                     Main.getCurrentScreen().push(lup, true, true, false, false, InputBlocker.DARK, null);
                     lup.setY(Main.height-lup.getHeight()-3);
+                    Sounds.playSound(Sounds.levelup);
                 }
             });
             tick.setPosition(dieHolder.getX()+dieHolder.getWidth()/2-tick.getWidth()/2,

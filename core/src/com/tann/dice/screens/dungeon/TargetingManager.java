@@ -241,6 +241,7 @@ public class TargetingManager {
         }
 
         if(invalidReason != null){
+            Sounds.playSound(Sounds.error);
             if(Main.getCurrentScreen().getTopActor() instanceof TextWriter){
                 Main.getCurrentScreen().popAllLight();
             }

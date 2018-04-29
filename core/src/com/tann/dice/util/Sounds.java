@@ -30,6 +30,8 @@ public class Sounds {
 	public static String[] pop;
 	public static String[] error;
 
+	public static String[] levelup;
+
 
 	public static void setup(){
 		//sfx//
@@ -49,6 +51,10 @@ public class Sounds {
 		pip = makeSounds("ui/pip", 5);
 		pop = makeSounds("ui/pop", 6);
 		error = makeSounds("ui/error", 1);
+
+		levelup = makeSounds("ui/levelup", 1);
+
+
 
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();

@@ -55,6 +55,7 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
                     Main.getCurrentScreen().popAllLight();
                     Main.getCurrentScreen().pop(LevelUpPanel.this);
                     PhaseManager.get().getPhase().refreshPhase();
+                    Sounds.playSound(Sounds.pip);
                 }
             });
 
@@ -74,6 +75,7 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
                 p.refresh();
                 Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
                 p.setPosition((int) (Main.width / 2 - p.getWidth() / 2), 5);
+                Sounds.playSound(Sounds.pip);
             }
         });
         addActor(org);
