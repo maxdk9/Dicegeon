@@ -235,6 +235,15 @@ public abstract class Screen extends Lay{
 		push(a, InputBlocker.DARK);
 	}
 
+	public boolean stackContains(Class c){
+		for(Pair p:modalStack){
+			if(p.a.getClass() == c){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void activatePhase(Phase phase){}
 
 }

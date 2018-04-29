@@ -354,7 +354,7 @@ public class Eff {
                 break;
             case Damage:
                 if(source==null || source.isPlayer()) {
-                    Sounds.playSound(Sounds.punches, 1, 1);
+                    Sounds.playSound(Sounds.fwips, 1, 1);
                 }
                 else{
                     Sounds.playSound(Sounds.hits, 1, 1);

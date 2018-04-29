@@ -1,6 +1,5 @@
 package com.tann.dice.screens.dungeon;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
@@ -19,7 +17,6 @@ import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
-import static com.tann.dice.gameplay.entity.type.MonsterType.*;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
@@ -28,16 +25,20 @@ import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.EscMenu;
+import com.tann.dice.screens.dungeon.panels.EntityContainer;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
-import com.tann.dice.screens.dungeon.panels.EntityContainer;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.tann.dice.gameplay.entity.type.MonsterType.*;
 
 public class DungeonScreen extends Screen implements ExplanelReposition{
 
@@ -407,6 +408,9 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     }
 
     private void bottomClick() {
+        if(stackContains(Explanel.class) && TargetingManager.get().getSelectedTargetable() != null){
+            Sounds.playSound(Sounds.pop);
+        }
         popAllLight();
         spellButt.hide();
         TargetingManager.get().deselectTargetable();

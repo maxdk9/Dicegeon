@@ -23,6 +23,7 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
+import com.tann.dice.util.Sounds;
 
 import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 
@@ -59,10 +60,12 @@ public class Die implements Targetable{
         switch(getState()){
             case Stopped:
             case Unlocking:
+                Sounds.playSound(Sounds.lock);
                 slideToPanel();
                 break;
             case Locked:
             case Locking:
+                Sounds.playSound(Sounds.unlock);
                 entity.getEntityPanel().unlockDie();
                 returnToPlay(null, INTERP_SPEED);
                 break;

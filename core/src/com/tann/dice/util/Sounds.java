@@ -2,7 +2,6 @@ package com.tann.dice.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -16,17 +15,30 @@ public class Sounds {
 
     public static String[] clacks;
     public static String[] clocks;
+	public static String[] lock;
+	public static String[] unlock;
+
 	public static String[] punches;
 	public static String[] hits;
+	public static String[] fwips;
 	public static String[] blocks;
 	public static String[] heals;
 	public static String[] magic;
 	public static String[] death;
 
+	public static String[] pip;
+	public static String[] pop;
+	public static String[] error;
+
+
 	public static void setup(){
 		//sfx//
-        clacks = makeSounds("clack", 4);
-        clocks = makeSounds("clock", 4);
+        clacks = makeSounds("dice/clack", 4);
+        clocks = makeSounds("dice/clock", 4);
+		lock = makeSounds("dice/lock", 1);
+		unlock = makeSounds("dice/unlock", 1);
+
+		fwips = makeSounds("combat/fwip", 5);
 		hits = makeSounds("combat/hit", 6);
 		punches = makeSounds("combat/punch", 5);
 		blocks = makeSounds("combat/block", 4);
@@ -34,6 +46,9 @@ public class Sounds {
 		magic = makeSounds("combat/mystic", 4);
 		death = makeSounds("combat/death", 1);
 
+		pip = makeSounds("ui/pip", 5);
+		pop = makeSounds("ui/pop", 6);
+		error = makeSounds("ui/error", 1);
 
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
@@ -144,6 +159,11 @@ public class Sounds {
 
 	static HashMap<String[], Long> timeLastPlayedMap = new HashMap<>();
 	private static final long repeatTime = 50;
+
+	public static void playSound(String[] strings){
+		playSound(strings, 1, 1);
+	}
+
 	public static void playSound(String[] strings, float volume, float pitch){
         Long l = timeLastPlayedMap.get(strings);
         long now = System.currentTimeMillis();

@@ -8,7 +8,6 @@ import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
 
 public class DieHolder extends Actor {
-    static final int extraGap = 0;
     DiceEntity entity;
     public DieHolder(DiceEntity entity) {
         this.entity = entity;

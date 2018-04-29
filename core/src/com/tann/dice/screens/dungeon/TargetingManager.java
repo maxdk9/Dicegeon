@@ -1,7 +1,6 @@
 package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
@@ -16,13 +15,11 @@ import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
-import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +89,7 @@ public class TargetingManager {
                 break;
             default:
                 DungeonScreen.get().spellButt.hide();
+                Sounds.playSound(Sounds.pip);
                 targetableClick(d, true);
                 break;
         }
@@ -127,6 +125,7 @@ public class TargetingManager {
             if(a instanceof Explanel){
                 Main.getCurrentScreen().popSingleLight();
                 if(Explanel.get().spell == t){
+                    Sounds.playSound(Sounds.pop);
                     return;
                 }
             }
@@ -137,6 +136,7 @@ public class TargetingManager {
                 ((ExplanelReposition)a).repositionExplanel(Explanel.get());
             }
             Main.getCurrentScreen().push(Explanel.get(), false, false, true, true, 0 , null);
+            Sounds.playSound(Sounds.pip);
             return;
         }
         for (DiceEntity de : Party.get().getActiveEntities()) {
@@ -153,6 +153,9 @@ public class TargetingManager {
                         case Untargeted:
                             if(!TargetingManager.get().target(null)) return;
                             break;
+                        default:
+                            Sounds.playSound(Sounds.pop);
+                            break;
                     }
                 }
             }
@@ -160,7 +163,7 @@ public class TargetingManager {
             return;
         }
         deselectTargetable();
-
+        Sounds.playSound(Sounds.pip);
         TargetingManager.get().setSelectedTargetable(t);
         t.select();
         if(t.getEffects()[0].isTargeted() && EntityGroup.getValidTargets(t, true).size()==0){
@@ -277,6 +280,7 @@ public class TargetingManager {
 
         // if you're de-clicking an entity, just declick and return
         if ((dieSide && getSelectedTargetable()==entity.getDie()) || (!dieSide && Main.getCurrentScreen().getTopActor()==entity.getDiePanel())) {
+            if(getSelectedTargetable() != null) Sounds.playSound(Sounds.pop);
             Main.getCurrentScreen().pop();
             return;
         }
