@@ -117,8 +117,10 @@ public class EntityGroup <T extends DiceEntity>{
             case EnemySingle:
             case EnemyOnlyAdjacents:
             case EnemyAndAdjacents:
+            case enemyHalfHealthOrLess:
                 for(DiceEntity de:enemies){
                     if(!de.canBeTargeted() && player) continue;
+                    if(type == TargetingType.enemyHalfHealthOrLess && de.getProfile().getTopHealth()>de.getMaxHp()/2) continue;
                     targetsTmp.add(de);
                 }
                 break;
@@ -212,6 +214,7 @@ public class EntityGroup <T extends DiceEntity>{
         Eff.TargetingType type = eff.targetingType;
         switch(type){
             case EnemySingle:
+            case enemyHalfHealthOrLess:
             case EnemySingleRanged:
             case FriendlySingle:
             case FriendlySingleOther:

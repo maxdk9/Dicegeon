@@ -11,7 +11,7 @@ import java.util.List;
 public class Eff {
 
     public enum TargetingType{
-        EnemySingle, EnemySingleRanged, EnemyAndAdjacents, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy, EnemyAndAdjacentsRanged,
+        EnemySingle, EnemySingleRanged, EnemyAndAdjacents, EnemyGroup, EnemyOnlyAdjacents, RandomEnemy, EnemyAndAdjacentsRanged, enemyHalfHealthOrLess,
         FriendlySingle, FriendlySingleOther, FriendlyGroup, FriendlySingleAndAdjacents, FriendlyMostDamaged,
         Self, OnRoll, Untargeted, AllTargeters,
         TopEnemy, BottomEnemy, TopBottomEnemy, AllFront,
@@ -77,6 +77,7 @@ public class Eff {
             case Damage:
                 switch(targetingType){
                     case EnemySingle: result += " to an enemy"; break;
+                    case enemyHalfHealthOrLess: result += " to an enemy on half hp or less"; break;
                     case EnemySingleRanged: result +=" to ANY enemy"; break;
                     case EnemyGroup: result += " to ALL enemies"; break;
                     case EnemyAndAdjacents: result += " to an enemy and both adjacent enemies"; break;
@@ -158,6 +159,7 @@ public class Eff {
     public Eff allFront() { return targetType(TargetingType.AllFront);}
     public Eff friendlyMostDamaged() { return targetType(TargetingType.FriendlyMostDamaged);}
     public Eff allies() { return targetType(TargetingType.Allies);}
+    public Eff enemyHalfOrLess() {return targetType(TargetingType.enemyHalfHealthOrLess);}
 
     public Eff justValue(int amount) {this.value = amount; return this;}
 
@@ -274,18 +276,24 @@ public class Eff {
             case CopyAbility:
                 return "No sides left to copy";
         }
+        switch(targetingType){
+            case enemyHalfHealthOrLess:
+                return "Can only target enemies on half health or less";
+        }
         return "Invalid no target string";
     }
 
     public boolean isTargeted() {
         switch(targetingType){
             case EnemySingle:
+            case enemyHalfHealthOrLess:
             case EnemySingleRanged:
             case FriendlySingle:
             case FriendlySingleOther:
             case FriendlySingleAndAdjacents:
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
+            case AllTargeters:
                 return true;
             case EnemyGroup:
             case EnemyOnlyAdjacents:
@@ -295,7 +303,6 @@ public class Eff {
             case Self:
             case OnRoll:
             case Untargeted:
-            case AllTargeters:
             case DoesNothing:
             case TopEnemy:
             case BottomEnemy:
@@ -311,6 +318,7 @@ public class Eff {
     public boolean needsUsing() {
         switch(targetingType){
             case EnemySingle:
+            case enemyHalfHealthOrLess:
             case EnemySingleRanged:
             case FriendlySingle:
             case FriendlySingleOther:

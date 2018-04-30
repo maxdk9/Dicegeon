@@ -21,6 +21,7 @@ import com.tann.dice.util.Tann;
 import com.tann.dice.util.TextWriter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TargetingManager {
@@ -217,8 +218,10 @@ public class TargetingManager {
         if (first.isTargeted() && !valids.contains(entity)) {
             switch(targetingType){
                 case EnemySingle:
+                case enemyHalfHealthOrLess:
                     if(entity.isPlayer()) invalidReason = "Target an enemy";
                     if(!entity.isPlayer() && !entity.slidOut) invalidReason = "Target an enemy in the front row";
+                    if(targetingType == TargetingType.enemyHalfHealthOrLess && entity.getProfile().getTopHealth()>entity.getMaxHp()/2) invalidReason = "Target an enemy on half health or less";
                     break;
                 case FriendlySingle:
                 case FriendlySingleOther:
@@ -350,10 +353,28 @@ public class TargetingManager {
         return getSelectedTargetable()!=null && getSelectedTargetable().getEffects()[0].type == Eff.EffType.CopyAbility;
     }
 
+    private static final HashMap<Targetable, Boolean> usabilityMap = new HashMap<>();
+
     public boolean isUsable(Targetable t) {
-        Eff e = t.getEffects()[0];
-        if(!e.needsUsing()) return false;
-        if(e.targetingType==TargetingType.RandomEnemy || e.targetingType==TargetingType.Untargeted) return true;
-        return EntityGroup.getValidTargets(t, true).size()>0;
+        Boolean b = usabilityMap.get(t);
+        if(b==null){
+            Eff e = t.getEffects()[0];
+            if(!e.needsUsing()) {
+                b = false;
+            }
+            else if(e.targetingType==TargetingType.RandomEnemy || e.targetingType==TargetingType.Untargeted){
+                b = true;
+            }
+            else{
+                b = EntityGroup.getValidTargets(t, true).size()>0;
+            }
+            usabilityMap.put(t, b);
+        }
+        return b;
     }
+
+    public void anythingChanged() {
+        usabilityMap.clear();
+    }
+
 }

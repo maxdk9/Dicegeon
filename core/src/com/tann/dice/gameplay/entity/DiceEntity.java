@@ -131,6 +131,7 @@ public abstract class DiceEntity {
     getProfile().somethingChanged();
     getDiePanel().somethingChanged();
     getDie().refresh();
+    TargetingManager.get().anythingChanged();
   }
 
   public int getMaxHp() {

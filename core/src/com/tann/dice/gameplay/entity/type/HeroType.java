@@ -91,7 +91,7 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
 
         add(new HeroType().name("Pyro").hp(6).tag(wizard1)
                 .sides(flameWard2, flameWard1, magic2, magic2, magic1, nothing)
-                .spells(Spell.inferno));
+                .spells(Spell.bloodBoil));
         add(new HeroType().name("Arcanist").hp(7).tag(wizard1)
                 .sides(magic3NextTurn, magic2NextTurn, magic2, magic2, nothing, nothing)
                 .spells(Spell.deathSpike));

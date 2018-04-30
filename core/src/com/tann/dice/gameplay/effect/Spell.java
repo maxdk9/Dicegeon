@@ -12,15 +12,15 @@ import com.tann.dice.util.Draw;
 
 public class Spell implements Targetable{
 
+//    public static final Spell inferno = new Spell().name("Inferno").image("inferno").cost(3).effs(new Eff().damage(2).enemyAndAdjacentsRanged());
 
     public static final Spell balance = new Spell().name("Balance").image("balance").cost(3).effs(new Eff().heal(1).friendlyGroup(), new Eff().damage(1).enemyGroup());
-
     public static final Spell healingMist = new Spell().name("Healing Mist").image("healingMist").cost(2).effs(new Eff().heal(2).friendlyGroup());
     public static final Spell lifeSpark = new Spell().name("Life Spark").image("lifeSpark").cost(1).effs(new Eff().heal(2).friendlySingle()).repeatable();
     public static final Spell stoneSkin = new Spell().name("Stoneskin").image("stoneskin").cost(3).effs(new Eff().shield(99).friendlySingle());
     public static final Spell rejuvenate = new Spell().name("Rejuvenate").image("rejuvenate").cost(3).effs(new Eff().heal(99).friendlySingle(), new Eff().decurse());
 
-    public static final Spell inferno = new Spell().name("Inferno").image("inferno").cost(3).effs(new Eff().damage(2).enemyAndAdjacentsRanged());
+    public static final Spell bloodBoil = new Spell().name("Blood Boil").image("bloodBoil").cost(2).effs(new Eff().damage(4).enemyHalfOrLess());
     public static final Spell deathSpike = new Spell().name("Death Spike").image("deathSpike").cost(5).effs(new Eff().damage(10).ranged());
     public static final Spell lightningStrike = new Spell().name("Lightning Strike").image("lightningStrike").cost(3).effs(new Eff().damage(4).ranged()).repeatable();
     public static final Spell arcaneMissile = new Spell().name("Arcane Missile").image("arcaneMissile").cost(2).effs(new Eff().damage(3)).repeatable();

@@ -142,7 +142,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         spellButt = new SpellButt();
         addActor(spellButt);
         float gap = 5;
-        spellButt.setPosition(EntityContainer.width + friendly.getX() + gap, Main.height - spellButt.getHeight() - gap);
+        spellButt.setPosition(EntityContainer.width + friendly.getX() + gap, (int)(Main.height - spellButt.getHeight() - gap*2.5));
 
         ImageActor cog = new ImageActor(Images.cog);
         addActor(cog);
