@@ -89,6 +89,7 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     Explanel.get().setup(equipment);
     Main.getCurrentScreen().push(panel, false, false, true, true, 0, null);
     repositionExplanel(panel);
+    Sounds.playSound(Sounds.pip);
   }
 
   private void deselectEquipment() {
@@ -104,6 +105,7 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     entity.addEquipment(getSelectedEquipment());
     Party.get().removeEquipment(getSelectedEquipment());
     deselectEquipment();
+    Sounds.playSound(Sounds.pop);
   }
 
   public boolean isActive(){

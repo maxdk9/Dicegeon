@@ -9,14 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
 import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.Pixl;
-import com.tann.dice.util.Slider;
-import com.tann.dice.util.TextButton;
-import com.tann.dice.util.TextWriter;
+import com.tann.dice.util.*;
 
-public class EscMenu extends Group {
+public class EscMenu extends Group implements OnPop{
   private static EscMenu self;
   public static EscMenu get(){
     if(self==null) self = new EscMenu();
@@ -75,5 +70,10 @@ public class EscMenu extends Group {
   public void draw(Batch batch, float parentAlpha) {
     Draw.fillActor(batch, this, Colours.dark, Colours.blue, 1);
     super.draw(batch, parentAlpha);
+  }
+
+  @Override
+  public void onPop() {
+    Sounds.playSound(Sounds.pop);
   }
 }

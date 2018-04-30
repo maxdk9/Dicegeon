@@ -10,10 +10,12 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EquipmentPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
+import com.tann.dice.util.OnPop;
+import com.tann.dice.util.Sounds;
 
 import java.util.List;
 
-public class InventoryPanel extends Group {
+public class InventoryPanel extends Group implements OnPop{
     private static final int across = 4, down = 2;
     private static final int scale = 1;
     private static final int PANEL_SIZE = Images.spellBorder.getRegionWidth()*scale, gap=1;
@@ -37,6 +39,7 @@ public class InventoryPanel extends Group {
                 if(e!=null){
                     Party.get().unequip(e);
                     Party.get().addEquipment(e);
+                    Sounds.playSound(Sounds.pop);
                 }
                 return super.touchDown(event, x, y, pointer, button);
             }
@@ -72,5 +75,10 @@ public class InventoryPanel extends Group {
         Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), 1);
 
         super.draw(batch, parentAlpha);
+    }
+
+    @Override
+    public void onPop() {
+        Sounds.playSound(Sounds.pop);
     }
 }

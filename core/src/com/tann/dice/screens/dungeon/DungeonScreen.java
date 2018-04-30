@@ -323,9 +323,11 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
     private void toggleMenu() {
         if(pop(EscMenu.get())){
+            Sounds.playSound(Sounds.pop);
             return;
         }
         push(EscMenu.get(), true, true, true, false, .8f, null);
+        Sounds.playSound(Sounds.pip);
     }
 
     @Override

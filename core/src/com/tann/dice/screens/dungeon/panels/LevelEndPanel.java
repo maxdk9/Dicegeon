@@ -68,6 +68,7 @@ public class LevelEndPanel extends Group {
                     p.refresh();
                     Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
                     p.setPosition((int) (Main.width / 2 - p.getWidth() / 2), 5);
+                    Sounds.playSound(Sounds.pip);
                 }
             });
         }
@@ -77,9 +78,10 @@ public class LevelEndPanel extends Group {
             cont.setRunnable(new Runnable() {
                 @Override
                 public void run() {
-                remove();
-                tipOfTheDay.remove();
-                PhaseManager.get().popPhase();
+                    remove();
+                    tipOfTheDay.remove();
+                    PhaseManager.get().popPhase();
+                    Sounds.playSound(Sounds.pip);
                 }
             });
         }
