@@ -246,6 +246,13 @@ public abstract class DiceEntity {
       case Hook:
         slide(true);
         return;
+      case Shield:
+        getEntityPanel().addHearticleShield(e.getValue());
+        break;
+      case Healing:
+        getEntityPanel().addHearticleHeart(e.getValue());
+        break;
+
     }
     getProfile().addEffect(e);
     if (instant || !isPlayer()) {

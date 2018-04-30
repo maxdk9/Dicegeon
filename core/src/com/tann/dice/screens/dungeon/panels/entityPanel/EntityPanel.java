@@ -11,18 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.DamageProfile;
-import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.die.Die;
-import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
 import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
+import com.tann.dice.screens.dungeon.panels.entityPanel.heartsHolder.HeartsHolder;
 import com.tann.dice.util.*;
 
-import java.lang.annotation.Target;
 import java.util.List;
 
 public class EntityPanel extends Group {
@@ -30,7 +28,7 @@ public class EntityPanel extends Group {
     public DiceEntity entity;
     public boolean holdsDie =true;
     DamageProfile profile;
-    HeartsHolder heartsHolder;
+    com.tann.dice.screens.dungeon.panels.entityPanel.heartsHolder.HeartsHolder heartsHolder;
     float startX;
     static final int n = 5;
     static NinePatch panelBorder = new NinePatch(Images.panelBorder, n,n,n,n);
@@ -374,6 +372,14 @@ public class EntityPanel extends Group {
         heartsHolder.addDamageFlibs(amount);
     }
 
+    public void addHearticleShield(int amount) {
+        heartsHolder.addShieldFlibs(amount);
+    }
+
+    public void addHearticleHeart(int amount) {
+        heartsHolder.addHeartFlibs(amount);
+    }
+
     float fadeSpeed = 0;
     private float intensity;
     public void setArrowIntenity(float intensity, float fadeSpeed) {
@@ -393,4 +399,5 @@ public class EntityPanel extends Group {
         holdsDie = true;
 
     }
+
 }

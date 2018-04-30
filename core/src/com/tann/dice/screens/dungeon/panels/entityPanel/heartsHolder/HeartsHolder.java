@@ -1,14 +1,12 @@
-package com.tann.dice.screens.dungeon.panels.entityPanel;
+package com.tann.dice.screens.dungeon.panels.entityPanel.heartsHolder;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
 import com.tann.dice.util.TannFont;
 
 public class HeartsHolder extends Group{
@@ -104,11 +102,43 @@ public class HeartsHolder extends Group{
     public void addDamageFlibs(int amount) {
         for (int i = 0; i < amount; i++) {
             int heartIndex = entity.getHp()-i-1;
-            int x = (int) (heartIndex%heartsPerRow * (heartWidth+heartGap)+heartWidth/2-SwipeyActor.dx/2);
-            int y = (int) (getHeight()-heartHeight-((heartIndex/heartsPerRow) * (heartHeight+heartGap))+heartHeight/2-SwipeyActor.dy/2);
-            SwipeyActor sa = new SwipeyActor();
-            sa.setPosition(x, y);
+            HearticleSwipe sa = new HearticleSwipe();
+            setHearticlePosition(sa, heartIndex);
             addActor(sa);
         }
+    }
+
+    public void addShieldFlibs(int amount){
+        int incoming = entity.getProfile().getIncomingDamage();
+        int blocked = entity.getProfile().getBlockedDamage();
+        int hp = entity.getProfile().getTopHealth();
+
+        for(int i=0;i<amount && i<incoming-blocked;i++){
+            int heartIndex = hp-incoming+blocked+i;
+            HearticleShield hs = new HearticleShield();
+            setHearticlePosition(hs, heartIndex);
+            addActor(hs);
+        }
+    }
+
+    public void addHeartFlibs(int amount){
+        int hp = entity.getProfile().getTopHealth();
+        int maxHp = entity.getMaxHp();
+        for(int i=0;i<amount && i<maxHp-hp;i++){
+            int heartIndex = hp+i;
+            HearticleHeart hh = new HearticleHeart();
+            setHearticlePosition(hh, heartIndex);
+            addActor(hh);
+        }
+    }
+
+    private void setHearticlePosition(Hearticle h, int heartIndex){
+        if(heartIndex<0){
+            h.setPosition(-500,-500);
+            return;
+        }
+        int x = (int) (heartIndex%heartsPerRow * (heartWidth+heartGap));
+        int y = (int) (getHeight()-heartHeight-((heartIndex/heartsPerRow) * (heartHeight+heartGap)));
+        h.setPosition(x, y);
     }
 }
