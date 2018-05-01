@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -131,15 +132,18 @@ public class Main extends ApplicationAdapter {
       }
     });
     BulletStuff.init();
+
     setScreen(DungeonScreen.get());
     DungeonScreen.get().nextLevel();
-//    setScreen(new DebugScreen());
+
+//    setScreen(MapScreen.get());
 
     String ex = Prefs.getString("lastException", "");
     if(!ex.equals("")){
       currentScreen.showExceptionPopup(ex);
       Prefs.setString("lastException", "");
     }
+
   }
 
   @Override
@@ -191,7 +195,6 @@ public class Main extends ApplicationAdapter {
       // draw top dice
       BulletStuff.renderTopBits();
       logTime("bl2");
-
     } catch (RuntimeException e){
       logException(e);
     }
@@ -287,9 +290,14 @@ public class Main extends ApplicationAdapter {
 
   private void drawFPSAndVersion() {
     batch.setColor(Colours.blue);
-    TannFont.font.drawString(batch, versionName, width / 2 - 25, 1);
-    TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", width / 2 + 5, 1); // + gcPauses
-    TannFont.font.drawString(batch, averageRenderTime +"ms", width / 2 + 27, 1); // + gcPauses
+    int x = width/2-35;
+    TannFont.font.drawString(batch, versionName, x, 1);
+    x+=26;
+    TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", x, 1);
+    x+=23;
+    TannFont.font.drawString(batch, averageRenderTime +"ms", x, 1);
+    x+=17;
+    TannFont.font.drawString(batch, ((SpriteBatch)stage.getBatch()).renderCalls+"rc", x, 1);
     if(chadwick){
       for(int y=0;y<times.size();y++){
         int yPos = 2+(1+y)*(1+TannFont.font.getHeight());

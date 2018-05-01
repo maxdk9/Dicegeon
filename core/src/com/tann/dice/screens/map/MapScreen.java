@@ -2,12 +2,16 @@ package com.tann.dice.screens.map;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.DieSpinner;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
+import com.tann.dice.util.Draw;
 import com.tann.dice.util.Screen;
+import com.tann.dice.util.TestActor;
 import com.tann.dice.util.TextButton;
 
 public class MapScreen extends Screen {
@@ -48,6 +52,26 @@ public class MapScreen extends Screen {
     DieSpinner ds = new DieSpinner(Party.get().getActiveEntities().get(0).getDie(), 80);
     ds.setPosition(100, 50);
     addActor(ds);
+
+    setTransform(true);
+
+    Actor a = new TestActor();
+    a.setSize(40,40);
+    addActor(a);
+
+    Interpolation terp = Interpolation.pow2Out;
+    float time = .7f;
+    a.addAction(Actions.sequence(
+            Actions.delay(1),
+            Actions.moveTo(50, 50, time, terp),
+            Actions.rotateBy(50, time, terp),
+            Actions.scaleTo(10, .5f, time, terp),
+            Actions.rotateBy(150, time, terp),
+            Actions.moveTo(100, 100, time, terp),
+            Actions.scaleTo(2, 1, time, terp),
+            Actions.rotateBy(360*4+160, time*7, terp)
+
+    ));
 
   }
 

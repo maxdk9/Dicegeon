@@ -145,7 +145,12 @@ public abstract class Screen extends Lay{
 			return;
 		}
 		Pair<Actor, InputBlocker> popped = modalStack.remove(modalStack.size()-1);
-		popped.a.remove();
+		if(popped.a instanceof PopAction){
+			((PopAction) popped.a).popAction();
+		}
+		else {
+			popped.a.remove();
+		}
 		popped.a.removeListener(SELF_POP);
 		if(popped.b!=null) {
 			popped.b.remove();

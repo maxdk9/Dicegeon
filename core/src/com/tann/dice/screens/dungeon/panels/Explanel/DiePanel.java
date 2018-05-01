@@ -1,11 +1,13 @@
 package com.tann.dice.screens.dungeon.panels.Explanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
@@ -24,10 +26,9 @@ import com.tann.dice.util.*;
 
 import java.util.ArrayList;
 
-public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
+public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, PopAction {
     public DiceEntity entity;
     public DiePanel(final DiceEntity entity) {
-        setTransform(false);
         this.entity = entity;
         addListener(new InputListener(){
             @Override
@@ -86,13 +87,21 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
     }
 
 
+    private static Matrix4 tmp = new Matrix4();
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, entity.getColour(), 1);
+        tmp.set(batch.getTransformMatrix());
+        batch.setTransformMatrix(computeTransform());
+        batch.setColor(entity.getColour());
+        Draw.fillRectangle(batch, 0, 0, getWidth(), getHeight());
+        batch.setColor(Colours.dark);
+        Draw.fillRectangle(batch, 1, 1, getWidth()-2, getHeight()-2);
+//        Draw.fillActor(batch, this, Colours.dark, entity.getColour(), 1);
         batch.setColor(entity.getColour());
         int rectHeight = TEXT_GAP*2 + TannFont.font.getHeight();
-        Draw.drawRectangle(batch, getX(), getY()+getHeight()-rectHeight, getWidth(), rectHeight, 1);
+        Draw.drawRectangle(batch, 0, getHeight()-rectHeight, getWidth(), rectHeight, 1);
         drawReminder(batch);
+        batch.setTransformMatrix(tmp);
         super.draw(batch, parentAlpha);
     }
 
@@ -106,8 +115,8 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
         int gap = 2;
         int width = TannFont.font.getWidth(text)+gap*2;
         int height = TannFont.font.getHeight()+gap*2;
-        int startX = (int) (getX() + getWidth()/2-width/2);
-        int startY = (int) (getY() - height - 3);
+        int startX = (int) (getWidth()/2-width/2);
+        int startY = (int) (-height - 3);
 
         batch.setColor(entity.getColour());
         Draw.fillRectangle(batch, startX, startY, width, height);
@@ -140,5 +149,18 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
                 break;
         }
 
+    }
+
+    @Override
+    public void popAction() {
+        Actor ePan = entity.getEntityPanel();
+        Vector2 coord = Tann.getLocalCoordinates(ePan);
+        addAction(Actions.sequence(
+                Actions.parallel(
+                        Actions.scaleTo(0, 0, .3f),
+                        Actions.moveTo(coord.x+ePan.getWidth(), coord.y+ePan.getHeight()/2, .3f)
+                ),
+                Actions.removeActor()
+        ));
     }
 }

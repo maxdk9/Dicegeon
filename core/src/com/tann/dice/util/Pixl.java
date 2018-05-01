@@ -18,7 +18,6 @@ public class Pixl {
     }
 
     public Pixl(Group g, int baseGap, int forceWidth) {
-        g.setTransform(false);
         this.g = g;
         this.baseGap = baseGap;
         this.forceWidth = forceWidth;

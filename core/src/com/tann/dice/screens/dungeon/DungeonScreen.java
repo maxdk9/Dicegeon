@@ -31,6 +31,7 @@ import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
@@ -390,7 +391,17 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         Sounds.playSound(Sounds.pip);
         DiePanel pan = entity.getDiePanel();
         push(pan, true, false, true, true, 0, null);
-        pan.setPosition(pan.getNiceX(false), pan.getNiceY());
+        pan.setScale(0);
+        EntityPanel ePan = entity.getEntityPanel();
+        Vector2 coord = Tann.getLocalCoordinates(ePan);
+        pan.setPosition(coord.x+ePan.getWidth()*.8f, coord.y+ePan.getHeight()/2);
+        float dur = .4f;
+        Interpolation terp = Interpolation.pow2Out;
+        pan.addAction(Actions.parallel(
+                Actions.scaleTo(1, 1, dur*.8f, terp),
+                Actions.moveTo(pan.getNiceX(false), pan.getNiceY(), dur, terp)
+        ));
+//        pan.setPosition(pan.getNiceX(false), pan.getNiceY());
         if (entity.getTarget() != null) {
             for (DiceEntity de : entity.getTarget()) {
                 de.getEntityPanel().setTargeted(true);
