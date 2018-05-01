@@ -387,6 +387,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     }
 
     public void showDiePanel(DiceEntity entity) {
+        Sounds.playSound(Sounds.pip);
         DiePanel pan = entity.getDiePanel();
         push(pan, true, false, true, true, 0, null);
         pan.setPosition(pan.getNiceX(false), pan.getNiceY());
@@ -410,7 +411,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     }
 
     private void bottomClick() {
-        if(stackContains(Explanel.class) && TargetingManager.get().getSelectedTargetable() != null){
+        if((stackContains(Explanel.class) || stackContains(DiePanel.class))){
             Sounds.playSound(Sounds.pop);
         }
         popAllLight();

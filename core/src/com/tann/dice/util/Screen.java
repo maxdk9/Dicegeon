@@ -95,6 +95,7 @@ public abstract class Screen extends Lay{
 		@Override
 		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 			pop(event.getListenerActor());
+			Sounds.playSound(Sounds.pop);
 			return true;
 		}
 	};

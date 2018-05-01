@@ -19,6 +19,7 @@ import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
 import com.tann.dice.screens.dungeon.panels.entityPanel.TraitPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
+import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 
 import java.util.List;
@@ -95,6 +96,7 @@ public class NetPanel extends Group {
                     if(e.side == s){
                         Main.getCurrentScreen().popSingleLight();
                         event.stop();
+                        Sounds.playSound(Sounds.pop);
                         return false;
                     }
                 }
@@ -114,6 +116,7 @@ public class NetPanel extends Group {
                     exp.setPosition(exp.getNiceX(false), pos.y-4-exp.getHeight());
                 }
                 Main.getCurrentScreen().push(exp, false, false, true, true, 0, null);
+                Sounds.playSound(Sounds.pip);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

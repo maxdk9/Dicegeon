@@ -286,6 +286,7 @@ public class TargetingManager {
         if ((dieSide && getSelectedTargetable()==entity.getDie()) || (!dieSide && Main.getCurrentScreen().getTopActor()==entity.getDiePanel())) {
             if(getSelectedTargetable() != null) Sounds.playSound(Sounds.pop);
             Main.getCurrentScreen().pop();
+            Sounds.playSound(Sounds.pop);
             return;
         }
 
