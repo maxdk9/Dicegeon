@@ -65,6 +65,7 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
       @Override
       public void run() {
         Main.getCurrentScreen().pop();
+        Sounds.playSound(Sounds.pop);
       }
     });
     done.setPosition((int)(getWidth()-gap-done.getWidth()), (int)(getHeight()-gap-done.getHeight()));

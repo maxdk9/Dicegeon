@@ -66,12 +66,6 @@ public class InventoryPanel extends Group implements OnPop{
         if(PartyManagementPanel.get().getSelectedEquipment()!=null){
             batch.setColor(Colours.light);
         }
-//        for(int x=0;x<=across;x++){
-//            Draw.fillRectangle(batch, getX()+x*(PANEL_SIZE+gap), getY(), gap, getHeight());
-//        }
-//        for(int y=0;y<=down;y++){
-//            Draw.fillRectangle(batch,  getX(),getY()+y*(PANEL_SIZE+gap), getWidth(), gap);
-//        }
         Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), 1);
 
         super.draw(batch, parentAlpha);

@@ -5,10 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.Pixl;
-import com.tann.dice.util.TextWriter;
+import com.tann.dice.util.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +58,7 @@ public class TipOfTheDay extends Group {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 layout();
+                Sounds.playSound(Sounds.pip);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

@@ -170,8 +170,10 @@ public abstract class Screen extends Lay{
 		}
 	}
 
-	public void popAllLight(){
-		while(popSingleLight()){}
+	public boolean popAllLight(){
+		boolean popped = false;
+		while(popSingleLight()){ popped = true; }
+		return popped;
 	}
 
 	public boolean popSingleLight() {

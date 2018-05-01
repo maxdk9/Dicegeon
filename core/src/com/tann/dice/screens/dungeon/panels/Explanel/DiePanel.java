@@ -37,8 +37,9 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition {
                     PartyManagementPanel.get().equip(entity);
                 }
                 if(Main.getCurrentScreen() instanceof DebugScreen) return true;
-                Main.getCurrentScreen().popAllLight();
-                Sounds.playSound(Sounds.pop);
+                if(Main.getCurrentScreen().popAllLight()) {
+                    Sounds.playSound(Sounds.pop);
+                }
                 event.cancel();
                 event.stop();
                 event.handle();

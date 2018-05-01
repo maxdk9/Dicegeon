@@ -33,6 +33,7 @@ public class InputBlocker extends Actor{
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(r!=null) r.run();
                 Main.getCurrentScreen().popAllLight();
+                Sounds.playSound(Sounds.pop);
                 event.handle();
                 event.stop();
                 return super.touchDown(event, x, y, pointer, button);

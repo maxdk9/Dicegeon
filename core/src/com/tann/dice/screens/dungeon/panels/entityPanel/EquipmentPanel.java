@@ -65,6 +65,7 @@ public class EquipmentPanel extends Actor {
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
+    if(equipment == null && PartyManagementPanel.get().getSelectedEquipment() == null) return;
     int scale = doubleSize?2:1;
     batch.setColor(Colours.grey);
     if(PartyManagementPanel.get().getSelectedEquipment()!=null && onPlayer){
