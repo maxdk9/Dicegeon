@@ -168,7 +168,7 @@ public class Layoo {
                         newY = (int)newY;
                     }
 				    if(slide){
-				        e.a.addAction(Actions.moveTo(newX, newY, .5f, Interpolation.pow2Out));
+				        e.a.addAction(Actions.moveTo(newX, newY, Chrono.d, Chrono.i));
                     }
                     else{
                         e.a.setPosition(newX, newY);

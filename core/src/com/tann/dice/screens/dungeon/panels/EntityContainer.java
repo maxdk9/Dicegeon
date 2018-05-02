@@ -8,6 +8,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
+import com.tann.dice.util.Chrono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class EntityContainer extends Group {
           else alive.add(de.getEntityPanel());
       }
       float duration = slide?.5f:0;
-      Interpolation terp = Interpolation.pow2Out;
+      Interpolation terp = Chrono.i;
       for(EntityPanel ep : dead){
           if(slide) {
               ep.addAction(Actions.moveTo(ep.getPreferredX(), ep.getY(), duration, terp));

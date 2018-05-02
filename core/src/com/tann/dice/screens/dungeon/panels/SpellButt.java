@@ -13,12 +13,8 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.ImageActor;
-import com.tann.dice.util.Tann;
+import com.tann.dice.util.*;
 
-import com.tann.dice.util.TannFont;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +44,7 @@ public class SpellButt extends Group {
     public boolean shown;
     public void toggleButt(){
         float speed = .3f;
-        Interpolation terp = Interpolation.pow2Out;
+        Interpolation terp = Chrono.i;
         if(shown){
             container.addAction(Actions.scaleTo(0,0, speed, terp));
             container.addAction(Actions.moveTo(getWidth()/2, getHeight()/2, speed, terp));

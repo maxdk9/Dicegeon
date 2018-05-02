@@ -21,6 +21,7 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.util.Chrono;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 import com.tann.dice.util.Sounds;
@@ -104,7 +105,7 @@ public class Die implements Targetable{
                     }
                 }
                 dist = Math.min(1,dist);
-                float interp = Interpolation.pow2Out.apply(dist);
+                float interp = Chrono.i.apply(dist);
                 physical.transform.setToRotation(0,0,0,0);
                 Vector3 thisFrame =startPos.cpy().lerp(targetPos, interp);
                 physical.transform.setToTranslation(thisFrame);

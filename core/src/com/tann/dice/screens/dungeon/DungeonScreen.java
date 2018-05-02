@@ -396,7 +396,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         Vector2 coord = Tann.getLocalCoordinates(ePan);
         pan.setPosition(coord.x+ePan.getWidth()*(entity.isPlayer()?.8f:.2f), coord.y+ePan.getHeight()/2);
         float dur = .4f;
-        Interpolation terp = Interpolation.pow2Out;
+        Interpolation terp = Chrono.i;
         pan.clearActions();
         pan.addAction(Actions.parallel(
                 Actions.scaleTo(1, 1, dur*.8f, terp),
@@ -432,11 +432,11 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     }
 
     public void slideRollButton(boolean in) {
-        rollButton.addAction(Actions.moveTo(in ? BUTT_GAP : -rollButton.getWidth(), BUTT_GAP, .3f, Interpolation.pow2Out));
+        rollButton.addAction(Actions.moveTo(in ? BUTT_GAP : -rollButton.getWidth(), BUTT_GAP, Chrono.d, Chrono.i));
     }
 
     public void slideConfirmButton(boolean in) {
-        confirmButton.addAction(Actions.moveTo(in ? getWidth() - confirmButton.getWidth() - BUTT_GAP : getWidth(), BUTT_GAP, .3f, Interpolation.pow2Out));
+        confirmButton.addAction(Actions.moveTo(in ? getWidth() - confirmButton.getWidth() - BUTT_GAP : getWidth(), BUTT_GAP, Chrono.d, Chrono.i));
     }
 
     public void setConfirmText(String s) {

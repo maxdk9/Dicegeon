@@ -48,7 +48,7 @@ public class EscMenu extends Group implements OnPop{
       public void run() {
         DebugScreen dbs = new DebugScreen();
         dbs.layout();
-        Main.self.setScreen(dbs, Main.TransitionType.LEFT, Interpolation.pow2Out, 1);
+        Main.self.setScreen(dbs, Main.TransitionType.LEFT, Chrono.i, Chrono.d);
       }
     });
     Continue.setRunnable(new Runnable() {

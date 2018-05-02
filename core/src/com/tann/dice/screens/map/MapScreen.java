@@ -9,10 +9,7 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.DieSpinner;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.Screen;
-import com.tann.dice.util.TestActor;
-import com.tann.dice.util.TextButton;
+import com.tann.dice.util.*;
 
 public class MapScreen extends Screen {
 
@@ -43,7 +40,7 @@ public class MapScreen extends Screen {
     fite.setRunnable(new Runnable() {
       @Override
       public void run() {
-        Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, .3f);
+        Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Chrono.i, Chrono.d);
       }
     });
     addActor(fite);
@@ -59,7 +56,7 @@ public class MapScreen extends Screen {
     a.setSize(40,40);
     addActor(a);
 
-    Interpolation terp = Interpolation.pow2Out;
+    Interpolation terp = Chrono.i;
     float time = .7f;
     a.addAction(Actions.sequence(
             Actions.delay(1),
