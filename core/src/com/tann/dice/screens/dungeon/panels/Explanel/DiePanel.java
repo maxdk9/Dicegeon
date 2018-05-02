@@ -153,6 +153,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
 
     @Override
     public void popAction() {
+        clearActions();
         Actor ePan = entity.getEntityPanel();
         Vector2 coord = Tann.getLocalCoordinates(ePan);
         addAction(Actions.sequence(
