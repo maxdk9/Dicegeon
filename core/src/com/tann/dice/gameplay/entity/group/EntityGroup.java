@@ -322,6 +322,6 @@ public class EntityGroup <T extends DiceEntity>{
             public void run() {
                 firstRoll();
             }
-        }, Die.INTERP_SPEED_SLOW+.03f); //todo better
+        }, Die.INTERP_SPEED_SLOW+.1f); //todo better
     }
 }

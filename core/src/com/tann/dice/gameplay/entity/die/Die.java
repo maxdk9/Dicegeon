@@ -33,7 +33,7 @@ public class Die implements Targetable{
 
     private static final float MAX_AIRTIME = 2.7f;
     public static final float INTERP_SPEED = .35f;
-    public static final float INTERP_SPEED_SLOW = .7f;
+    public static final float INTERP_SPEED_SLOW = .5f;
 
     private float currentInterpSpeed;
 
@@ -391,7 +391,7 @@ public class Die implements Targetable{
         dist=0;
         physical.update();
         startPos = physical.transform.getTranslation(startPos);
-        targetPos = position;
+        targetPos.set(position);
         physical.transform.getRotation(startQuat);
         targetQuat = rotation;
     }

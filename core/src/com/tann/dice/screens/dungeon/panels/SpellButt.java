@@ -75,37 +75,6 @@ public class SpellButt extends Group {
         }
     }
 
-//    List<Actor> spellHovers = new ArrayList<>();
-//    public void addSpellHover(int amount){
-//        for(int i=0;i<amount;i++) {
-//            Actor a = new ImageActor(Images.magicHover);
-//            DungeonScreen.get().addActor(a);
-//            a.setPosition(getX() + getWidth() / 2 - a.getWidth()/2, getY() + getHeight() / 2 - a.getHeight()/2);
-//            float radius = 13f;
-//            double startAngle = Math.PI * 3 / 4f;
-//            double increment = Math.PI / 5;
-//            double angle = startAngle + increment * ((spellHovers.size() + 1) / 2) * ((spellHovers.size() % 2 == 0 ? 1 : -1));
-//            a.addAction(Actions.moveTo(
-//                    (int) (getX() + getWidth() / 2f + Math.cos(angle) * radius - a.getWidth() / 2f + .5f),
-//                    (int) (getY() + getHeight() / 2f + Math.sin(angle) * radius - a.getHeight() / 2f + .5f),
-//                    .3f, Interpolation.pow2Out
-//            ));
-//            spellHovers.add(a);
-//        }
-//    }
-//
-//    public void removeAllHovers(){
-//        while(spellHovers.size()>0){
-//            removeHover();
-//        }
-//    }
-//
-//    public void removeHover(){
-//        if(spellHovers.size()>0) {
-//            spellHovers.remove(spellHovers.size() - 1).remove();
-//        }
-//    }
-
     public void show() {
         if(!shown){
             toggleButt();
