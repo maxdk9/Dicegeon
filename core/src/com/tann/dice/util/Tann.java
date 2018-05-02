@@ -119,7 +119,7 @@ public class Tann {
         return tmp;
     }
 
-    public static void moveToAndRemove(Actor a, TannPosition tannPosition) {
+    public static void slideAway(Actor a, TannPosition tannPosition) {
         a.clearActions();
         Vector2 pos = getPos(a, tannPosition);
         a.addAction(Actions.sequence(
@@ -128,12 +128,11 @@ public class Tann {
         ));
     }
 
-    public static void slideInFrom(Actor a, TannPosition tannPosition, float xPosition, float yPosition) {
+    public static void slideIn(Actor a, TannPosition tannPosition, float xPosition, float yPosition) {
         a.clearActions();
         Vector2 pos = getPos(a, tannPosition);
         a.setPosition(pos.x, pos.y);
         a.addAction(Actions.moveTo((int)xPosition, (int)yPosition, Chrono.d, Chrono.i));
-
     }
 
 }

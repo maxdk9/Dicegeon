@@ -21,6 +21,7 @@ import com.tann.dice.screens.dungeon.panels.LevelUpPanel;
 import com.tann.dice.screens.dungeon.panels.entityPanel.heartsHolder.HeartsHolder;
 import com.tann.dice.util.*;
 
+import com.tann.dice.util.Tann.TannPosition;
 import java.util.List;
 
 public class EntityPanel extends Group {
@@ -168,8 +169,8 @@ public class EntityPanel extends Group {
                 @Override
                 public void run() {
                     LevelUpPanel lup = new LevelUpPanel((Hero) entity);
-                    Main.getCurrentScreen().push(lup, true, true, false, false, InputBlocker.DARK, null);
-                    lup.setY(Main.height-lup.getHeight()-3);
+                    Main.getCurrentScreen().push(lup, false, true, false, false, InputBlocker.DARK, null);
+                    Tann.slideIn(lup, TannPosition.Top, Main.width/2-lup.getWidth()/2, Main.height-lup.getHeight()-3);
                     Sounds.playSound(Sounds.levelup);
                 }
             });

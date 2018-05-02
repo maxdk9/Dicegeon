@@ -1,12 +1,9 @@
 package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import com.tann.dice.util.*;
 
@@ -15,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import javafx.animation.Interpolatable;
 
 public class TipOfTheDay extends Group {
 
@@ -93,6 +89,6 @@ public class TipOfTheDay extends Group {
     }
 
     public void slideIn() {
-        Tann.slideInFrom(this, TannPosition.Bot, (int) (Main.width/2-getWidth()/2), 35);
+        Tann.slideIn(this, TannPosition.Bot, (int) (Main.width/2-getWidth()/2), 35);
     }
 }

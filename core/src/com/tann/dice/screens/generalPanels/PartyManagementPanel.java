@@ -14,8 +14,9 @@ import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.util.*;
+import com.tann.dice.util.Tann.TannPosition;
 
-public class PartyManagementPanel extends Group implements OnPop, ExplanelReposition{
+public class PartyManagementPanel extends Group implements OnPop, ExplanelReposition, PopAction{
 
   private static PartyManagementPanel self;
   public static PartyManagementPanel get() {
@@ -127,4 +128,9 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     g.setPosition((int) Math.min(Main.width-g.getWidth()-2, local.x+panel.getX()+panel.getWidth()/2-g.getWidth()/2),
             (int)(local.y+panel.getY()+panel.getHeight()+2));
 }
+
+  @Override
+  public void popAction() {
+    Tann.slideAway(this, TannPosition.Bot);
+  }
 }

@@ -2,7 +2,6 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -11,12 +10,18 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.*;
-
+import com.tann.dice.util.Colours;
+import com.tann.dice.util.Draw;
+import com.tann.dice.util.InputBlocker;
+import com.tann.dice.util.Pixl;
+import com.tann.dice.util.Sounds;
+import com.tann.dice.util.Tann;
 import com.tann.dice.util.Tann.TannPosition;
+import com.tann.dice.util.TextButton;
+import com.tann.dice.util.TextWriter;
 import java.util.List;
 
-public class LevelEndPanel extends Group {
+public class LevelEndPanel extends Group{
 
     private static final String[] congrats = new String[]{
             "Nice!", "Congrats", "You did it!", "Congration", "Hot stuff", "Wowzers", "Splendid", "I knew you could do it", "They never stood a chance",
@@ -70,7 +75,7 @@ public class LevelEndPanel extends Group {
                     }
                     p.refresh();
                     Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
-                    p.setPosition((int) (Main.width / 2 - p.getWidth() / 2), 5);
+                    Tann.slideIn(p, TannPosition.Bot, (int) (Main.width / 2 - p.getWidth() / 2), 5);
                     Sounds.playSound(Sounds.pip);
                 }
             });
@@ -81,8 +86,8 @@ public class LevelEndPanel extends Group {
             cont.setRunnable(new Runnable() {
                 @Override
                 public void run() {
-                    Tann.moveToAndRemove(tipOfTheDay, TannPosition.Bot);
-                    tipOfTheDay.remove();
+                    Tann.slideAway(tipOfTheDay, TannPosition.Bot);
+                    Tann.slideAway(LevelEndPanel.this, TannPosition.Top);
                     PhaseManager.get().popPhase();
                     Sounds.playSound(Sounds.pip);
                 }
@@ -111,5 +116,4 @@ public class LevelEndPanel extends Group {
         action = true;
         levelup = false;
     }
-
 }

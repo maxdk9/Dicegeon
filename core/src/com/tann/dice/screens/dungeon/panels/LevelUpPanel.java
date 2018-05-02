@@ -13,9 +13,10 @@ import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
+import com.tann.dice.util.Tann.TannPosition;
 import java.util.List;
 
-public class LevelUpPanel extends Group implements ExplanelReposition{
+public class LevelUpPanel extends Group implements ExplanelReposition, PopAction{
     Hero hero;
     DiePanel basePanel;
     DiePanel[] optionsPanels;
@@ -74,7 +75,7 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
                 PartyManagementPanel p = PartyManagementPanel.get();
                 p.refresh();
                 Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
-                p.setPosition((int) (Main.width / 2 - p.getWidth() / 2), 5);
+                Tann.slideIn(p, TannPosition.Bot, (int) (Main.width / 2 - p.getWidth() / 2), 5);
                 Sounds.playSound(Sounds.pip);
             }
         });
@@ -112,4 +113,8 @@ public class LevelUpPanel extends Group implements ExplanelReposition{
                 local.y+basePanel.getY()-g.getHeight()-2);
     }
 
+    @Override
+    public void popAction() {
+        Tann.slideAway(this, TannPosition.Top);
+    }
 }
