@@ -38,6 +38,8 @@ public class LevelEndPanel extends Group{
         this.congrat = Tann.getRandom(congrats);
         this.levelup = levelup;
         tipOfTheDay.setPosition(Main.width/2-tipOfTheDay.getWidth()/2, -tipOfTheDay.getHeight());
+        tipOfTheDay.layout();
+        tipOfTheDay.slideIn();
         layout();
     }
 
@@ -101,8 +103,6 @@ public class LevelEndPanel extends Group{
         }
 
         Main.getCurrentScreen().addActor(tipOfTheDay);
-        tipOfTheDay.layout();
-        tipOfTheDay.slideIn();
         setX((int)(Main.width/2-getWidth()/2));
     }
 
