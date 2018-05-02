@@ -1,20 +1,11 @@
 package com.tann.dice.util;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.screens.map.MapScreen;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +13,7 @@ import java.util.List;
 
 public class Tann {
 
-    static Vector2 tmp = new Vector2();
+    private static final Vector2 tmp = new Vector2();
     public static Vector2 getLocalCoordinates(Actor a){
         tmp.set(0,0);
         return a.localToStageCoordinates(tmp);
@@ -104,6 +95,45 @@ public class Tann {
         Object o = array[i1];
         array[i1]=array[i2];
         array[i2]=o;
+    }
+
+    public enum TannPosition{
+        Left, Right, Top, Bot
+    }
+
+    private static Vector2 getPos(Actor a, TannPosition tannPosition){
+        switch (tannPosition){
+            case Left:
+                tmp.set(-a.getWidth(), Main.height/2-a.getHeight()/2);
+                break;
+            case Right:
+                tmp.set(Main.width, Main.height/2-a.getHeight()/2);
+                break;
+            case Top:
+                tmp.set(Main.width/2-a.getWidth()/2, Main.height);
+                break;
+            case Bot:
+                tmp.set(Main.width/2-a.getWidth()/2, -a.getHeight());
+                break;
+        }
+        return tmp;
+    }
+
+    public static void moveToAndRemove(Actor a, TannPosition tannPosition) {
+        a.clearActions();
+        Vector2 pos = getPos(a, tannPosition);
+        a.addAction(Actions.sequence(
+            Actions.moveTo(pos.x,pos.y,Chrono.d, Chrono.i),
+            Actions.removeActor()
+        ));
+    }
+
+    public static void slideInFrom(Actor a, TannPosition tannPosition, float xPosition, float yPosition) {
+        a.clearActions();
+        Vector2 pos = getPos(a, tannPosition);
+        a.setPosition(pos.x, pos.y);
+        a.addAction(Actions.moveTo((int)xPosition, (int)yPosition, Chrono.d, Chrono.i));
+
     }
 
 }

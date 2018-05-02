@@ -1,16 +1,21 @@
 package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import com.tann.dice.util.*;
 
+import com.tann.dice.util.Tann.TannPosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javafx.animation.Interpolatable;
 
 public class TipOfTheDay extends Group {
 
@@ -22,7 +27,7 @@ public class TipOfTheDay extends Group {
         if(jokes.isEmpty()){
             jokes.addAll(Arrays.asList(
                     "Take off your socks before you go to bed",
-                    "What do you call a rich goblin?[n][n][light][sin]A gobling!",
+                    "What do you call a rich goblin?[n][nh][sin]A gobling!",
                     "The dragon has a poison attack",
                     "It's probably fine",
                     "If you find a bug, send an email to tann@tann.space for a prize"
@@ -59,6 +64,7 @@ public class TipOfTheDay extends Group {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 layout();
                 Sounds.playSound(Sounds.pip);
+                setX(Main.width/2-getWidth()/2);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -78,12 +84,15 @@ public class TipOfTheDay extends Group {
         p.actor(new TextWriter(string, 100));
         p.row(3);
         p.pix();
-        setPosition((int)(Main.width/2-getWidth()/2), (int)(Main.height/3-getHeight()/2));
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Draw.fillActor(batch, this, Colours.dark, Colours.green, 1);
         super.draw(batch, parentAlpha);
+    }
+
+    public void slideIn() {
+        Tann.slideInFrom(this, TannPosition.Bot, (int) (Main.width/2-getWidth()/2), 35);
     }
 }

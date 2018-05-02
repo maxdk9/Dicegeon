@@ -19,7 +19,6 @@ public class HearticleShield extends Hearticle {
   public void draw(Batch batch, float parentAlpha) {
     super.draw(batch, parentAlpha);
     float alpha = Interpolation.pow2Out.apply(Math.min(1, (ratio)));
-    System.out.println(alpha);
     batch.setColor(Colours.withAlpha(Colours.z_white, alpha));
     Draw.draw(batch, shield, getX()-1, getY()-1);
   }

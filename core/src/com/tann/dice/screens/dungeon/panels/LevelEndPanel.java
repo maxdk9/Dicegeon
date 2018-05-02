@@ -2,6 +2,7 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -12,6 +13,7 @@ import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
+import com.tann.dice.util.Tann.TannPosition;
 import java.util.List;
 
 public class LevelEndPanel extends Group {
@@ -30,6 +32,7 @@ public class LevelEndPanel extends Group {
         this.gainedEquipment = gainedEquipment;
         this.congrat = Tann.getRandom(congrats);
         this.levelup = levelup;
+        tipOfTheDay.setPosition(Main.width/2-tipOfTheDay.getWidth()/2, -tipOfTheDay.getHeight());
         layout();
     }
 
@@ -78,14 +81,13 @@ public class LevelEndPanel extends Group {
             cont.setRunnable(new Runnable() {
                 @Override
                 public void run() {
-                    remove();
+                    Tann.moveToAndRemove(tipOfTheDay, TannPosition.Bot);
                     tipOfTheDay.remove();
                     PhaseManager.get().popPhase();
                     Sounds.playSound(Sounds.pip);
                 }
             });
         }
-//        p.row(3);
         p.pix();
 
         for (final DiceEntity de : Party.get().getActiveEntities()) {
@@ -95,6 +97,7 @@ public class LevelEndPanel extends Group {
 
         Main.getCurrentScreen().addActor(tipOfTheDay);
         tipOfTheDay.layout();
+        tipOfTheDay.slideIn();
         setX((int)(Main.width/2-getWidth()/2));
     }
 

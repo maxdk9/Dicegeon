@@ -7,6 +7,7 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.LevelEndPanel;
 import com.tann.dice.util.Tann;
+import com.tann.dice.util.Tann.TannPosition;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,7 @@ public class LevelEndPhase extends Phase {
         }
         levelEndPanel = new LevelEndPanel(gainedEquipment, level%2==0);
         DungeonScreen.get().addActor(levelEndPanel);
-        Tann.center(levelEndPanel);
-        levelEndPanel.setY((int)(Main.height*2/3f-levelEndPanel.getHeight()/2));
+        Tann.slideInFrom(levelEndPanel, TannPosition.Top, Main.width/2-levelEndPanel.getWidth()/2, Main.height-40-levelEndPanel.getHeight());
         for(DiceEntity de:Party.get().getActiveEntities()){
             de.slide(false);
         }
