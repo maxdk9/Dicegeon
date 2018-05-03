@@ -44,14 +44,16 @@ public class EscMenu extends Group implements OnPop{
     p.actor(Continue).pix();
 
 
-    stats.setRunnable(new Runnable() {
-      @Override
-      public void run() {
-        DebugScreen dbs = new DebugScreen();
-        dbs.layout();
-        Main.self.setScreen(dbs, Main.TransitionType.LEFT, Chrono.i, Chrono.d);
-      }
-    });
+    if(stats!=null){
+      stats.setRunnable(new Runnable() {
+        @Override
+        public void run() {
+          DebugScreen dbs = new DebugScreen();
+          dbs.layout();
+          Main.self.setScreen(dbs, Main.TransitionType.LEFT, Chrono.i, Chrono.d);
+        }
+      });
+    }
     Continue.setRunnable(new Runnable() {
       @Override
       public void run() {

@@ -290,7 +290,7 @@ public class Main extends ApplicationAdapter {
 
   private void drawFPSAndVersion() {
     batch.setColor(Colours.blue);
-    int x = width/2-35;
+    int x = width/2-39;
     TannFont.font.drawString(batch, versionName, x, 1);
     x+=26;
     TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", x, 1);

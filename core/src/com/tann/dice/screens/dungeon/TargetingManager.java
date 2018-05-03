@@ -13,6 +13,7 @@ import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.util.Colours;
@@ -332,6 +333,13 @@ public class TargetingManager {
         Eff.TargetingType tType = t.getEffects()[0].targetingType;
         for (DiceEntity de : EntityGroup.getValidTargets(t, true)) {
             de.getEntityPanel().setPossibleTarget(true);
+        }
+    }
+
+    public void showAllTargetingArrows() {
+        clearTargetingHighlights();
+        for (DiceEntity de : Party.getAllActive()) {
+            de.getEntityPanel().setArrowIntenity(1, 0);
         }
     }
 

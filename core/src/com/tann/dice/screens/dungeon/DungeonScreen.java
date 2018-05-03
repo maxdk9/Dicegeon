@@ -140,14 +140,36 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
             }
         });
 
+
+        int gap = 6;
+        int topAvailableWidth = (int) (Main.width- EntityContainer.width*2 - friendly.getX()*2 - EntityPanel.slideAmount - gap*2);
+        int topStartX = (int) (EntityContainer.width + friendly.getX()+gap);
+
         spellButt = new SpellButt();
         addActor(spellButt);
-        float gap = 5;
-        spellButt.setPosition(EntityContainer.width + friendly.getX() + gap, (int)(Main.height - spellButt.getHeight() - gap*2.5));
+        spellButt.setPosition(topStartX, (int)(Main.height - spellButt.getHeight() - gap));
+
+        ImageActor target = new ImageActor(Images.target);
+        addActor(target);
+        target.setPosition((int)(topStartX + topAvailableWidth - target.getWidth()), Main.height-gap-target.getHeight());
+        target.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                TargetingManager.get().showAllTargetingArrows();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Party.clearTargetedHighlights();
+                super.touchUp(event, x, y, pointer, button);
+            }
+        });
+
 
         ImageActor cog = new ImageActor(Images.cog);
         addActor(cog);
-        cog.setPosition(EntityContainer.width+gap, gap);
+        cog.setPosition((int)(topStartX), gap);
         cog.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -455,7 +477,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     @Override
     public void activatePhase(Phase phase) {
         turnPhaseWriter.setText(phase.describe());
-        turnPhaseWriter.setPosition((int) (getWidth() / 2 - turnPhaseWriter.getWidth() / 2), (int) (getHeight() - turnPhaseWriter.getHeight() - 1));
+        turnPhaseWriter.setPosition((int) (getWidth() / 2 - turnPhaseWriter.getWidth() / 2), 7);
     }
 
     public void layoutEntityGroups(){

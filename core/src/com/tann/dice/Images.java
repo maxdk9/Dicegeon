@@ -21,6 +21,7 @@ public class Images {
     public static final TextureRegion tick = Main.atlas.findRegion("ui/tick");
     public static final TextureRegion levelup = Main.atlas.findRegion("ui/levelup");
     public static final TextureRegion cog = Main.atlas.findRegion("ui/cog");
+    public static final TextureRegion target = Main.atlas.findRegion("ui/target");
     public static final TextureRegion skull = Main.atlas.findRegion("icon/skull");
 
 	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("reg/face/sword");

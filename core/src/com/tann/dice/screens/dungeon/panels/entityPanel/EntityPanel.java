@@ -25,7 +25,6 @@ import com.tann.dice.util.Tann.TannPosition;
 import java.util.List;
 
 public class EntityPanel extends Group {
-
     public DiceEntity entity;
     public boolean holdsDie =true;
     DamageProfile profile;
@@ -38,6 +37,7 @@ public class EntityPanel extends Group {
     static NinePatch panelBorderRightHighlight = new NinePatch(Images.panelBorderRightHighlight, n,n,n,n);
     static NinePatch panelBorderColour = new NinePatch(Images.panelBorderColour, n,n,n,n);
     public static final float WIDTH = EntityContainer.width;
+    public static final int slideAmount = 15;
     int borderSize = 4;
     private final int gap;
     boolean huge;
@@ -195,7 +195,6 @@ public class EntityPanel extends Group {
             return entity.isPlayer()?-deadAmount:deadAmount;
         }
         if(entity.isPlayer()) return startX;
-        int slideAmount = 14;
         return startX + (entity.slidOut?-slideAmount:0);
     }
 
@@ -349,7 +348,7 @@ public class EntityPanel extends Group {
     }
 
     private void drawArrows(Batch batch) {
-        if(!entity.isPlayer() && !holdsDie) return;
+        if(!entity.isPlayer() && !holdsDie || intensity==0) return;
         List<DiceEntity> targs = entity.isPlayer()?entity.getAllTargeters():entity.getTarget();
         if(targs == null || targs.size()==0) return;
         batch.setColor(Colours.withAlpha(Colours.yellow, intensity));
