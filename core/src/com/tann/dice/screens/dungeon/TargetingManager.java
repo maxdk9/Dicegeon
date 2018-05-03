@@ -306,7 +306,7 @@ public class TargetingManager {
         Main.getCurrentScreen().popAllLight();
 
         if (entity.isPlayer()) {
-            if (dieSide) {
+            if (dieSide && PhaseManager.get().getPhase().canTarget()) {
                 // open die explanel for targeting
                 click(entity.getDie(), false);
             } else {
