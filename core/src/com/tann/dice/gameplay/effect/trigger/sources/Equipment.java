@@ -34,9 +34,9 @@ public class Equipment {
     add(new Equipment().name("Antivenom").image("antivenom")
             .fluff("Weird trick discovered by a mum, snakes hate her!").trigger(new TriggerDamageImmunity(true, false)));
     add(new Equipment().name("Blood Vial").image("bloodVial")
-            .fluff("Something description").trigger(new TriggerOnKill(new Eff().heal(1).self())));
+            .fluff("It [sin]sizzles[sin] gently in your palm").trigger(new TriggerOnKill(new Eff().heal(1).self())));
     add(new Equipment().name("Bone Idol").image("bone")
-            .fluff("Something something lazybones").trigger(new TriggerNoDeathPenalty()));
+            .fluff("A real lazy-bone").trigger(new TriggerNoDeathPenalty()));
 
     defaultLevel = 1;
     add(new Equipment().name("Reinforced Shield").image("shieldReinforce")
@@ -48,9 +48,9 @@ public class Equipment {
     add(new Equipment().name("Crystal Heart").image("crystalHeart")
             .fluff("You feel warmth inside").trigger(new TriggerEffTypeBonus(EffType.Magic, 1)));
     add(new Equipment().name("Thorns").image("thorns")
-            .fluff("Something description").trigger(new TriggerDamageAttackers(1)));
+            .fluff("Careful, it's sharp").trigger(new TriggerDamageAttackers(1)));
     add(new Equipment().name("Relic").image("relic")
-            .fluff("Something description").trigger(new TriggerOneHealthBonusOutgoing(2)));
+            .fluff("Power to the weak").trigger(new TriggerOneHealthBonusOutgoing(2)));
 
 
     defaultLevel = 2;
