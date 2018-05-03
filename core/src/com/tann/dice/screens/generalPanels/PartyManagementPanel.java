@@ -51,6 +51,7 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     for(int i=0;i< Party.get().getEntities().size();i++){
       DiceEntity de = Party.get().getEntities().get(i);
       DiePanel dp = de.getDiePanel();
+      dp.setScale(1);
       dp.setPosition(gap + (gap+dp.getWidth())*(i%3),  gap + (diePanelHeight+gap)*(i/3));
       addActor(dp);
     }
