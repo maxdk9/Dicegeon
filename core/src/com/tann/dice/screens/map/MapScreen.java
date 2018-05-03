@@ -27,7 +27,6 @@ public class MapScreen extends Screen {
     manag.setRunnable(new Runnable() {
       @Override
       public void run() {
-        System.out.println("hi");
         PartyManagementPanel p = PartyManagementPanel.get();
         addActor(p);
         p.setPosition((int)(getWidth()/2-p.getWidth()/2), 1);

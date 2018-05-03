@@ -621,7 +621,7 @@ public abstract class DiceEntity {
 
     EntitySize(int pixels) {
       this.pixels = pixels;
-      this.maximumPips = (pixels - 4) / 2;
+      this.maximumPips = (pixels - 3) / 2;
       this.dieSize = BASE_SIZE * pixels;
     }
   }

@@ -29,7 +29,7 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType rat = new MonsterType().name("Rattie").hp(3).size(smol)
             .sides(smol_nip3, smol_nip3, smol_nip2, smol_nip2, smol_nipPoison1, smol_nipPoison1);
     public static final MonsterType skeleton = new MonsterType().name("Skeleton").hp(5).size(smol)
-            .sides(smol_sword5, smol_sword4, smol_sword4, smol_sword4, smol_sword3, smol_sword3);
+            .sides(smol_sword4, smol_sword4, smol_sword4, smol_sword4, smol_sword3, smol_sword3);
     public static final MonsterType zombie = new MonsterType().name("Zombie").hp(7).size(smol)
             .sides(smol_nipPoison1, smol_nipPoison1, smol_nip3, smol_nip3, smol_nip2, smol_nip2);
     public static final MonsterType slimie = new MonsterType().name("Slimelet").hp(3).size(smol)
