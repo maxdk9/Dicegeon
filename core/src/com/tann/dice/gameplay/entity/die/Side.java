@@ -40,7 +40,6 @@ public class Side {
             arr[arr.length-1]=Main.atlas_3d.findRegion(es.name()+"/bar/x");
             sizeToPips.put(es, arr);
         }
-        System.out.println("hi");
     }
 
 
@@ -109,9 +108,11 @@ public class Side {
 //    public static final Side front2 = front1.withValue(2);
 
     public static final Side hook1 = new Side().title("Hook").image("hook").effect(new Eff().damage(1).ranged(), new Eff().hook());
+    public static final Side hook2 = hook1.withValue(2);
 
     public static final Side arrow1 = new Side().title("Arrow").image("arrow").effect(new Eff().damage(1).ranged());
     public static final Side arrow2 = arrow1.withValue(2);
+    public static final Side arrow3 = arrow1.withValue(3);
 
     public static final Side swordShield1 = new Side().title("Riposte").image("swordShield").effect(new Eff().damage(1), new Eff().shield(1).self());
     public static final Side swordShield2 = swordShield1.withValue(2);
@@ -157,12 +158,12 @@ public class Side {
     public static final Side magic1NextTurn = new Side().title("Channel Magic").image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
     public static final Side magic2NextTurn = magic1NextTurn.withValue(2);
     public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
+    public static final Side magic4NextTurn = magic1NextTurn.withValue(4);
 
     // heal stuff
 
     public static final Side heal2 = new Side().title("Heal").image("heal").effect(new Eff().heal(2).friendlySingle());
     public static final Side heal3 = heal2.withValue(3);
-    public static final Side heal4 = heal2.withValue(4);
     public static final Side heal5 = heal2.withValue(5);
 
     public static final Side healAll1 = new Side().title("Mass Heal").image("healAll").effect(new Eff().heal(1).friendlyGroup());

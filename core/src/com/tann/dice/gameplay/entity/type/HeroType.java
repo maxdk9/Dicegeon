@@ -39,48 +39,48 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
 
         lv = 1;
         add(new HeroType().name("Rogue").hp(5).tag(fighter1)
-                .sides(poison1, poison1, sword2, arrow1, vanish, nothing));
-        add(new HeroType().name("Ranger").hp(6).tag(fighter1)
-                .sides(execute4, arrow2, arrow2, arrow1, arrow1,nothing));
+                .sides(poison1, poison1, sword3, arrow2, vanish, nothing));
+        add(new HeroType().name("Ranger").hp(5).tag(fighter1)
+                .sides(execute4, arrow1, arrow3, arrow2, vanish, nothing));
         add(new HeroType().name("Gladiator").hp(5).tag(fighter1)
                 .sides(swordShield2, swordShield2, trident1, trident1, shield3, nothing));
-        add(new HeroType().name("Dabbler").hp(6).tag(fighter1)
+        add(new HeroType().name("Dabbler").hp(7).tag(fighter1)
                 .sides(sword3, heal3, shield2, arrow2, magic2, nothing));
 //        add(new HeroType().name("Berserker").hp(7).tag(fighter1)
 //                .sides(sword1AllSelfDamage1, sword1AllSelfDamage1, sword2, sword2, shield2, nothing)
 //                .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
         add(new HeroType().name("Whirl").hp(6).tag(fighter1)
                 .sides(whirlwind1, trident1, trident1, sword2, shieldPlusAdjacent1, nothing));
-        add(new HeroType().name("Crusher").hp(6).tag(fighter1)
+        add(new HeroType().name("Crusher").hp(7).tag(fighter1)
                 .sides(topbot2, topbot1, topbot1, sword2, shield2, nothing));
-        add(new HeroType().name("Bruiser").hp(6).tag(fighter1)
-            .sides(sword3, hook1, hook1, sword2, shield2, nothing));
-        add(new HeroType().name("Combo").hp(6).tag(fighter1)
+        add(new HeroType().name("Bruiser").hp(8).tag(fighter1)
+            .sides(sword3, hook2, hook1, sword2, shield3, nothing));
+        add(new HeroType().name("Combo").hp(7).tag(fighter1)
             .sides(trident1, sword2, sword2, shield2, nothing, nothing)
         .trait(new TriggerBoostOnRoll(1)));
 
 
-        add(new HeroType().name("Paladin").hp(7).tag(defender1)
+        add(new HeroType().name("Paladin").hp(8).tag(defender1)
                 .sides(shieldHeart2, shieldHeart2, shield2,  sword2, sword2, nothing));
         add(new HeroType().name("Bard").hp(6).tag(defender1)
                 .sides(shield3, wardingchord, wardingchord, reroll, magic2, nothing));
-        add(new HeroType().name("Bouncer").hp(9).tag(defender1)
+        add(new HeroType().name("Bouncer").hp(10).tag(defender1)
                 .sides(taunt, taunt, shield2, shield2, sword2, nothing)
                 .trait(new TriggerDamageLimit(4)));
-        add(new HeroType().name("Guardian").hp(7).tag(defender1)
-                .sides(shieldPlusAdjacent2, shieldPlusAdjacent2, shield3, shield3, trident1, nothing));
+        add(new HeroType().name("Guardian").hp(6).tag(defender1)
+                .sides(shieldPlusAdjacent2, shieldPlusAdjacent1, shield3, shield3, trident1, nothing));
 
 
-        add(new HeroType().name("Alchemist").hp(5).tag(healer1)
-                .sides(heal4, magic2, magic1, potionregen, potionregen, nothing)
+        add(new HeroType().name("Alchemist").hp(6).tag(healer1)
+                .sides(heal5, magic2, magic1, potionregen, potionregen, nothing)
                 .spells(Spell.stoneSkin));
         add(new HeroType().name("Druid").hp(7).tag(healer1)
-                .sides(heal4, heal4, sword2, magic1, magic2, nothing)
+                .sides(heal5, heal3, sword2, magic2, magic2, nothing)
                 .spells(Spell.balance));
         add(new HeroType().name("Witch").hp(6).tag(healer1)
-                .sides(healBuff1, healBuff1, poison1, heal5, heal3, magic2)
+                .sides(healBuff1, healBuff1, poison1, heal5, magic2, nothing)
                 .spells(Spell.lifeSpark));
-        add(new HeroType().name("Medic").hp(7).tag(healer1)
+        add(new HeroType().name("Medic").hp(5).tag(healer1)
             .sides(healAll2, cure3, cure3, magic2, magic2, nothing)
             .spells(Spell.rejuvenate));
         add(new HeroType().name("Vampire").hp(6).tag(healer1)
@@ -92,14 +92,14 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
         add(new HeroType().name("Pyro").hp(6).tag(wizard1)
                 .sides(flameWard2, flameWard1, magic2, magic2, magic1, nothing)
                 .spells(Spell.bloodBoil));
-        add(new HeroType().name("Arcanist").hp(7).tag(wizard1)
-                .sides(magic3NextTurn, magic2NextTurn, magic2, magic2, nothing, nothing)
+        add(new HeroType().name("Arcanist").hp(5).tag(wizard1)
+                .sides(magic4NextTurn, magic3NextTurn, magic2, magic2, nothing, nothing)
                 .spells(Spell.deathSpike));
-        add(new HeroType().name("Channeler").hp(6).tag(wizard1)
+        add(new HeroType().name("Channeler").hp(7).tag(wizard1)
                 .sides(buff2, buff1, magic2, magic2, magic1, nothing)
                 .spells(Spell.arcaneMissile));
         add(new HeroType().name("Trickster").hp(7).tag(wizard1)
-                .sides(copy, copy, magic2, magic1, magic1, nothing)
+                .sides(copy, copy, magic2, magic2, magic1, nothing)
                 .spells(Spell.lightningStrike));//TODO new spell here (enemy reroll!??)
 
 

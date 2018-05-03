@@ -120,7 +120,7 @@ public class Explanel extends InfoPanel implements OnPop {
         spellDraw.setSize(spell.getImage().getRegionWidth()*scale, spell.getImage().getRegionHeight()*scale);
         boolean enoughMagic = Party.get().getAvaliableMagic()>=spell.getCost();
 
-        Pixl p = getPixl();
+        Pixl p = new Pixl(this, 2, panelWidth+8).row(topAndBottom);
         int picWidth = Images.spellBorder.getRegionWidth()*2;
         int gap = 2;
         p.gap(picWidth+gap*2);
