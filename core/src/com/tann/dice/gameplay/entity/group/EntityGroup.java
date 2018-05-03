@@ -175,7 +175,14 @@ public class EntityGroup <T extends DiceEntity>{
                         good = true;
                         break;
                     case Shield:
-                        good = de.getProfile().unblockedRegularIncoming() > 0;
+                        if(type == TargetingType.FriendlySingleAndAdjacents){
+                            for(DiceEntity adj: de.getAdjacents(true)){
+                                good |= adj.getProfile().unblockedRegularIncoming() > 0;
+                            }
+                        }
+                        else {
+                            good = de.getProfile().unblockedRegularIncoming() > 0;
+                        }
                         break;
                     case RedirectIncoming:
                         good = de.getProfile().getIncomingDamage() > 0;

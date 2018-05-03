@@ -237,8 +237,10 @@ public class TargetingManager {
                 default: break;
             }
         }
-
-        if(t.getEffects()[0].targetingType != Eff.TargetingType.Untargeted && EntityGroup.getValidTargets(t, true).size()==0) {
+        // TODO better
+        if(t.getEffects()[0].targetingType != Eff.TargetingType.Untargeted
+            &&  t.getEffects()[0].targetingType != TargetingType.FriendlyMostDamaged
+            && EntityGroup.getValidTargets(t, true).size()==0) {
             // if not good targets
             invalidReason = t.getEffects()[0].getNoTargetsString();
         }

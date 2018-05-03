@@ -94,8 +94,9 @@ public class LevelUpPanel extends Group implements ExplanelReposition, PopAction
       int lineEndX = (int)(getX() + optionsPanels[0].getX());
       int lineDist = 16;
       int lineStartY = (int) (getY() + basePanel.getY() + basePanel.getHeight());
-      //TODO fix this magic number +1 ugh
+
       super.draw(batch, parentAlpha);
+
       batch.setColor(Colours.light);
       Draw.drawLine(batch, lineStartX, lineStartY, lineStartX, lineStartY+lineDist, 1);
       Draw.drawLine(batch, lineStartX, lineStartY+lineDist, lineEndX, lineStartY+lineDist, 1);
