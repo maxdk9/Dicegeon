@@ -45,9 +45,7 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     setSize(example.getWidth()*3+gap*4, example.getHeight()*2+gap*3);
 
     DiePanel examplePanel = Party.get().getActiveEntities().get(0).getDiePanel();
-    int diePanelWidth = (int) examplePanel.getWidth();
     int diePanelHeight = (int) examplePanel.getHeight();
-    int panelsHigh = 3;
     for(int i=0;i< Party.get().getEntities().size();i++){
       DiceEntity de = Party.get().getEntities().get(i);
       DiePanel dp = de.getDiePanel();

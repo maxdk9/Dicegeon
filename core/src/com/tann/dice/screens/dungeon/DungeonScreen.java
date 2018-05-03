@@ -319,6 +319,9 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
             case Keys.ESCAPE:
                 toggleMenu();
                 break;
+            case Keys.W:
+                if(Main.debug) nextLevel();
+                break;
         }
     }
 

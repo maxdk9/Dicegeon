@@ -100,7 +100,7 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .spells(Spell.arcaneMissile));
         add(new HeroType().name("Trickster").hp(7).tag(wizard1)
                 .sides(copy, copy, magic2, magic2, magic1, nothing)
-                .spells(Spell.lightningStrike));//TODO new spell here (enemy reroll!??)
+                .spells(Spell.lightningStrike));
 
 
 

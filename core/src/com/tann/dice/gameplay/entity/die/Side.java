@@ -33,7 +33,6 @@ public class Side {
     static{
         for(EntitySize es:EntitySize.values()){
             TextureRegion[] arr = new TextureRegion[es.maximumPips+2];
-            System.out.println(es.maximumPips+1+":"+es);
             for(int i=0;i<arr.length-1;i++){
                 arr[i]= Main.atlas_3d.findRegion(es.name()+"/bar/"+i);
             }

@@ -35,12 +35,13 @@ public class EscMenu extends Group implements OnPop{
     p.actor(new TextWriter("Dicegeons"))
         .row().actor(new TextWriter("[blue]Good Art by Gnapp"))
         .row().actor(new TextWriter("[yellow]The rest by tann"))
-        .row().actor(Slider.music)
         .row().actor(Slider.SFX);
     TextButton Continue = new TextButton(40, 11, "Continue");
-    TextButton stats = new TextButton(40, 11, "Stats");
+    TextButton stats = Main.debug?new TextButton(40, 11, "Stats"):null;
     TextButton restart = new TextButton(40, 11, "Restart");
-    p.row().actor(restart).actor(stats).actor(Continue).pix();
+    p.row().actor(restart);
+    if(Main.debug) p.actor(stats);
+    p.actor(Continue).pix();
 
 
     stats.setRunnable(new Runnable() {

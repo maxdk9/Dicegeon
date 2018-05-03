@@ -8,10 +8,7 @@ import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EquipmentPanel;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.OnPop;
-import com.tann.dice.util.Sounds;
+import com.tann.dice.util.*;
 
 import java.util.List;
 
@@ -55,6 +52,9 @@ public class InventoryPanel extends Group implements OnPop{
             addActor(ep);
             ep.setPosition((i%across)*(PANEL_SIZE+gap)+gap, (i/across)*(PANEL_SIZE+gap)+gap);
         }
+        TextWriter tw = new TextWriter("[orange]Equipment", 999, Colours.purple, 2);
+        addActor(tw);
+        tw.setPosition(getWidth()/2-tw.getWidth()/2, getHeight()-1);
 
     }
 
