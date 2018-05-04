@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import java.util.ArrayList;
@@ -128,7 +129,8 @@ public class Tann {
         ));
     }
 
-    public static void slideIn(Actor a, TannPosition tannPosition, int distance) {
+    public static void slideIn(Actor a, Group parent, TannPosition tannPosition, int distance) {
+        parent.addActor(a);
         a.clearActions();
         Vector2 pos = getPos(a, tannPosition);
         a.setPosition(pos.x, pos.y);

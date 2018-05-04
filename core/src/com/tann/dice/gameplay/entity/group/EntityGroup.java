@@ -322,6 +322,7 @@ public class EntityGroup <T extends DiceEntity>{
     public void resetForRoll() {
         for(final DiceEntity de:activeEntities){
             de.getDie().used=false;
+            de.getEntityPanel().holdsDie = false;
             de.getDie().returnToPlay(null, Die.INTERP_SPEED_SLOW);
         }
         Tann.delay(new Runnable() {

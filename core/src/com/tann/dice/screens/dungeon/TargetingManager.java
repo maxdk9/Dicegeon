@@ -11,6 +11,7 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
@@ -291,6 +292,26 @@ public class TargetingManager {
             Main.getCurrentScreen().pop();
             Sounds.playSound(Sounds.pop);
             return;
+        }
+
+        // if you're clicking on an enemy's die side, just show their explanel
+        if(!entity.isPlayer() && dieSide && entity.getEntityPanel().holdsDie){
+            Side s = entity.getDie().getActualSide();
+            Actor topActor = DungeonScreen.get().getTopActor();
+            if(topActor instanceof Explanel){
+                if(((Explanel) topActor).side == s){
+                    Main.getCurrentScreen().popAllLight();
+                    Sounds.playSound(Sounds.pop);
+                    return;
+                }
+            }
+            Sounds.playSound(Sounds.pip);
+            if(s!=null){
+                Explanel e = Explanel.get();
+                e.setup(s, false, entity);
+                DungeonScreen.get().push(e, true, false, true, true, 0, null);
+                return;
+            }
         }
 
         // if you can't target or are clicking the die side, first poplight TODO deselect targetable and popSingleLight hmmmmm

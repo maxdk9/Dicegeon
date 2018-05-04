@@ -76,7 +76,7 @@ public class LevelUpPanel extends Group implements ExplanelReposition, PopAction
                 p.refresh();
                 Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
                 p.setX((int) (Main.width / 2 - p.getWidth() / 2));
-                Tann.slideIn(p, TannPosition.Bot, 5);
+                Tann.slideIn(p, Main.getCurrentScreen(), TannPosition.Bot, 5);
                 Sounds.playSound(Sounds.pip);
             }
         });

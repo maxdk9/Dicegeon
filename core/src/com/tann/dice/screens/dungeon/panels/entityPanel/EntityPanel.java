@@ -26,7 +26,7 @@ import java.util.List;
 
 public class EntityPanel extends Group {
     public DiceEntity entity;
-    public boolean holdsDie =true;
+    public boolean holdsDie = false;
     DamageProfile profile;
     com.tann.dice.screens.dungeon.panels.entityPanel.heartsHolder.HeartsHolder heartsHolder;
     float startX;
@@ -65,14 +65,14 @@ public class EntityPanel extends Group {
                 }
                 if (entity.isDead()) return false;
                 boolean dieSide = isClickOnDie(x);
-                if(PhaseManager.get().getPhase().canRoll() && dieSide){
+                if(PhaseManager.get().getPhase().canRoll() && dieSide && entity.isPlayer()){
                     entity.getDie().toggleLock();
                     return true;
                 }
                 if (TargetingManager.get().targetsDie()) {
                     dieSide = false;
                 }
-                TargetingManager.get().clicked(EntityPanel.this.entity, dieSide && holdsDie && entity.isPlayer());
+                TargetingManager.get().clicked(EntityPanel.this.entity, dieSide && holdsDie);
                 return true;
             }
 
@@ -171,7 +171,7 @@ public class EntityPanel extends Group {
                     LevelUpPanel lup = new LevelUpPanel((Hero) entity);
                     Main.getCurrentScreen().push(lup, false, true, false, false, InputBlocker.DARK, null);
                     lup.setX(Main.width/2-lup.getWidth()/2);
-                    Tann.slideIn(lup, TannPosition.Top, 3);
+                    Tann.slideIn(lup, Main.getCurrentScreen(), TannPosition.Top, 3);
                     Sounds.playSound(Sounds.levelup);
                 }
             });
@@ -185,7 +185,8 @@ public class EntityPanel extends Group {
     }
 
     public boolean isClickOnDie(float x){
-        return x>getWidth()- dieHolder.getWidth()-8 && entity.isPlayer();
+        if(entity.isPlayer()) return x>getWidth()- dieHolder.getWidth()-8;
+        else return x < dieHolder.getWidth() + 8;
     }
 
     public DieHolder dieHolder;

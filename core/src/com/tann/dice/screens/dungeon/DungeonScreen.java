@@ -56,6 +56,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     public static final float BOTTOM_BUTTON_HEIGHT = 25;
     public static final float BOTTOM_BUTTON_WIDTH = 78;
     public static final float BUTT_GAP = 2;
+    private static final int TOP_BUTT_GAP = 6;
     public EntityContainer friendly;
     public EntityContainer enemy;
     public SpellHolder spellHolder;
@@ -141,13 +142,12 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         });
 
 
-        int gap = 6;
-        int topAvailableWidth = (int) (Main.width- EntityContainer.width*2 - friendly.getX()*2 - EntityPanel.slideAmount - gap*2);
-        int topStartX = (int) (EntityContainer.width + friendly.getX()+gap);
+        int topAvailableWidth = (int) (Main.width- EntityContainer.width*2 - friendly.getX()*2 - EntityPanel.slideAmount - TOP_BUTT_GAP*2);
+        int topStartX = (int) (EntityContainer.width + friendly.getX()+TOP_BUTT_GAP);
 
         spellButt = new SpellButt();
         addActor(spellButt);
-        spellButt.setPosition(topStartX, (int)(Main.height - spellButt.getHeight() - gap));
+        spellButt.setPosition(topStartX, (int)(Main.height - spellButt.getHeight() - TOP_BUTT_GAP));
 
         target = new ImageActor(Images.target);
         addActor(target);
@@ -169,7 +169,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
         ImageActor cog = new ImageActor(Images.cog);
         addActor(cog);
-        cog.setPosition(topStartX, gap);
+        cog.setPosition(topStartX, TOP_BUTT_GAP);
         cog.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -182,7 +182,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
     public void slideTarget(boolean show){
         if(show){
-            Tann.slideIn(target, Tann.TannPosition.Top, 4);
+            Tann.slideIn(target, this, Tann.TannPosition.Top, TOP_BUTT_GAP);
         }
         else{
             Tann.slideAway(target, Tann.TannPosition.Top);
