@@ -136,7 +136,7 @@ public class Tann {
         a.setPosition(pos.x, pos.y);
         switch(tannPosition){
             case Left:
-                pos.x += distance;
+                pos.x += distance+a.getWidth();
                 break;
             case Right:
                 pos.x -= distance+a.getWidth();
@@ -145,7 +145,7 @@ public class Tann {
                 pos.y -= distance+a.getHeight();
                 break;
             case Bot:
-                pos.y += distance;
+                pos.y += distance+a.getHeight();
                 break;
 
         }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.util.*;
 
 import com.tann.dice.util.Tann.TannPosition;
@@ -90,6 +91,6 @@ public class TipOfTheDay extends Group {
 
     public void slideIn() {
         setX((int) (Main.width/2-getWidth()/2));
-        Tann.slideIn(this, getParent(), TannPosition.Bot,  35);
+        Tann.slideIn(this, DungeonScreen.get(), TannPosition.Bot,  35);
     }
 }

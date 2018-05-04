@@ -126,7 +126,7 @@ public abstract class DiceEntity {
     activeTriggers = null;
     describableTriggers = null;
     for (Side s : sides) {
-      s.useTriggers(getActiveTriggers());
+      s.useTriggers(getActiveTriggers(), this);
     }
     getProfile().somethingChanged();
     getDiePanel().somethingChanged();

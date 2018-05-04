@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.effect.trigger.types;
 
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
 
 public class TriggerSideChange extends Trigger{
@@ -15,7 +16,7 @@ public class TriggerSideChange extends Trigger{
     }
 
     @Override
-    public void affectSide(Side side) {
+    public void affectSide(Side side, DiceEntity owner) {
         Eff[] effs = side.getEffects();
         for(int i=0;i<effs.length;i++){
             if(effs[i].type==replace){

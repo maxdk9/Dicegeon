@@ -51,6 +51,8 @@ public class Equipment {
             .fluff("Careful, it's sharp").trigger(new TriggerDamageAttackers(1)));
     add(new Equipment().name("Relic").image("relic")
             .fluff("Power to the weak").trigger(new TriggerOneHealthBonusOutgoing(2)));
+    add(new Equipment().name("Troll's Nose").image("nose")
+            .fluff("Smells really bad").trigger(new TriggerEndOfTurnSelf(new Eff().heal(1))));
 
 
     defaultLevel = 2;
@@ -58,6 +60,8 @@ public class Equipment {
             .fluff("A glowing purple stone").trigger(new TriggerAllSidesBonus(1, false)));
     add(new Equipment().name("Iron Helmet").image("ironHelmet")
             .fluff("A visored metal helmet").trigger(new TriggerMaxHP(6)));
+    add(new Equipment().name("Sapphire Ring").image("sapphireRing")
+            .fluff("A [blue][sin]swirly[blue][sin] ring").trigger(new TriggerLeftmostBonus(3)));
 //    add(new Equipment().name("Loaded Die").image("dice")
 //            .fluff("It doesn't feel quite right...").trigger(new TriggerSideChange(EffType.Empty, Side.reroll)));
 

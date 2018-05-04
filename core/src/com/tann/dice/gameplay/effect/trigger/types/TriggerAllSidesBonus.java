@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.effect.trigger.types;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
 
 public class TriggerAllSidesBonus extends Trigger{
@@ -15,7 +16,7 @@ public class TriggerAllSidesBonus extends Trigger{
     }
 
     @Override
-    public void affectSide(Side side) {
+    public void affectSide(Side side, DiceEntity owner) {
         for(Eff e:side.getEffects()){
             if(e.getValue()==0) continue;
             e.justValue(e.getValue()+amount);

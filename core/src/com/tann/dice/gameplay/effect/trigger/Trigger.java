@@ -53,7 +53,7 @@ public abstract class Trigger implements Cloneable{
 
   public Integer getRegen(){return 0;};
 
-  public void affectSide(Side side) { }
+  public void affectSide(Side side, DiceEntity owner) { }
 
   protected String noDescription(String extra){
     return "No description for "+this.getClass().getSimpleName()+" ("+extra+")";

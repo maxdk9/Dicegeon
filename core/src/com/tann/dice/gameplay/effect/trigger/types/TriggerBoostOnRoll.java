@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.effect.trigger.types;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,7 @@ public class TriggerBoostOnRoll extends Trigger {
   }
 
   @Override
-  public void affectSide(Side side) {
+  public void affectSide(Side side, DiceEntity owner) {
     int toAdd = Collections.frequency(sides, side)*bonus;
     for(Eff e:side.getEffects()){
       if(e.getValue()==0) continue;

@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.effect.trigger.types;
 
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
 
 public class TriggerEffTypeBonus extends Trigger {
@@ -13,7 +14,7 @@ public class TriggerEffTypeBonus extends Trigger {
     }
 
     @Override
-    public void affectSide(Side side) {
+    public void affectSide(Side side, DiceEntity owner) {
         boolean found = false;
         for(Eff e:side.getEffects()){
             if(e.type == type){
