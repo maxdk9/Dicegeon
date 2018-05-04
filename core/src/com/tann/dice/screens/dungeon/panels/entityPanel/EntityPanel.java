@@ -13,6 +13,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
+import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
@@ -363,7 +364,10 @@ public class EntityPanel extends Group {
             Vector2 them = Tann.getLocalCoordinates(ep);
             them.x-=getParent().getX();
             them.y-=getParent().getY();
-            float width = 3, segmentSize = 5, gapSize = 2, speed = 2;
+
+            Monster m = (Monster) (de instanceof Monster?de:entity);
+            float width = m.getDie().getActualSide().getEffects()[0].getValue()+1;
+            float segmentSize = 5, gapSize = 2, speed = 2;
             if(entity.isPlayer()){
                 Draw.drawDottedLine(batch, them.x, them.y+ep.getHeight()/2, me.x+getWidth(), me.y+getHeight()/2, width, segmentSize, gapSize, speed);
             }
