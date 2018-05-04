@@ -65,7 +65,7 @@ public class EntityPanel extends Group {
                     entity.kill();
                 }
                 if (entity.isDead()) return false;
-                boolean dieSide = isClickOnDie(x);
+                boolean dieSide = isClickOnDie(x, y);
                 if(PhaseManager.get().getPhase().canRoll() && dieSide && entity.isPlayer()){
                     entity.getDie().toggleLock();
                     return true;
@@ -185,9 +185,13 @@ public class EntityPanel extends Group {
         }
     }
 
-    public boolean isClickOnDie(float x){
-        if(entity.isPlayer()) return x>getWidth()- dieHolder.getWidth()-8;
-        else return x < dieHolder.getWidth() + 8;
+    public boolean isClickOnDie(float x, float y){
+        int wig = 4;
+        if(x < dieHolder.getX()-wig) return false;
+        if(x > dieHolder.getX()+dieHolder.getWidth()+wig) return false;
+        if(y < dieHolder.getY()-wig) return false;
+        if(y > dieHolder.getY()+dieHolder.getHeight()+wig) return false;
+        return true;
     }
 
     public DieHolder dieHolder;

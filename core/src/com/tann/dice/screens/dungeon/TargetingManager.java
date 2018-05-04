@@ -295,7 +295,7 @@ public class TargetingManager {
         }
 
         // if you're clicking on an enemy's die side, just show their explanel
-        if(!entity.isPlayer() && dieSide && entity.getEntityPanel().holdsDie){
+        if(!entity.isPlayer() && dieSide && entity.getEntityPanel().holdsDie && getSelectedTargetable()==null){
             Side s = entity.getDie().getActualSide();
             Actor topActor = DungeonScreen.get().getTopActor();
             if(topActor instanceof Explanel){
@@ -315,7 +315,9 @@ public class TargetingManager {
         }
 
         // if you can't target or are clicking the die side, first poplight TODO deselect targetable and popSingleLight hmmmmm
-        if(!PhaseManager.get().getPhase().canTarget() || dieSide) Main.getCurrentScreen().popAllLight();
+        if(!PhaseManager.get().getPhase().canTarget() || (dieSide && entity.isPlayer())){
+            Main.getCurrentScreen().popAllLight();
+        }
 
         // attempt to target an entity
         if(PhaseManager.get().getPhase().canTarget()) {
