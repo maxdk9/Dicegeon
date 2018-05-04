@@ -45,7 +45,7 @@ public class LevelEndPanel extends Group{
 
     public void layout(){
         clearChildren();
-        Pixl p = new Pixl(this, 2);
+        Pixl p = new Pixl(this, 2, 110);
         p.row(4);
         p.actor(new TextWriter("[purple]Level "+ DungeonScreen.get().level+"/"+DungeonScreen.levels.size()));
         p.row();

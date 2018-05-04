@@ -351,9 +351,12 @@ public class EntityPanel extends Group {
         if(!entity.isPlayer() && !holdsDie || intensity==0) return;
         List<DiceEntity> targs = entity.isPlayer()?entity.getAllTargeters():entity.getTarget();
         if(targs == null || targs.size()==0) return;
-        batch.setColor(Colours.withAlpha(Colours.yellow, intensity));
+        batch.setColor(Colours.withAlpha(entity.getColour(), intensity));
         for(DiceEntity de:targs){
             EntityPanel ep = de.getEntityPanel();
+            if(de.isPlayer()){
+                batch.setColor(Colours.withAlpha(de.getColour(), intensity));
+            }
             Vector2 me = new Vector2(getX(), getY());
             Vector2 them = Tann.getLocalCoordinates(ep);
             them.x-=getParent().getX();

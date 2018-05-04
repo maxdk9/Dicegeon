@@ -145,7 +145,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
                 break;
             case big:
             case huge:
-                g.setPosition(Main.width/2-g.getWidth()/2, Main.height/2-g.getHeight()/2);
+                g.setPosition((int)(Main.width/2-g.getWidth()/2), (int)(Main.height/2-g.getHeight()/2));
                 break;
         }
 
