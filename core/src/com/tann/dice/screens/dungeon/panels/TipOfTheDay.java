@@ -89,6 +89,7 @@ public class TipOfTheDay extends Group {
     }
 
     public void slideIn() {
-        Tann.slideIn(this, TannPosition.Bot, (int) (Main.width/2-getWidth()/2), 35);
+        setX((int) (Main.width/2-getWidth()/2));
+        Tann.slideIn(this, TannPosition.Bot,  35);
     }
 }

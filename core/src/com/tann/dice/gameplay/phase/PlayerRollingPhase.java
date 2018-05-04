@@ -12,6 +12,7 @@ public class PlayerRollingPhase extends Phase {
         Party.get().resetRolls();
         DungeonScreen.get().slideConfirmButton(true);
         DungeonScreen.get().slideRollButton(true);
+        DungeonScreen.get().slideTarget(true);
         DungeonScreen.get().setConfirmText("Confirm Dice");
     }
 

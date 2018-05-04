@@ -18,6 +18,7 @@ public class TargetingPhase extends Phase {
         Party.get().resetMagic();
         DungeonScreen.get().removeLeftoverDice();
         DungeonScreen.get().spellButt.hide();
+        DungeonScreen.get().slideTarget(false);
         PhaseManager.get().pushPhase(new DamagePhase());
     }
 

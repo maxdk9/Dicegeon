@@ -170,7 +170,8 @@ public class EntityPanel extends Group {
                 public void run() {
                     LevelUpPanel lup = new LevelUpPanel((Hero) entity);
                     Main.getCurrentScreen().push(lup, false, true, false, false, InputBlocker.DARK, null);
-                    Tann.slideIn(lup, TannPosition.Top, Main.width/2-lup.getWidth()/2, Main.height-lup.getHeight()-3);
+                    lup.setX(Main.width/2-lup.getWidth()/2);
+                    Tann.slideIn(lup, TannPosition.Top, 3);
                     Sounds.playSound(Sounds.levelup);
                 }
             });

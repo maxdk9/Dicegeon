@@ -77,7 +77,8 @@ public class LevelEndPanel extends Group{
                     }
                     p.refresh();
                     Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
-                    Tann.slideIn(p, TannPosition.Bot, (int) (Main.width / 2 - p.getWidth() / 2), 5);
+                    p.setX((int) (Main.width / 2 - p.getWidth() / 2));
+                    Tann.slideIn(p, TannPosition.Bot, 5);
                     Sounds.playSound(Sounds.pip);
                 }
             });

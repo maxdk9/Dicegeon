@@ -88,7 +88,7 @@ public class HeartsHolder extends Group{
                 TannFont.font.drawString(batch, overkillText, (int) (getX() - 1 - TannFont.font.getWidth(overkillText)), overkillY, false);
             }
             if (poisonOverkill > 0){
-                batch.setColor(Colours.purple);
+                batch.setColor(Colours.green);
                 if(overkill>0){
                     overkillY -= TannFont.font.getLineHeight();
                 }

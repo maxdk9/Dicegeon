@@ -59,7 +59,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     public EntityContainer friendly;
     public EntityContainer enemy;
     public SpellHolder spellHolder;
-
+    private ImageActor target;
     private DungeonScreen() {
     }
 
@@ -149,9 +149,9 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         addActor(spellButt);
         spellButt.setPosition(topStartX, (int)(Main.height - spellButt.getHeight() - gap));
 
-        ImageActor target = new ImageActor(Images.target);
+        target = new ImageActor(Images.target);
         addActor(target);
-        target.setPosition((int)(topStartX + topAvailableWidth - target.getWidth()), Main.height-gap-target.getHeight());
+        target.setPosition((int)(topStartX + topAvailableWidth - target.getWidth()), Main.height);
         target.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -169,7 +169,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
         ImageActor cog = new ImageActor(Images.cog);
         addActor(cog);
-        cog.setPosition((int)(topStartX), gap);
+        cog.setPosition(topStartX, gap);
         cog.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -178,6 +178,15 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
             }
         });
 
+    }
+
+    public void slideTarget(boolean show){
+        if(show){
+            Tann.slideIn(target, Tann.TannPosition.Top, 4);
+        }
+        else{
+            Tann.slideAway(target, Tann.TannPosition.Top);
+        }
     }
 
     public int level = 0;
@@ -198,7 +207,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     }
 
     static {
-        addLevel(rat, goblin, bird, dragon); // all sizes
+//        addLevel(rat, goblin, bird, dragon); // all sizes
 //        addLevel(rat); // ezpz
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);

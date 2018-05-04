@@ -104,16 +104,16 @@ public class Tann {
     private static Vector2 getPos(Actor a, TannPosition tannPosition){
         switch (tannPosition){
             case Left:
-                tmp.set(-a.getWidth(), Main.height/2-a.getHeight()/2);
+                tmp.set(-a.getWidth(), a.getY());
                 break;
             case Right:
-                tmp.set(Main.width, Main.height/2-a.getHeight()/2);
+                tmp.set(Main.width, a.getY());
                 break;
             case Top:
-                tmp.set(Main.width/2-a.getWidth()/2, Main.height);
+                tmp.set(a.getX(), Main.height);
                 break;
             case Bot:
-                tmp.set(Main.width/2-a.getWidth()/2, -a.getHeight());
+                tmp.set(a.getX(), -a.getHeight());
                 break;
         }
         return tmp;
@@ -128,11 +128,26 @@ public class Tann {
         ));
     }
 
-    public static void slideIn(Actor a, TannPosition tannPosition, float xPosition, float yPosition) {
+    public static void slideIn(Actor a, TannPosition tannPosition, int distance) {
         a.clearActions();
         Vector2 pos = getPos(a, tannPosition);
         a.setPosition(pos.x, pos.y);
-        a.addAction(Actions.moveTo((int)xPosition, (int)yPosition, Chrono.d, Chrono.i));
+        switch(tannPosition){
+            case Left:
+                pos.x += distance;
+                break;
+            case Right:
+                pos.x -= distance+a.getWidth();
+                break;
+            case Top:
+                pos.y -= distance+a.getHeight();
+                break;
+            case Bot:
+                pos.y += distance;
+                break;
+
+        }
+        a.addAction(Actions.moveTo(pos.x, pos.y, Chrono.d, Chrono.i));
     }
 
 }
