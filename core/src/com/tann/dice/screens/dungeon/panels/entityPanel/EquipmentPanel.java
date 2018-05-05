@@ -12,6 +12,7 @@ import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
+import com.tann.dice.util.Sounds;
 
 public class EquipmentPanel extends Actor {
 
@@ -49,6 +50,7 @@ public class EquipmentPanel extends Actor {
           Explanel.get().setup(EquipmentPanel.this.equipment);
           a = Main.getCurrentScreen().getTopActor();
           Main.getCurrentScreen().push(Explanel.get(), false, false, true, true, 0, null);
+          Sounds.playSound(Sounds.pip);
           if (!(a instanceof ExplanelReposition)) {
             a = Main.getCurrentScreen();
           }

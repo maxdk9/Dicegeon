@@ -24,8 +24,11 @@ public class Sounds {
 	public static String[] blocks;
 	public static String[] heals;
 	public static String[] magic;
+
 	public static String[] boost;
 	public static String[] copy;
+	public static String[] taunt;
+
 	public static String[] death;
 
 	public static String[] pip;
@@ -51,6 +54,7 @@ public class Sounds {
 		death = makeSounds("combat/death", 1);
 		boost = makeSounds("combat/boost", 1);
 		copy = makeSounds("combat/copy", 1);
+		taunt = makeSounds("combat/taunt", 1);
 
 		pip = makeSounds("ui/pip", 5);
 		pop = makeSounds("ui/pop", 6);

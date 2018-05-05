@@ -34,7 +34,7 @@ public class Equipment {
     add(new Equipment().name("Antivenom").image("antivenom")
             .fluff("Weird trick discovered by a mum, snakes hate her!").trigger(new TriggerDamageImmunity(true, false)));
     add(new Equipment().name("Blood Vial").image("bloodVial")
-            .fluff("It [sin]sizzles[sin] gently in your palm").trigger(new TriggerOnKill(new Eff().heal(1).self())));
+            .fluff("It [sin]sizzles[sin] gently").trigger(new TriggerOnKill(new Eff().heal(1).self())));
     add(new Equipment().name("Bone Idol").image("bone")
             .fluff("A real lazy-bone").trigger(new TriggerNoDeathPenalty()));
 

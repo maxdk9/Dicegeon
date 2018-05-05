@@ -46,7 +46,7 @@ public class Main extends ApplicationAdapter {
   public static Main self;
   private static boolean showFPS = true;
   private static boolean printCalls = false;
-  public static boolean debug = true;
+  public static boolean debug = false;
   Screen currentScreen;
   Screen previousScreen;
   public static float ticks;
@@ -295,9 +295,9 @@ public class Main extends ApplicationAdapter {
     TannFont.font.drawString(batch, versionName, x, 1);
     x+=26;
     TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", x, 1);
-    x+=23;
+    x+=22;
     TannFont.font.drawString(batch, averageRenderTime +"ms", x, 1);
-    x+=17;
+    x+=18;
     TannFont.font.drawString(batch, ((SpriteBatch)stage.getBatch()).renderCalls+"rc", x, 1);
     if(chadwick){
       for(int y=0;y<times.size();y++){

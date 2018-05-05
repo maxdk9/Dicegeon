@@ -13,6 +13,7 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.InventoryPanel;
 import com.tann.dice.util.Colours;
+import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,8 +44,13 @@ public class Party extends EntityGroup<Hero>{
     }
 
     public void addHeroes(){
-        HeroType all = HeroType.byName("Trickster");
-        HeroType all2 = HeroType.byName("Channeler");
+        if(true){
+            setupForLevel(6);
+            return;
+        }
+
+        HeroType all = HeroType.byName("fighter");
+        HeroType all2 = HeroType.byName("bouncer");
         HeroType[] types = new HeroType[]{
 //                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
                 all, all, all, all2, all2
@@ -57,6 +63,34 @@ public class Party extends EntityGroup<Hero>{
         setEntities(tmp);
         DungeonScreen.get().friendly.setEntities(activeEntities);
 
+    }
+
+    private void setupForLevel(int level) {
+        HeroType[] types = new HeroType[]{acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)};
+        for(int i=0;i<(level)/2;i++){
+            while (true){
+                int index = (int) (Math.random()*5);
+                if(types[index].level==0){
+                    types[index] = Tann.getRandom(types[index].getLevelupOptions());
+                    break;
+                }
+            }
+        }
+        List<Hero> tmp = new ArrayList<>();
+        for(HeroType type: types){
+            tmp.add(type.buildHero());
+        }
+        setEntities(tmp);
+        DungeonScreen.get().friendly.setEntities(activeEntities);
+        for(int i=0;i<(level-1)/2;i++){
+            while(true){
+                Hero h = Tann.getRandom(tmp);
+                if(h.equipment.isEmpty()){
+                    h.addEquipment(Equipment.random(Math.min(i, 2)));
+                    break;
+                }
+            }
+        }
     }
 
     public void fullyReset(){

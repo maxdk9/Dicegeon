@@ -149,7 +149,8 @@ public class DamageProfile {
     public void action(){
         target.heal(getHeals());
         target.damage(Math.max(0, getIncomingDamage() - getBlockedDamage()));
-        for(Eff e:effs){
+        List<Eff> copy = new ArrayList<>(effs);
+        for(Eff e:copy){
             if(e.source!=null && e.type == Damage) {
                 target.attackedBy(e.source);
             }

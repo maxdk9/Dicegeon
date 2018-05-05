@@ -29,7 +29,7 @@ public class HeartsHolder extends Group{
         if(big){
             heartsPerRow=7;
         }
-        heartsPerRow = Math.min(heartsPerRow, e.getMaxHp());
+//        heartsPerRow = Math.min(heartsPerRow, e.getMaxHp());
         this.profile = e.getProfile();
 
         setSize(heartWidth*heartsPerRow + heartGap*(heartsPerRow-1), ((e.getMaxHp()+(heartsPerRow-1))/heartsPerRow)*(heartHeight+heartGap)-heartGap);

@@ -53,8 +53,8 @@ public class MonsterType extends EntityType<MonsterType>{
             .trait(new TriggerDamageAttackers(1));
     public static final MonsterType bird = new MonsterType().name("Awk").hp(7).size(big).fleePip(2)
             .sides(big_claw2, big_claw2, big_peck3, big_peck3, big_peck5, big_peck5);
-    public static final MonsterType summoner = new MonsterType().name("Lich").hp(21).size(big)
-            .sides(big_summonSkeleton2, big_summonSkeleton2, big_summonSkeleton2, big_summonZombie2, big_summonZombie2, big_summonZombie2)
+    public static final MonsterType lich = new MonsterType().name("Lich").hp(21).size(big)
+            .sides(big_summonSkeleton2, big_summonSkeleton2, big_summonZombie2, big_summonZombie1, big_decay3, big_decay3)
             .trait(new TriggerOnDeathEffect(new Eff().untargeted().destroyAllSummons()));
     public static final MonsterType slimoBig = new MonsterType().name("Slimer").hp(12).size(big)
             .sides(big_slimeTriple2, big_slimeTriple2, big_slimeTriple2, big_slimeTriple2, big_slimeUpDown3, big_slimeUpDown3)

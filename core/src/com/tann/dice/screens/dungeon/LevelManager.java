@@ -34,14 +34,15 @@ public class LevelManager {
 
     private void init() {
         //        addLevel(rat, goblin, bird, dragon); // all sizes
+        addLevel(skeleton, lich, zombie);
 
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
-        addLevel(spikeGolem, spikeGolem);
-        addLevel(bird, bird, bird);
+        addLevel(goblin, spikeGolem, goblin);
+        addLevel(bird, archer, bird);
         addLevel(archer, slimoBig, goblin);
 
-        addLevel(skeleton, skeleton, summoner, zombie, zombie);
+        addLevel(skeleton, lich, zombie);
         addLevel(archer, spikeGolem, spikeGolem, archer);
         addLevel(slimoHuge);
         addLevel(bird, spikeGolem, archer, spikeGolem, bird);

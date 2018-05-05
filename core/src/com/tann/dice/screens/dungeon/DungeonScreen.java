@@ -290,6 +290,9 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
             case Keys.W:
                 if(Main.debug) LevelManager.get().nextLevel();
                 break;
+            case Keys.M:
+                if(Main.debug) Party.get().addMagic(1);
+                break;
         }
     }
 

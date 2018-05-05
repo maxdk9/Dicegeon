@@ -381,6 +381,9 @@ public class Eff {
             case CopyAbility:
                 Sounds.playSound(Sounds.copy);
                 break;
+            case RedirectIncoming:
+                Sounds.playSound(Sounds.taunt);
+                break;
         }
     }
 

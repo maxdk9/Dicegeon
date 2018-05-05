@@ -270,6 +270,9 @@ public class Side {
     public static final Side big_summonZombie1 = new Side().title("Summon Zombie").size(big).image("summonZombie").effect(new Eff().summon("Zombie",1));
     public static final Side big_summonZombie2 = big_summonZombie1.withValue(2);
 
+    public static final Side big_decay = new Side().title("Death Cloud").size(big).image("decay").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side big_decay3 = big_decay.withValue(3);
+
     public static final Side big_slimeUpDown1 = new Side().title("Flobble").size(big).image("upDownBlob").effect(new Eff().damage(1).topBotEnemy());
     public static final Side big_slimeUpDown2 = big_slimeUpDown1.withValue(2);
     public static final Side big_slimeUpDown3 = big_slimeUpDown1.withValue(3);

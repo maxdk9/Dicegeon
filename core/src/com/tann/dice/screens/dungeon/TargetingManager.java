@@ -173,6 +173,7 @@ public class TargetingManager {
         t.select();
         if(t.getEffects()[0].isTargeted() && getValidTargets(t, true).size()==0){
             DungeonScreen.get().showDialog(t.getEffects()[0].getNoTargetsString());
+            Sounds.playSound(Sounds.error);
             deselectTargetable();
             return;
         }
