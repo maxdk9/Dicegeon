@@ -78,4 +78,11 @@ public class TriggerEndOfTurnSelf extends Trigger {
     public void setValue(int value) {
         eff.justValue(value);
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        TriggerEndOfTurnSelf clone = (TriggerEndOfTurnSelf) super.clone();
+        clone.eff = eff.copy();
+        return clone;
+    }
 }

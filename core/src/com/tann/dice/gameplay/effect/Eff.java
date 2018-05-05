@@ -233,7 +233,7 @@ public class Eff {
     }
 
     public int getValue() {
-        int actualValue = value; // + bonusFromSide;
+        int actualValue = value;
         if(source != null) {
             List<Trigger> triggers = source.getActiveTriggers();
             for(int i=0;i<triggers.size();i++){
