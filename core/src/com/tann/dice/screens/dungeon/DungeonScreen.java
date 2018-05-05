@@ -368,7 +368,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         pan.setScale(0);
         EntityPanel ePan = entity.getEntityPanel();
         Vector2 coord = Tann.getLocalCoordinates(ePan);
-        pan.setPosition(coord.x+ePan.getWidth()*(entity.isPlayer()?.8f:.2f), coord.y+ePan.getHeight()/2);
+        pan.setPosition(coord.x+ePan.getWidth()*(entity.isPlayer()?.8f:0.2f), coord.y+ePan.getHeight()/2);
         float dur = .4f;
         Interpolation terp = Chrono.i;
         pan.clearActions();

@@ -21,6 +21,7 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.DieSpinner;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
+import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
@@ -154,12 +155,12 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
     @Override
     public void popAction() {
         clearActions();
-        Actor ePan = entity.getEntityPanel();
+        EntityPanel ePan = entity.getEntityPanel();
         Vector2 coord = Tann.getLocalCoordinates(ePan);
         addAction(Actions.sequence(
                 Actions.parallel(
                         Actions.scaleTo(0, 0, .3f),
-                        Actions.moveTo(coord.x+ePan.getWidth(), coord.y+ePan.getHeight()/2, .3f)
+                        Actions.moveTo(coord.x+(ePan.entity.isPlayer()?ePan.getWidth():0), coord.y+ePan.getHeight()/2, .3f)
                 ),
                 Actions.removeActor()
         ));

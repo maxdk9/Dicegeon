@@ -5,8 +5,8 @@ import com.tann.dice.gameplay.effect.trigger.types.TriggerCowardly;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageAttackers;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerOnDeathEffect;
 import com.tann.dice.gameplay.entity.Monster;
-import com.tann.dice.gameplay.entity.die.Side;
-import static com.tann.dice.gameplay.entity.die.Side.*; 
+
+import static com.tann.dice.gameplay.entity.die.Side.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType bird = new MonsterType().name("Awk").hp(7).size(big).fleePip(2)
             .sides(big_claw2, big_claw2, big_peck3, big_peck3, big_peck5, big_peck5);
     public static final MonsterType lich = new MonsterType().name("Lich").hp(21).size(big)
-            .sides(big_summonSkeleton2, big_summonSkeleton2, big_summonZombie2, big_summonZombie1, big_decay3, big_decay3)
+            .sides(big_summonSkeleton2, big_summonSkeleton2, big_summonZombie2, big_summonZombie2, big_decay2, big_decay2)
             .trait(new TriggerOnDeathEffect(new Eff().untargeted().destroyAllSummons()));
     public static final MonsterType slimoBig = new MonsterType().name("Slimer").hp(12).size(big)
             .sides(big_slimeTriple2, big_slimeTriple2, big_slimeTriple2, big_slimeTriple2, big_slimeUpDown3, big_slimeUpDown3)

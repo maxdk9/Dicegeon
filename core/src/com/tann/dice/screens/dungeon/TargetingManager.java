@@ -298,6 +298,16 @@ public class TargetingManager {
 
         // if you're clicking on an enemy's die side, just show their explanel
         if(!entity.isPlayer() && dieSide && entity.getEntityPanel().holdsDie && getSelectedTargetable()==null){
+            Actor a = Main.getCurrentScreen().getTopActor();
+            if(a instanceof Explanel){
+                Explanel e = (Explanel) a;
+                if(e.side!=null && e.side == entity.getDie().getActualSide()){
+                    Sounds.playSound(Sounds.pop);
+                    Main.getCurrentScreen().popAllLight();
+                    return;
+                }
+            }
+            Main.getCurrentScreen().popAllLight();
             Side s = entity.getDie().getActualSide();
             Actor topActor = DungeonScreen.get().getTopActor();
             if(topActor instanceof Explanel){

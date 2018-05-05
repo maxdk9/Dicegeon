@@ -46,7 +46,7 @@ public class Main extends ApplicationAdapter {
   public static Main self;
   private static boolean showFPS = true;
   private static boolean printCalls = false;
-  public static boolean debug = false;
+  public static boolean debug = true;
   Screen currentScreen;
   Screen previousScreen;
   public static float ticks;
