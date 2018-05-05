@@ -27,7 +27,6 @@ public class Hero extends DiceEntity {
         }
         this.level = type.level;
         this.spells = Arrays.asList(type.spells);
-        addEquipment(Equipment.byName("Sapphire Ring"));
     }
 
     @Override

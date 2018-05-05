@@ -346,23 +346,23 @@ public class BulletStuff {
 			Sounds.playSound(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f));
 			Sounds.playSoundDelayed(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f), .4f);
 		}
-
+		int maximumDelay = 5;
 		float clackStart = firstRoll?0:.13f;
 		float clackRand = .1f;
 		for(int i=1;i<numDice;i++){
-			Sounds.playSoundDelayed(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f), (float) (clackStart+i*clackRand*Math.random()));
+			Sounds.playSoundDelayed(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f), (float) (clackStart+Math.min(maximumDelay, i)*clackRand*Math.random()));
 		}
 
 		int extraClacks = (int) (Math.pow(numDice, 2)*Math.random()/7);
 		float extraClackStart = .85f;
 		for(int i=0;i<extraClacks;i++){
-			Sounds.playSoundDelayed(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f), (float) (extraClackStart+i*clackRand*Math.random()));
+			Sounds.playSoundDelayed(Sounds.clacks, 1, (float)(.8f+Math.random()*.2f), (float) (extraClackStart+Math.min(maximumDelay, i)*clackRand*Math.random()));
 		}
 
 		float clockStart = .65f;
 		float clockRand = .22f;
 		for(int i=0;i<numDice;i++){
-			Sounds.playSoundDelayed(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f), (float) (clockStart+i*Math.random()*clockRand));
+			Sounds.playSoundDelayed(Sounds.clocks, 1, (float)(.8f+Math.random()*.2f), (float) (clockStart+Math.min(maximumDelay, i)*Math.random()*clockRand));
 		}
 	}
 }

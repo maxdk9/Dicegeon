@@ -34,16 +34,17 @@ public class LevelManager {
 
     private void init() {
         //        addLevel(rat, goblin, bird, dragon); // all sizes
-        addLevel(bird, bird, bird); // ezpz
+
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
-        addLevel(goblin, goblin, bird, goblin);
-        addLevel(spikeGolem, bird);
+        addLevel(spikeGolem, spikeGolem);
+        addLevel(bird, bird, bird);
         addLevel(archer, slimoBig, goblin);
-        addLevel(skeleton, summoner, zombie);
-        addLevel(spikeGolem, spikeGolem, snake, snake);
+
+        addLevel(skeleton, skeleton, summoner, zombie, zombie);
+        addLevel(archer, spikeGolem, spikeGolem, archer);
         addLevel(slimoHuge);
-        addLevel(bird, spikeGolem, spikeGolem, bird);
+        addLevel(bird, spikeGolem, archer, spikeGolem, bird);
         addLevel(archer, dragon, bird);
     }
 
@@ -94,6 +95,7 @@ public class LevelManager {
     }
 
     public void restart() {
+        Monster.resetLocks();
         level = 0;
         Party.get().fullyReset();
         nextLevel();

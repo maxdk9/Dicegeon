@@ -34,8 +34,12 @@ public class Monster extends DiceEntity {
 
 
     static long nextLockTime = 0;
-    static final long lockDelay = 500;
-    static final long firstLockDelay = 250;
+    static final long lockDelay = 400;
+    static final long firstLockDelay = 350;
+
+    public static void resetLocks() {
+        nextLockTime = 0;
+    }
 
     @Override
     public void stopped() {
@@ -94,4 +98,5 @@ public class Monster extends DiceEntity {
         }
         return false;
     }
+
 }

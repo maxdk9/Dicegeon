@@ -3,11 +3,13 @@ package com.tann.dice.screens.dungeon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.DieShader;
+import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.Eff.TargetingType;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
@@ -510,8 +512,19 @@ public class TargetingManager {
                         }
                         break;
                     case Buff:
-                        if (de.getEntityPanel().holdsDie && !de.getDie().used){
-                            good = true;
+                        if (de.isPlayer() != source.isPlayer() || (de.getEntityPanel().holdsDie && !de.getDie().used)){
+
+                            Buff buff = e.getBuff();
+                            if(buff.trigger instanceof TriggerAllSidesBonus){
+                                // can't buff dice with no value
+                                if(de.getDie().getActualSide().getEffects()[0].getValue() == 0) good = false;
+                                    // can't buff self
+                                else if(de == source) good = false;
+                                else good = true;
+                            }
+                            else {
+                                good = true;
+                            }
                         }
                         break;
                     case Decurse:

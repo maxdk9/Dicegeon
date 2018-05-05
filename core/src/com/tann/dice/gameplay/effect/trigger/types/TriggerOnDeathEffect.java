@@ -13,6 +13,8 @@ import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.util.Tann;
 
+import java.util.List;
+
 public class TriggerOnDeathEffect extends Trigger {
 
     private static TextureRegion tr = loadImage("death");
@@ -24,19 +26,27 @@ public class TriggerOnDeathEffect extends Trigger {
 
     @Override
     public void onDeath() {
-        switch(eff.type){
+        switch (eff.type) {
             case Summon:
-                for(int i=0;i<eff.getValue();i++) {
+                for (int i = 0; i < eff.getValue(); i++) {
                     Monster m = MonsterType.byName(eff.summonType).buildMonster();
                     Room.get().addEntity(m);
                     EntityPanel sourcePan = entity.getEntityPanel();
                     EntityPanel newPan = m.getEntityPanel();
-                    newPan.setPosition(sourcePan.getX() + sourcePan.getWidth()/2 - newPan.getWidth()/2, sourcePan.getY()+sourcePan.getHeight()/2-newPan.getHeight()/2);
+                    newPan.setPosition(sourcePan.getX() + sourcePan.getWidth() / 2 - newPan.getWidth() / 2, sourcePan.getY() + sourcePan.getHeight() / 2 - newPan.getHeight() / 2);
                 }
                 DungeonScreen.get().enemy.setEntities(Room.get().getActiveEntities());
                 DungeonScreen.get().layoutSidePanels();
                 BulletStuff.refresh(Room.get().getAllActive());
                 break;
+            case DestroyAllSummons:
+                List<Monster> entityList = Room.get().getActiveEntities();
+                for (int i = entityList.size() - 1; i >= 0; i--) {
+                    Monster m = entityList.get(i);
+                    if (m.getSize() == DiceEntity.EntitySize.smol) {
+                        m.kill();
+                    }
+                }
         }
     }
 

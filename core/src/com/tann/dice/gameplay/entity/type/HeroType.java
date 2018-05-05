@@ -78,7 +78,7 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .sides(heal5, heal3, sword2, magic2, magic2, nothing)
                 .spells(Spell.balance));
         add(new HeroType().name("Witch").hp(6).tag(healer1)
-                .sides(healBuff1, healBuff1, poison1, heal5, magic2, nothing)
+                .sides(poison1, heal5, healBuff1, healBuff1, magic2, nothing)
                 .spells(Spell.lifeSpark));
         add(new HeroType().name("Medic").hp(5).tag(healer1)
             .sides(healAll2, cure3, cure3, magic2, magic2, nothing)

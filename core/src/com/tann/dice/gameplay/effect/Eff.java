@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.effect;
 
 import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.type.MonsterType;
@@ -23,7 +24,7 @@ public class Eff {
     public enum EffType {
         Damage, Shield, Magic, Healing,
         Empty, Buff, Execute, Reroll, RedirectIncoming,
-        CopyAbility, Decurse, Hook, Summon,
+        CopyAbility, Decurse, Hook, Summon, DestroyAllSummons
 	}
 
 
@@ -138,6 +139,7 @@ public class Eff {
     public Eff decurse() {return type(EffType.Decurse); }
     public Eff hook() {return type(EffType.Hook); }
     public Eff summon(String monsterType, int value) {this.summonType=monsterType; return type(EffType.Summon, value); }
+    public Eff destroyAllSummons() {return type(EffType.DestroyAllSummons); }
 
     public Eff enemySingle() { return targetType(TargetingType.EnemySingle);} //implicit
     public Eff allTargeters() { return targetType(TargetingType.AllTargeters); }
@@ -370,6 +372,14 @@ public class Eff {
                 break;
             case Magic:
                 Sounds.playSound(Sounds.magic, 1, 1);
+                break;
+            case Buff:
+                if(buff.trigger instanceof TriggerAllSidesBonus){
+                    Sounds.playSound(Sounds.boost);
+                }
+                break;
+            case CopyAbility:
+                Sounds.playSound(Sounds.copy);
                 break;
         }
     }

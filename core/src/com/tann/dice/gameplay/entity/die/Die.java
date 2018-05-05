@@ -317,7 +317,7 @@ public class Die implements Targetable{
             texLocs[4*i+1] = face.getRegionY()/height;
             int pipIndex = s.getEffects()[0].getValue();
             TextureRegion[] pipImages = Side.sizeToPips.get(entity.getSize());
-            pipIndex = Math.min(pipImages.length, pipIndex);
+            pipIndex = Math.min(pipImages.length-1, pipIndex);
             TextureRegion pips = pipImages[pipIndex];
             if(pips == null){
                 System.out.println("no pip texture: "+entity.getSize()+":"+s.getEffects()[0].getValue());
@@ -423,8 +423,8 @@ public class Die implements Targetable{
                 }
             }
             if(good) return temp2;
-            dist+=.05f;
-            angle += 5;
+            dist+=.001f;
+            angle += 1;
         }
     }
 
@@ -553,6 +553,7 @@ public class Die implements Targetable{
         physical.userData = this;
         physical.updateBounds();
         physical.transform.rotate(d6Quats[3]);
+        physical.transform.setTranslation(new Vector3(999,999,999));
     }
 
     public float getMass() {
