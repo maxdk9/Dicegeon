@@ -314,7 +314,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
             if (d.getUsed()) continue;
             if (!first.needsUsing()) continue;
             if (!first.isTargeted()) return false;
-            if (EntityGroup.getValidTargets(d, true).size() > 0) return false;
+            if (TargetingManager.getValidTargets(d, true).size() > 0) return false;
         }
         return true;
     }

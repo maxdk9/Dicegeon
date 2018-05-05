@@ -78,7 +78,7 @@ public class TargetingManager {
             case TopBottomEnemy:
             case AllFront:
                 for(Eff e:d.getEffects()){
-                    hitMultiple(EntityGroup.getActualTargets(e, true, null), e, false);
+                    hitMultiple(getActualTargets(e, true, null), e, false);
                 }
                 d.use();
                 d.afterUse();
@@ -169,7 +169,7 @@ public class TargetingManager {
         Sounds.playSound(Sounds.pip);
         TargetingManager.get().setSelectedTargetable(t);
         t.select();
-        if(t.getEffects()[0].isTargeted() && EntityGroup.getValidTargets(t, true).size()==0){
+        if(t.getEffects()[0].isTargeted() && getValidTargets(t, true).size()==0){
             DungeonScreen.get().showDialog(t.getEffects()[0].getNoTargetsString());
             deselectTargetable();
             return;
@@ -206,7 +206,7 @@ public class TargetingManager {
         Eff first = t.getEffects()[0];
         Eff.TargetingType targetingType = first.targetingType;
         EffType effType = first.type;
-        List<DiceEntity> valids = EntityGroup.getValidTargets(t, true);
+        List<DiceEntity> valids = getValidTargets(t, true);
 
         String invalidReason = null;
 
@@ -242,7 +242,7 @@ public class TargetingManager {
         // TODO better
         if(t.getEffects()[0].targetingType != Eff.TargetingType.Untargeted
             &&  t.getEffects()[0].targetingType != TargetingType.FriendlyMostDamaged
-            && EntityGroup.getValidTargets(t, true).size()==0) {
+            && getValidTargets(t, true).size()==0) {
             // if not good targets
             invalidReason = t.getEffects()[0].getNoTargetsString();
         }
@@ -260,7 +260,7 @@ public class TargetingManager {
 
         if (t.use()) {
             for (Eff e : t.getEffects()) {
-                hitEntities(EntityGroup.getActualTargets(e, player, entity), e);
+                hitEntities(getActualTargets(e, player, entity), e);
             }
         }
         if(!t.repeat()) {
@@ -354,7 +354,7 @@ public class TargetingManager {
         Targetable t = TargetingManager.get().getSelectedTargetable();
         if (t == null || t.getEffects().length == 0) return;
         Eff.TargetingType tType = t.getEffects()[0].targetingType;
-        for (DiceEntity de : EntityGroup.getValidTargets(t, true)) {
+        for (DiceEntity de : getValidTargets(t, true)) {
             de.getEntityPanel().setPossibleTarget(true);
         }
     }
@@ -370,7 +370,7 @@ public class TargetingManager {
         Eff e = d.getEffects()[0];
         if(e.type==EffType.Healing || e.type == EffType.Summon) return new ArrayList<>();
         DiceEntity target = null;
-        List<DiceEntity> validTargets = EntityGroup.getValidTargets(d, false);
+        List<DiceEntity> validTargets = getValidTargets(d, false);
         if(e.targetingType == Eff.TargetingType.EnemyAndAdjacents || e.targetingType== Eff.TargetingType.EnemyAndAdjacentsRanged){
             if(validTargets.size()>=3){
                 validTargets.remove(0);
@@ -380,7 +380,7 @@ public class TargetingManager {
         if (validTargets.size() > 0) {
             target = Tann.getRandom(validTargets);
         }
-        return EntityGroup.getActualTargets(e, false, target);
+        return getActualTargets(e, false, target);
     }
 
     public boolean targetsDie() {
@@ -400,7 +400,7 @@ public class TargetingManager {
                 b = true;
             }
             else{
-                b = EntityGroup.getValidTargets(t, true).size()>0;
+                b = getValidTargets(t, true).size()>0;
             }
             usabilityMap.put(t, b);
         }
@@ -409,6 +409,196 @@ public class TargetingManager {
 
     public void anythingChanged() {
         usabilityMap.clear();
+    }
+
+    private static List<DiceEntity> targetsTmp = new ArrayList<>();
+
+    public static List<DiceEntity> getValidTargets(Targetable t, boolean player){
+        Eff[] effects = t.getEffects();
+        TargetingType type = effects[0].targetingType;
+        DiceEntity source = null;
+        if(t instanceof Die){
+            Die d = (Die) t;
+            source = d.entity;
+        }
+        targetsTmp.clear();
+        List<? extends DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        List<? extends DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        switch(type){
+            case EnemySingle:
+            case EnemyOnlyAdjacents:
+            case EnemyAndAdjacents:
+            case enemyHalfHealthOrLess:
+                for(DiceEntity de:enemies){
+                    if(!de.canBeTargeted() && player) continue;
+                    if(type == TargetingType.enemyHalfHealthOrLess && de.getProfile().getTopHealth()>de.getMaxHp()/2) continue;
+                    targetsTmp.add(de);
+                }
+                break;
+            case EnemySingleRanged:
+            case EnemyAndAdjacentsRanged:
+                targetsTmp.addAll(enemies);
+                break;
+            case FriendlySingle:
+            case FriendlySingleAndAdjacents:
+                targetsTmp.addAll(friends);
+                break;
+            case FriendlySingleOther:
+                targetsTmp.addAll(friends);
+                targetsTmp.remove(source);
+                break;
+            case AllTargeters:
+                for(DiceEntity de:friends){
+                    if(de.getAllTargeters().size()>0){
+                        targetsTmp.add(de);
+                    }
+                }
+                break;
+            case EnemyGroup:
+                targetsTmp.addAll(enemies);
+                break;
+            case Allies:
+                targetsTmp.addAll(friends);
+                targetsTmp.remove(source);
+                break;
+            case FriendlyGroup:
+                targetsTmp.addAll(friends);
+                break;
+            case Self:
+                targetsTmp.add(source);
+                break;
+            case RandomEnemy:
+            case Untargeted:
+                break;
+        }
+
+        for(int i=targetsTmp.size()-1;i>=0;i--) {
+            DiceEntity de = targetsTmp.get(i);
+            boolean good = false;
+            for(Eff e:effects) {
+                switch (e.type) {
+                    case Empty:
+                    case Magic:
+                        break;
+                    case Damage:
+                    case Reroll:
+                        good = true;
+                        break;
+                    case Shield:
+                        if(type == TargetingType.FriendlySingleAndAdjacents){
+                            for(DiceEntity adj: de.getAdjacents(true)){
+                                good |= adj.getProfile().unblockedRegularIncoming() > 0;
+                            }
+                        }
+                        else {
+                            good = de.getProfile().unblockedRegularIncoming() > 0;
+                        }
+                        break;
+                    case RedirectIncoming:
+                        good = de.getProfile().getIncomingDamage() > 0;
+                        break;
+                    case Healing:
+                        good = de.getProfile().getTopHealth() < de.getMaxHp();
+                        break;
+                    case Execute:
+                        good = de.getHp() == e.getValue();
+                        break;
+                    case CopyAbility:
+                        if (de.getEntityPanel().holdsDie){
+                            Side theirSide = de.getDie().getActualSide();
+                            good= theirSide!= null && theirSide.getEffects()[0].type != Eff.EffType.CopyAbility;
+                        }
+                        break;
+                    case Buff:
+                        if (de.getEntityPanel().holdsDie && !de.getDie().used){
+                            good = true;
+                        }
+                        break;
+                    case Decurse:
+                        good = de.hasNegativeBuffs();
+                        break;
+                }
+                if(good) break;
+            }
+            if(!good){
+                targetsTmp.remove(de);
+            }
+        }
+
+        return targetsTmp;
+    }
+
+    public static List<DiceEntity> getActualTargets(Eff eff, boolean player, DiceEntity target){
+        List<DiceEntity> result = new ArrayList<>();
+        List<? extends DiceEntity> friends = player ? Party.get().getActiveEntities() : Room.get().getActiveEntities();
+        List<? extends DiceEntity> enemies = player ? Room.get().getActiveEntities() : Party.get().getActiveEntities();
+        Eff.TargetingType type = eff.targetingType;
+        switch(type){
+            case EnemySingle:
+            case enemyHalfHealthOrLess:
+            case EnemySingleRanged:
+            case FriendlySingle:
+            case FriendlySingleOther:
+                result.add(target);
+                break;
+            case Self:
+                result.add(eff.source);
+                break;
+            case EnemyAndAdjacents:
+            case EnemyAndAdjacentsRanged:
+            case FriendlySingleAndAdjacents:
+                result.addAll(target.getAdjacents(true));
+                break;
+            case EnemyOnlyAdjacents:
+                result.addAll(target.getAdjacents(false));
+                break;
+            case EnemyGroup:
+                result.addAll(enemies);
+                break;
+            case Allies:
+                result.addAll(friends);
+                result.remove(eff.source);
+                break;
+            case FriendlyGroup:
+                result.addAll(friends);
+                break;
+            case RandomEnemy:
+                result.add(Tann.getRandom(enemies));
+                break;
+            case AllTargeters:
+                result.addAll(target.getAllTargeters());
+                break;
+            case TopEnemy:
+                result.add(enemies.get(enemies.size()-1));
+                break;
+            case BottomEnemy:
+                result.add(enemies.get(0));
+                break;
+            case TopBottomEnemy:
+                result.add(enemies.get(0));
+                result.add(enemies.get(enemies.size()-1));
+                break;
+            case AllFront:
+                for(DiceEntity de:enemies){
+                    if(de.slidOut) result.add(de);
+                }
+                break;
+            case FriendlyMostDamaged:
+                int mostDamage = -1;
+                DiceEntity record = null;
+                for(DiceEntity de:friends){
+                    int damage = de.getMaxHp()-de.getHp();
+                    if(damage>mostDamage){
+                        mostDamage = damage;
+                        record = de;
+                    }
+                }
+                result.add(record);
+                break;
+            case Untargeted:
+                break;
+        }
+        return result;
     }
 
 }

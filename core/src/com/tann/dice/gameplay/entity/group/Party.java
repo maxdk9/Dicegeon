@@ -42,22 +42,12 @@ public class Party extends EntityGroup<Hero>{
         return self;
     }
 
-    public void fullyReset(){
-        super.reset();
-        clearEntities();
-        addHeroes();
-        equipment.clear();
-        for(int i=0;i<2;i++){
-//            addEquipment(Equipment.random());
-        }
-    }
-
     public void addHeroes(){
-        HeroType all = HeroType.byName("Gladiator");
+        HeroType all = HeroType.byName("Trickster");
         HeroType all2 = HeroType.byName("pyro");
         HeroType[] types = new HeroType[]{
-                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
-//                all, all, all, all2, all2
+//                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
+                all, all, all, all2, all2
         };
         List<Hero> tmp = new ArrayList<>();
         for(HeroType type: types){
@@ -66,6 +56,16 @@ public class Party extends EntityGroup<Hero>{
         setEntities(tmp);
         DungeonScreen.get().friendly.setEntities(activeEntities);
 
+    }
+
+    public void fullyReset(){
+        super.reset();
+        clearEntities();
+        addHeroes();
+        equipment.clear();
+        for(int i=0;i<2;i++){
+//            addEquipment(Equipment.random());
+        }
     }
 
     private int magic = 0;
