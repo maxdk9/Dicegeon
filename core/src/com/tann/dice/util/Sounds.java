@@ -28,6 +28,7 @@ public class Sounds {
 	public static String[] boost;
 	public static String[] copy;
 	public static String[] taunt;
+	public static String[] stealth;
 
 	public static String[] death;
 
@@ -55,6 +56,7 @@ public class Sounds {
 		boost = makeSounds("combat/boost", 1);
 		copy = makeSounds("combat/copy", 1);
 		taunt = makeSounds("combat/taunt", 1);
+		stealth = makeSounds("combat/stealth", 1);
 
 		pip = makeSounds("ui/pip", 5);
 		pop = makeSounds("ui/pop", 6);
