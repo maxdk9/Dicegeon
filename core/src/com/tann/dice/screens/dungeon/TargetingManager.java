@@ -144,9 +144,6 @@ public class TargetingManager {
             Sounds.playSound(Sounds.pip);
             return;
         }
-        for (DiceEntity de : Party.get().getActiveEntities()) {
-            de.setShaderState(DieShader.DieShaderState.Nothing);
-        }
         if (TargetingManager.get().getSelectedTargetable() == t) {
             if(t instanceof Spell){
                 Spell s = (Spell) t;
@@ -163,12 +160,14 @@ public class TargetingManager {
                             break;
                     }
                 }
+                else{
+                    Sounds.playSound(Sounds.pop);
+                }
             }
             deselectTargetable();
             return;
         }
         deselectTargetable();
-        Sounds.playSound(Sounds.pip);
         TargetingManager.get().setSelectedTargetable(t);
         t.select();
         if(t.getEffects()[0].isTargeted() && getValidTargets(t, true).size()==0){
@@ -177,7 +176,7 @@ public class TargetingManager {
             deselectTargetable();
             return;
         }
-
+        Sounds.playSound(Sounds.pip);
         if(t.isUsable()) {
             showTargetingHighlights();
         }

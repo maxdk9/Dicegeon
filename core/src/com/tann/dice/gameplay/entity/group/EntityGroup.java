@@ -89,7 +89,7 @@ public class EntityGroup <T extends DiceEntity>{
     }
 
     public static void activateDamage() {
-        List<DiceEntity> all = EntityGroup.getAllActive();
+        List<DiceEntity> all = new ArrayList<>(EntityGroup.getAllActive());
         for(int i=all.size()-1;i>=0;i--){
             DiceEntity de = all.get(i);
             de.getProfile().action();

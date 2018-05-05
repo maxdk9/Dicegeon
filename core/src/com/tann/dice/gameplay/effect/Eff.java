@@ -66,6 +66,8 @@ public class Eff {
                 return "Pull an enemy forwards";
             case Summon:
                 return "Summon "+getValue()+" "+summonType+(getValue()==1?"":"s");
+            case DestroyAllSummons:
+                return "Destroy all summoned monsters";
         }
         return "no base for "+type;
     }
