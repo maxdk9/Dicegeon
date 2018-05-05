@@ -207,8 +207,8 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     }
 
     static {
-        addLevel(rat, goblin, bird, dragon); // all sizes
-//        addLevel(rat); // ezpz
+//        addLevel(rat, goblin, bird, dragon); // all sizes
+        addLevel(rat, rat, rat, rat); // ezpz
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
         addLevel(goblin, goblin, bird, goblin);

@@ -143,7 +143,7 @@ public class DamageProfile {
                 removed = true;
             }
         }
-        if(removed) somethingChanged();
+        if(removed) target.somethingChanged();
     }
 
     public void action(){
