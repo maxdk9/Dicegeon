@@ -10,6 +10,7 @@ import com.tann.dice.Main;
 import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.util.*;
 
 public class EscMenu extends Group implements OnPop{
@@ -64,6 +65,7 @@ public class EscMenu extends Group implements OnPop{
     restart.setRunnable(new Runnable() {
       @Override
       public void run() {
+        PhaseManager.get().getPhase().cleanup();
         Main.getCurrentScreen().pop(EscMenu.this);
         LevelManager.get().restart();
       }

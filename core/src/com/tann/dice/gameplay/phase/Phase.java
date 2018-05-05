@@ -42,4 +42,6 @@ public abstract class Phase {
     public boolean showDiePanelReminder() {
         return true;
     }
+
+    public void cleanup(){}
 }

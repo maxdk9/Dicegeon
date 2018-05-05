@@ -91,8 +91,7 @@ public class LevelEndPanel extends Group{
             cont.setRunnable(new Runnable() {
                 @Override
                 public void run() {
-                    Tann.slideAway(tipOfTheDay, TannPosition.Bot);
-                    Tann.slideAway(LevelEndPanel.this, TannPosition.Top);
+                    slideOff();
                     PhaseManager.get().popPhase();
                     Sounds.playSound(Sounds.pip);
                 }
@@ -107,6 +106,11 @@ public class LevelEndPanel extends Group{
 
         Main.getCurrentScreen().addActor(tipOfTheDay);
         setX((int)(Main.width/2-getWidth()/2));
+    }
+
+    public void slideOff(){
+        Tann.slideAway(tipOfTheDay, TannPosition.Bot);
+        Tann.slideAway(LevelEndPanel.this, TannPosition.Top);
     }
 
     @Override

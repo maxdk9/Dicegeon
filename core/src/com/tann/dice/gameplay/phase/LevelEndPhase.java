@@ -56,4 +56,8 @@ public class LevelEndPhase extends Phase {
         return "You beat it!";
     }
 
+    @Override
+    public void cleanup() {
+        levelEndPanel.slideOff();
+    }
 }

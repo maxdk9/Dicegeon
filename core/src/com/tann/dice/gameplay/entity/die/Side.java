@@ -272,6 +272,7 @@ public class Side {
 
     public static final Side big_decay = new Side().title("Death Cloud").size(big).image("decay").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side big_decay2 = big_decay.withValue(2);
+    public static final Side big_decay3 = big_decay.withValue(3);
 
     public static final Side big_slimeUpDown1 = new Side().title("Flobble").size(big).image("upDownBlob").effect(new Eff().damage(1).topBotEnemy());
     public static final Side big_slimeUpDown2 = big_slimeUpDown1.withValue(2);
