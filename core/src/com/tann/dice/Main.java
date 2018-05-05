@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.screens.map.MapScreen;
 import com.tann.dice.util.*;
@@ -134,7 +135,7 @@ public class Main extends ApplicationAdapter {
     BulletStuff.init();
 
     setScreen(DungeonScreen.get());
-    DungeonScreen.get().nextLevel();
+    LevelManager.get().nextLevel();
 
 //    setScreen(MapScreen.get());
 

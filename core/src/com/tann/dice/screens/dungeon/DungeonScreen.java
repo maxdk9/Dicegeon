@@ -69,6 +69,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     public SpellButt spellButt;
     private TextWriter turnPhaseWriter;
 
+
     private void init() {
         turnPhaseWriter = new TextWriter("", 990, Colours.purple, 2);
         addActor(turnPhaseWriter);
@@ -77,6 +78,8 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         addActor(enemy);
         friendly = new EntityContainer(true);
         addActor(friendly);
+        final int buttonBorder = 2;
+        final Color buttonBorderColour = Colours.purple;
         rollButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.roll, Colours.dark,
                 new Runnable() {
                     @Override
@@ -89,7 +92,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
                 }) {
             @Override
             public void draw(Batch batch, float parentAlpha) {
-                Draw.fillActor(batch, this, Colours.dark, Colours.grey, 1);
+                Draw.fillActor(batch, this, Colours.dark, buttonBorderColour, buttonBorder);
                 batch.setColor(Colours.light);
                 int rolls = Party.get().getRolls();
                 int maxRolls = Party.get().getMaxRolls();
@@ -112,11 +115,11 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         confirmButton = new Button(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT, 1, Images.tick, Colours.dark) {
             @Override
             public void draw(Batch batch, float parentAlpha) {
-                Color border = Colours.grey;
+                Color border = buttonBorderColour;
                 if(PhaseManager.get().getPhase() instanceof PlayerRollingPhase && Party.get().allDiceLockedOrLocking()){
                     border = Colours.light;
                 }
-                Draw.fillActor(batch, this, Colours.dark, border, 1);
+                Draw.fillActor(batch, this, Colours.dark, border, buttonBorder);
                 batch.setColor(Colours.light);
                 batch.draw(Images.tick, (int) (this.getX() + this.getWidth() / 2 - Images.tick.getRegionWidth() / 2), (int) (this.getY() + this.getHeight() / 2 - Images.tick.getRegionHeight() / 2));
             }
@@ -189,73 +192,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         }
     }
 
-    public int level = 0;
 
-    public void setup(List<Monster> monsters) {
-        Room.get().reset();
-        Room.get().setEntities(monsters);
-        spellButt.hide();
-        BulletStuff.reset();
-        BulletStuff.refresh(EntityGroup.getAllActive());
-        enemy.setEntities(monsters);
-    }
-
-    public static final List<List<MonsterType>> levels = new ArrayList<>();
-
-    private static void addLevel(MonsterType... monsterTypes) {
-        levels.add(Arrays.asList(monsterTypes));
-    }
-
-    static {
-//        addLevel(rat, goblin, bird, dragon); // all sizes
-        addLevel(rat, rat, rat, rat); // ezpz
-        addLevel(goblin, goblin, goblin, goblin);
-        addLevel(goblin, archer, goblin, archer, goblin);
-        addLevel(goblin, goblin, bird, goblin);
-        addLevel(spikeGolem, bird);
-        addLevel(archer, slimoBig, goblin);
-        addLevel(skeleton, summoner, zombie);
-        addLevel(spikeGolem, spikeGolem, snake, snake);
-        addLevel(slimoHuge);
-        addLevel(bird, spikeGolem, spikeGolem, bird);
-        addLevel(archer, dragon, bird);
-    }
-
-    public void nextLevel() {
-
-//        spellButt.removeAllHovers();
-        Explanel.get().remove();
-        Party.get().rejig();
-        spellButt.setSpellHolder(spellHolder);
-        spellHolder.setup(Party.get().getSpells());
-        PhaseManager.get().clearPhases();
-
-        if (level < levels.size()) {
-            setup(MonsterType.monsterList(levels.get(level)));
-            level++;
-        } else {
-            PhaseManager.get().pushPhase(new VictoryPhase());
-            PhaseManager.get().kickstartPhase(VictoryPhase.class);
-            return;
-        }
-
-        if (level > 1) {
-            PhaseManager.get().pushPhase(new LevelEndPhase());
-            Party.get().reset();
-        }
-        PhaseManager.get().pushPhase(new EnemyRollingPhase());
-//        PhaseManager.get().pushPhase(new LevelEndPhase());
-        PhaseManager.get().kickstartPhase();
-
-        PartyManagementPanel.get();
-        Party.get().somethingChanged();
-    }
-
-    public void restart() {
-        level = 0;
-        Party.get().fullyReset();
-        nextLevel();
-    }
 
     @Override
     public void drawBackground(Batch batch) {
@@ -351,7 +288,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
                 toggleMenu();
                 break;
             case Keys.W:
-                if(Main.debug) nextLevel();
+                if(Main.debug) LevelManager.get().nextLevel();
                 break;
         }
     }
@@ -384,7 +321,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
     public boolean checkEnd() {
         if (checkDead(Room.get().getActiveEntities(), true)) {
-            nextLevel();
+            LevelManager.get().nextLevel();
             return true;
         } else if (checkDead(Party.get().getActiveEntities(), false)) {
             PhaseManager.get().clearPhases();

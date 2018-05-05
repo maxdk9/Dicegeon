@@ -8,6 +8,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.Colours;
@@ -47,7 +48,7 @@ public class LevelEndPanel extends Group{
         clearChildren();
         Pixl p = new Pixl(this, 2, 110);
         p.row(4);
-        p.actor(new TextWriter("[purple]Level "+ DungeonScreen.get().level+"/"+DungeonScreen.levels.size()));
+        p.actor(new TextWriter("[purple]Level "+ LevelManager.get().level+"/"+LevelManager.get().levels.size()));
         p.row();
         p.actor(new TextWriter("[orange]"+ congrat));
         p.row(4);

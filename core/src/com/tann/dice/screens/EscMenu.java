@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
 import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.util.*;
 
 public class EscMenu extends Group implements OnPop{
@@ -64,7 +65,7 @@ public class EscMenu extends Group implements OnPop{
       @Override
       public void run() {
         Main.getCurrentScreen().pop(EscMenu.this);
-        DungeonScreen.get().restart();
+        LevelManager.get().restart();
       }
     });
   }

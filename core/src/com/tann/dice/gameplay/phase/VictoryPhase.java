@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.phase;
 
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.util.InputBlocker;
 import com.tann.dice.util.TextButton;
@@ -14,7 +15,7 @@ public class VictoryPhase extends Phase{
 
     @Override
     public void deactivate() {
-        DungeonScreen.get().restart();
+        LevelManager.get().restart();
     }
 
     @Override
