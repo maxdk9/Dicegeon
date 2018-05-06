@@ -22,6 +22,9 @@ import static com.tann.dice.gameplay.entity.type.MonsterType.dragon;
 
 public class LevelManager {
 
+    private static final int START_LEVEL = 5;
+    private int level = START_LEVEL;
+
     private static LevelManager self;
     public final List<List<MonsterType>> levels = new ArrayList<>();
     public static LevelManager get(){
@@ -34,7 +37,7 @@ public class LevelManager {
 
     private void init() {
         //        addLevel(rat, goblin, bird, dragon); // all sizes
-        addLevel(skeleton, lich, zombie);
+//        addLevel(skeleton, lich, zombie);
 
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);
@@ -55,51 +58,56 @@ public class LevelManager {
     }
 
     public void nextLevel(){
+        level++;
 
-//        spellButt.removeAllHovers();
         Explanel.get().remove();
-        Party.get().rejig();
-        DungeonScreen.get().spellButt.setSpellHolder(DungeonScreen.get().spellHolder);
-        DungeonScreen.get().spellHolder.setup(Party.get().getSpells());
         PhaseManager.get().clearPhases();
 
         if (level < levels.size()) {
-            setup(MonsterType.monsterList(levels.get(level)));
-            level++;
+            PhaseManager.get().pushPhase(new LevelEndPhase());
+            startLevel();
         } else {
             PhaseManager.get().pushPhase(new VictoryPhase());
             PhaseManager.get().kickstartPhase(VictoryPhase.class);
             return;
         }
 
-        if (level > 1) {
-            PhaseManager.get().pushPhase(new LevelEndPhase());
-            Party.get().reset();
-        }
-        PhaseManager.get().pushPhase(new EnemyRollingPhase());
-//        PhaseManager.get().pushPhase(new LevelEndPhase());
+        Party.get().reset();
         PhaseManager.get().kickstartPhase();
-
-        PartyManagementPanel.get();
-        Party.get().somethingChanged();
     }
 
-    public int level = 0;
+    public void startLevel() {
 
-    public void setup(List<Monster> monsters) {
+        Party.get().rejig();
+        DungeonScreen.get().spellButt.setSpellHolder(DungeonScreen.get().spellHolder);
+        DungeonScreen.get().spellHolder.setup(Party.get().getSpells());
+
+        List<Monster> monsters = MonsterType.monsterList(levels.get(level));
         Room.get().reset();
         Room.get().setEntities(monsters);
         BulletStuff.reset();
         BulletStuff.refresh(EntityGroup.getAllActive());
         DungeonScreen.get().spellButt.hide();
         DungeonScreen.get().enemy.setEntities(monsters);
+        PhaseManager.get().pushPhase(new EnemyRollingPhase());
+        PartyManagementPanel.get();
+        Party.get().somethingChanged();
     }
 
     public void restart() {
         Monster.resetLocks();
-        level = 0;
+        level = START_LEVEL;
         Party.get().fullyReset();
-        nextLevel();
+        PhaseManager.get().clearPhases();
+        startGame();
     }
 
+    public void startGame() {
+        startLevel();
+        PhaseManager.get().kickstartPhase();
+    }
+
+    public int getLevel(){
+        return level;
+    }
 }

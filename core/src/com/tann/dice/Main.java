@@ -135,7 +135,7 @@ public class Main extends ApplicationAdapter {
     BulletStuff.init();
 
     setScreen(DungeonScreen.get());
-    LevelManager.get().nextLevel();
+    LevelManager.get().startGame();
 
 //    setScreen(MapScreen.get());
 

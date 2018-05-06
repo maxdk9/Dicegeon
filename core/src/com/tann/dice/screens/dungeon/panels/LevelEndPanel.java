@@ -49,7 +49,7 @@ public class LevelEndPanel extends Group{
         clearChildren();
         Pixl p = new Pixl(this, 2, 110);
         p.row(4);
-        p.actor(new TextWriter("[purple]Level "+ LevelManager.get().level+"/"+LevelManager.get().levels.size()));
+        p.actor(new TextWriter("[purple]Level "+ LevelManager.get().getLevel()+"/"+LevelManager.get().levels.size()));
         p.row();
         p.actor(new TextWriter("[orange]"+ congrat));
         p.row(4);

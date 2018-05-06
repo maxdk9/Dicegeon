@@ -10,6 +10,7 @@ import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.InventoryPanel;
 import com.tann.dice.util.Colours;
@@ -44,8 +45,8 @@ public class Party extends EntityGroup<Hero>{
     }
 
     public void addHeroes(){
-        if(true){
-            setupForLevel(6);
+        if(LevelManager.get().getLevel()!=1){
+            setupForLevel(LevelManager.get().getLevel());
             return;
         }
 
@@ -67,7 +68,7 @@ public class Party extends EntityGroup<Hero>{
 
     private void setupForLevel(int level) {
         HeroType[] types = new HeroType[]{acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)};
-        for(int i=0;i<(level)/2;i++){
+        for(int i=0;i<(level+1)/2;i++){
             while (true){
                 int index = (int) (Math.random()*5);
                 if(types[index].level==0){
@@ -82,7 +83,7 @@ public class Party extends EntityGroup<Hero>{
         }
         setEntities(tmp);
         DungeonScreen.get().friendly.setEntities(activeEntities);
-        for(int i=0;i<(level-1)/2;i++){
+        for(int i=0;i<(level)/2;i++){
             while(true){
                 Hero h = Tann.getRandom(tmp);
                 if(h.equipment.isEmpty()){

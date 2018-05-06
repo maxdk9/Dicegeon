@@ -17,10 +17,10 @@ public class LevelEndPhase extends Phase {
     @Override
     public void activate() {
         Party.get().reset();
-        int level = LevelManager.get().level;
+        int level = LevelManager.get().getLevel();
         List<Equipment> gainedEquipment = new ArrayList<>();
         if(level%2==1){
-            gainedEquipment.add(Equipment.random(LevelManager.get().level/5));
+            gainedEquipment.add(Equipment.random(LevelManager.get().getLevel()/5));
         }
         for(Equipment e:gainedEquipment){
             Party.get().addEquipment(e);

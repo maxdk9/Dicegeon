@@ -494,7 +494,7 @@ public class Die implements Targetable{
     private Vector3 temp = new Vector3();
     private Vector3 temp2 = new Vector3();
 
-    // setup stuff
+    // startLevel stuff
 
     public Die(DiceEntity entity) {
         this.entity=entity;

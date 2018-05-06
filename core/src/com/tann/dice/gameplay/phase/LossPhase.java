@@ -10,7 +10,7 @@ import com.tann.dice.util.TextWriter;
 public class LossPhase extends Phase{
     @Override
     public void activate() {
-        TextButton tb = new TextButton("You lose, you got to level "+ LevelManager.get().level, 5);
+        TextButton tb = new TextButton("You lose, you got to level "+ LevelManager.get().getLevel(), 5);
         DungeonScreen.get().push(tb, true, true, true, true, InputBlocker.DARK, PhaseManager.popPhaseRunnable);
     }
 

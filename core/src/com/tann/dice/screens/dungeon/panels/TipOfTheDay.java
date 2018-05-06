@@ -61,7 +61,7 @@ public class TipOfTheDay extends Group {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 layout();
                 Sounds.playSound(Sounds.pip);
-                setX(Main.width/2-getWidth()/2);
+                setX((int)(Main.width/2-getWidth()/2));
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
