@@ -87,7 +87,7 @@ public class Party extends EntityGroup<Hero>{
             while(true){
                 Hero h = Tann.getRandom(tmp);
                 if(h.equipment.isEmpty()){
-                    h.addEquipment(Equipment.random(Math.min(i, 2)));
+                    h.addEquipment(Equipment.random(Math.min((i+1)/2, 2)));
                     break;
                 }
             }

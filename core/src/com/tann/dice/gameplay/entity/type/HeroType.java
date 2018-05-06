@@ -42,7 +42,7 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .sides(poison1, poison1, sword3, arrow2, vanish, nothing));
         add(new HeroType().name("Ranger").hp(5).tag(fighter1)
                 .sides(execute4, arrow1, arrow3, arrow2, vanish, nothing));
-        add(new HeroType().name("Gladiator").hp(5).tag(fighter1)
+        add(new HeroType().name("Gladiator").hp(6).tag(fighter1)
                 .sides(swordShield2, swordShield2, trident1, trident1, shield3, nothing));
         add(new HeroType().name("Dabbler").hp(7).tag(fighter1)
                 .sides(sword3, heal3, shield2, arrow2, magic2, nothing));

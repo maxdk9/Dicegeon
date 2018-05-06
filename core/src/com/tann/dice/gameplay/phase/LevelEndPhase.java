@@ -19,13 +19,13 @@ public class LevelEndPhase extends Phase {
         Party.get().reset();
         int level = LevelManager.get().getLevel();
         List<Equipment> gainedEquipment = new ArrayList<>();
-        if(level%2==1){
+        if(level%2==0){
             gainedEquipment.add(Equipment.random(LevelManager.get().getLevel()/5));
         }
         for(Equipment e:gainedEquipment){
             Party.get().addEquipment(e);
         }
-        levelEndPanel = new LevelEndPanel(gainedEquipment, level%2==0);
+        levelEndPanel = new LevelEndPanel(gainedEquipment, level%2==1);
         levelEndPanel.setX(Main.width/2-levelEndPanel.getWidth()/2);
         Tann.slideIn(levelEndPanel, DungeonScreen.get(), TannPosition.Top, 40);
         for(DiceEntity de:Party.get().getActiveEntities()){
