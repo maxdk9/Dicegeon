@@ -55,7 +55,7 @@ public abstract class DiceEntity {
   public AtlasRegion portrait;
   public int portraitOffset;
   public ArrayList<Equipment> equipment = new ArrayList<>();
-  public int equipmentMaxSize = 4;
+  public int equipmentMaxSize = 1;
   public Trait[] traits;
 
   public DiceEntity(EntityType type) {

@@ -19,8 +19,13 @@ import java.util.Scanner;
 public class DicetopLauncher {
     private static final boolean forcePack = false;
 	public static void main (String[] arg)  {
-        checkPack("../../images_3d", "misc/imagehash3d.txt", true);
-        checkPack("../../images", "misc/imagehash2d.txt", false);
+	    try {
+            checkPack("../../images_3d", "misc/imagehash3d.txt", true);
+            checkPack("../../images", "misc/imagehash2d.txt", false);
+        }
+        catch (Exception e){
+            System.err.println("Probably running as standalone desktop");
+        }
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.foregroundFPS = 60;
         config.backgroundFPS = 20;

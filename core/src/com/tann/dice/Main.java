@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
+import com.tann.dice.screens.titleScreen.TitleScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
 
@@ -130,10 +131,10 @@ public class Main extends ApplicationAdapter {
     });
     BulletStuff.init();
 
-    setScreen(DungeonScreen.get());
-    LevelManager.get().startGame();
+//    setScreen(DungeonScreen.get());
+//    LevelManager.get().startGame();
 
-//    setScreen(MapScreen.get());
+    setScreen(TitleScreen.get());
 
     String ex = Prefs.getString("lastException", "");
     if(!ex.equals("")){

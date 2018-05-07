@@ -27,8 +27,6 @@ public class Hero extends DiceEntity {
         }
         this.level = type.level;
         this.spells = Arrays.asList(type.spells);
-        addEquipment(Equipment.random());
-        addEquipment(Equipment.random());
     }
 
     @Override
