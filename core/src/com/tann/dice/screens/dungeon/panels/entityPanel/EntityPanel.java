@@ -170,6 +170,7 @@ public class EntityPanel extends Group {
                 @Override
                 public void run() {
                     LevelUpPanel lup = new LevelUpPanel((Hero) entity);
+                    Main.getCurrentScreen().popAllLight();
                     Main.getCurrentScreen().push(lup, false, true, false, false, InputBlocker.DARK, null);
                     lup.setX(Main.width/2-lup.getWidth()/2);
                     Tann.slideIn(lup, Main.getCurrentScreen(), TannPosition.Top, 3);

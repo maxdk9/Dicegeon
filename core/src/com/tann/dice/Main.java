@@ -16,8 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.titleScreen.TitleScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
@@ -43,7 +41,7 @@ public class Main extends ApplicationAdapter {
   public static Main self;
   private static boolean showFPS = true;
   private static boolean printCalls = false;
-  public static boolean debug = false;
+  public static boolean debug = true;
   Screen currentScreen;
   Screen previousScreen;
   public static float ticks;

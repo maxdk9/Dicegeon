@@ -229,6 +229,7 @@ public class TargetingManager {
                 case EnemySingle:
                 case EnemySingleRanged:
                 case enemyHalfHealthOrLess:
+                case EnemyAndAdjacents:
                     if(entity.isPlayer()) invalidReason = "Target an enemy";
                     if(!entity.isPlayer() && !entity.slidOut) invalidReason = "Target an enemy in the front row";
                     if(targetingType == TargetingType.enemyHalfHealthOrLess && entity.getProfile().getTopHealth()>entity.getMaxHp()/2) invalidReason = "Target an enemy on half health or less";
@@ -248,7 +249,9 @@ public class TargetingManager {
                     if(!entity.isPlayer()) invalidReason = "Target a hero";
                     else if(entity.getAllTargeters().isEmpty())  invalidReason = "Target a hero who is being attacked";
                     break;
-                default: break;
+                default:
+                    invalidReason = "Can't target that";
+                    break;
             }
         }
         // TODO better
@@ -374,8 +377,7 @@ public class TargetingManager {
     public void showTargetingHighlights() {
         clearTargetingHighlights();
         Targetable t = TargetingManager.get().getSelectedTargetable();
-        if (t == null || t.getEffects().length == 0) return;
-        Eff.TargetingType tType = t.getEffects()[0].targetingType;
+        if (t == null || t.getEffects().length == 0 || t == Spell.balance) return; //TODO I hope the new system works better with balance :)
         for (DiceEntity de : getValidTargets(t, true)) {
             de.getEntityPanel().setPossibleTarget(true);
         }
