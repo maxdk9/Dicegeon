@@ -311,6 +311,7 @@ public class TargetingManager {
 
         // if you're clicking on an enemy's die side, just show their explanel
         if(!entity.isPlayer() && dieSide && entity.getEntityPanel().holdsDie && getSelectedTargetable()==null){
+            DungeonScreen.get().spellButt.hide();
             Actor a = Main.getCurrentScreen().getTopActor();
             if(a instanceof Explanel){
                 Explanel e = (Explanel) a;

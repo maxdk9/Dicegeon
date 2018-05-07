@@ -363,6 +363,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
     public void showDiePanel(DiceEntity entity) {
         Sounds.playSound(Sounds.pip);
+        DungeonScreen.get().spellButt.hide();
         DiePanel pan = entity.getDiePanel();
         push(pan, true, false, true, true, 0, null);
         pan.setScale(0);
