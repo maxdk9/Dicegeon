@@ -10,7 +10,6 @@ public class TargetingPhase extends Phase {
         DungeonScreen.get().slideRollButton(false);
         DungeonScreen.get().slideConfirmButton(true);
         DungeonScreen.get().setConfirmText("End Turn");
-        Party.get().activateNextTurnEffects();
     }
 
     @Override

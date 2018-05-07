@@ -66,7 +66,7 @@ public class SpellButt extends Group {
         super.draw(batch, parentAlpha);
         batch.setColor(Colours.z_white);
         batch.draw(Images.magicButt, getX(), getY());
-        if(PhaseManager.get().getPhase().canTarget()){
+        if(PhaseManager.get().getPhase().canTarget() || Party.get().getAvaliableMagic()>0){
             TannFont.font.drawString(batch, Party.get().getAvaliableMagic()+"", (int)(getX()+getWidth()/2), (int) (getY()+getHeight()/2), Align.center);
         }
     }

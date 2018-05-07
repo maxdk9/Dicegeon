@@ -12,6 +12,7 @@ import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
+import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.generalPanels.InventoryPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
@@ -45,12 +46,12 @@ public class Party extends EntityGroup<Hero>{
     }
 
     public void addHeroes(){
-        if(LevelManager.get().getLevel()!=1){
+        if(LevelManager.get().getLevel()!=0){
             setupForLevel(LevelManager.get().getLevel());
             return;
         }
 
-        HeroType all = HeroType.byName("channeler");
+        HeroType all = HeroType.byName("Arcanist");
         HeroType all2 = HeroType.byName("rogue");
         HeroType[] types = new HeroType[]{
 //                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
@@ -108,8 +109,9 @@ public class Party extends EntityGroup<Hero>{
 
     public void addMagic(int add){
         this.magic += add;
-        DungeonScreen.get().spellButt.show();
-//        DungeonScreen.get().spellButt.addSpellHover(add);
+        if(PhaseManager.get().getPhase().canTarget()) {
+            DungeonScreen.get().spellButt.show();
+        }
     }
 
     @Override

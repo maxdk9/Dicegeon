@@ -14,6 +14,7 @@ public class PlayerRollingPhase extends Phase {
         DungeonScreen.get().slideRollButton(true);
         DungeonScreen.get().slideTarget(true);
         DungeonScreen.get().setConfirmText("Confirm Dice");
+        Party.get().activateNextTurnEffects();
     }
 
     @Override
