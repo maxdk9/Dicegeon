@@ -22,7 +22,7 @@ import static com.tann.dice.gameplay.entity.type.MonsterType.dragon;
 
 public class LevelManager {
 
-    private static final int START_LEVEL = 0;
+    private static final int START_LEVEL = 7;
     private int level = START_LEVEL;
 
     private static LevelManager self;
@@ -48,7 +48,7 @@ public class LevelManager {
         addLevel(skeleton, lich, zombie);
         addLevel(archer, spikeGolem, spikeGolem, archer);
         addLevel(slimoHuge);
-        addLevel(bird, spikeGolem, archer, spikeGolem, bird);
+        addLevel(bird, spikeGolem, spikeGolem, bird);
         addLevel(archer, dragon, bird);
     }
 

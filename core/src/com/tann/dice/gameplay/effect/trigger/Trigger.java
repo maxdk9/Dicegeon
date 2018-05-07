@@ -43,8 +43,6 @@ public abstract class Trigger implements Cloneable{
 
   public boolean startsAtTheBack(){ return false; }
 
-  public boolean stayForwards(){ return false; }
-
   public void onKill(){}
 
   public void onDeath(){}

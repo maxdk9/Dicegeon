@@ -307,7 +307,8 @@ public abstract class DiceEntity {
     if (aboveFlee && hp <= fleePip) {
       slide(false);
     }
-    if (hp <= 0) {
+    somethingChanged();
+    if (getProfile().getTopHealth() <= 0) {
       die();
     }
   }
