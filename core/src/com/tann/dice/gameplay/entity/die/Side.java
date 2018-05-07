@@ -286,6 +286,8 @@ public class Side {
 
     public static final Side huge_chomp1 = new Side().title("CRUNCH").size(huge).image("chomp").effect(new Eff().damage(1));
     public static final Side huge_chomp7 = huge_chomp1.withValue(7);
+    public static final Side huge_chomp8 = huge_chomp1.withValue(8);
+    public static final Side huge_chomp9 = huge_chomp1.withValue(9);
 
     public static final Side huge_flame = new Side().title("FWOOM").size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
     public static final Side huge_flame2 = huge_flame.withValue(2);

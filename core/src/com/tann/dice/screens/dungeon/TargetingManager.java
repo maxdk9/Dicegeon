@@ -10,6 +10,7 @@ import com.tann.dice.gameplay.effect.Eff.TargetingType;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerEndOfTurnSelf;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
@@ -237,6 +238,10 @@ public class TargetingManager {
                             case Shield: invalidReason = "Can only block incoming damage"; break;
                         }
                     }
+                    break;
+                case AllTargeters:
+                    if(!entity.isPlayer()) invalidReason = "Target a hero";
+                    else if(entity.getAllTargeters().isEmpty())  invalidReason = "Target a hero who is being attacked";
                     break;
                 default: break;
             }
@@ -522,8 +527,10 @@ public class TargetingManager {
                         }
                         break;
                     case Buff:
-                        if (de.isPlayer() != source.isPlayer() || (de.getEntityPanel().holdsDie && !de.getDie().used)){
-
+                        if(e.getBuff().trigger instanceof TriggerEndOfTurnSelf){
+                            good = true;
+                        }
+                        else if (de.isPlayer() != source.isPlayer() || (de.getEntityPanel().holdsDie && !de.getDie().used)){
                             Buff buff = e.getBuff();
                             if(buff.trigger instanceof TriggerAllSidesBonus){
                                 // can't buff dice with no value

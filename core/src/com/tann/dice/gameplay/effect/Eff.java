@@ -3,6 +3,7 @@ package com.tann.dice.gameplay.effect;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageImmunity;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerEndOfTurnSelf;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.type.MonsterType;
@@ -382,6 +383,9 @@ public class Eff {
                 }
                 if(buff.trigger instanceof TriggerDamageImmunity){
                     Sounds.playSound(Sounds.stealth);
+                }
+                if(buff.trigger instanceof TriggerEndOfTurnSelf){
+                    Sounds.playSound(Sounds.heals);
                 }
                 break;
             case CopyAbility:
