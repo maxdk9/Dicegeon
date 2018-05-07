@@ -67,6 +67,8 @@ public abstract class Trigger implements Cloneable{
 
   public boolean showInPanel() { return false; }
 
+  public boolean highlightForNewPlayers(){ return false; }
+
   public TextureRegion getImage(){
     return unknown;
   }

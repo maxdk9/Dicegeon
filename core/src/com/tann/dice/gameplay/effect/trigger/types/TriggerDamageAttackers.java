@@ -32,4 +32,9 @@ public class TriggerDamageAttackers extends Trigger {
     public String describe() {
         return "Return "+amount+" damage whenever an enemy hits you";
     }
+
+    @Override
+    public boolean highlightForNewPlayers() {
+        return true;
+    }
 }

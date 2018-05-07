@@ -239,7 +239,7 @@ public class Side {
     public static final Side slimeUpDown1 = new Side().title("Flobble").image("upDownBlob").effect(new Eff().damage(1).topBotEnemy());
     public static final Side slimeUpDown2 = slimeUpDown1.withValue(2);
 
-    public static final Side slime_triple = new Side().title("Fwip").image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side slime_triple = new Side().title("Glorp").image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side slime_triple2 = slime_triple.withValue(2);
 
     public static final Side healMostDamaged1 = new Side().title("Heal").image("heal").effect(new Eff().heal(1).friendlyMostDamaged());
@@ -278,7 +278,7 @@ public class Side {
     public static final Side big_slimeUpDown2 = big_slimeUpDown1.withValue(2);
     public static final Side big_slimeUpDown3 = big_slimeUpDown1.withValue(3);
 
-    public static final Side big_slimeTriple1 = new Side().title("Fwip").size(big).image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side big_slimeTriple1 = new Side().title("Glorp").size(big).image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side big_slimeTriple2 = big_slimeTriple1.withValue(2);
     public static final Side big_slimeTriple3 = big_slimeTriple1.withValue(3);
 
@@ -307,7 +307,7 @@ public class Side {
     public static final Side huge_slimeUpDown4 = huge_slimeUpDown1.withValue(4);
     public static final Side huge_slimeUpDown5 = huge_slimeUpDown1.withValue(5);
 
-    public static final Side huge_slimeTriple1 = new Side().title("FWIP").size(huge).image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side huge_slimeTriple1 = new Side().title("GLORP").size(huge).image("threeBlobs").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side huge_slimeTriple2 = huge_slimeTriple1.withValue(2);
     public static final Side huge_slimeTriple3 = huge_slimeTriple1.withValue(3);
     public static final Side huge_slimeTriple4 = huge_slimeTriple1.withValue(4);

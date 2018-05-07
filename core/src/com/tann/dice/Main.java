@@ -149,9 +149,6 @@ public class Main extends ApplicationAdapter {
     resetTime();
     long renderStart = System.currentTimeMillis();
     try {
-      if (Gdx.graphics.getDeltaTime() > 63 / 1000f && Main.ticks > 2) {
-        gcPauses++;
-      }
       update(Gdx.graphics.getDeltaTime());
       logTime("upd");
       Gdx.gl.glClear(GL_DEPTH_BUFFER_BIT);
@@ -273,31 +270,21 @@ public class Main extends ApplicationAdapter {
     }
   }
 
-  private void drawVersion() {
-    batch.setColor(Colours.blue);
-    TannFont.font.drawString(batch, versionName, 0, 5, false);
-  }
-
-  int gcPauses = 0;
-
-  public static void log(String s){
-
-  }
-
   private void drawFPSAndVersion() {
     batch.setColor(Colours.blue);
-    int x = width/2-39;
+    int x = width/2-21;
     TannFont.font.drawString(batch, versionName, x, 1);
     x+=26;
     TannFont.font.drawString(batch, Gdx.graphics.getFramesPerSecond() + "fps", x, 1);
-    x+=22;
-    TannFont.font.drawString(batch, averageRenderTime +"ms", x, 1);
-    x+=18;
-    TannFont.font.drawString(batch, ((SpriteBatch)stage.getBatch()).renderCalls+"rc", x, 1);
+    if(debug) {
+      x += 22;
+      TannFont.font.drawString(batch, averageRenderTime + "ms", x, 1);
+      x += 18;
+      TannFont.font.drawString(batch, ((SpriteBatch) stage.getBatch()).renderCalls + "rc", x, 1);
+    }
     if(chadwick){
       for(int y=0;y<times.size();y++){
         int yPos = 2+(1+y)*(1+TannFont.font.getHeight());
-
         TannFont.font.drawString(batch, times.get(y).a+":", width / 2 + 27, yPos);
         long avg = 0;
         for(Long l:times.get(y).b){

@@ -6,6 +6,8 @@ import com.tann.dice.gameplay.effect.trigger.types.TriggerBoostOnRoll;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageLimit;
 import com.tann.dice.gameplay.entity.Hero;
 import static com.tann.dice.gameplay.entity.die.Side.*;
+
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
 
@@ -46,9 +48,6 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .sides(swordShield2, swordShield2, trident1, trident1, shield3, nothing));
         add(new HeroType().name("Dabbler").hp(7).tag(fighter1)
                 .sides(sword3, heal3, shield2, arrow2, magic2, nothing));
-//        add(new HeroType().name("Berserker").hp(7).tag(fighter1)
-//                .sides(sword1AllSelfDamage1, sword1AllSelfDamage1, sword2, sword2, shield2, nothing)
-//                .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
         add(new HeroType().name("Whirl").hp(6).tag(fighter1)
                 .sides(whirlwind1, trident1, trident1, sword2, shieldPlusAdjacent1, nothing));
         add(new HeroType().name("Crusher").hp(7).tag(fighter1)
@@ -58,6 +57,9 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
         add(new HeroType().name("Combo").hp(7).tag(fighter1)
             .sides(trident1, sword2, sword2, shield2, nothing, nothing)
         .trait(new TriggerBoostOnRoll(1)));
+        //        add(new HeroType().name("Berserker").hp(7).tag(fighter1)
+//                .sides(sword1AllSelfDamage1, sword1AllSelfDamage1, sword2, sword2, shield2, nothing)
+//                .trait(new TriggerHalfHealthEffTypeBonus(Eff.EffType.Damage, 1)));
 
 
         add(new HeroType().name("Paladin").hp(8).tag(defender1)
@@ -88,7 +90,6 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
             .spells(Spell.healingMist));
 
 
-
         add(new HeroType().name("Pyro").hp(6).tag(wizard1)
                 .sides(flameWard2, flameWard1, magic2, magic2, magic1, nothing)
                 .spells(Spell.bloodBoil));
@@ -103,9 +104,7 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .spells(Spell.lightningStrike));
 
 
-
         // novelty huge die
-
 //        add(new HeroType().size(DiceEntity.EntitySize.huge).name("RogueHuge").hp(5).tag(fighter1)
 //                .sides(huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1, huge_chomp1));
     }
@@ -152,6 +151,9 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
             if(Tann.anySharedItems(type.tags, levelsUpInto)){
                 results.add(type);
             }
+        }
+        for(Hero h: Party.get().getEntities()){
+            results.remove(h.getHeroType());
         }
         return results;
     }

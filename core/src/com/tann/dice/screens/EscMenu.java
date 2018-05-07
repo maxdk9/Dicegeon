@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
@@ -67,6 +68,7 @@ public class EscMenu extends Group implements OnPop{
       public void run() {
         PhaseManager.get().getPhase().cleanup();
         Main.getCurrentScreen().pop(EscMenu.this);
+        Party.get().fullyReset();
         LevelManager.get().restart();
       }
     });

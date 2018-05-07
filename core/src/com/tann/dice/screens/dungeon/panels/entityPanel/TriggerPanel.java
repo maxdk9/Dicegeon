@@ -8,6 +8,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.DiceEntity.EntitySize;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Draw;
+import com.tann.dice.util.Prefs;
 
 import java.util.List;
 
@@ -24,6 +25,11 @@ public class TriggerPanel extends Actor {
             itemsPerColumn = 1;
         }
         setSize(WIDTH, itemsPerColumn * BUFFSIZE + (itemsPerColumn-1)*GAP);
+        for(Trigger t:entity.getActiveTriggers()){
+            if(t.highlightForNewPlayers()) {
+                Prefs.setBoolean(t.getClass().getSimpleName(), true);
+            }
+        }
     }
 
     @Override

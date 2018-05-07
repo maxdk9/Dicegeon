@@ -7,6 +7,7 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
+import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -37,7 +38,7 @@ public class TriggerOnDeathEffect extends Trigger {
                 }
                 DungeonScreen.get().enemy.setEntities(Room.get().getActiveEntities());
                 DungeonScreen.get().layoutSidePanels();
-                BulletStuff.refresh(Room.get().getAllActive());
+                BulletStuff.refresh(EntityGroup.getAllActive());
                 break;
             case DestroyAllSummons:
                 List<Monster> entityList = Room.get().getActiveEntities();
@@ -63,5 +64,10 @@ public class TriggerOnDeathEffect extends Trigger {
     @Override
     public String describe() {
         return "When this dies, "+eff.toString().toLowerCase();
+    }
+
+    @Override
+    public boolean highlightForNewPlayers() {
+        return true;
     }
 }
