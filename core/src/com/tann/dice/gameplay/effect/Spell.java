@@ -37,7 +37,7 @@ public class Spell implements Targetable{
     private TextureRegion image;
     private Eff[] effects;
     private boolean selected;
-    private boolean repeatable;
+    public boolean repeatable;
 
     public Spell name(String name){
         this.name = name;

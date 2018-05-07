@@ -148,6 +148,10 @@ public class TargetingManager {
         if (TargetingManager.get().getSelectedTargetable() == t) {
             if(t instanceof Spell){
                 Spell s = (Spell) t;
+                if(s.repeatable){
+                    Sounds.playSound(Sounds.pip);
+                    return;
+                }
                 if(s.isUsable()) {
                     switch  (s.getEffects()[0].targetingType){
                         case EnemyGroup:
