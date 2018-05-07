@@ -37,7 +37,7 @@ public class TriggerPanel extends Actor {
             if(!t.showInPanel()) continue;
             int yCo = drawIndex%itemsPerColumn;
             int xCo = drawIndex/itemsPerColumn;
-            Draw.drawSize(batch, t.getImage(), getX()+ xCo*(GAP + BUFFSIZE), getY() + getHeight() - BUFFSIZE *(yCo+1) - yCo*GAP, BUFFSIZE, BUFFSIZE);
+            Draw.drawSize(batch, t.getImage(), getX()+ xCo*(GAP + BUFFSIZE), getY() + getHeight() - (BUFFSIZE+GAP) *(yCo+1) + GAP, BUFFSIZE, BUFFSIZE);
             drawIndex++;
         }
     }

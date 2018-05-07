@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -17,16 +16,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
-import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.screens.map.MapScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static com.badlogic.gdx.graphics.GL20.*;
 

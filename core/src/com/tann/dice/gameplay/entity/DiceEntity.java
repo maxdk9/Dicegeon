@@ -55,7 +55,7 @@ public abstract class DiceEntity {
   public AtlasRegion portrait;
   public int portraitOffset;
   public ArrayList<Equipment> equipment = new ArrayList<>();
-  public int equipmentMaxSize = 1;
+  public int equipmentMaxSize = 4;
   public Trait[] traits;
 
   public DiceEntity(EntityType type) {
@@ -298,6 +298,7 @@ public abstract class DiceEntity {
   }
 
   public void damage(int value) {
+    if(hp<=0) return;
     new Eff().damage(value).playSound();
     if (value > 0) {
       getEntityPanel().addDamageFlib(value);

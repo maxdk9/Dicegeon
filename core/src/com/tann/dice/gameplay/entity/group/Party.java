@@ -51,7 +51,7 @@ public class Party extends EntityGroup<Hero>{
             return;
         }
 
-        HeroType all = HeroType.byName("pyro");
+        HeroType all = HeroType.byName("rogue");
         HeroType all2 = HeroType.byName("witch");
         HeroType[] types = new HeroType[]{
 //                acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)

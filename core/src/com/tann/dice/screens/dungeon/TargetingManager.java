@@ -223,6 +223,7 @@ public class TargetingManager {
         if (first.isTargeted() && !valids.contains(entity)) {
             switch(targetingType){
                 case EnemySingle:
+                case EnemySingleRanged:
                 case enemyHalfHealthOrLess:
                     if(entity.isPlayer()) invalidReason = "Target an enemy";
                     if(!entity.isPlayer() && !entity.slidOut) invalidReason = "Target an enemy in the front row";
