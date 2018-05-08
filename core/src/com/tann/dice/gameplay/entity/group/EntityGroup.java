@@ -58,6 +58,9 @@ public class EntityGroup <T extends DiceEntity>{
     }
 
     public void firstRoll(){
+        for(DiceEntity de:getActiveEntities()){
+            if(de.getDie().getState()!= Die.DieState.Stopped) return;
+        }
         roll(true);
     }
 
@@ -134,15 +137,15 @@ public class EntityGroup <T extends DiceEntity>{
 
     public void resetForRoll() {
         for(final DiceEntity de:activeEntities){
+            de.getDie().reset();
             de.getDie().used=false;
             de.getEntityPanel().holdsDie = false;
-            de.getDie().returnToPlay(null, Die.INTERP_SPEED_SLOW);
+            de.getDie().returnToPlay(new Runnable() {
+                @Override
+                public void run() {
+                    firstRoll();
+                }
+            }, Die.INTERP_SPEED_SLOW);
         }
-        Tann.delay(new Runnable() {
-            @Override
-            public void run() {
-                firstRoll();
-            }
-        }, Die.INTERP_SPEED_SLOW+.1f); //todo better
     }
 }

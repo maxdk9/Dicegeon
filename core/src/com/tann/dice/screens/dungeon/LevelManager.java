@@ -101,14 +101,19 @@ public class LevelManager {
     }
 
     public void restart() {
+        reset();
+        startGame();
+    }
+
+    public void reset(){
         Monster.resetLocks();
         level = START_LEVEL;
         Party.get().fullyReset();
         PhaseManager.get().clearPhases();
-        startGame();
     }
 
     public void startGame() {
+        reset();
         startLevel();
         PhaseManager.get().kickstartPhase();
     }

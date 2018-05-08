@@ -38,6 +38,7 @@ public class TitleScreen extends Screen{
         hard.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                DungeonScreen.clearStatic();
                 Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Chrono.i, Chrono.d);
                 LevelManager.get().startGame();
                 return super.touchDown(event, x, y, pointer, button);

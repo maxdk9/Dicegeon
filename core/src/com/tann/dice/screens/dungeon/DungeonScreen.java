@@ -53,6 +53,11 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         return self;
     }
 
+    public static void clearStatic() {
+        self = null;
+    }
+
+
     public static final float BOTTOM_BUTTON_HEIGHT = 25;
     public static final float BOTTOM_BUTTON_WIDTH = 78;
     public static final float BUTT_GAP = 2;
@@ -389,7 +394,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     @Override
     public void act(float delta) {
         super.act(delta);
-        PhaseManager.get().getPhase().checkIfDone();
+        PhaseManager.get().checkPhaseIsDone();
     }
 
     public void layoutSidePanels() {

@@ -34,7 +34,7 @@ public class Die implements Targetable{
 
     private static final float MAX_AIRTIME = 2.7f;
     public static final float INTERP_SPEED = .35f;
-    public static final float INTERP_SPEED_SLOW = .5f;
+    public static final float INTERP_SPEED_SLOW = .7f;
 
     private float currentInterpSpeed;
 
@@ -592,6 +592,7 @@ public class Die implements Targetable{
 
     public void reset() {
         used= true;
+        lockedSide = -1;
     }
 
     @Override

@@ -69,4 +69,9 @@ public class PhaseManager {
         getPhase().activate();
         Main.getCurrentScreen().activatePhase(getPhase());
     }
+
+    public void checkPhaseIsDone() {
+        Phase p = getPhase();
+        if(p!=null) p.checkIfDone();
+    }
 }
