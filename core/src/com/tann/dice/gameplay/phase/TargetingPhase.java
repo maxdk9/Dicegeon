@@ -8,7 +8,6 @@ public class TargetingPhase extends Phase {
     @Override
     public void activate() {
         DungeonScreen.get().slideRollButton(false);
-        DungeonScreen.get().slideConfirmButton(true);
         DungeonScreen.get().setConfirmText("End Turn");
     }
 
@@ -19,6 +18,7 @@ public class TargetingPhase extends Phase {
         DungeonScreen.get().spellButt.hide();
         DungeonScreen.get().slideTarget(false);
         PhaseManager.get().pushPhase(new DamagePhase());
+        DungeonScreen.get().slideConfirmButton(false);
     }
 
     @Override
