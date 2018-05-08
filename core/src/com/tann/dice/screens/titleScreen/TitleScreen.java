@@ -44,6 +44,16 @@ public class TitleScreen extends Screen{
             }
         });
 
+        TextButton reset = new TextButton("Reset Save", 3);
+        reset.setPosition(getWidth()-reset.getWidth(), 0);
+        addActor(reset);
+        reset.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Prefs.RESETSAVEDATA();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
     }
 
     @Override
@@ -55,6 +65,8 @@ public class TitleScreen extends Screen{
     public void preDraw(Batch batch) {
         batch.setColor(Colours.dark);
         Draw.fillActor(batch, this);
+        batch.setColor(Colours.grey);
+        TannFont.font.drawString(batch, Prefs.getInt("launches", 999)+"", 0, 0);
     }
 
     @Override

@@ -19,6 +19,7 @@ import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
 import com.tann.dice.screens.dungeon.panels.entityPanel.TraitPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
+import com.tann.dice.util.Prefs;
 import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 
@@ -58,7 +59,7 @@ public class NetPanel extends Group {
                 panel.addListener(new InputListener(){
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        Main.learnt = true;
+                        Prefs.setBoolean(Prefs.LEARNT_EXPLANEL, true);
                         return false;
                     }
                 });
@@ -100,7 +101,7 @@ public class NetPanel extends Group {
                         return false;
                     }
                 }
-                Main.learnt = true;
+                Prefs.setBoolean(Prefs.LEARNT_EXPLANEL, true);
                 Main.getCurrentScreen().pop(Explanel.class);
                 Explanel exp = Explanel.get();
                 exp.setup(s, false, de);

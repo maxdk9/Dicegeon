@@ -1,5 +1,7 @@
 package com.tann.dice.screens.dungeon;
 
+import com.tann.dice.Main;
+import com.tann.dice.Main.TransitionType;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
@@ -12,6 +14,8 @@ import com.tann.dice.gameplay.phase.VictoryPhase;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 
+import com.tann.dice.screens.titleScreen.TitleScreen;
+import com.tann.dice.util.Chrono;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -107,7 +107,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
     }
 
     private void drawReminder(Batch batch) {
-        if(Main.learnt) return;
+        if(Prefs.getBoolean(Prefs.LEARNT_EXPLANEL, false)) return;
         if(entity.getDescribableTriggers().size()>0) return;
         Phase phase = PhaseManager.get().getPhase();
         if(phase == null) return;

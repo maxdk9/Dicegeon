@@ -7,11 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.tann.dice.Main;
+import com.tann.dice.Main.TransitionType;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.debugScreen.DebugScreen;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
+import com.tann.dice.screens.titleScreen.TitleScreen;
 import com.tann.dice.util.*;
 
 public class EscMenu extends Group implements OnPop{
@@ -41,8 +43,8 @@ public class EscMenu extends Group implements OnPop{
         .row().actor(Slider.SFX);
     TextButton Continue = new TextButton(40, 11, "Continue");
     TextButton stats = Main.debug?new TextButton(40, 11, "Stats"):null;
-    TextButton restart = new TextButton(40, 11, "Restart");
-    p.row().actor(restart);
+    TextButton quit = new TextButton(40, 11, "Quit");
+    p.row().actor(quit);
     if(Main.debug) p.actor(stats);
     p.actor(Continue).pix();
 
@@ -63,13 +65,13 @@ public class EscMenu extends Group implements OnPop{
         Main.getCurrentScreen().pop(EscMenu.this);
       }
     });
-    restart.setRunnable(new Runnable() {
+    quit.setRunnable(new Runnable() {
       @Override
       public void run() {
         PhaseManager.get().getPhase().cleanup();
         Main.getCurrentScreen().pop(EscMenu.this);
         Party.get().fullyReset();
-        LevelManager.get().restart();
+        Main.self.setScreen(TitleScreen.get(), TransitionType.LEFT, Chrono.i, Chrono.d);
       }
     });
   }

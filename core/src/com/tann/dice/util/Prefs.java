@@ -6,6 +6,7 @@ import com.badlogic.gdx.Preferences;
 
 public class Prefs {
 
+    public static final String LEARNT_EXPLANEL = "LEARNT_EXPLANEL";
 
     private static Preferences prefs;
     private static Preferences get(){
