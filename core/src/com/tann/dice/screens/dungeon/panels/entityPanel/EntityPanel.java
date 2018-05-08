@@ -225,8 +225,6 @@ public class EntityPanel extends Group {
             Draw.fillActor(batch, this);
         }
 
-
-
         batch.setColor(Colours.z_white);
 
         int npWiggle = 1;

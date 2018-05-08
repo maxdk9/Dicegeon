@@ -336,6 +336,7 @@ public class TargetingManager {
                 Explanel e = Explanel.get();
                 e.setup(s, false, entity);
                 DungeonScreen.get().push(e, true, false, true, true, 0, null);
+                entity.getEntityPanel().setArrowIntenity(1, 0);
                 return;
             }
         }
