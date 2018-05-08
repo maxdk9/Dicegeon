@@ -2,6 +2,7 @@ package com.tann.dice.screens.dungeon.panels.entityPanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -25,11 +26,6 @@ public class TriggerPanel extends Actor {
             itemsPerColumn = 1;
         }
         setSize(WIDTH, itemsPerColumn * BUFFSIZE + (itemsPerColumn-1)*GAP);
-        for(Trigger t:entity.getActiveTriggers()){
-            if(t.highlightForNewPlayers()) {
-                Prefs.setBoolean(t.getClass().getSimpleName(), true);
-            }
-        }
     }
 
     @Override
@@ -43,6 +39,13 @@ public class TriggerPanel extends Actor {
             if(!t.showInPanel()) continue;
             int yCo = drawIndex%itemsPerColumn;
             int xCo = drawIndex/itemsPerColumn;
+            if(t.highlightForNewPlayers() && !Prefs.getBoolean(t.getClass().getSimpleName(), false)) {
+                batch.setColor(Colours.withAlpha(Colours.light, (float) (.4f+Math.sin(Main.ticks*5f)*.25f)));
+                int extraGap = 1;
+                Draw.drawRectangle(batch,getX()+ xCo*(GAP + BUFFSIZE)-extraGap, getY() + getHeight() - (BUFFSIZE+GAP) *(yCo+1) + GAP-extraGap,
+                    BUFFSIZE+extraGap*2, BUFFSIZE+extraGap*2, 1);
+            }
+            batch.setColor(Colours.z_white);
             Draw.drawSize(batch, t.getImage(), getX()+ xCo*(GAP + BUFFSIZE), getY() + getHeight() - (BUFFSIZE+GAP) *(yCo+1) + GAP, BUFFSIZE, BUFFSIZE);
             drawIndex++;
         }

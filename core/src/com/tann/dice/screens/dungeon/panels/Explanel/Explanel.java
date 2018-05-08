@@ -88,6 +88,9 @@ public class Explanel extends InfoPanel implements OnPop {
         this.trigger= trigger;
         int borderSize = 2;
         TextWriter tw = new TextWriter("[white][image][light][h]: "+trigger.describeForBuffText(), (int) width-borderSize*2, entity.getColour(), borderSize, trigger.getImage());
+        if(trigger.highlightForNewPlayers()) {
+            Prefs.setBoolean(trigger.getClass().getSimpleName(), true);
+        }
         tw.setWidth(width);
         addActor(tw);
         setSize(tw.getWidth(), tw.getHeight());

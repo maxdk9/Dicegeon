@@ -29,7 +29,7 @@ public class EntityPanel extends Group {
     public DiceEntity entity;
     public boolean holdsDie = false;
     DamageProfile profile;
-    com.tann.dice.screens.dungeon.panels.entityPanel.heartsHolder.HeartsHolder heartsHolder;
+    HeartsHolder heartsHolder;
     float startX;
     static final int n = 5;
     static NinePatch panelBorder = new NinePatch(Images.panelBorder, n,n,n,n);

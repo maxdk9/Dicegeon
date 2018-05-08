@@ -1,7 +1,16 @@
 package com.tann.dice.screens.dungeon;
 
-import com.tann.dice.Main;
-import com.tann.dice.Main.TransitionType;
+import static com.tann.dice.gameplay.entity.type.MonsterType.archer;
+import static com.tann.dice.gameplay.entity.type.MonsterType.bird;
+import static com.tann.dice.gameplay.entity.type.MonsterType.dragon;
+import static com.tann.dice.gameplay.entity.type.MonsterType.goblin;
+import static com.tann.dice.gameplay.entity.type.MonsterType.lich;
+import static com.tann.dice.gameplay.entity.type.MonsterType.skeleton;
+import static com.tann.dice.gameplay.entity.type.MonsterType.slimoBig;
+import static com.tann.dice.gameplay.entity.type.MonsterType.slimoHuge;
+import static com.tann.dice.gameplay.entity.type.MonsterType.spikeGolem;
+import static com.tann.dice.gameplay.entity.type.MonsterType.zombie;
+
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
@@ -13,20 +22,13 @@ import com.tann.dice.gameplay.phase.LevelEndPhase;
 import com.tann.dice.gameplay.phase.VictoryPhase;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-
-import com.tann.dice.screens.titleScreen.TitleScreen;
-import com.tann.dice.util.Chrono;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.tann.dice.gameplay.entity.type.MonsterType.*;
-import static com.tann.dice.gameplay.entity.type.MonsterType.bird;
-import static com.tann.dice.gameplay.entity.type.MonsterType.dragon;
-
 public class LevelManager {
 
-    private static final int START_LEVEL = 2;
+    private static final int START_LEVEL = 5;
     private int level = START_LEVEL;
 
     private static LevelManager self;
