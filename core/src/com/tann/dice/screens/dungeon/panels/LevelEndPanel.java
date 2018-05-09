@@ -47,19 +47,21 @@ public class LevelEndPanel extends Group{
 
     public void layout(){
         clearChildren();
-        Pixl p = new Pixl(this, 2, 110);
+        Pixl p = new Pixl(this, 2, 120);
         p.row(4);
         p.actor(new TextWriter("[grey]Level "+ LevelManager.get().getLevel()+"/"+LevelManager.get().levels.size()));
         p.row();
         p.actor(new TextWriter("[orange]"+ congrat));
         p.row(4);
-        for(Equipment e:gainedEquipment){
-            p.gap(4);
-            p.actor(new TextWriter("You got: "));
-            p.gap(4);
-            p.actor(new EquipmentPanel(e, false, false));
-            p.gap(4);
-            p.row();
+        if(!action) {
+            for (Equipment e : gainedEquipment) {
+                p.gap(4);
+                p.actor(new TextWriter("You got: "));
+                p.gap(4);
+                p.actor(new EquipmentPanel(e, false, false));
+                p.gap(4);
+                p.row();
+            }
         }
         if(levelup){
             p.actor(new TextWriter("Choose a hero to level up"));
@@ -68,15 +70,16 @@ public class LevelEndPanel extends Group{
         p.row(4);
         int buttonGap = 6;
         if(!levelup) {
+            if(!action){
+                TextWriter tw = new TextWriter("Equip you equip your new item!");
+                p.actor(tw).row();
+            }
             TextButton inventory = new TextButton("Inventory", buttonGap);
             p.actor(inventory);
             inventory.setRunnable(new Runnable() {
                 @Override
                 public void run() {
                     PartyManagementPanel p = PartyManagementPanel.get();
-                    if (!levelup) {
-                        PhaseManager.get().getPhase().refreshPhase();
-                    }
                     p.refresh();
                     Main.getCurrentScreen().push(p, false, true, true, false, InputBlocker.DARK, null);
                     p.setX((int) (Main.width / 2 - p.getWidth() / 2));
@@ -120,7 +123,9 @@ public class LevelEndPanel extends Group{
     }
 
     public void action(){
-        action = true;
+        if(Party.get().getEquipment().size()==0){
+            action = true;
+        }
         levelup = false;
     }
 }

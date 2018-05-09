@@ -10,6 +10,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
 import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
@@ -131,5 +132,6 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
   @Override
   public void popAction() {
     Tann.slideAway(this, TannPosition.Bot);
+    PhaseManager.get().getPhase().refreshPhase();
   }
 }

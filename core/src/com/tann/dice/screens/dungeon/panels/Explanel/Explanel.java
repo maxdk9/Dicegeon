@@ -104,8 +104,9 @@ public class Explanel extends InfoPanel implements OnPop {
         int textWidth = 61;
         int width = side.size.pixels*2 + gap*3 + textWidth;
         Pixl p = new Pixl(this, gap, width);
-        p.actor(new TextWriter("[light]"+side.getTitle())).row(4)
-                .actor(new DieSidePanel(side, entity, 2)).gap(gap).actor(new TextWriter("[grey]"+side.toString(), textWidth));
+        p.actor(new TextWriter("[light]"+side.getTitle()))
+            .row(4)
+            .actor(new DieSidePanel(side, entity, 2)).gap(gap).actor(new TextWriter("[grey]"+side.toString(), textWidth));
         p.pix();
     }
 

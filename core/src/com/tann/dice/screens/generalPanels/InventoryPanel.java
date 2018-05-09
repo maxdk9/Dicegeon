@@ -54,7 +54,7 @@ public class InventoryPanel extends Group implements OnPop{
         }
         TextWriter tw = new TextWriter("[orange]Equipment", 999, Colours.purple, 2);
         addActor(tw);
-        tw.setPosition(getWidth()/2-tw.getWidth()/2, getHeight()-1);
+        tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(getHeight()-1));
 
     }
 
