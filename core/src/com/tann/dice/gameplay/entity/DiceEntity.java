@@ -285,6 +285,7 @@ public abstract class DiceEntity {
     for (Eff e : copy.getEffects()) {
       e.source = this;
     }
+    copy.useTriggers(getActiveTriggers(), this);
     somethingChanged();
   }
 

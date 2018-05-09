@@ -338,14 +338,14 @@ public class Side {
 	    return result;
     }
 
-	public void useTriggers(List<Trigger> triggers, DiceEntity entity){
+    public void useTriggers(List<Trigger> triggers, DiceEntity entity) {
         calculatedTexture = tr;
         calculatedEffects = new Eff[effects.length];
-        for(int i=0;i<calculatedEffects.length;i++){
+        for (int i = 0; i < calculatedEffects.length; i++) {
             calculatedEffects[i] = effects[i].copy();
         }
-	    for(Trigger t:triggers){
-	        t.affectSide(this, entity);
+        for (Trigger t : triggers) {
+            t.affectSide(this, entity);
         }
     }
 
