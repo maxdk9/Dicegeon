@@ -82,6 +82,11 @@ public class Party extends EntityGroup<Hero>{
         for(HeroType type: types){
             tmp.add(type.buildHero());
         }
+        for(Hero h:tmp){
+            if(h.equipment.size()>0){
+                throw new RuntimeException("Can't setup for level with existing equipment");
+            }
+        }
         setEntities(tmp);
         DungeonScreen.get().friendly.setEntities(activeEntities);
         for(int i=0;i<(level)/2;i++){
