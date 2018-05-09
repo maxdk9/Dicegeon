@@ -530,10 +530,8 @@ public class TargetingManager {
                         good = de.getHp() == e.getValue();
                         break;
                     case CopyAbility:
-                        if (de.getEntityPanel().holdsDie){
-                            Side theirSide = de.getDie().getActualSide();
-                            good= theirSide!= null && theirSide.getEffects()[0].type != Eff.EffType.CopyAbility;
-                        }
+                        Side theirSide = de.getDie().getActualSide();
+                        good= theirSide!= null && theirSide.getEffects()[0].type != Eff.EffType.CopyAbility;
                         break;
                     case Buff:
                         if(e.getBuff().trigger instanceof TriggerEndOfTurnSelf){

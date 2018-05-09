@@ -242,7 +242,7 @@ public abstract class DiceEntity {
         e.source.somethingChanged();
         break;
       case CopyAbility:
-        e.source.setCurrentSide(getDie().getActualSide().copy());
+        e.source.setCurrentSide(getDie().getActualSide().withValue(getDie().getActualSide().getEffects()[0].getValue()));
         return;
       case Hook:
         slide(true);

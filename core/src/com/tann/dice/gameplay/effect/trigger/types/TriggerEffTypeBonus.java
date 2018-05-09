@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.effect.trigger.types;
 
 import com.tann.dice.gameplay.effect.Eff;
+import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -19,6 +20,14 @@ public class TriggerEffTypeBonus extends Trigger {
         for(Eff e:side.getEffects()){
             if(e.type == type){
                 found = true;
+            }
+            if(e.type == EffType.Buff){
+                Trigger t = e.getBuff().trigger;
+                if(t instanceof TriggerEndOfTurnSelf){
+                    if(((TriggerEndOfTurnSelf) t).eff.type == type){
+                        found = true;
+                    }
+                }
             }
         }
         if(found) {

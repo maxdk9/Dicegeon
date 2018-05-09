@@ -28,7 +28,7 @@ import java.util.List;
 
 public class LevelManager {
 
-    private static final int START_LEVEL = 5;
+    private static final int START_LEVEL = 0;
     private int level = START_LEVEL;
 
     private static LevelManager self;

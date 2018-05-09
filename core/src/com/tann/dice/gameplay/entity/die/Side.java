@@ -57,7 +57,7 @@ public class Side {
         return this;
     }
 
-    private Side withValue(int value) {
+    public Side withValue(int value) {
         Side copy = copy();
         for(Eff e:copy.effects){
             e.justValue(value);
