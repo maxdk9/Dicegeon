@@ -42,37 +42,32 @@ public class EscMenu extends Group implements OnPop{
         .row().actor(new TextWriter("[blue]Good Art by Gnapp"))
         .row().actor(new TextWriter("[yellow]The rest by tann"))
         .row().actor(Slider.SFX);
-    TextButton Continue = new TextButton(40, 11, "Continue");
-    TextButton restart = new TextButton(40, 11, "Restart");
-    TextButton stats = Main.debug?new TextButton(40, 11, "Stats"):null;
-    TextButton quit = new TextButton(40, 11, "Quit");
     p.row();
-    if(Main.debug) p.actor(stats);
-    p.actor(quit)
-    .actor(restart)
-    .actor(Continue).pix();
-
-
-    if(stats!=null){
-      stats.setRunnable(new Runnable() {
-        @Override
-        public void run() {
-          DebugScreen dbs = new DebugScreen();
-          dbs.layout();
-          Main.self.setScreen(dbs, Main.TransitionType.LEFT, Chrono.i, Chrono.d);
-        }
-      });
-    }
-    Continue.setRunnable(new Runnable() {
-      @Override
-      public void run() {
-        Main.getCurrentScreen().pop(EscMenu.this);
+    if(Main.debug){
+      TextButton stats = new TextButton(40, 11, "Stats");
+      if(stats!=null){
+        stats.setRunnable(new Runnable() {
+          @Override
+          public void run() {
+            DebugScreen dbs = new DebugScreen();
+            dbs.layout();
+            Main.self.setScreen(dbs, Main.TransitionType.LEFT, Chrono.i, Chrono.d);
+          }
+        });
       }
-    });
-    quit.setRunnable(new Runnable() {
+      p.actor(stats);
+    }
+    p.actor(makeQuit())
+    .actor(makeRestart())
+    .actor(makeContinue()).pix();
+  }
+
+  public static TextButton makeQuit() {
+    TextButton butt = new TextButton(40, 11, "Quit");
+    butt.setRunnable(new Runnable() {
       @Override
       public void run() {
-        Main.getCurrentScreen().pop(EscMenu.this);
+        Main.getCurrentScreen().pop();
         PhaseManager.get().getPhase().cleanup();
         Party.get().fullyReset();
         LevelManager.get().reset();
@@ -80,13 +75,7 @@ public class EscMenu extends Group implements OnPop{
         Main.self.setScreen(TitleScreen.get(), TransitionType.LEFT, Chrono.i, Chrono.d);
       }
     });
-    restart.setRunnable(new Runnable() {
-      @Override
-      public void run() {
-        Main.getCurrentScreen().pop(EscMenu.this);
-        LevelManager.get().restart();
-      }
-    });
+    return butt;
   }
 
   @Override
@@ -98,5 +87,28 @@ public class EscMenu extends Group implements OnPop{
   @Override
   public void onPop() {
     Sounds.playSound(Sounds.pop);
+  }
+
+  public static TextButton makeContinue(){
+    TextButton butt = new TextButton(40, 11, "Continue");
+    butt.setRunnable(new Runnable() {
+      @Override
+      public void run() {
+        Main.getCurrentScreen().pop();
+      }
+    });
+    return butt;
+  }
+
+  public static TextButton makeRestart() {
+    TextButton butt = new TextButton(40, 11, "Restart");
+    butt.setRunnable(new Runnable() {
+      @Override
+      public void run() {
+        Main.getCurrentScreen().pop();
+        LevelManager.get().restart();
+      }
+    });
+    return butt;
   }
 }

@@ -288,10 +288,12 @@ public class Side {
     public static final Side huge_chomp7 = huge_chomp1.withValue(7);
     public static final Side huge_chomp8 = huge_chomp1.withValue(8);
     public static final Side huge_chomp9 = huge_chomp1.withValue(9);
+    public static final Side huge_chomp10 = huge_chomp1.withValue(10);
 
     public static final Side huge_flame = new Side().title("FWOOM").size(huge).image("flame").effect(new Eff().damage(1).enemyGroup());
     public static final Side huge_flame2 = huge_flame.withValue(2);
     public static final Side huge_flame3 = huge_flame.withValue(3);
+    public static final Side huge_flame4 = huge_flame.withValue(4);
 
     public static final Side huge_poisonBreath1 = new Side().title("SPLATTER").size(huge).image("poisonBreath").effect(new Eff().damage(1).enemyAndAdjacents(),
             new Eff().buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));

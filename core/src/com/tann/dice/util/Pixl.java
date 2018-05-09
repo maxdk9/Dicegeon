@@ -101,6 +101,10 @@ public class Pixl {
         }
     }
 
+    public Pixl text(String s) {
+        return actor(new TextWriter(s));
+    }
+
     class Row{
         List<Element> elementList = new ArrayList<>();
         int aboveRowGap;
