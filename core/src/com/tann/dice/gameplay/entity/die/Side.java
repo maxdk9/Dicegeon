@@ -352,6 +352,7 @@ public class Side {
     public void changeTo(Side other){
 	    this.calculatedTexture = other.tr;
 	    this.calculatedEffects = other.effects;
+	    this.title = other.title;
     }
 
     public void draw(Batch batch, float x, float y, int scale, Color colour, TextureRegion lapel2D, boolean used) {

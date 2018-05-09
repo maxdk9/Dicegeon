@@ -71,9 +71,12 @@ public class Equipment {
   }
 
   private static void add(Equipment add){
-    if(byName(add.name)!=null){
-      System.err.println("Wuhoh, duplicate equipment with name "+add.name);
-      return;
+    String name = add.name.toLowerCase();
+    for(Equipment e:all){
+      if(e.name.toLowerCase().equals(name)) {
+        System.err.println("Wuhoh, duplicate equipment with name " + add.name);
+        return;
+      }
     }
     all.add(add);
   }
@@ -112,7 +115,7 @@ public class Equipment {
         return e.copy();
       }
     }
-    return null;
+    throw new RuntimeException("No item with name "+name);
   }
 
 
