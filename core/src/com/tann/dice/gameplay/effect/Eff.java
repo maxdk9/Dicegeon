@@ -100,12 +100,12 @@ public class Eff {
             case Shield:
                 result = getBaseString();
                 switch(targetingType){
-                    case FriendlySingleOther: result += " from one other hero"; break;
-                    case FriendlySingleAndAdjacents: result += " from one hero and both adjacents"; break;
-                    case FriendlySingle: result += " from any hero"; break;
-                    case FriendlyGroup: result += " from everyone"; break;
-                    case Self: result += " from yourself"; break;
-                    default: result += " from ????"+targetingType; break;
+                    case FriendlySingleOther: result += " to one other hero"; break;
+                    case FriendlySingleAndAdjacents: result += " to one hero and both adjacents"; break;
+                    case FriendlySingle: result += " to any hero"; break;
+                    case FriendlyGroup: result += " to everyone"; break;
+                    case Self: result += " to yourself"; break;
+                    default: result += " to ????"+targetingType; break;
                 }
                 break;
             case Magic: result = getBaseString(); break;
