@@ -20,7 +20,7 @@ public class DamageProfile {
     }
 
     public void somethingChanged(){
-        incomingPoison = null;
+        netIncomingPoison = null;
         incomingDamage = null;
         buffs = null;
         execute = null;
@@ -93,20 +93,25 @@ public class DamageProfile {
         return heals;
     }
 
-    private Integer incomingPoison;
-    public int getIncomingPoisonDamage(){
-        if(incomingPoison == null){
-            incomingPoison = 0;
-            for(Trigger t:target.getActiveTriggers()){
-                incomingPoison += Math.max(0,t.getIncomingPoisonDamage());
-            }
-            for(Trigger t:target.getActiveTriggers()){
-                incomingPoison = t.alterIncomingPoisonDamage(incomingPoison);
-            }
-            incomingPoison -= getRegen();
-            incomingPoison = Math.max(0, incomingPoison);
+    private Integer netIncomingPoison;
+    public int getNetIncomingPoisonDamage(){
+        if(netIncomingPoison == null){
+            netIncomingPoison = getIncomingPoisonDamage();
+            netIncomingPoison -= getRegen();
+            netIncomingPoison = Math.max(0, netIncomingPoison);
         }
-        return incomingPoison;
+        return netIncomingPoison;
+    }
+
+    private int getIncomingPoisonDamage(){
+        netIncomingPoison = 0;
+        for(Trigger t:target.getActiveTriggers()){
+            netIncomingPoison += Math.max(0,t.getIncomingPoisonDamage());
+        }
+        for(Trigger t:target.getActiveTriggers()){
+            netIncomingPoison = t.alterIncomingPoisonDamage(netIncomingPoison);
+        }
+        return netIncomingPoison;
     }
 
     private Integer regen;
@@ -147,8 +152,8 @@ public class DamageProfile {
     }
 
     public void action(){
-        target.heal(getHeals());
-        target.damage(Math.max(0, getIncomingDamage() - getBlockedDamage()));
+        int toHeal = getHeals();
+        int toDamage = Math.max(0, getIncomingDamage() - getBlockedDamage());
         List<Eff> copy = new ArrayList<>(effs);
         for(Eff e:copy){
             if(e.source!=null && e.type == Damage) {
@@ -162,12 +167,14 @@ public class DamageProfile {
             target.kill();
         }
         reset();
+        target.heal(toHeal);
+        target.damage(toDamage);
         target.imposeMaximumHealth();
         target.somethingChanged();
     }
 
     public boolean isGoingToDie(boolean includePoison){
-        return getEffectiveHp()-(includePoison?getIncomingPoisonDamage():0) <= 0 || getExecute();
+        return getEffectiveHp()-(includePoison? getNetIncomingPoisonDamage():0) <= 0 || getExecute();
     }
 
     public int getEffectiveHp() {
@@ -183,13 +190,13 @@ public class DamageProfile {
     }
 
     public int unblockedTotalIncoming() {
-        return unblockedRegularIncoming()+getIncomingPoisonDamage();
+        return unblockedRegularIncoming()+ getNetIncomingPoisonDamage();
     }
 
     public int getOverkill(boolean poison) {
         int regularOverkill = unblockedRegularIncoming()  - Math.min(target.getMaxHp(), target.getHp() + getHeals());
         if(!poison) return regularOverkill;
-        else return getIncomingPoisonDamage() + Math.min(0, regularOverkill);
+        else return getNetIncomingPoisonDamage() + Math.min(0, regularOverkill);
     }
 
     public void decurse() {
@@ -199,5 +206,12 @@ public class DamageProfile {
                 effs.remove(e);
             }
         }
+    }
+
+    public void endOfTurn() {
+        int damage = getIncomingPoisonDamage()-getRegen();
+        if(damage>0) target.damage(damage);
+        if(damage<0) target.heal(-damage);
+
     }
 }

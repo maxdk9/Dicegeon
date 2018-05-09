@@ -1,16 +1,5 @@
 package com.tann.dice.screens.dungeon;
 
-import static com.tann.dice.gameplay.entity.type.MonsterType.archer;
-import static com.tann.dice.gameplay.entity.type.MonsterType.bird;
-import static com.tann.dice.gameplay.entity.type.MonsterType.dragon;
-import static com.tann.dice.gameplay.entity.type.MonsterType.goblin;
-import static com.tann.dice.gameplay.entity.type.MonsterType.lich;
-import static com.tann.dice.gameplay.entity.type.MonsterType.skeleton;
-import static com.tann.dice.gameplay.entity.type.MonsterType.slimoBig;
-import static com.tann.dice.gameplay.entity.type.MonsterType.slimoHuge;
-import static com.tann.dice.gameplay.entity.type.MonsterType.spikeGolem;
-import static com.tann.dice.gameplay.entity.type.MonsterType.zombie;
-
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
@@ -25,6 +14,8 @@ import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.tann.dice.gameplay.entity.type.MonsterType.*;
 
 public class LevelManager {
 
@@ -43,7 +34,7 @@ public class LevelManager {
 
     private void init() {
         //        addLevel(rat, goblin, bird, dragon); // all sizes
-//        addLevel(skeleton, lich, zombie);
+//        addLevel(snake, snake, snake, snake, snake);
 
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);

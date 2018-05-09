@@ -507,9 +507,7 @@ public abstract class DiceEntity {
 
   public void upkeep() {
     List<Trigger> activeTriggers = getActiveTriggers();
-    for (Trigger t : activeTriggers) {
-      t.endOfTurn();
-    }
+    getProfile().endOfTurn();
     getProfile().action();
     for (int i = buffs.size() - 1; i >= 0; i--) {
       buffs.get(i).turn();

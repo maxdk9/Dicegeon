@@ -16,10 +16,10 @@ public class TriggerEndOfTurnSelf extends Trigger {
         this.eff = eff;
     }
 
-    @Override
-    public void endOfTurn() {
-        entity.hit(eff, false);
-    }
+//    @Override
+//    public void endOfTurn() {
+//        entity.hit(eff, false);
+//    }
 
     @Override
     public Integer getIncomingPoisonDamage() {
