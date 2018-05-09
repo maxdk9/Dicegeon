@@ -19,7 +19,7 @@ import static com.tann.dice.gameplay.entity.type.MonsterType.*;
 
 public class LevelManager {
 
-    private static final int START_LEVEL = 0;
+    private static final int START_LEVEL = 7;
     private int level = START_LEVEL;
 
     private static LevelManager self;
@@ -34,7 +34,7 @@ public class LevelManager {
 
     private void init() {
         //        addLevel(rat, goblin, bird, dragon); // all sizes
-//        addLevel(dragon, dragon, dragon);
+//        addLevel(dragon, dragon, dragon, dragon);
 
         addLevel(goblin, goblin, goblin, goblin);
         addLevel(goblin, archer, goblin, archer, goblin);

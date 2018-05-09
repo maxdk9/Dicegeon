@@ -17,8 +17,8 @@ public class TargetingPhase extends Phase {
         DungeonScreen.get().removeLeftoverDice();
         DungeonScreen.get().spellButt.hide();
         DungeonScreen.get().slideTarget(false);
-        PhaseManager.get().pushPhase(new DamagePhase());
         DungeonScreen.get().slideConfirmButton(false);
+        PhaseManager.get().pushPhase(new DamagePhase());
     }
 
     @Override

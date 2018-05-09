@@ -1,6 +1,7 @@
 package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.screens.EscMenu;
@@ -9,25 +10,21 @@ import com.tann.dice.util.Draw;
 import com.tann.dice.util.ImageActor;
 import com.tann.dice.util.Pixl;
 
-public class LossPanel extends Group {
+public class VictoryPanel extends Group {
+    TextureRegion tr = Images.ending1;
 
-    public LossPanel(int level) {
-        new Pixl(this, 5)
-                .text("[red]YOU LOSE!")
-                .row()
-                .actor(new ImageActor(Images.hugeSkull))
-                .row()
-                .text("You got to level " + (level+1) +"/"+ (LevelManager.get().levels.size()+1))
+    public VictoryPanel() {
+        new Pixl(this, 10)
+                .actor(new ImageActor(tr))
                 .row()
                 .actor(EscMenu.makeQuit())
-                .actor(EscMenu.makeRestart())
                 .pix();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         int border = 2;
-        Draw.fillActor(batch, this, Colours.dark, Colours.red, border);
+        Draw.fillActor(batch, this, Colours.dark, Colours.blue, border);
         super.draw(batch, parentAlpha);
     }
 }

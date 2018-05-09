@@ -12,7 +12,7 @@ public class LossPhase extends Phase{
     @Override
     public void activate() {
         LossPanel lossPanel = new LossPanel(LevelManager.get().getLevel());
-        DungeonScreen.get().push(lossPanel, true, true, false, false, 0, PhaseManager.popPhaseRunnable);
+        DungeonScreen.get().push(lossPanel, true, true, false, false, 0, null);
     }
 
     @Override

@@ -32,6 +32,8 @@ public class LevelEndPhase extends Phase {
             de.slide(false);
         }
         DungeonScreen.get().spellButt.setVisible(false);
+        DungeonScreen.get().slideTarget(false);
+        DungeonScreen.get().slideConfirmButton(false);
     }
 
     @Override

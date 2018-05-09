@@ -25,6 +25,9 @@ public class Images {
     public static final TextureRegion skull = Main.atlas.findRegion("icon/skull");
     public static final TextureRegion hugeSkull = Main.atlas.findRegion("ui/lossSkull");
 
+    public static final TextureRegion ending1 = Main.atlas.findRegion("ui/ending1");
+    public static final TextureRegion ending2 = Main.atlas.findRegion("ui/ending2");
+
 	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("reg/face/sword");
 
     public static final TextureRegion heart = Main.atlas.findRegion("icon/hp");

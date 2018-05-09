@@ -2,6 +2,7 @@ package com.tann.dice.screens.dungeon.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -12,22 +13,16 @@ import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EquipmentPanel;
 import com.tann.dice.screens.generalPanels.PartyManagementPanel;
-import com.tann.dice.util.Colours;
-import com.tann.dice.util.Draw;
-import com.tann.dice.util.InputBlocker;
-import com.tann.dice.util.Pixl;
-import com.tann.dice.util.Sounds;
-import com.tann.dice.util.Tann;
+import com.tann.dice.util.*;
 import com.tann.dice.util.Tann.TannPosition;
-import com.tann.dice.util.TextButton;
-import com.tann.dice.util.TextWriter;
+
 import java.util.List;
 
 public class LevelEndPanel extends Group{
 
     private static final String[] congrats = new String[]{
-            "Nice!", "Congrats", "You did it!", "Congration", "Hot stuff", "Wowzers", "Splendid", "I knew you could do it", "They never stood a chance",
-            "Imbressive", "[sin]Dicey[sin]"};
+            "Nice!", "Congrats", "You did it!", "Hot stuff", "Wowzers", "Awesome", "I knew you could do it", "They never stood a chance", "[sin]Dicey[sin]",
+    "Good Stuff", "Getting stronger!"};
 
     List<Equipment> gainedEquipment;
     boolean action;
@@ -49,14 +44,14 @@ public class LevelEndPanel extends Group{
         clearChildren();
         Pixl p = new Pixl(this, 2, 120);
         p.row(4);
-        p.actor(new TextWriter("[grey]Level "+ LevelManager.get().getLevel()+"/"+LevelManager.get().levels.size()));
-        p.row();
         p.actor(new TextWriter("[orange]"+ congrat));
+        p.row(5);
+        p.actor(new TextWriter("[grey]Level "+ LevelManager.get().getLevel()+"/"+LevelManager.get().levels.size()));
         p.row(4);
         if(!action) {
             for (Equipment e : gainedEquipment) {
                 p.gap(4);
-                p.actor(new TextWriter("You got: "));
+                p.actor(new TextWriter("You got an item!  "));
                 p.gap(4);
                 p.actor(new EquipmentPanel(e, false, false));
                 p.gap(4);
@@ -67,12 +62,12 @@ public class LevelEndPanel extends Group{
             p.actor(new TextWriter("Choose a hero to level up"));
             p.row();
         }
-        p.row(4);
         int buttonGap = 6;
         if(!levelup) {
+            p.row(4);
             if(!action){
-                TextWriter tw = new TextWriter("Equip you equip your new item!");
-                p.actor(tw).row();
+                TextWriter tw = new TextWriter("[grey]Equip all your items");
+                p.actor(tw).row(5);
             }
             TextButton inventory = new TextButton("Inventory", buttonGap);
             p.actor(inventory);
@@ -100,6 +95,7 @@ public class LevelEndPanel extends Group{
                 }
             });
         }
+        p.row(4);
         p.pix();
 
         for (final DiceEntity de : Party.get().getActiveEntities()) {
@@ -123,9 +119,7 @@ public class LevelEndPanel extends Group{
     }
 
     public void action(){
-        if(Party.get().getEquipment().size()==0){
-            action = true;
-        }
+        action =  Party.get().getEquipment().size()==0;
         levelup = false;
     }
 }
