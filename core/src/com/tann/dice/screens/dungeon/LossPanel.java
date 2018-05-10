@@ -19,7 +19,7 @@ public class LossPanel extends Group {
                 .row()
                 .text("You got to level " + (level+1) +"/"+ (LevelManager.get().levels.size()+1))
                 .row()
-                .actor(EscMenu.makeQuit())
+                .actor(EscMenu.makeQuit(false))
                 .actor(EscMenu.makeRestart())
                 .pix();
     }

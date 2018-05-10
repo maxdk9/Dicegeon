@@ -9,7 +9,10 @@ public class VictoryPhase extends Phase{
     @Override
     public void activate() {
         Prefs.setBoolean(Prefs.EASY, true);
-        if(!LevelManager.get().easy) Prefs.setBoolean(Prefs.HARD, true);
+        if(!LevelManager.get().easy) {
+            Prefs.setBoolean(Prefs.HARD, true);
+            Prefs.setInt(Prefs.STREAK, Prefs.getInt(Prefs.STREAK, 0)+1);
+        }
         DungeonScreen.get().push(new VictoryPanel(), true, true, false, false, 0, null);
     }
 

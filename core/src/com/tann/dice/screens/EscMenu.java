@@ -57,16 +57,19 @@ public class EscMenu extends Group implements OnPop{
       }
       p.actor(stats);
     }
-    p.actor(makeQuit())
+    p.actor(makeQuit(true))
     .actor(makeRestart())
     .actor(makeContinue()).pix();
   }
 
-  public static TextButton makeQuit() {
+  public static TextButton makeQuit(final boolean clearStreak) {
     TextButton butt = new TextButton(40, 11, "Quit");
     butt.setRunnable(new Runnable() {
       @Override
       public void run() {
+        if(clearStreak) {
+          Prefs.setInt(Prefs.STREAK, 0);
+        }
         Main.getCurrentScreen().pop();
         PhaseManager.get().getPhase().cleanup();
         Party.get().fullyReset();
@@ -107,6 +110,7 @@ public class EscMenu extends Group implements OnPop{
       public void run() {
         Main.getCurrentScreen().pop();
         LevelManager.get().restart();
+        Prefs.setInt(Prefs.STREAK, 0);
       }
     });
     return butt;

@@ -16,7 +16,7 @@ public class VictoryPanel extends Group {
         new Pixl(this, 10)
                 .actor(new ImageActor(LevelManager.get().easy?Images.ending1:Images.ending2))
                 .row()
-                .actor(EscMenu.makeQuit())
+                .actor(EscMenu.makeQuit(false))
                 .pix();
     }
 

@@ -3,6 +3,7 @@ package com.tann.dice.screens.titleScreen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
 import com.tann.dice.screens.dungeon.DungeonScreen;
@@ -96,9 +97,21 @@ public class TitleScreen extends Screen{
             batch.draw(Images.wreath, getX()+easy.getX()+easy.getWidth()/2-Images.wreath.getRegionWidth()/2, (int)(easy.getY()+easy.getHeight()+4));
         }
         if(Prefs.getBoolean(Prefs.HARD, false)){
-            batch.draw(Images.wreath, getX()+hard.getX()+hard.getWidth()/2-Images.wreath.getRegionWidth()/2, (int)(hard.getY()+hard.getHeight()+4));
-        }
+            int x = (int) (getX()+hard.getX()+hard.getWidth()/2-Images.wreath.getRegionWidth()/2);
+            int y = (int) (hard.getY()+hard.getHeight()+4);
+            batch.draw(Images.wreath, x, y);
+            int streak = Prefs.getInt(Prefs.STREAK, 0);
+            if(streak>0) {
+                switch(streak){
+                    case 1: batch.setColor(Colours.purple); break;
+                    case 2: batch.setColor(Colours.orange); break;
+                    case 3: batch.setColor(Colours.yellow); break;
+                    case 4: default: batch.setColor(Colours.light);
+                }
 
+                TannFont.font.drawString(batch, streak + "", x + Images.wreath.getRegionWidth() / 2 - 1, y + Images.wreath.getRegionHeight() / 2, Align.center);
+            }
+        }
     }
 
     @Override
