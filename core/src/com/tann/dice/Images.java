@@ -33,6 +33,7 @@ public class Images {
     public static final TextureRegion heart = Main.atlas.findRegion("icon/hp");
     public static final TextureRegion heart_empty = Main.atlas.findRegion("icon/hp_empty");
     public static final TextureRegion heart_arrow = Main.atlas.findRegion("icon/hp_arrow");
+    public static final TextureRegion heart_arrow_left = Main.atlas.findRegion("icon/hp_arrow_left");
 
     public static final TextureRegion background = Main.atlas.findRegion("background2");
 

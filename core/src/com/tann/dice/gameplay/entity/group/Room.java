@@ -9,11 +9,8 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.TargetingManager;
-import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class Room extends EntityGroup<Monster> {
@@ -53,7 +50,7 @@ public class Room extends EntityGroup<Monster> {
         if(summoned){
             DungeonScreen.get().enemy.setEntities(getActiveEntities());
             DungeonScreen.get().layoutSidePanels();
-            BulletStuff.refresh(getAllActive());
+            BulletStuff.refresh(getEveryEntity());
         }
         return found;
     }

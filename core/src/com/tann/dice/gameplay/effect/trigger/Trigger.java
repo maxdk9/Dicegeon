@@ -26,32 +26,20 @@ public abstract class Trigger implements Cloneable{
   public void reset(){}
 
   public Integer alterIncomingDamage(Integer incomingDamage) { return incomingDamage; }
-
   public Integer alterIncomingPoisonDamage(Integer incomingDamage) { return incomingDamage; }
-
   public Integer getIncomingPoisonDamage() { return 0; }
-
   public void attackedBy(DiceEntity entity) { }
-
   public int alterOutgoingEffect(EffType type, int value) { return value; }
-
   public int alterIncomingEffect(EffType type, int value) { return value; }
-
   public boolean avoidDeath(){ return false; }
-
   public boolean avoidDeathPenalty(){ return false; }
-
   public boolean startsAtTheBack(){ return false; }
-
   public void onKill(){}
-
   public void onDeath(){}
-
   public void onHitWithEff(Eff e){}
-
   public Integer getRegen(){return 0;};
-
   public void affectSide(Side side, DiceEntity owner) { }
+  public boolean activateOnDamage(int old, int now){ return false; };
 
   protected String noDescription(String extra){
     return "No description for "+this.getClass().getSimpleName()+" ("+extra+")";
@@ -106,4 +94,5 @@ public abstract class Trigger implements Cloneable{
   public boolean isNegative() {
     return false;
   }
+
 }

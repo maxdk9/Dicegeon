@@ -2,7 +2,6 @@ package com.tann.dice.screens.dungeon;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tann.dice.Main;
-import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffType;
@@ -102,7 +101,7 @@ public class TargetingManager {
     }
 
     public void cancelEffects(DiceEntity entity) {
-        for (DiceEntity de : EntityGroup.getAllActive()) {
+        for (DiceEntity de : EntityGroup.getEveryEntity()) {
             de.removeEffects(entity);
         }
     }
@@ -370,7 +369,7 @@ public class TargetingManager {
     }
 
     public void clearTargetingHighlights() {
-        for (DiceEntity de : EntityGroup.getAllActive()) {
+        for (DiceEntity de : EntityGroup.getEveryEntity()) {
             de.getEntityPanel().setPossibleTarget(false);
         }
     }
@@ -386,7 +385,7 @@ public class TargetingManager {
 
     public void showAllTargetingArrows() {
         clearTargetingHighlights();
-        for (DiceEntity de : Party.getAllActive()) {
+        for (DiceEntity de : Party.getEveryEntity()) {
             de.getEntityPanel().setArrowIntenity(1, 0);
         }
     }

@@ -4,6 +4,7 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerCowardly;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerDamageAttackers;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerOnDeathEffect;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerRetaliate;
 import com.tann.dice.gameplay.entity.Monster;
 
 import static com.tann.dice.gameplay.entity.die.Side.*;
@@ -63,7 +64,8 @@ public class MonsterType extends EntityType<MonsterType>{
     //huge
 
     public static final MonsterType dragon = new MonsterType().name("Lizard").hp(40).size(huge)
-            .sides(huge_flame3, huge_flame3, huge_chomp9, huge_chomp9, huge_poisonBreath1, huge_poisonBreath1);
+            .sides(huge_flame3, huge_flame3, huge_chomp8, huge_chomp8, huge_poisonBreath1, huge_poisonBreath1)
+            .trait(new TriggerRetaliate(new int[]{10,20,30}, new Eff().damage(1).enemyGroup()));
     public static final MonsterType slimoHuge = new MonsterType().name("Slime Queen").hp(20).size(huge)
             .sides(huge_slimeTriple4, huge_slimeTriple4, huge_slimeTriple4, huge_slimeTriple4, huge_slimeUpDown5, huge_slimeUpDown4)
             .trait(new TriggerOnDeathEffect(new Eff().summon("Slimelet", 9)));

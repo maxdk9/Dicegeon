@@ -311,11 +311,21 @@ public abstract class DiceEntity {
     if (value > 0) {
       getEntityPanel().addDamageFlib(value);
     }
+
+    for(Trigger t:getActiveTriggers()){
+      boolean triggered = t.activateOnDamage(hp, hp-value);
+      if(triggered){
+        getEntityPanel().pokeForwards();
+      }
+    }
+
     boolean aboveFlee = hp > fleePip;
     hp -= value;
     if (aboveFlee && hp <= fleePip) {
       slide(false);
     }
+
+
     somethingChanged();
     if (getProfile().getTopHealth() <= 0) {
       die();

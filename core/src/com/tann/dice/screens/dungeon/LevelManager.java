@@ -83,7 +83,7 @@ public class LevelManager {
         Room.get().reset();
         Room.get().setEntities(monsters);
         BulletStuff.reset();
-        BulletStuff.refresh(EntityGroup.getAllActive());
+        BulletStuff.refresh(EntityGroup.getEveryEntity());
         DungeonScreen.get().spellButt.hide();
         DungeonScreen.get().enemy.setEntities(monsters);
         PhaseManager.get().pushPhase(new EnemyRollingPhase());

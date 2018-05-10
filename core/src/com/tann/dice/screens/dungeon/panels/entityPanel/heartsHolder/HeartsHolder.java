@@ -5,9 +5,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tann.dice.Images;
 import com.tann.dice.gameplay.effect.DamageProfile;
+import com.tann.dice.gameplay.effect.trigger.Trigger;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerRetaliate;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.TannFont;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HeartsHolder extends Group{
     DiceEntity entity;
@@ -44,6 +49,15 @@ public class HeartsHolder extends Group{
         int y = (int) (getY()+getHeight()-heartSize);
         int x = (int) getX();
         TextureRegion tr;
+
+        List<TriggerRetaliate> retaliations = new ArrayList<>();
+        for(Trigger t:entity.getActiveTriggers()){
+            if(t instanceof TriggerRetaliate){
+                TriggerRetaliate retaliate = (TriggerRetaliate) t;
+                retaliations.add(retaliate);
+            }
+        }
+
         for(int i=0;i<entity.getMaxHp();i++){
             boolean poison = false;
             if (i % (heartsPerRow)==0 && i!=0){
@@ -66,12 +80,23 @@ public class HeartsHolder extends Group{
                 else{
                     batch.setColor(Colours.red);
                 }
-                if(!entity.isPlayer() && i<profile.getTopHealth() && i==entity.fleePip){
+                if(i<profile.getTopHealth() && i==entity.fleePip){
                     tr = Images.heart_arrow;
                     if(!poison){
                         batch.setColor(Colours.grey);
                     }
                 }
+                for(TriggerRetaliate retal:retaliations){
+                    for(int threshold:retal.hps){
+                        if(i<profile.getTopHealth() && i==threshold){
+                            tr = Images.heart_arrow_left;
+                            if(!poison){
+                                batch.setColor(Colours.orange);
+                            }
+                        }
+                    }
+                }
+
             }
             batch.draw(tr, x, y);
 

@@ -16,13 +16,11 @@ import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
-import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Die.DieState;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
-import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.gameplay.phase.*;
 import com.tann.dice.screens.EscMenu;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
@@ -32,14 +30,9 @@ import com.tann.dice.screens.dungeon.panels.ExplanelReposition;
 import com.tann.dice.screens.dungeon.panels.SpellButt;
 import com.tann.dice.screens.dungeon.panels.SpellHolder;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
-import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.util.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static com.tann.dice.gameplay.entity.type.MonsterType.*;
 
 public class DungeonScreen extends Screen implements ExplanelReposition{
 
@@ -205,7 +198,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
         Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
         batch.setColor(Colours.z_white);
         batch.draw(Images.background, getX(), getY());
-        for (DiceEntity de : EntityGroup.getAllActive()) {
+        for (DiceEntity de : EntityGroup.getEveryEntity()) {
             de.getEntityPanel().drawBackground(batch);
         }
     }

@@ -1,7 +1,6 @@
 package com.tann.dice.gameplay.effect.trigger.types;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
@@ -12,7 +11,6 @@ import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
-import com.tann.dice.util.Tann;
 
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class TriggerOnDeathEffect extends Trigger {
                 }
                 DungeonScreen.get().enemy.setEntities(Room.get().getActiveEntities());
                 DungeonScreen.get().layoutSidePanels();
-                BulletStuff.refresh(EntityGroup.getAllActive());
+                BulletStuff.refresh(EntityGroup.getEveryEntity());
                 break;
             case DestroyAllSummons:
                 List<Monster> entityList = Room.get().getActiveEntities();

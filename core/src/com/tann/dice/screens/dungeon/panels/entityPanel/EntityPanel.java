@@ -2,6 +2,7 @@ package com.tann.dice.screens.dungeon.panels.entityPanel;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -412,4 +413,18 @@ public class EntityPanel extends Group {
 
     }
 
+    public void pokeForwards() {
+        int distance = 30;
+        addAction(Actions.sequence(
+                Actions.moveBy(-distance, 0, .3f, Interpolation.pow2In),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        Sounds.playSound(Sounds.punches);
+                    }
+                }),
+                Actions.delay(.2f),
+                Actions.moveBy(distance, 0, .8f)
+        ));
+    }
 }

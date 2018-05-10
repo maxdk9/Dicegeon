@@ -12,7 +12,6 @@ import com.tann.dice.gameplay.phase.TargetingPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
-import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.generalPanels.InventoryPanel;
 import com.tann.dice.util.Colours;
 import com.tann.dice.util.Tann;
@@ -291,7 +290,7 @@ public class Party extends EntityGroup<Hero>{
     }
 
     public boolean allDiceLockedOrLocking() {
-        for(DiceEntity de:getAllActive()){
+        for(DiceEntity de: getEveryEntity()){
             Die.DieState state =  de.getDie().getState();
             if(state!=Die.DieState.Locked && state !=Die.DieState.Locking) {
                 return false;

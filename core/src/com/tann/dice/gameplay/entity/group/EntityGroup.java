@@ -1,16 +1,11 @@
 package com.tann.dice.gameplay.entity.group;
 
 import com.tann.dice.bullet.BulletStuff;
-import com.tann.dice.gameplay.effect.Eff.TargetingType;
-import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.Buff;
-import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
-import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.screens.dungeon.DungeonScreen;
-import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +79,7 @@ public class EntityGroup <T extends DiceEntity>{
     }
 
     private static List<DiceEntity> tmpALl = new ArrayList<>();
-    public static List<DiceEntity> getAllActive(){
+    public static List<DiceEntity> getEveryEntity(){
         tmpALl.clear();
         tmpALl.addAll(Party.get().getActiveEntities());
         tmpALl.addAll(Room.get().getActiveEntities());
@@ -92,7 +87,7 @@ public class EntityGroup <T extends DiceEntity>{
     }
 
     public static void activateDamage() {
-        List<DiceEntity> all = new ArrayList<>(EntityGroup.getAllActive());
+        List<DiceEntity> all = new ArrayList<>(EntityGroup.getEveryEntity());
         for(int i=all.size()-1;i>=0;i--){
             DiceEntity de = all.get(i);
             de.getProfile().action();
@@ -104,7 +99,7 @@ public class EntityGroup <T extends DiceEntity>{
     }
 
     public static void clearTargetedHighlights() {
-        for(DiceEntity de : getAllActive()){
+        for(DiceEntity de : getEveryEntity()){
             de.getEntityPanel().setTargeted(false);
             de.getEntityPanel().setArrowIntenity(0, 0);
         }
@@ -114,7 +109,7 @@ public class EntityGroup <T extends DiceEntity>{
     }
 
     public boolean allDiceStopped() {
-        for(DiceEntity de:getAllActive()){
+        for(DiceEntity de: getEveryEntity()){
             Die.DieState state = de.getDie().getState();
             switch(state){
                 case Rolling:

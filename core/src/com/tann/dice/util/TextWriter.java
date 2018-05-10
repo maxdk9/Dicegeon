@@ -56,6 +56,7 @@ public class TextWriter extends Group {
         textureMap.put("heart", Images.heart);
         textureMap.put("heartempty", Images.heart_empty);
         textureMap.put("heartArrow", Images.heart_arrow);
+        textureMap.put("heartArrowLeft", Images.heart_arrow_left);
         colorMap.put("white", Colours.z_white);
         colorMap.put("red", Colours.red);
         colorMap.put("purple", Colours.purple);
