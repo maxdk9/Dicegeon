@@ -11,11 +11,10 @@ import com.tann.dice.util.ImageActor;
 import com.tann.dice.util.Pixl;
 
 public class VictoryPanel extends Group {
-    TextureRegion tr = Images.ending1;
 
     public VictoryPanel() {
         new Pixl(this, 10)
-                .actor(new ImageActor(tr))
+                .actor(new ImageActor(LevelManager.get().easy?Images.ending1:Images.ending2))
                 .row()
                 .actor(EscMenu.makeQuit())
                 .pix();

@@ -53,6 +53,11 @@ public class Main extends ApplicationAdapter {
     return self.currentScreen;
   }
 
+  static float noiseFromTicks = 0;
+  public static float getNoiseFromTicks() {
+    return noiseFromTicks;
+  }
+
   public enum MainState {
     Normal, Paused
   }
@@ -220,7 +225,7 @@ public class Main extends ApplicationAdapter {
 
 
   public void update(float delta) {
-
+    noiseFromTicks = (float) Noise.noise(Main.ticks,0);
     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
       delta *= .1f;
     }

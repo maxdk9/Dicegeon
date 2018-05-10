@@ -27,6 +27,7 @@ public class Images {
 
     public static final TextureRegion ending1 = Main.atlas.findRegion("ui/ending1");
     public static final TextureRegion ending2 = Main.atlas.findRegion("ui/ending2");
+    public static final TextureRegion wreath = Main.atlas.findRegion("ui/wreath");
 
 	public static final TextureRegion side_sword = Main.atlas_3d.findRegion("reg/face/sword");
 

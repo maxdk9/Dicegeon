@@ -22,7 +22,7 @@ public class TriggerOnKill extends Trigger {
 
     @Override
     public String describe() {
-        return "When this hero kills an enemy, "+eff.toString().toLowerCase();
+        return "When you kill an enemy, "+eff.toString().toLowerCase();
     }
 
     @Override
