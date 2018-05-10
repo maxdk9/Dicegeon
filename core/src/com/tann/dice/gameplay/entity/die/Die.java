@@ -61,6 +61,7 @@ public class Die implements Targetable{
         switch(getState()){
             case Stopped:
             case Unlocking:
+                if(getSide() == -1) return;
                 Sounds.playSound(Sounds.lock);
                 slideToPanel();
                 break;

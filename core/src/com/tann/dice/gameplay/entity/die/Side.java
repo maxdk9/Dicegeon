@@ -122,13 +122,14 @@ public class Side {
     public static final Side bloodPact1 = new Side().title("Blood Pact").image("bloodPact").effect(new Eff().damage(1).self(),
             new Eff().allies().buff(new Buff(-1, new TriggerMaxHP(1))).justValue(1),
             new Eff().allies().heal(1)).customDescription("Pay 1 health to give all other heroes +1 maximum health");
-    public static final Side bloodPact2 = bloodPact1.withValue(2);
+    public static final Side bloodPact2 = bloodPact1.withValue(2).customDescription("Pay 2 health to give all other heroes +2 maximum health");
 
 //    public static final Side sword1AllSelfDamage1 = new Side().image("swordSelfDamage").effect(new Eff().damage(1).enemyGroup(), new Eff().damage(1).self());
 //    public static final Side sword2AllSelfDamage2 = sword1AllSelfDamage1.withValue(2);
 
     public static final Side poison1 = new Side().title("Poison").image("poison").effect(new Eff().justValue(1).
-            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged());
+        buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(1).self()))).ranged());
+    public static final Side poison2 = poison1.withValue(2);
 
     public static final Side flameWard1 = new Side().title("Flame Wall").image("flameWard").effect(new Eff().damage(1).allTargeters());
     public static final Side flameWard2 = flameWard1.withValue(2);

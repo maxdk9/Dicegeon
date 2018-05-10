@@ -63,7 +63,7 @@ public class MonsterType extends EntityType<MonsterType>{
     //huge
 
     public static final MonsterType dragon = new MonsterType().name("Lizard").hp(40).size(huge)
-            .sides(huge_poisonBreath1, huge_poisonBreath1, huge_flame4, huge_flame3, huge_chomp10, huge_chomp8);
+            .sides(huge_flame3, huge_flame3, huge_chomp9, huge_chomp9, huge_poisonBreath1, huge_poisonBreath1);
     public static final MonsterType slimoHuge = new MonsterType().name("Slime Queen").hp(20).size(huge)
             .sides(huge_slimeTriple4, huge_slimeTriple4, huge_slimeTriple4, huge_slimeTriple4, huge_slimeUpDown5, huge_slimeUpDown4)
             .trait(new TriggerOnDeathEffect(new Eff().summon("Slimelet", 9)));

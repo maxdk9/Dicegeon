@@ -19,6 +19,7 @@ import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.EntityType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
+import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.screens.dungeon.panels.Explanel.DiePanel;
@@ -72,7 +73,13 @@ public abstract class DiceEntity {
       portrait = Tann.getRandom(portraits);
       portraitOffset = Integer.valueOf(portrait.name.split("-")[1]);
     }
-    setMaxHp(type.hp);
+    if(isPlayer()){
+      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?1.2f:1)));
+    }
+    else{
+      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?.8f:1)));
+    }
+
     fullHeal();
     setSides(entityType.sides);
   }

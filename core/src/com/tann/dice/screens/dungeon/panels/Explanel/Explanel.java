@@ -128,7 +128,7 @@ public class Explanel extends InfoPanel implements OnPop {
         int picWidth = Images.spellBorder.getRegionWidth()*2;
         int gap = 2;
         p.gap(picWidth+gap*2);
-        p.actor(new TextWriter(spell.getName()));
+        p.actor(new TextWriter("[blue]"+spell.getName()));
         p.gap(5);
         for(int i=0;i<spell.getCost();i++) {
             p.actor(new ImageActor(Images.magic));

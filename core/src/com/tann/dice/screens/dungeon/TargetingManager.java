@@ -537,6 +537,10 @@ public class TargetingManager {
                         if(e.getBuff().trigger instanceof TriggerEndOfTurnSelf){
                             good = true;
                         }
+                        else if (source == null){
+                            // just for rejuvenate spell
+                            good = true;
+                        }
                         else if (de.isPlayer() != source.isPlayer() || (de.getEntityPanel().holdsDie && !de.getDie().used)){
                             Buff buff = e.getBuff();
                             if(buff.trigger instanceof TriggerAllSidesBonus){

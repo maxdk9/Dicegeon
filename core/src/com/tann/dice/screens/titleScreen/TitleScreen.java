@@ -20,27 +20,34 @@ public class TitleScreen extends Screen{
     }
 
     private void init() {
-        TextButton normal = new TextButton("Start normal game", 10);
-        TextButton hard = new TextButton("Start hard game", 10);
-        addActor(normal);
+        TextButton easy = new TextButton("Easy Mode", 10);
+        TextButton hard = new TextButton("Hard Mode", 10);
+        addActor(easy);
         addActor(hard);
-        hard.setWidth(normal.getWidth());
+        hard.setWidth(easy.getWidth());
         int y = 10;
         int gap = 10;
         hard.setPosition((int)(getWidth()/2-hard.getWidth()/2), y);
         y += hard.getHeight()+gap;
-        normal.setPosition((int)(getWidth()/2-normal.getWidth()/2), y);
-        y += normal.getHeight()+gap;
+        easy.setPosition((int)(getWidth()/2-easy.getWidth()/2), y);
+        y += easy.getHeight()+gap;
         ImageActor ia = new ImageActor(Main.atlas.findRegion("title"));
         addActor(ia);
         ia.setPosition((int)(getWidth()/2-ia.getWidth()/2), (int)(y+(Main.height-y)/2-ia.getHeight()/2));
 
+
+        easy.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                start(true);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+
         hard.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                DungeonScreen.clearStatic();
-                Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Chrono.i, Chrono.d);
-                LevelManager.get().startGame();
+                start(false);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -55,6 +62,21 @@ public class TitleScreen extends Screen{
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
+
+//        TextWriter explainEasy = new TextWriter("[green]Good for learning the game[n]-20% enemy hp[n]+20% hero hp");
+//        explainEasy.setPosition(easy.getX()+easy.getWidth()+2, (int)(easy.getY()+easy.getHeight()/2-explainEasy.getHeight()/2));
+//        addActor(explainEasy);
+//
+//        TextWriter explainHard = new TextWriter("[red]The real challenge");
+//        explainHard.setPosition(hard.getX()+hard.getWidth()+2, (int)(hard.getY()+hard.getHeight()/2-explainHard.getHeight()/2));
+//        addActor(explainHard);
+    }
+
+    private void start(boolean easy) {
+        LevelManager.get().easy = easy;
+        DungeonScreen.clearStatic();
+        Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Chrono.i, Chrono.d);
+        LevelManager.get().startGame();
     }
 
     @Override

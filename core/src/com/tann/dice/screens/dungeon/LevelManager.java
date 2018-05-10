@@ -19,9 +19,9 @@ import static com.tann.dice.gameplay.entity.type.MonsterType.*;
 
 public class LevelManager {
 
-    private static final int START_LEVEL = 7;
+    private static final int START_LEVEL = 0;
     private int level = START_LEVEL;
-
+    public boolean easy = false;
     private static LevelManager self;
     public final List<List<MonsterType>> levels = new ArrayList<>();
     public static LevelManager get(){

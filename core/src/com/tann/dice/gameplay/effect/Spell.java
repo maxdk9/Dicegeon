@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.trigger.types.TriggerMaxHP;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.panels.SpellPanel;
@@ -18,7 +19,8 @@ public class Spell implements Targetable{
     public static final Spell healingMist = new Spell().name("Healing Mist").image("healingMist").cost(2).effs(new Eff().heal(2).friendlyGroup());
     public static final Spell lifeSpark = new Spell().name("Life Spark").image("lifeSpark").cost(1).effs(new Eff().heal(2).friendlySingle()).repeatable();
     public static final Spell stoneSkin = new Spell().name("Stoneskin").image("stoneskin").cost(3).effs(new Eff().shield(99).friendlySingle());
-    public static final Spell rejuvenate = new Spell().name("Rejuvenate").image("rejuvenate").cost(3).effs(new Eff().heal(99).friendlySingle(), new Eff().decurse());
+    public static final Spell rejuvenate = new Spell().name("Rejuvenate").image("rejuvenate").cost(3).effs(
+        new Eff().buff(new Buff(-1, new TriggerMaxHP(5))).friendlySingle().justValue(5), new Eff().heal(5).friendlySingle());
 
     public static final Spell bloodBoil = new Spell().name("Blood Boil").image("bloodBoil").cost(2).effs(new Eff().damage(4).enemyHalfOrLess()).repeatable();
     public static final Spell deathSpike = new Spell().name("Death Spike").image("deathSpike").cost(5).effs(new Eff().damage(10).ranged()).repeatable();
@@ -76,6 +78,7 @@ public class Spell implements Targetable{
     }
 
     public String getDescription(){
+        if(this == rejuvenate) return "Give a friendly hero +5 maximum health (and heal them for 5)";
         if(description == null){
             description = Eff.describe(effects);
         }
