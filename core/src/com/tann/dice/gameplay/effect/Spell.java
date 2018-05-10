@@ -78,7 +78,7 @@ public class Spell implements Targetable{
     }
 
     public String getDescription(){
-        if(this == rejuvenate) return "Give a friendly hero +5 maximum health (and heal them for 5)";
+        if(this == rejuvenate) return "Give a friendly hero +5 maximum health (and heal them[n]for 5)";
         if(description == null){
             description = Eff.describe(effects);
         }

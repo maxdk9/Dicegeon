@@ -51,11 +51,11 @@ public class Eff {
             case Magic:
                 return "Gain "+getValue()+" magic to spend on spells";
             case Healing:
-                return "Restore "+getValue()+" missing health ([purple][heartempty][purple]) to";
+                return "Restore "+getValue()+" missing health ([purple][heartempty][purple])";
             case Buff:
                 return getBuff().toNiceString();
             case Execute:
-                return "Kills target if they are on exactly "+getValue()+" hp";
+                return "Kills ANY target if they are on exactly "+getValue()+" hp";
             case Reroll:
                 return "gain +1 reroll this turn";
             case RedirectIncoming:
@@ -63,9 +63,9 @@ public class Eff {
             case CopyAbility:
                 return "Copy a side from another hero";
             case Decurse:
-                return "Remove all negative effects";
+                return "Remove all negative effects from a hero";
             case Hook:
-                return "Pull an enemy forwards";
+                return "Pull them forwards";
             case Summon:
                 return "Summon "+getValue()+" "+summonType+(getValue()==1?"":"s");
             case DestroyAllSummons:
@@ -112,17 +112,23 @@ public class Eff {
             case Healing:
                 result = getBaseString();
                 switch(targetingType){
-                    case FriendlySingleOther: result += " another damaged character"; break;
-                    case FriendlySingle: result += " any damaged character"; break;
-                    case FriendlyGroup: result += " ALL damaged characters"; break;
-                    case FriendlyMostDamaged: result += " the most-damaged friendly character"; break;
-                    case Self: result += " yourself"; break;
+                    case FriendlySingleOther: result += " to another damaged character"; break;
+                    case FriendlySingle: result += " to any damaged character"; break;
+                    case FriendlyGroup: result += " to ALL damaged characters"; break;
+                    case FriendlyMostDamaged: result += " to the most-damaged friendly character"; break;
+                    case Self: result += " to yourself"; break;
                     default: result += " Need description: " +targetingType;
                 }
                 break;
             case Execute: result = getBaseString(); break;
             case Reroll: result = "When you roll this, "+getBaseString(); break;
-            case Buff: result = getBaseString(); break;
+            case Buff:
+                switch(targetingType){
+                    case EnemySingle: result += " to an enemy"; break;
+                    case EnemySingleRanged: result +=" to ANY enemy"; break;
+                    case EnemyAndAdjacents: result += " to an enemy and both adjacent enemies"; break;
+                    default: break;
+                }
         }
         if(nextTurn){
             result += " next turn";
@@ -223,8 +229,8 @@ public class Eff {
             if (i < effects.length-1 && effects[i+1].targetingType!=e.targetingType){
                 result += e.toString();
             }
-            else if(i!=0) result += e.getBaseString();
-            else result += e.getBaseString().toLowerCase();
+            else if(i!=0) result += e.getBaseString().toLowerCase();
+            else result += e.getBaseString();
             result += " and ";
         }
         String lastEff = effects[effects.length-1].toString();

@@ -414,7 +414,7 @@ public class EntityPanel extends Group {
     }
 
     public void pokeForwards() {
-        int distance = 30;
+        int distance = 35;
         addAction(Actions.sequence(
                 Actions.moveBy(-distance, 0, .3f, Interpolation.pow2In),
                 Actions.run(new Runnable() {

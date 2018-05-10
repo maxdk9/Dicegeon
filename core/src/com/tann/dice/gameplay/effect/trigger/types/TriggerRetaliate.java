@@ -22,7 +22,7 @@ public class TriggerRetaliate extends Trigger{
 
     @Override
     public String describe() {
-        return "Retaliates by dealing one damage to all heroes after taking enough damage to cover a [orange][heartArrowLeft][orange][h]symbol";
+        return "Retaliates by dealing one damage to all heroes after taking enough damage to cover a [orange][heartArrowLeft][orange]symbol";
     }
 
     @Override

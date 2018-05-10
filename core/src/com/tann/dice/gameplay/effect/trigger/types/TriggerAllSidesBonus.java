@@ -40,6 +40,6 @@ public class TriggerAllSidesBonus extends Trigger{
 
     @Override
     public String describe() {
-        return "+"+amount+" to all sides";
+        return "Give +"+amount+" to all sides to a hero";
     }
 }
