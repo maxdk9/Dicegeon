@@ -267,7 +267,7 @@ public class Die implements Targetable{
         float r2 = (rot + Maths.factor(rotRand))*Maths.mult();
         float r3 = (rot + Maths.factor(rotRand))*Maths.mult();
         float mult = getForceMultiplier();
-        float rotMult = 1+(float) (Math.pow(entity.getSize().pixels/12f, 5)/80f);
+        float rotMult = 1+(float) (Math.pow(entity.getSize().pixels/12f, 6)/80f);
         float totalCentering =Maths.factor(centeringRand) + centeringMult;
         Vector3 pos = new Vector3();
         getPosition(pos);

@@ -95,7 +95,6 @@ public class TargetingManager {
                 break;
             default:
                 DungeonScreen.get().spellButt.hide();
-                Sounds.playSound(Sounds.pip);
                 targetableClick(d, true);
                 break;
         }

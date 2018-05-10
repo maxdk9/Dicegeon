@@ -33,7 +33,7 @@ public class LevelManager {
     }
 
     private void init() {
-        //        addLevel(rat, goblin, bird, dragon); // all sizes
+                addLevel(rat, goblin, bird, dragon); // all sizes
 //        addLevel(dragon, dragon, dragon, dragon);
 
         addLevel(goblin, goblin, goblin, goblin);
