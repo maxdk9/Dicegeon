@@ -105,6 +105,10 @@ public class Pixl {
         return actor(new TextWriter(s));
     }
 
+    public Pixl image(TextureRegion image) {
+        return actor(new ImageActor(image));
+    }
+
     class Row{
         List<Element> elementList = new ArrayList<>();
         int aboveRowGap;

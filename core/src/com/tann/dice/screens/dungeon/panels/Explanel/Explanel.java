@@ -65,7 +65,7 @@ public class Explanel extends InfoPanel implements OnPop {
     public void setup(final Equipment equipment){
         reset();
         this.equipment = equipment;
-        final int scale = 2;
+        final int scale = 1;
         Actor equipDraw = new Actor(){
             @Override
             public void draw(Batch batch, float parentAlpha) {
@@ -74,10 +74,8 @@ public class Explanel extends InfoPanel implements OnPop {
         };
         equipDraw.setSize(equipment.image.getRegionWidth()*scale, equipment.image.getRegionHeight()*scale);
 
-        Pixl p = getPixl();
-        p.actor(new TextWriter("[orange]"+equipment.name))
-                .row()
-                .actor(equipDraw)
+        Pixl p = new Pixl(this, 3);
+        p.actor(equipment.image).gap(2).text("[orange]"+equipment.name)
                 .row()
                 .actor(new TextWriter("[grey]"+equipment.fluff+"[nh][light]"+equipment.getDescription(), textWidth));
         finalise(p);
@@ -103,10 +101,10 @@ public class Explanel extends InfoPanel implements OnPop {
         int gap = 3;
         int textWidth = 61;
         int width = side.size.pixels*2 + gap*3 + textWidth;
-        Pixl p = new Pixl(this, gap, width);
+        Pixl p = new Pixl(this, gap);
         p.actor(new TextWriter("[light]"+side.getTitle()))
             .row(4)
-            .actor(new DieSidePanel(side, entity, 2)).gap(gap).actor(new TextWriter("[grey]"+side.toString(), textWidth));
+            .actor(new DieSidePanel(side, entity, 1)).gap(gap).actor(new TextWriter("[grey]"+side.toString(), textWidth));
         p.pix();
     }
 
@@ -114,28 +112,18 @@ public class Explanel extends InfoPanel implements OnPop {
     private void setup(final Spell spell, boolean usable){
         reset();
         this.spell = spell;
-        final int scale = 2;
-        Actor spellDraw = new Actor(){
-            @Override
-            public void draw(Batch batch, float parentAlpha) {
-                spell.draw(batch, getX(), getY(), scale);
-            }
-        };
-        spellDraw.setSize(spell.getImage().getRegionWidth()*scale, spell.getImage().getRegionHeight()*scale);
+        final int scale = 1;
         boolean enoughMagic = Party.get().getAvaliableMagic()>=spell.getCost();
 
-        Pixl p = new Pixl(this, 2, panelWidth+8).row(topAndBottom);
-        int picWidth = Images.spellBorder.getRegionWidth()*2;
+        Pixl p = new Pixl(this, 3).row(topAndBottom);
         int gap = 2;
-        p.gap(picWidth+gap*2);
+        p.image(spell.getImage());
         p.actor(new TextWriter("[blue]"+spell.getName()));
         p.gap(5);
         for(int i=0;i<spell.getCost();i++) {
             p.actor(new ImageActor(Images.magic));
         }
         p.row();
-        p.gap(picWidth+gap*2);
-        int textWidth = panelWidth - gap*3 - picWidth;
         p.actor(new TextWriter(spell.getDescription(), textWidth));
         if(usable && enoughMagic){
             switch (spell.getEffects()[0].targetingType) {
@@ -144,7 +132,7 @@ public class Explanel extends InfoPanel implements OnPop {
                 case RandomEnemy:
                 case Untargeted:
                     if(enoughMagic) {
-                        p.row().gap(picWidth+gap*2).actor(new TextWriter("[blue]Tap again to cast", textWidth));
+                        p.row().actor(new TextWriter("[blue]Tap again to cast", textWidth));
                     }
                     break;
             }
@@ -165,18 +153,6 @@ public class Explanel extends InfoPanel implements OnPop {
                 tw.setPosition((int)(getWidth()/2-tw.getWidth()/2), (int)(-tw.getHeight()-2));
             }
         }
-
-        int diff = (int) (picWidth+gap*2-getHeight());
-        if(diff>0){
-            for(Actor a:getChildren()){
-                a.setY(a.getY()+diff);
-            }
-        }
-        setHeight(Math.max(getHeight(), picWidth+gap*2));
-
-        ImageActor ia = new ImageActor(spell.getImage(), picWidth, picWidth);
-        addActor(ia);
-        ia.setPosition(gap, gap);
 
     }
 
