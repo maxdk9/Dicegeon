@@ -53,6 +53,8 @@ public class Equipment {
             .fluff("Power to the weak").trigger(new TriggerOneHealthBonusOutgoing(2)));
     add(new Equipment().name("Troll's Nose").image("nose")
             .fluff("Smells really bad").trigger(new TriggerEndOfTurnSelf(new Eff().heal(1))));
+    add(new Equipment().name("Dragon Pipe").image("pipe")
+            .fluff("Rumoured to have been owned by the legendary White Dragon").trigger(new TriggerEffTypeBonus(EffType.Healing, 2)));
 
 
     defaultLevel = 2;
