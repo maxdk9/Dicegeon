@@ -301,7 +301,7 @@ public class Side {
     public static final Side huge_flame4 = huge_flame.withValue(4);
 
     public static final Side huge_poisonBreath1 = new Side().title("SPLATTER").size(huge).image("poisonBreath").effect(new Eff().damage(1).enemyAndAdjacents(),
-            new Eff().buff(new Buff(2, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1).enemyAndAdjacents());
+            new Eff().buff(new Buff(6, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1).enemyAndAdjacents());
 
 //    public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
 //            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));
