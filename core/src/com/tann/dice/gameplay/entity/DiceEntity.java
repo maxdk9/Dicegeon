@@ -77,7 +77,7 @@ public abstract class DiceEntity {
       setMaxHp(type.hp + (LevelManager.get().easy?1:0));
     }
     else{
-      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?.8f:1)));
+      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?.75f:1)));
     }
 
     fullHeal();

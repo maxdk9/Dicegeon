@@ -234,7 +234,7 @@ public class Side {
             buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0).self()))).justValue(1));
     public static final Side snakePoison2 = snakePoison1.withValue(2);
 
-    public static final Side claw = new Side().title("Swish").image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
+    public static final Side claw = new Side().title("Rake").image("claw").effect(new Eff().damage(1).enemyAndAdjacents());
     public static final Side claw_2 = claw.withValue(2);
 
     public static final Side slimeUpDown1 = new Side().title("Flobble").image("upDownBlob").effect(new Eff().damage(1).topBotEnemy());

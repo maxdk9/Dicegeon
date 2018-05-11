@@ -418,7 +418,7 @@ public class Die implements Targetable{
                 float xDiff = temp.x-temp2.x;
                 float zDiff = temp.z-temp2.z;
                 float dieDist = (float) Math.sqrt(xDiff*xDiff+zDiff*zDiff);
-                if(dieDist < 1.25*(DIE_SIZE+d.DIE_SIZE)){
+                if(dieDist < 1.28*(DIE_SIZE+d.DIE_SIZE)){
                     good=false;
                     break;
                 }
