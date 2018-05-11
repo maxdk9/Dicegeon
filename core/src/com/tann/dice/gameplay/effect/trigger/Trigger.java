@@ -2,6 +2,7 @@ package com.tann.dice.gameplay.effect.trigger;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Eff.EffType;
 import com.tann.dice.gameplay.entity.DiceEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 public abstract class Trigger implements Cloneable{
 
   private static final TextureRegion unknown = loadImage("unknown");
+  public Buff buff;
 
   protected static TextureRegion loadImage(String name){
     return Main.atlas.findRegion("trigger/"+name);
@@ -66,6 +68,8 @@ public abstract class Trigger implements Cloneable{
   public boolean afterUse(Side side){ return false; };
 
   public abstract String describe();
+
+  public String describeForPanelText(){return describeForBuffText();};
 
   public void setEntity(DiceEntity entity){
     this.entity = entity;

@@ -50,7 +50,7 @@ public class MonsterType extends EntityType<MonsterType>{
     //big
 
     public static final MonsterType spikeGolem = new MonsterType().name("Spiker").hp(11).size(big)
-            .sides(big_punch5, big_punch5, big_punch5, big_punch3, big_punch3, big_healMostDamaged3)
+            .sides(big_stomp1, big_stomp1, big_punch4, big_punch4, big_punch4, big_healMostDamaged3)
             .trait(new TriggerDamageAttackers(1));
     public static final MonsterType bird = new MonsterType().name("Awk").hp(7).size(big).fleePip(2)
             .sides(big_claw2, big_claw2, big_peck3, big_peck3, big_peck5, big_peck5);
@@ -66,8 +66,8 @@ public class MonsterType extends EntityType<MonsterType>{
     public static final MonsterType dragon = new MonsterType().name("Lizard").hp(40).size(huge)
             .sides(huge_flame3, huge_flame3, huge_chomp8, huge_chomp8, huge_poisonBreath1, huge_poisonBreath1)
             .trait(new TriggerRetaliate(new int[]{10,20,30}, new Eff().damage(1).enemyGroup()));
-    public static final MonsterType slimoHuge = new MonsterType().name("Slime Queen").hp(20).size(huge)
-            .sides(huge_slimeTriple4, huge_slimeTriple4, huge_slimeTriple4, huge_slimeTriple4, huge_slimeUpDown5, huge_slimeUpDown4)
+    public static final MonsterType slimoHuge = new MonsterType().name("Slime Queen").hp(30).size(huge)
+            .sides(huge_slimeTriple4, huge_slimeTriple4, huge_slimeTriple4, huge_slimeTriple4, huge_slimeUpDown5, huge_slimeUpDown5)
             .trait(new TriggerOnDeathEffect(new Eff().summon("Slimelet", 9)));
 
     private MonsterType fleePip(int fleePip){

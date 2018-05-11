@@ -6,7 +6,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 
 public class Buff {
 
-    int turns;
+    public int turns;
     public DiceEntity target;
     public final TextureRegion image;
     public final Trigger trigger;

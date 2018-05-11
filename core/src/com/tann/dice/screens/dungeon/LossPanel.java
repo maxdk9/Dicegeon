@@ -17,7 +17,7 @@ public class LossPanel extends Group {
                 .row()
                 .actor(new ImageActor(Images.hugeSkull))
                 .row()
-                .text("You got to level " + (level+1) +"/"+ (LevelManager.get().levels.size()+1))
+                .text("You got to level " + (level+1) +"/"+ (LevelManager.get().levels.size()))
                 .row()
                 .actor(EscMenu.makeQuit(false))
                 .actor(EscMenu.makeRestart())

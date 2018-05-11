@@ -249,9 +249,13 @@ public class Side {
 
     // BIG
 
+    public static final Side big_stomp1 = new Side().title("Slam!").size(big).image("stomp").effect(new Eff().damage(1).enemyGroup());
+
     public static final Side big_punch1 = new Side().title("Pow!").size(big).image("punch").effect(new Eff().damage(1));
     public static final Side big_punch3 = big_punch1.withValue(3);
+    public static final Side big_punch4 = big_punch1.withValue(4);
     public static final Side big_punch5 = big_punch1.withValue(5);
+    public static final Side big_punch6 = big_punch1.withValue(6);
 
     public static final Side big_healMostDamaged1 = new Side().title("Heal").size(big).image("heal").effect(new Eff().heal(1).friendlyMostDamaged());
     public static final Side big_healMostDamaged3 = big_healMostDamaged1.withValue(3);
@@ -297,7 +301,7 @@ public class Side {
     public static final Side huge_flame4 = huge_flame.withValue(4);
 
     public static final Side huge_poisonBreath1 = new Side().title("SPLATTER").size(huge).image("poisonBreath").effect(new Eff().damage(1).enemyAndAdjacents(),
-            new Eff().buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1).enemyAndAdjacents());
+            new Eff().buff(new Buff(2, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1).enemyAndAdjacents());
 
 //    public static final Side huge_posionChomp = new Side().size(huge).image("poisonChomp").effect(new Eff().damage(1), new Eff().
 //            buff(new Buff(-1, new TriggerEndOfTurnSelf(new Eff().damage(0)))).justValue(1));

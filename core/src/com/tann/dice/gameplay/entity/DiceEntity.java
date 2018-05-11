@@ -18,6 +18,7 @@ import com.tann.dice.gameplay.entity.die.Side;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.entity.type.EntityType;
+import com.tann.dice.gameplay.entity.type.MonsterType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
@@ -77,7 +78,10 @@ public abstract class DiceEntity {
       setMaxHp(type.hp + (LevelManager.get().easy?1:0));
     }
     else{
-      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?.75f:1)));
+      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?.8f:1)));
+      if(type == MonsterType.dragon && LevelManager.get().easy){
+        setMaxHp(30);
+      }
     }
 
     fullHeal();
@@ -178,6 +182,7 @@ public abstract class DiceEntity {
       }
       for (Buff b : getBuffs()) {
         activeTriggers.add(b.trigger);
+        b.trigger.buff = b;
       }
       for (Trigger t : activeTriggers) {
         t.setEntity(this);

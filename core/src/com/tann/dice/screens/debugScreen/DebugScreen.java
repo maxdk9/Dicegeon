@@ -58,7 +58,7 @@ public class DebugScreen extends Screen implements ExplanelReposition{
             }
 
             Group heroGroup = new Group();
-            Pixl p = new Pixl(heroGroup, 0);
+            Pixl p = new Pixl(heroGroup, -1);
             for(Color c: heroMap.keySet()){
                 int index = 0;
                 Collections.sort(heroMap.get(c), new Comparator<Hero>() {
@@ -82,7 +82,7 @@ public class DebugScreen extends Screen implements ExplanelReposition{
         }
         {
             Group monsterGroup = new Group();
-            Pixl p = new Pixl(monsterGroup, 0);
+            Pixl p = new Pixl(monsterGroup, -1);
             for (int i = 0; i < MonsterType.ALL_MONSTERS.size(); i++) {
                 p.actor(MonsterType.ALL_MONSTERS.get(i).buildMonster().getDiePanel());
                 if ((i+1) % row == 0) p.row();
@@ -95,7 +95,7 @@ public class DebugScreen extends Screen implements ExplanelReposition{
 
         {
             Group equipmentGroup = new Group();
-            Pixl p = new Pixl(equipmentGroup, 0);
+            Pixl p = new Pixl(equipmentGroup, -1);
             for(int i=0;i<Equipment.all.size();i++){
                 Equipment e = Equipment.all.get(i);
                 EquipmentPanel ep = new EquipmentPanel(e, false, false);

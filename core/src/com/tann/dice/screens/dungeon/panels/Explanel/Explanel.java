@@ -3,6 +3,7 @@ package com.tann.dice.screens.dungeon.panels.Explanel;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tann.dice.Images;
+import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
@@ -85,7 +86,8 @@ public class Explanel extends InfoPanel implements OnPop {
         reset();
         this.trigger= trigger;
         int borderSize = 2;
-        TextWriter tw = new TextWriter("[white][image][light][h]: "+trigger.describeForBuffText(), (int) width-borderSize*2, entity.getColour(), borderSize, trigger.getImage());
+        String text = "[white][image][light][h]: "+trigger.describeForPanelText();
+        TextWriter tw = new TextWriter(text, (int) width-borderSize*2, entity.getColour(), borderSize, trigger.getImage());
         if(trigger.highlightForNewPlayers()) {
             Prefs.setBoolean(trigger.getClass().getSimpleName(), true);
         }
