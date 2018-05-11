@@ -16,6 +16,7 @@ import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
 import com.tann.dice.screens.dungeon.panels.EntityContainer;
@@ -424,7 +425,12 @@ public class EntityPanel extends Group {
                     }
                 }),
                 Actions.delay(.2f),
-                Actions.moveBy(distance, 0, .8f)
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        DungeonScreen.get().enemy.layout(true);
+                    }
+                })
         ));
     }
 }

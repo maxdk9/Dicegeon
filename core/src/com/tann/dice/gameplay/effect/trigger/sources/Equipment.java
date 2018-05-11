@@ -64,6 +64,8 @@ public class Equipment {
             .fluff("A visored metal helmet").trigger(new TriggerMaxHP(6)));
     add(new Equipment().name("Sapphire Ring").image("sapphireRing")
             .fluff("A [blue][sin]swirly[blue][sin] ring").trigger(new TriggerLeftmostBonus(3)));
+    add(new Equipment().name("MegaThorns").image("thorns")
+            .fluff("Careful, it's sharp").trigger(new TriggerDamageAttackers(3)));
 //    add(new Equipment().name("Loaded Die").image("dice")
 //            .fluff("It doesn't feel quite right...").trigger(new TriggerSideChange(EffType.Empty, Side.reroll)));
 
