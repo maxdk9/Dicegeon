@@ -111,8 +111,8 @@ public class LevelUpPanel extends Group implements ExplanelReposition, PopAction
     @Override
     public void repositionExplanel(Group g) {
         Vector2 local= Tann.getLocalCoordinates(this);
-        g.setPosition(local.x+basePanel.getX()+basePanel.getWidth()/2-g.getWidth()/2,
-                local.y+basePanel.getY()-g.getHeight()-2);
+        g.setPosition((int)(local.x+basePanel.getX()+basePanel.getWidth()/2-g.getWidth()/2),
+                (int)(local.y+basePanel.getY()-g.getHeight()-2));
     }
 
     @Override

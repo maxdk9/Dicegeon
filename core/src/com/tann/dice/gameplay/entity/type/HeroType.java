@@ -98,10 +98,10 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
                 .spells(Spell.deathSpike));
         add(new HeroType().name("Channeler").hp(7).tag(wizard1)
                 .sides(buff2, buff1, magic2, magic2, magic1, nothing)
-                .spells(Spell.arcaneMissile));
+                .spells(Spell.iceStorm));
         add(new HeroType().name("Trickster").hp(7).tag(wizard1)
                 .sides(copy, copy, magic2, magic2, magic1, nothing)
-                .spells(Spell.lightningStrike));
+                .spells(Spell.arcaneMissile));
 
 
         // novelty huge die
