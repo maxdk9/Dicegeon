@@ -414,6 +414,7 @@ public class Die implements Targetable{
             temp2.set((float)Math.sin(angle)*dist,-BulletStuff.height+.5f,(float)Math.cos(angle)*dist -BulletStuff.heightFactor/2+bounds.y+bounds.height/2);
             boolean good = true;
             for(Die d:BulletStuff.dice){
+                if(d==this) continue;
                 d.getPosition(temp);
                 float xDiff = temp.x-temp2.x;
                 float zDiff = temp.z-temp2.z;

@@ -46,7 +46,7 @@ public class LevelEndPanel extends Group{
         p.row(4);
         p.actor(new TextWriter("[orange]"+ congrat));
         p.row(5);
-        p.actor(new TextWriter("[grey]Level "+ LevelManager.get().getLevel()+"/"+LevelManager.get().levels.size()));
+        p.actor(new TextWriter("[grey]Level "+ (LevelManager.get().getLevel()+1)+"/"+LevelManager.get().levels.size()));
         p.row(4);
         if(!action) {
             for (Equipment e : gainedEquipment) {

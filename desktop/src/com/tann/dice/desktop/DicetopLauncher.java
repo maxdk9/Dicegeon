@@ -27,12 +27,13 @@ public class DicetopLauncher {
             System.err.println("Probably running as standalone desktop");
         }
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+//        System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 		config.foregroundFPS = 60;
         config.backgroundFPS = 20;
 		config.width=1280;
 		config.height=180*4;
 		config.samples=10;
-		config.title="Dicegeon";
+		config.title="Untitled Dice Game";
 		config.resizable = false;
         config.addIcon("misc/icon.png", Files.FileType.Internal);
         new LwjglApplication(new Main(), config);

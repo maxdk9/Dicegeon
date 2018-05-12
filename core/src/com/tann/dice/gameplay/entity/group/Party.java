@@ -14,6 +14,7 @@ import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.generalPanels.InventoryPanel;
 import com.tann.dice.util.Colours;
+import com.tann.dice.util.Sounds;
 import com.tann.dice.util.Tann;
 
 import java.util.ArrayList;
@@ -50,8 +51,8 @@ public class Party extends EntityGroup<Hero>{
             return;
         }
 
-        HeroType all = HeroType.byName("paladin");
-        HeroType all2 = HeroType.byName("bouncer");
+        HeroType all = HeroType.byName("trickster");
+        HeroType all2 = HeroType.byName("channeler");
         HeroType[] types = new HeroType[]{
                 acolyte, herbalist, defender, fighter, fighter.withColour(Colours.orange)
 //                all, all, all, all2, all2
@@ -167,10 +168,10 @@ public class Party extends EntityGroup<Hero>{
         return maxRolls;
     }
 
-    public Set<Spell> getSpells(){
-        Set<Spell> spells = new HashSet<>();
-        spells.add(Spell.slice);
+    public List<Spell> getSpells(){
+        List<Spell> spells = new ArrayList<>();
         spells.add(Spell.resist);
+        spells.add(Spell.slice);
 //        spells.add(Spell.dart);
         for(DiceEntity de:getEntities()){
             spells.addAll(((Hero)(de)).getSpells());
@@ -194,10 +195,20 @@ public class Party extends EntityGroup<Hero>{
     @Override
     public void roll(boolean firstRoll) {
         if(!PhaseManager.get().getPhase().canRoll()) return;
+        int numToRoll = 0;
         for(DiceEntity de:getActiveEntities()){
-            if(de.getDie().getState() == Die.DieState.Rolling || de.getDie().getState() == Die.DieState.Unlocking){
+            Die.DieState state = de.getDie().getState();
+            if(state == Die.DieState.Rolling || state == Die.DieState.Unlocking){
+                Sounds.playSound(Sounds.error);
                 return;
             }
+            if(state == Die.DieState.Stopped){
+                numToRoll++;
+            }
+        }
+        if(numToRoll == 0){
+            Sounds.playSound(Sounds.error);
+            return;
         }
         if(!firstRoll) rolls --;
         super.roll(firstRoll);

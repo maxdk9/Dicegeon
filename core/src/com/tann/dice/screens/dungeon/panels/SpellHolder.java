@@ -33,7 +33,7 @@ public class SpellHolder extends Group {
         });
     }
 
-    public void setup(Set<Spell> spells) {
+    public void setup(List<Spell> spells) {
         spellMap.clear();
         for(Spell spell:spells){
             List<Spell> costSpells = spellMap.get(spell.getCost());

@@ -240,6 +240,7 @@ public class TargetingManager {
                         switch (effType) {
                             case Healing: invalidReason = "Can't heal heroes on full health"; break;
                             case Shield: invalidReason = "Can only block incoming damage"; break;
+                            case CopyAbility: invalidReason = "You can' copy yourself!"; break;
                         }
                     }
                     break;
@@ -248,8 +249,10 @@ public class TargetingManager {
                     else if(entity.getAllTargeters().isEmpty())  invalidReason = "Target a hero who is being attacked";
                     break;
                 default:
-                    invalidReason = "Can't target that";
                     break;
+            }
+            if(invalidReason == null) {
+                invalidReason = "Can't target that";
             }
         }
         // TODO better
@@ -408,7 +411,9 @@ public class TargetingManager {
     }
 
     public boolean targetsDie() {
-        return getSelectedTargetable()!=null && getSelectedTargetable().getEffects()[0].type == Eff.EffType.CopyAbility;
+        if(getSelectedTargetable() == null) return false;
+        EffType type = getSelectedTargetable().getEffects()[0].type;
+        return type == EffType.CopyAbility || type == EffType.Buff;
     }
 
     private static final HashMap<Targetable, Boolean> usabilityMap = new HashMap<>();
