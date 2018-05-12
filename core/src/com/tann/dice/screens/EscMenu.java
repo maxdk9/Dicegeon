@@ -62,6 +62,17 @@ public class EscMenu extends Group implements OnPop{
     .actor(makeContinue()).pix();
   }
 
+  @Override
+  public void draw(Batch batch, float parentAlpha) {
+    Draw.fillActor(batch, this, Colours.dark, Colours.blue, 1);
+    super.draw(batch, parentAlpha);
+  }
+
+  @Override
+  public void onPop() {
+    Sounds.playSound(Sounds.pop);
+  }
+
   public static TextButton makeQuit(final boolean clearStreak) {
     TextButton butt = new TextButton(40, 11, "Quit");
     butt.setRunnable(new Runnable() {
@@ -81,17 +92,6 @@ public class EscMenu extends Group implements OnPop{
     return butt;
   }
 
-  @Override
-  public void draw(Batch batch, float parentAlpha) {
-    Draw.fillActor(batch, this, Colours.dark, Colours.blue, 1);
-    super.draw(batch, parentAlpha);
-  }
-
-  @Override
-  public void onPop() {
-    Sounds.playSound(Sounds.pop);
-  }
-
   public static TextButton makeContinue(){
     TextButton butt = new TextButton(40, 11, "Continue");
     butt.setRunnable(new Runnable() {
@@ -108,7 +108,10 @@ public class EscMenu extends Group implements OnPop{
     butt.setRunnable(new Runnable() {
       @Override
       public void run() {
+        PhaseManager.get().getPhase().cleanup();
         Main.getCurrentScreen().pop();
+        DungeonScreen.clearStatic();
+        Main.self.setScreen(DungeonScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .1f);
         LevelManager.get().restart();
         Prefs.setInt(Prefs.STREAK, 0);
       }
