@@ -283,6 +283,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     public void keyPress(int keycode) {
         switch(keycode){
             case Keys.ESCAPE:
+                popAllLight();
                 toggleMenu();
                 break;
             case Keys.W:

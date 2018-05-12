@@ -6,6 +6,7 @@ import com.tann.dice.gameplay.effect.trigger.Trigger;
 
 public class TriggerOneHealthBonusOutgoing extends Trigger {
 
+    public static final TextureRegion image = loadImage("sigil");
     int bonus;
 
     public TriggerOneHealthBonusOutgoing(int bonus) {
@@ -27,7 +28,7 @@ public class TriggerOneHealthBonusOutgoing extends Trigger {
 
     @Override
     public TextureRegion getImage() {
-        return TriggerAllSidesBonus.image;
+        return image;
     }
 
     @Override
@@ -35,3 +36,4 @@ public class TriggerOneHealthBonusOutgoing extends Trigger {
         return "If you are on exactly 1 hp, +"+bonus+" to all effects.";
     }
 }
+

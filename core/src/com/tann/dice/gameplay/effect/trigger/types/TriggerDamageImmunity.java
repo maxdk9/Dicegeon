@@ -7,7 +7,7 @@ import com.tann.dice.gameplay.effect.trigger.Trigger;
 public class TriggerDamageImmunity extends Trigger{
 
     private static final TextureRegion stealth = loadImage("stealth");
-
+    private static final TextureRegion poisonImage = loadImage("poisonImmunity");
     boolean poison, regular;
 
     public TriggerDamageImmunity(boolean poison, boolean regular) {
@@ -27,12 +27,12 @@ public class TriggerDamageImmunity extends Trigger{
 
     @Override
     public TextureRegion getImage() {
-        return stealth;
+        return regular?stealth:poisonImage;
     }
 
     @Override
     public boolean showInPanel() {
-        return regular;
+        return true;
     }
 
     @Override
