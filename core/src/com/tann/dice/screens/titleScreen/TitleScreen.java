@@ -24,14 +24,6 @@ public class TitleScreen extends Screen{
     TextButton easy, hard;
     private void init() {
        layout();
-
-//        TextWriter explainEasy = new TextWriter("[green]Good for learning the game[n]-20% enemy hp[n]+20% hero hp");
-//        explainEasy.setPosition(easy.getX()+easy.getWidth()+2, (int)(easy.getY()+easy.getHeight()/2-explainEasy.getHeight()/2));
-//        addActor(explainEasy);
-//
-//        TextWriter explainHard = new TextWriter("[red]The real challenge");
-//        explainHard.setPosition(hard.getX()+hard.getWidth()+2, (int)(hard.getY()+hard.getHeight()/2-explainHard.getHeight()/2));
-//        addActor(explainHard);
     }
 
     private void start(boolean easy) {
@@ -45,11 +37,13 @@ public class TitleScreen extends Screen{
     public void layout() {
         clearChildren();
         easy = new TextButton("Easy Mode", 10);
+        easy.setColor(Colours.green);
         hard = new TextButton("Hard Mode", 10);
+        hard.setColor(Colours.red);
         addActor(easy);
         addActor(hard);
         hard.setWidth(easy.getWidth());
-        int y = 25;
+        int y = 35;
         int gap = 60;
         easy.setPosition((int)(getWidth()/2-easy.getWidth()/2-gap), y);
         hard.setPosition((int)(getWidth()/2-hard.getWidth()/2+gap), y);
@@ -90,14 +84,21 @@ public class TitleScreen extends Screen{
         int currentStreak = Prefs.getInt(Prefs.STREAK, 0);
         int bestStreak = Prefs.getInt(Prefs.MAX_STREAK, 0);
         if(bestStreak>0) {
-            String streakString = "Current Streak: " + getColString(currentStreak) + currentStreak + "[light]";
+            String streakString = "[red]Current Streak: " + getColString(currentStreak) + currentStreak + getColString(currentStreak);
             streakString += "[n]";
             streakString += "Best Streak: " + getColString(bestStreak) + bestStreak ;
-            System.out.println(getColString(bestStreak));
             TextWriter tw = new TextWriter(streakString);
             addActor(tw);
-            tw.setPosition((int) (hard.getX() + hard.getWidth() / 2 - tw.getWidth() / 2), hard.getY() - tw.getHeight() - 2);
+            tw.setPosition((int) (hard.getX() ), hard.getY() - tw.getHeight() - 2);
         }
+
+        TextWriter explainEasy = new TextWriter("Good for learning[n][purple]-25% enemy hp[n][green]+25% hero hp");
+        explainEasy.setPosition(easy.getX()+easy.getWidth()/2-explainEasy.getWidth()/2, (int)(easy.getY()-explainEasy.getHeight()-2));
+        addActor(explainEasy);
+
+//        TextWriter explainHard = new TextWriter("[red]The real challenge");
+//        explainHard.setPosition(hard.getX()+hard.getWidth()+2, (int)(hard.getY()+hard.getHeight()/2-explainHard.getHeight()/2));
+//        addActor(explainHard);
     }
 
     @Override
@@ -111,7 +112,7 @@ public class TitleScreen extends Screen{
             batch.setColor(Colours.z_white);
             batch.draw(Images.wreath, x, y);
 
-            batch.setColor(Colours.red);
+            batch.setColor(Colours.green);
             TannFont.font.drawString(batch, easyWins + "", x + Images.wreath.getRegionWidth() / 2 - 1, y + Images.wreath.getRegionHeight() / 2, Align.center);
         }
         int hardWins = Prefs.getInt(Prefs.HARD, 0);
@@ -128,10 +129,12 @@ public class TitleScreen extends Screen{
 
     private String getColString(int num){
         switch(num){
-            case 0: return "[grey]";
+            case 0: return "[purple]";
             case 1: return "[purple]";
             case 2: return "[orange]";
-            case 3: default: return "[yellow]";
+            case 3: return "[yellow]";
+            case 4: return "[blue]";
+            case 5: default: return "[light]";
         }
     }
 

@@ -74,15 +74,7 @@ public abstract class DiceEntity {
       portrait = Tann.getRandom(portraits);
       portraitOffset = Integer.valueOf(portrait.name.split("-")[1]);
     }
-    if(isPlayer()){
-      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?1.25f:1)));
-    }
-    else{
-      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?.8f:1)));
-      if(type == MonsterType.dragon && LevelManager.get().easy){
-        setMaxHp(30);
-      }
-    }
+    setMaxHp(type.hp);
 
     fullHeal();
     setSides(entityType.sides);
@@ -110,7 +102,15 @@ public abstract class DiceEntity {
 
   // gameplay junk
   public void setMaxHp(int maxHp) {
-    this.baseMaxHp = maxHp;
+    if(isPlayer()){
+      this.baseMaxHp = Math.round(maxHp * (LevelManager.get().easy?1.25f:1));
+    }
+    else{
+      this.baseMaxHp = (Math.round(maxHp * (LevelManager.get().easy?.8f:1)));
+      if(this.entityType == MonsterType.dragon && LevelManager.get().easy){
+        setMaxHp(30); // shitty haaack
+      }
+    }
   }
 
   public void fullHeal() {

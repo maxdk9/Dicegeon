@@ -17,6 +17,7 @@ public class TextButton extends Group{
         setTransform(false);
         setText(text);
         setSize(width, height);
+        setColor(Colours.light);
     }
 
     public TextButton(String text, int gap) {
@@ -59,7 +60,7 @@ public class TextButton extends Group{
         super.draw(batch, parentAlpha);
         int BORDER = 1;
         Draw.fillActor(batch, this, background, Colours.purple, BORDER);
-        batch.setColor(Colours.light);
+        batch.setColor(getColor());
         font.drawString(batch, text, (int)(getX()+getWidth()/2f-font.getWidth(text)/2f), (int) (getY()+getHeight()/2-font.getHeight()/2));
     }
 

@@ -20,6 +20,7 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
+import com.tann.dice.gameplay.phase.VictoryPhase;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
@@ -52,7 +53,7 @@ public class Main extends ApplicationAdapter {
   public static Main self;
   private static boolean showFPS = true;
   private static boolean printCalls = false;
-  public static boolean debug = false;
+  public static boolean debug = true;
   Screen currentScreen;
   Screen previousScreen;
   public static float ticks;
@@ -273,7 +274,7 @@ public class Main extends ApplicationAdapter {
 
   @Override
   public void dispose() {
-    if(getCurrentScreen() instanceof DungeonScreen){
+    if(getCurrentScreen() instanceof DungeonScreen && !(PhaseManager.get().getPhase() instanceof VictoryPhase)){
       Prefs.setInt(Prefs.STREAK, 0);
     }
     super.dispose();
