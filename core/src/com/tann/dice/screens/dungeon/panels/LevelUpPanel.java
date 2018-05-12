@@ -28,7 +28,11 @@ public class LevelUpPanel extends Group implements ExplanelReposition, PopAction
         basePanel = new DiePanel(hero);
         addActor(basePanel);
 
-        setSize(basePanel.getWidth() * 2 + hGap * 3 + tickSize, basePanel.getHeight() * 2 + vGap * 3 + topHeight);
+        List<HeroType> options = Tann.pickNRandomElements(hero.getHeroType().getLevelupOptions(), 2);
+
+        int panelHeights = (int) (options.get(0).buildHero().getDiePanel().getHeight() + options.get(1).buildHero().getDiePanel().getHeight());
+
+        setSize(basePanel.getWidth() * 2 + hGap * 3 + tickSize,  panelHeights+ vGap * 3 + topHeight);
         int bottomHeight = (int) (getHeight() - topHeight);
 
         TextWriter tw = new TextWriter("Level up! Choose a new class:");
@@ -36,10 +40,11 @@ public class LevelUpPanel extends Group implements ExplanelReposition, PopAction
         tw.setPosition((int) (getWidth() / 2 - tw.getWidth() / 2), (int) (bottomHeight + topHeight / 2 - tw.getHeight() / 2));
 
 
-        List<HeroType> options = Tann.pickNRandomElements(hero.getHeroType().getLevelupOptions(), 2);
         basePanel.setPosition(hGap, (int) (bottomHeight / 2 - basePanel.getHeight() / 2));
         optionsPanels = new DiePanel[options.size()];
 
+
+        int y = vGap;
         for (int i = 0; i < options.size(); i++) {
             final HeroType et = options.get(i);
             Hero choice = et.buildHero();
@@ -48,7 +53,8 @@ public class LevelUpPanel extends Group implements ExplanelReposition, PopAction
             choice.setColour(hero.getColour());
             DiePanel dp = choice.getDiePanel();
             addActor(dp);
-            dp.setPosition(dp.getWidth() + hGap * 2, i * (vGap + dp.getHeight()) + vGap);
+            dp.setPosition(dp.getWidth() + hGap * 2, y);
+            y += vGap + dp.getHeight();
             Button tick = new Button(tickSize, tickSize, 1, Images.tick, Colours.dark, new Runnable() {
                 @Override
                 public void run() {

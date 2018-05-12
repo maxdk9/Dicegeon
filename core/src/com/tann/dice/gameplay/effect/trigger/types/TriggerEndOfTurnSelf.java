@@ -68,9 +68,14 @@ public class TriggerEndOfTurnSelf extends Trigger {
     public String describeForPanelText() {
         switch (eff.type){
             case Damage:
-                String text = eff.getValue() + " poison damage ([green][heart][green]) each turn";
+                String text = eff.getValue() + " poison damage ([green][heart][green])";
                 if(buff != null && buff.turns != -1){
-                    text += " for "+buff.turns+" turn"+(buff.turns==1?"":"s");
+                    if(buff.turns == 1){
+                        text += " this turn";
+                    }
+                    else {
+                        text += " each turn for " + buff.turns + " turns";
+                    }
                 }
                 return text;
             case Healing:

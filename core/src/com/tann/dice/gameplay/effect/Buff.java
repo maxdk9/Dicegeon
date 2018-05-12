@@ -31,7 +31,11 @@ public class Buff {
 
     public String toNiceString(){
         if(turns == -1) return trigger.describe();
-        return trigger.describe()+" for "+turns+" turn"+(turns==1?"":"s");
+        String result = trigger.describe();
+        if(turns == 1){
+            return result + " this turn";
+        }
+        return result + " for "+turns+" turns";
     }
 
     public void setValue(int value) {
