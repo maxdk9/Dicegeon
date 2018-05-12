@@ -20,6 +20,7 @@ import com.tann.dice.bullet.DieShader;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
+import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.screens.dungeon.PhaseManager;
 import com.tann.dice.screens.dungeon.TargetingManager;
@@ -73,22 +74,6 @@ public class Main extends ApplicationAdapter {
   }
 
   //Callbacks
-
-  private void clearAllStatics() {
-    BulletStuff.clearAllStatics();
-    DieShader.clearAllStatics();
-    Die.clearAllStatics();
-    Party.resetParty();
-    Room.resetRoom();
-    LevelManager.resetLevelManager();
-    PhaseManager.resetAllStatics();
-    TargetingManager.resetAllStatics();
-    Explanel.resetAllStatics();
-    InventoryPanel.resetAllStatics();
-    PartyManagementPanel.resetAllStatics();
-    Actor3d.resetAllStatics();
-    Sounds.disposeAll();
-  }
 
   @Override
   public void create() {
@@ -169,6 +154,8 @@ public class Main extends ApplicationAdapter {
       currentScreen.showExceptionPopup(ex);
       Prefs.setString("lastException", "");
     }
+
+    Gdx.input.setCatchBackKey(true);
   }
 
   @Override
@@ -286,6 +273,9 @@ public class Main extends ApplicationAdapter {
 
   @Override
   public void dispose() {
+    if(getCurrentScreen() instanceof DungeonScreen){
+      Prefs.setInt(Prefs.STREAK, 0);
+    }
     super.dispose();
     BulletStuff.dispose();
     clearAllStatics();
@@ -420,6 +410,22 @@ public class Main extends ApplicationAdapter {
   }
   private static void resetTime(){
     previousTime = System.currentTimeMillis();
+  }
+
+  private void clearAllStatics() {
+    BulletStuff.clearAllStatics();
+    DieShader.clearAllStatics();
+    Die.clearAllStatics();
+    Party.resetParty();
+    Room.resetRoom();
+    LevelManager.resetLevelManager();
+    PhaseManager.resetAllStatics();
+    TargetingManager.resetAllStatics();
+    Explanel.resetAllStatics();
+    InventoryPanel.resetAllStatics();
+    PartyManagementPanel.resetAllStatics();
+    Actor3d.resetAllStatics();
+    Sounds.disposeAll();
   }
 
 }

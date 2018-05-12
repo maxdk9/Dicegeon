@@ -24,7 +24,6 @@ public class TipOfTheDay extends Group {
         if(jokes.isEmpty()){
             jokes.addAll(Arrays.asList(
                     "Take off your socks before you go to bed",
-                    "What do you call a rich goblin?[n][nh][sin]A gobling!",
                     "The dragon has a poison attack",
                     "It's probably fine",
                     "If you find a bug, send an email to tann@tann.space for a prize"

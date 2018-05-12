@@ -30,9 +30,9 @@ public class Equipment {
     add(new Equipment().name("Hidden Dagger").image("concealedDagger")
             .fluff("A slim dagger, tucked away").trigger(new TriggerSideChange(EffType.Empty, Side.sword2)));
     add(new Equipment().name("Casta Root").image("herb")
-            .fluff("A natural cure-all").trigger(new TriggerEffTypeBonus(EffType.Healing, 1)));
+            .fluff("Highly-prized by herbalists").trigger(new TriggerEffTypeBonus(EffType.Healing, 1)));
     add(new Equipment().name("Antivenom").image("antivenom")
-            .fluff("Weird trick discovered by a mum, snakes hate her!").trigger(new TriggerDamageImmunity(true, false)));
+            .fluff("Dungeon magazine recommends this for fighting dragons").trigger(new TriggerDamageImmunity(true, false)));
     add(new Equipment().name("Blood Vial").image("bloodVial")
             .fluff("It [wiggle]sizzles[wiggle] gently").trigger(new TriggerOnKill(new Eff().heal(1).self())));
     add(new Equipment().name("Bone Idol").image("bone")
@@ -48,7 +48,7 @@ public class Equipment {
     add(new Equipment().name("Crystal Heart").image("crystalHeart")
             .fluff("You feel warmth inside").trigger(new TriggerEffTypeBonus(EffType.Magic, 1)));
     add(new Equipment().name("Thorns").image("thorns")
-            .fluff("Careful, it's sharp").trigger(new TriggerDamageAttackers(1)));
+            .fluff("Careful, they're sharp").trigger(new TriggerDamageAttackers(1)));
     add(new Equipment().name("Relic").image("relic")
             .fluff("Power to the weak").trigger(new TriggerOneHealthBonusOutgoing(2)));
     add(new Equipment().name("Troll's Nose").image("nose")

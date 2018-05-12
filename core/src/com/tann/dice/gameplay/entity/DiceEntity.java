@@ -75,7 +75,7 @@ public abstract class DiceEntity {
       portraitOffset = Integer.valueOf(portrait.name.split("-")[1]);
     }
     if(isPlayer()){
-      setMaxHp(type.hp + (LevelManager.get().easy?1:0));
+      setMaxHp(Math.round(type.hp * (LevelManager.get().easy?1.25f:1)));
     }
     else{
       setMaxHp(Math.round(type.hp * (LevelManager.get().easy?.8f:1)));
