@@ -142,9 +142,6 @@ public class Main extends ApplicationAdapter {
       currentScreen.showExceptionPopup(ex);
       Prefs.setString("lastException", "");
     }
-
-    Prefs.setInt("launches", Prefs.getInt("launches", 0)+1);
-
   }
 
   @Override

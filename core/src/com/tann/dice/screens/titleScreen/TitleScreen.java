@@ -23,6 +23,27 @@ public class TitleScreen extends Screen{
 
     TextButton easy, hard;
     private void init() {
+       layout();
+
+//        TextWriter explainEasy = new TextWriter("[green]Good for learning the game[n]-20% enemy hp[n]+20% hero hp");
+//        explainEasy.setPosition(easy.getX()+easy.getWidth()+2, (int)(easy.getY()+easy.getHeight()/2-explainEasy.getHeight()/2));
+//        addActor(explainEasy);
+//
+//        TextWriter explainHard = new TextWriter("[red]The real challenge");
+//        explainHard.setPosition(hard.getX()+hard.getWidth()+2, (int)(hard.getY()+hard.getHeight()/2-explainHard.getHeight()/2));
+//        addActor(explainHard);
+    }
+
+    private void start(boolean easy) {
+        LevelManager.get().easy = easy;
+        DungeonScreen.clearStatic();
+        Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Chrono.i, Chrono.d);
+        LevelManager.get().startGame();
+    }
+
+    @Override
+    public void layout() {
+        clearChildren();
         easy = new TextButton("Easy Mode", 10);
         hard = new TextButton("Hard Mode", 10);
         addActor(easy);
@@ -61,56 +82,56 @@ public class TitleScreen extends Screen{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Prefs.RESETSAVEDATA();
+                layout();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
 
-//        TextWriter explainEasy = new TextWriter("[green]Good for learning the game[n]-20% enemy hp[n]+20% hero hp");
-//        explainEasy.setPosition(easy.getX()+easy.getWidth()+2, (int)(easy.getY()+easy.getHeight()/2-explainEasy.getHeight()/2));
-//        addActor(explainEasy);
-//
-//        TextWriter explainHard = new TextWriter("[red]The real challenge");
-//        explainHard.setPosition(hard.getX()+hard.getWidth()+2, (int)(hard.getY()+hard.getHeight()/2-explainHard.getHeight()/2));
-//        addActor(explainHard);
-    }
-
-    private void start(boolean easy) {
-        LevelManager.get().easy = easy;
-        DungeonScreen.clearStatic();
-        Main.self.setScreen(DungeonScreen.get(), Main.TransitionType.LEFT, Chrono.i, Chrono.d);
-        LevelManager.get().startGame();
-    }
-
-    @Override
-    public void layout() {
-
+        int currentStreak = Prefs.getInt(Prefs.STREAK, 0);
+        int bestStreak = Prefs.getInt(Prefs.MAX_STREAK, 0);
+        if(bestStreak>0) {
+            String streakString = "Current Streak: " + getColString(currentStreak) + currentStreak + "[light]";
+            streakString += "[n]";
+            streakString += "Best Streak: " + getColString(bestStreak) + bestStreak ;
+            System.out.println(getColString(bestStreak));
+            TextWriter tw = new TextWriter(streakString);
+            addActor(tw);
+            tw.setPosition((int) (hard.getX() + hard.getWidth() / 2 - tw.getWidth() / 2), hard.getY() - tw.getHeight() - 2);
+        }
     }
 
     @Override
     public void preDraw(Batch batch) {
         batch.setColor(Colours.dark);
         Draw.fillActor(batch, this);
-        batch.setColor(Colours.grey);
-        TannFont.font.drawString(batch, Prefs.getInt("launches", 999)+"", 0, 0);
-        batch.setColor(Colours.z_white);
-        if(Prefs.getBoolean(Prefs.EASY, false)){
-            batch.draw(Images.wreath, getX()+easy.getX()+easy.getWidth()/2-Images.wreath.getRegionWidth()/2, (int)(easy.getY()+easy.getHeight()+4));
+        int easyWins = Prefs.getInt(Prefs.EASY, 0);
+        if(easyWins>0){
+            int x = (int) (getX()+easy.getX()+easy.getWidth()/2-Images.wreath.getRegionWidth()/2);
+            int y = (int) (easy.getY()+easy.getHeight()+4);
+            batch.setColor(Colours.z_white);
+            batch.draw(Images.wreath, x, y);
+
+            batch.setColor(Colours.red);
+            TannFont.font.drawString(batch, easyWins + "", x + Images.wreath.getRegionWidth() / 2 - 1, y + Images.wreath.getRegionHeight() / 2, Align.center);
         }
-        if(Prefs.getBoolean(Prefs.HARD, false)){
+        int hardWins = Prefs.getInt(Prefs.HARD, 0);
+        if(hardWins>0){
             int x = (int) (getX()+hard.getX()+hard.getWidth()/2-Images.wreath.getRegionWidth()/2);
             int y = (int) (hard.getY()+hard.getHeight()+4);
+            batch.setColor(Colours.z_white);
             batch.draw(Images.wreath, x, y);
-            int streak = Prefs.getInt(Prefs.STREAK, 0);
-            if(streak>0) {
-                switch(streak){
-                    case 1: batch.setColor(Colours.purple); break;
-                    case 2: batch.setColor(Colours.orange); break;
-                    case 3: batch.setColor(Colours.yellow); break;
-                    case 4: default: batch.setColor(Colours.light);
-                }
 
-                TannFont.font.drawString(batch, streak + "", x + Images.wreath.getRegionWidth() / 2 - 1, y + Images.wreath.getRegionHeight() / 2, Align.center);
-            }
+            batch.setColor(Colours.red);
+            TannFont.font.drawString(batch, hardWins + "", x + Images.wreath.getRegionWidth() / 2 - 1, y + Images.wreath.getRegionHeight() / 2, Align.center);
+        }
+    }
+
+    private String getColString(int num){
+        switch(num){
+            case 0: return "[grey]";
+            case 1: return "[purple]";
+            case 2: return "[orange]";
+            case 3: default: return "[yellow]";
         }
     }
 
@@ -132,5 +153,11 @@ public class TitleScreen extends Screen{
     @Override
     public void keyPress(int keycode) {
 
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        super.setActive(active);
+        layout();
     }
 }

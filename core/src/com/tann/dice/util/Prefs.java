@@ -7,7 +7,7 @@ import com.badlogic.gdx.Preferences;
 public class Prefs {
 
     public static final String LEARNT_EXPLANEL = "LEARNT_EXPLANEL";
-    public static final String EASY = "easy", HARD = "hard", STREAK = "streak";
+    public static final String EASY = "easy", HARD = "hard", STREAK = "streak", MAX_STREAK ="max streak";
 
 
     private static Preferences prefs;
@@ -58,5 +58,9 @@ public class Prefs {
     public static void RESETSAVEDATA() {
         get().clear();
         get().flush();
+    }
+
+    public static void add(String key, int i) {
+        setInt(key, getInt(key, 0)+i);
     }
 }

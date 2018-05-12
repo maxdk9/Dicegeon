@@ -8,10 +8,16 @@ import com.tann.dice.util.Prefs;
 public class VictoryPhase extends Phase{
     @Override
     public void activate() {
-        Prefs.setBoolean(Prefs.EASY, true);
-        if(!LevelManager.get().easy) {
-            Prefs.setBoolean(Prefs.HARD, true);
-            Prefs.setInt(Prefs.STREAK, Prefs.getInt(Prefs.STREAK, 0)+1);
+        if(LevelManager.get().easy) {
+            Prefs.add(Prefs.EASY, 1);
+        }
+        else{
+            Prefs.add(Prefs.HARD, 1);
+            Prefs.add(Prefs.STREAK, 1);
+            int streak = Prefs.getInt(Prefs.STREAK, 0);
+            if(streak > Prefs.getInt(Prefs.MAX_STREAK, 0)){
+                Prefs.setInt(Prefs.MAX_STREAK, streak);
+            }
         }
         DungeonScreen.get().push(new VictoryPanel(), true, true, false, false, 0, null);
     }
