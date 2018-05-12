@@ -34,15 +34,16 @@ public class EscMenu extends Group implements OnPop{
       }
     });
     Pixl p = new Pixl(this, 2);
-    int sliderWidth = 40, sliderHeight = 11;
+    int sliderWidth = 70, sliderHeight = 13;
     Slider.music.setSize(sliderWidth, sliderHeight);
     Slider.SFX.setSize(sliderWidth, sliderHeight);
 
-    p.actor(new TextWriter("Dicegeons"))
-        .row().actor(new TextWriter("[blue]Good Art by Gnapp"))
-        .row().actor(new TextWriter("[yellow]The rest by tann"))
-        .row().actor(Slider.SFX);
-    p.row();
+    p.row(4).text("Untitled Dice Game")
+            .row(6).text("[blue]Good Art by Gnapp")
+            .row().text("[yellow]Everything else by tann")
+            .row(6).actor(new TextWriter("[grey]Special thanks to FireBlt, MrRisotto, Jo and Sunilingus", 100))
+        .row(8).actor(Slider.SFX)
+        .row(12);
     if(Main.debug){
       TextButton stats = new TextButton(40, 11, "Stats");
       if(stats!=null){
