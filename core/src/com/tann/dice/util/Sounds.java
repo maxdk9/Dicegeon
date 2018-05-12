@@ -178,7 +178,7 @@ public class Sounds {
             s=get(string, Sound.class);
 			soundMap.put(string, s);
 		}
-		s.play(Slider.SFX.getValue()*2*volume, pitch, 0);
+		s.play(Slider.SFX.getValue()*volume, pitch, 0);
 	}
 
 	static HashMap<String[], Long> timeLastPlayedMap = new HashMap<>();
