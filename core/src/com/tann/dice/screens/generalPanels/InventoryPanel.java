@@ -15,7 +15,7 @@ import java.util.List;
 public class InventoryPanel extends Group implements OnPop{
     private static final int across = 4, down = 2;
     private static final int scale = 1;
-    private static final int PANEL_SIZE = Images.spellBorder.getRegionWidth()*scale, gap=1;
+    private static final int PANEL_SIZE = 14*scale, gap=1;
 
     private static InventoryPanel self;
     public static InventoryPanel get(){
@@ -23,6 +23,10 @@ public class InventoryPanel extends Group implements OnPop{
             self = new InventoryPanel();
         }
         return self;
+    }
+
+    public static void resetAllStatics(){
+        self = null;
     }
 
     private InventoryPanel() {

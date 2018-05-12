@@ -35,6 +35,10 @@ public class Explanel extends InfoPanel implements OnPop {
         return self;
     }
 
+    public static void resetAllStatics(){
+        self = null;
+    }
+
     public Explanel(){
     }
 

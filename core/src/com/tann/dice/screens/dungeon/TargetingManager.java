@@ -36,6 +36,10 @@ public class TargetingManager {
         return self;
     }
 
+    public static void resetAllStatics() {
+        self = null;
+    }
+
     private Targetable selectedTargetable;
 
     public Targetable getSelectedTargetable() {

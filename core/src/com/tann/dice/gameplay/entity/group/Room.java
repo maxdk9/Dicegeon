@@ -23,6 +23,10 @@ public class Room extends EntityGroup<Monster> {
         return self;
     }
 
+    public static void resetRoom() {
+        self = null;
+    }
+
     public boolean activateDelayedRolls() {
         boolean found = false;
 
@@ -59,4 +63,5 @@ public class Room extends EntityGroup<Monster> {
     public void reset() {
         super.reset();
     }
+
 }

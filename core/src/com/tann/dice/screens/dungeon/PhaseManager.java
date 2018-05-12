@@ -15,6 +15,10 @@ public class PhaseManager {
         return self;
     }
 
+    public static void resetAllStatics() {
+        self = null;
+    }
+
     public static Runnable popPhaseRunnable = new Runnable() {
         @Override
         public void run() {
@@ -74,4 +78,5 @@ public class PhaseManager {
         Phase p = getPhase();
         if(p!=null) p.checkIfDone();
     }
+
 }

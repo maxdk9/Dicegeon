@@ -26,6 +26,10 @@ public class DieShader implements Shader{
 	int[] v_faces = new int[26];
     int v_size;
 
+    public static void clearAllStatics(){
+		program = null;
+	}
+
     public enum DieShaderState{
         Nothing(0), Selected(1);
         int num;

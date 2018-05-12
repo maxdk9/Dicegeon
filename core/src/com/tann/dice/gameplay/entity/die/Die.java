@@ -47,8 +47,15 @@ public class Die implements Targetable{
     private float dist = 0;
     public boolean used = true;
 
+
+
     public boolean getUsed(){
         return used;
+    }
+
+
+    public static void clearAllStatics() {
+        MATERIAL = null;
     }
 
     public void slideToPanel(){

@@ -28,6 +28,10 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     return self;
   }
 
+  public static void resetAllStatics() {
+    self = null;
+  }
+
   private PartyManagementPanel() {
     setTransform(false);
     addListener(new InputListener(){
@@ -134,4 +138,5 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
     Tann.slideAway(this, TannPosition.Bot);
     PhaseManager.get().getPhase().refreshPhase();
   }
+
 }

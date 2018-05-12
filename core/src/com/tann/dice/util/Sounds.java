@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 public class Sounds {
 
 
-	public static AssetManager am= new AssetManager();
+	public static AssetManager am;
 
     public static String[] clacks;
     public static String[] clocks;
@@ -38,8 +38,16 @@ public class Sounds {
 
 	public static String[] levelup;
 
+	public static void disposeAll(){
+		for(Sound s:soundMap.values()){
+			s.dispose();
+		}
+		soundMap = new HashMap<>();
+	}
 
 	public static void setup(){
+		am= new AssetManager();
+
 		//sfx//
         clacks = makeSounds("dice/clack", 4);
         clocks = makeSounds("dice/clock", 4);
@@ -104,8 +112,8 @@ public class Sounds {
         return strings;
     }
 	
-	private static ArrayList<Fader> faders = new ArrayList<Sounds.Fader>();
-	
+	private static ArrayList<Fader> faders = new ArrayList<>();
+
 	public static void fade(Music m, float targetVolume, float duration){
 		faders.add(new Fader(m, targetVolume, duration));
 	}

@@ -36,6 +36,9 @@ public class Party extends EntityGroup<Hero>{
 
     private static Party self;
 
+    public static void resetParty(){
+        self = null;
+    }
 
     public static Party get() {
         if (self == null) {

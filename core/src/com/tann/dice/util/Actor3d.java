@@ -8,6 +8,9 @@ import java.util.List;
 public abstract class Actor3d extends Actor {
 
     public static List<Actor3d> actor3dList = new ArrayList<>();
+    public static void resetAllStatics() {
+        actor3dList = new ArrayList<>();
+    }
 
     public abstract void draw3D();
 
@@ -21,4 +24,5 @@ public abstract class Actor3d extends Actor {
         actor3dList.remove(this);
         return super.remove();
     }
+
 }

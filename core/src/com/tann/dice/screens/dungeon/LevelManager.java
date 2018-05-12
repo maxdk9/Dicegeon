@@ -19,7 +19,7 @@ import static com.tann.dice.gameplay.entity.type.MonsterType.*;
 
 public class LevelManager {
 
-    private static final int START_LEVEL = 9;
+    private static final int START_LEVEL = 0;
     private int level = START_LEVEL;
     public boolean easy = false;
     private static LevelManager self;
@@ -30,6 +30,10 @@ public class LevelManager {
             self.init();
         }
         return self;
+    }
+
+    public static void resetLevelManager(){
+        self = null;
     }
 
     private void init() {

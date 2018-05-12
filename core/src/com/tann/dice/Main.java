@@ -16,6 +16,16 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
+import com.tann.dice.bullet.DieShader;
+import com.tann.dice.gameplay.entity.die.Die;
+import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.gameplay.entity.group.Room;
+import com.tann.dice.screens.dungeon.LevelManager;
+import com.tann.dice.screens.dungeon.PhaseManager;
+import com.tann.dice.screens.dungeon.TargetingManager;
+import com.tann.dice.screens.dungeon.panels.Explanel.Explanel;
+import com.tann.dice.screens.generalPanels.InventoryPanel;
+import com.tann.dice.screens.generalPanels.PartyManagementPanel;
 import com.tann.dice.screens.titleScreen.TitleScreen;
 import com.tann.dice.util.*;
 import com.tann.dice.util.Screen;
@@ -41,7 +51,7 @@ public class Main extends ApplicationAdapter {
   public static Main self;
   private static boolean showFPS = true;
   private static boolean printCalls = false;
-  public static boolean debug = true;
+  public static boolean debug = false;
   Screen currentScreen;
   Screen previousScreen;
   public static float ticks;
@@ -64,8 +74,25 @@ public class Main extends ApplicationAdapter {
 
   //Callbacks
 
+  private void clearAllStatics() {
+    BulletStuff.clearAllStatics();
+    DieShader.clearAllStatics();
+    Die.clearAllStatics();
+    Party.resetParty();
+    Room.resetRoom();
+    LevelManager.resetLevelManager();
+    PhaseManager.resetAllStatics();
+    TargetingManager.resetAllStatics();
+    Explanel.resetAllStatics();
+    InventoryPanel.resetAllStatics();
+    PartyManagementPanel.resetAllStatics();
+    Actor3d.resetAllStatics();
+    Sounds.disposeAll();
+  }
+
   @Override
   public void create() {
+
     if (printCalls) {
       System.out.println("create");
     }
@@ -260,6 +287,8 @@ public class Main extends ApplicationAdapter {
   @Override
   public void dispose() {
     super.dispose();
+    BulletStuff.dispose();
+    clearAllStatics();
     if (printCalls) {
       System.out.println("dispose");
     }
