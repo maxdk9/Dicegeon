@@ -44,6 +44,8 @@ public class PartyManagementPanel extends Group implements OnPop, ExplanelReposi
   }
 
   public void refresh(){
+    clearChildren();
+
     int gap = 2;
     DiePanel example = Party.get().getEntities().get(0).getDiePanel();
 
