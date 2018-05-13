@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.utils.Array;
 import com.tann.dice.Main;
+import org.lwjgl.Sys;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -26,12 +27,12 @@ public class DicetopLauncher {
         catch (Exception e){
             System.err.println("Probably running as standalone desktop");
         }
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //        System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.foregroundFPS = 60;
         config.backgroundFPS = 20;
 		config.width=1280;
-		config.height=180*4;
+		config.height=720;
 		config.samples=10;
 		config.title="Untitled Dice Game";
 		config.resizable = false;
