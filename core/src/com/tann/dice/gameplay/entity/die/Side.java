@@ -155,7 +155,7 @@ public class Side {
     public static final Side magic1 = new Side().title("Gather Magic").image("magic").effect(new Eff().magic(1).untargeted());
     public static final Side magic2 = magic1.withValue(2);
 
-    public static final Side magic1NextTurn = new Side().title("Channel Magic").image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
+    public static final Side magic1NextTurn = new Side().title("Store Magic").image("magicNextTurn").effect(new Eff().magic(1).nextTurn().untargeted());
     public static final Side magic2NextTurn = magic1NextTurn.withValue(2);
     public static final Side magic3NextTurn = magic1NextTurn.withValue(3);
     public static final Side magic4NextTurn = magic1NextTurn.withValue(4);
