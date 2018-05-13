@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
+import com.tann.dice.gameplay.entity.type.HeroType;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.LevelManager;
 import com.tann.dice.util.*;
@@ -36,6 +37,18 @@ public class TitleScreen extends Screen{
     @Override
     public void layout() {
         clearChildren();
+
+        if(Main.debug || LevelManager.START_LEVEL!=0 || HeroType.acolyte.buildHero().equipment.size()>0){
+            for(int y=0;y<Main.height;y+=10){
+                TextWriter tw = new TextWriter("[purple]Debug Mode");
+                tw.setPosition((int)(getX()+getWidth()-tw.getWidth()), y);
+                addActor(tw);
+                tw = new TextWriter("[purple]Debug Mode");
+                tw.setPosition((int)(getX()), y);
+                addActor(tw);
+            }
+        }
+
         easy = new TextButton("Easy Mode", 10);
         easy.setColor(Colours.green);
         hard = new TextButton("Hard Mode", 10);
@@ -95,6 +108,7 @@ public class TitleScreen extends Screen{
         TextWriter explainEasy = new TextWriter("Good for learning[n][purple]-25% enemy hp[n][green]+25% hero hp");
         explainEasy.setPosition(easy.getX()+easy.getWidth()/2-explainEasy.getWidth()/2, (int)(easy.getY()-explainEasy.getHeight()-2));
         addActor(explainEasy);
+
 
 //        TextWriter explainHard = new TextWriter("[red]The real challenge");
 //        explainHard.setPosition(hard.getX()+hard.getWidth()+2, (int)(hard.getY()+hard.getHeight()/2-explainHard.getHeight()/2));
