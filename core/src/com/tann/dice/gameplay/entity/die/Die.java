@@ -32,7 +32,7 @@ public class Die implements Targetable{
 
     public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
 
-    private static final float MAX_AIRTIME = 2.7f;
+    private static final float MAX_AIRTIME = 3.7f;
     public static final float INTERP_SPEED = .35f;
     public static final float INTERP_SPEED_SLOW = .7f;
 

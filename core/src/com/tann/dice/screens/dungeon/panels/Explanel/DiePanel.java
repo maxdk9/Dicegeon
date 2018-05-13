@@ -54,8 +54,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
     public static final int TEXT_GAP = 3;
     public void layout(){
         clearChildren();
-        Group g = new Group();
-        Pixl p = new Pixl(g, gap);
+        Pixl p = new Pixl(this, gap);
         p.actor(new TextWriter(entity.name+"  "+entity.getHp()+"/"+entity.getMaxHp()+"[h][red][heart][h][light]"));
         p.row(gap+2);
         if(entity.getSize()== DiceEntity.EntitySize.smol || entity.getSize() == DiceEntity.EntitySize.reg) {
@@ -63,32 +62,29 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
         }
         p.actor(new NetPanel(entity));
         p.pix();
-        setSize(g.getWidth(), g.getHeight());
-        addActor(g);
 
         int y = 0;
-        ArrayList<Actor> actors = new ArrayList<>();
-        for (Trigger t : entity.getDescribableTriggers()) {
-            Explanel e= new Explanel();
-            e.setup(t, getWidth(), entity);
-            addActor(e);
-            g.setY(g.getY()+e.getHeight());
-            setHeight(getHeight()+e.getHeight());
-        }
-        if(entity.fleePip>0){
-            int borderSize = 2;
-            int width = (int) getWidth()-borderSize*2;
-            TextWriter tw = new TextWriter("[grey][heartArrow][light][h]: Withdraws after taking enough damage to cover this symbol",
-                    width, entity.getColour(), 2);
-            tw.setWidth(getWidth());
-            actors.add(tw);
+        if(!(PhaseManager.get().getPhase() instanceof LevelEndPhase) || !entity.isPlayer()) {
+            ArrayList<Actor> actors = new ArrayList<>();
+            for (Trigger t : entity.getDescribableTriggers()) {
+                Explanel e= new Explanel();
+                e.setup(t, getWidth(), entity);
+                actors.add(e);
+            }
+            if(entity.fleePip>0){
+                int borderSize = 2;
+                int width = (int) getWidth()-borderSize*2;
+                TextWriter tw = new TextWriter("[grey][heartArrow][light][h]: Withdraws after taking enough damage to cover this symbol",
+                        width, entity.getColour(), 2);
+                tw.setWidth(getWidth());
+                actors.add(tw);
+            }
             for(Actor a:actors){
                 addActor(a);
                 y -= (a.getHeight() - 1);
                 a.setPosition(0, y);
             }
         }
-
     }
 
 

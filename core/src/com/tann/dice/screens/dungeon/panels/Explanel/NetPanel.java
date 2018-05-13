@@ -42,13 +42,13 @@ public class NetPanel extends Group {
         place(setup(de.getSides()[3]), 2, 1);
         place(setup(de.getSides()[5]), 3, 1);
 
-//        if(de.isPlayer()) {
-//            for (int i = 0; i < de.traits.length; i++) {
-//                Trait t = de.traits[i];
-//                TraitPanel tp = new TraitPanel(de, t, false);
-//                place(tp, 2 + i, 0);
-//            }
-//        }
+        if(de.isPlayer()) {
+            for (int i = 0; i < de.traits.length; i++) {
+                Trait t = de.traits[i];
+                TraitPanel tp = new TraitPanel(de, t, false);
+                place(tp, 2 + i, 0);
+            }
+        }
 
         if(de instanceof Hero){
             Hero h  = (Hero) de;
