@@ -15,9 +15,9 @@ public class TannStage extends Stage {
         try {
             return super.touchDown(screenX, screenY, pointer, button);
         }
-        catch (RuntimeException e){
-            Main.logException(e);
-            return false;
+        catch (Throwable t){
+            Main.logException(t);
+            throw t;
         }
     }
 }

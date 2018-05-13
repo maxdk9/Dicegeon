@@ -205,8 +205,9 @@ public class Main extends ApplicationAdapter {
       // draw top dice
       BulletStuff.renderTopBits();
       logTime("bl2");
-    } catch (RuntimeException e){
-      logException(e);
+    } catch (Throwable t){
+      logException(t);
+      throw t;
     }
     logRenderTime(System.currentTimeMillis() - renderStart);
   }
@@ -226,13 +227,12 @@ public class Main extends ApplicationAdapter {
     averageRenderTime = total/samples.size();
   }
 
-  public static void logException(RuntimeException e){
-      String message = versionName + "\n" + e.getClass()+": "+e.getMessage() + "\n";
-      for(StackTraceElement ste:e.getStackTrace()){
+  public static void logException(Throwable t) {
+      String message = versionName + "\n" + t.getClass()+": "+t.getMessage() + "\n";
+      for(StackTraceElement ste:t.getStackTrace()){
           message += ste.toString()+"\n";
       }
       Prefs.setString("lastException", message);
-      throw e;
   }
 
 
@@ -263,9 +263,6 @@ public class Main extends ApplicationAdapter {
   public void resize(int width, int height) {
     stage.getViewport().update(width, height);
     BulletStuff.resize();
-    if (currentScreen != null) {
-      currentScreen.layChain();
-    }
     BulletStuff.updateCamera();
     if (printCalls) {
       System.out.println("resize");
