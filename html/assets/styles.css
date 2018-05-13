@@ -1,0 +1,32 @@
+body{
+	margin: 0px;
+	background-color: #120f17;
+	color: #f1e5b5;
+	text-align: left;
+	font-family: 'Hind';font-size: 22px;
+}
+p{
+
+}
+h1{
+     margin: 0;
+  }
+
+a {
+    color: #217b91;
+}
+
+.mainDiv{
+	margin-left:25%;
+	width:50%;
+}
+
+.downloadButton{
+	width: 200px;
+}
+
+.twitter{
+	float:left;
+	position:fixed;
+}
+

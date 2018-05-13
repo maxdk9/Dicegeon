@@ -1,6 +1,7 @@
 ## my added stuff
 builds/
-
+*.apk
+*dice.jar
 
 ## Java
 
