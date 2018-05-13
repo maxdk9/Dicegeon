@@ -291,6 +291,8 @@ public class Eff {
         switch(targetingType){
             case enemyHalfHealthOrLess:
                 return "Can only target enemies on half health or less";
+            case DoesNothing:
+                return "This ability does nothing";
         }
         return "Invalid no target string";
     }
@@ -306,6 +308,7 @@ public class Eff {
             case EnemyAndAdjacents:
             case EnemyAndAdjacentsRanged:
             case AllTargeters:
+            case DoesNothing:
                 return true;
             case EnemyGroup:
             case EnemyOnlyAdjacents:
@@ -315,7 +318,6 @@ public class Eff {
             case Self:
             case OnRoll:
             case Untargeted:
-            case DoesNothing:
             case TopEnemy:
             case BottomEnemy:
             case TopBottomEnemy:
