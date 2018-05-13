@@ -108,7 +108,7 @@ public abstract class DiceEntity {
     else{
       this.baseMaxHp = (Math.round(maxHp * (LevelManager.get().easy?.8f:1)));
       if(this.entityType == MonsterType.dragon && LevelManager.get().easy){
-        setMaxHp(30); // shitty haaack
+        this.baseMaxHp=30; // shitty haaack
       }
     }
   }
