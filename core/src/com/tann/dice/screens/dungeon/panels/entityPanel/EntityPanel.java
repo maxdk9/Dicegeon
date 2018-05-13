@@ -219,10 +219,6 @@ public class EntityPanel extends Group {
 
         batch.setColor(Colours.dark);
         drawCutout(batch);
-        if(entity.getProfile().isGoingToDie(true)){
-            batch.setColor(Colours.withAlpha(Colours.red, (float) (.2f+Math.sin(Main.ticks*5f)*.25f)));
-            drawCutout(batch);
-        }
         if(entity.isDead()){
             Draw.fillActor(batch, this);
         }
@@ -239,6 +235,12 @@ public class EntityPanel extends Group {
             panelBorderRight.draw(batch, getX()+borderX, getY()-npWiggle, getWidth()-borderX+npWiggle, getHeight()+npWiggle*2);
             panelBorderLeft.draw(batch, getX()-npWiggle, getY()-npWiggle, borderX+npWiggle*2, getHeight()+npWiggle*2);
         }
+
+        if(entity.getProfile().isGoingToDie(true)){
+            batch.setColor(Colours.withAlpha(Colours.red, (float) (.3f+Math.sin(Main.ticks*5f)*.25f)));
+            drawCutout(batch);
+        }
+
         if(possibleTarget){
             batch.setColor(Colours.light);
             if (TargetingManager.get().targetsDie()) {
