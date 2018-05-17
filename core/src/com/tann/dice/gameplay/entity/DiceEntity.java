@@ -245,7 +245,7 @@ public abstract class DiceEntity {
         List<Eff> incomingEffs = getProfile().effs;
         for (int i = incomingEffs.size() - 1; i >= 0; i--) {
           Eff potential = incomingEffs.get(i);
-          if (!potential.source.isPlayer()) {
+          if (potential.source != null && !potential.source.isPlayer()) {
             incomingEffs.remove(potential);
             e.source.hit(potential, false);
           }
