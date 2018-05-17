@@ -20,7 +20,7 @@ public class TriggerSideChange extends Trigger{
         Eff[] effs = side.getEffects();
         for(int i=0;i<effs.length;i++){
             if(effs[i].type==replace){
-                side.changeTo(replacement);
+                side.changeTo(replacement.copy());
                 break;
             }
         }
