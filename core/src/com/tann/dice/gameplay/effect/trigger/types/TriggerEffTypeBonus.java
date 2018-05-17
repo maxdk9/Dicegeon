@@ -22,12 +22,7 @@ public class TriggerEffTypeBonus extends Trigger {
                 found = true;
             }
             if(e.type == EffType.Buff){
-                Trigger t = e.getBuff().trigger;
-                if(t instanceof TriggerEndOfTurnSelf){
-                    if(((TriggerEndOfTurnSelf) t).eff.type == type){
-                        found = true;
-                    }
-                }
+                return; // don't affect buffs hack for now
             }
         }
         if(found) {
