@@ -87,6 +87,13 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
         }
     }
 
+    public void onDisplay(){
+        for (Trigger t : entity.getDescribableTriggers()) {
+            if(t.highlightForNewPlayers()) {
+                Prefs.setBoolean(t.getClass().getSimpleName(), true);
+            }
+        }
+    }
 
     private static Matrix4 tmp = new Matrix4();
     @Override

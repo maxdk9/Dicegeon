@@ -390,6 +390,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
             }
         }
         entity.getEntityPanel().setArrowIntenity(1, 0);
+        pan.onDisplay();
     }
 
     @Override
