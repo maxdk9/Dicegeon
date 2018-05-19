@@ -130,6 +130,7 @@ public class Die implements Targetable{
             case Locked:
                 break;
             case Rolling:
+                outOfBoundsCheck();
                 if(isStopped()){
                     setState(Stopped);
                 }
@@ -140,6 +141,17 @@ public class Die implements Targetable{
                     }
                 }
                 break;
+        }
+    }
+
+    private void outOfBoundsCheck() {
+        getPosition(temp);
+        if(temp.y < -100) {
+            Rectangle bounds = BulletStuff.playerArea;
+            physical.transform.setToTranslation(0, -10, -BulletStuff.heightFactor / 2 + bounds.y + bounds.height / 2);
+            physical.body.setWorldTransform(physical.transform);
+            physical.body.setLinearVelocity(new Vector3(0, 0, 0));
+            randomise(0, 0, 0, 0, 10, 0, 0, 0);
         }
     }
 
