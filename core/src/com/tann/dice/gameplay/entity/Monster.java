@@ -82,7 +82,7 @@ public class Monster extends DiceEntity {
 
     @Override
     protected void die() {
-        TextWisp tw = new TextWisp("Enemy attack cancelled", 1.0f);
+        TextWisp tw = new TextWisp("Enemy attack cancelled", 1.6f);
         tw.setPosition(Main.width/2-tw.getWidth()/2-4, Main.height-tw.getHeight()-1);
         DungeonScreen.get().addActor(tw);
         super.die();
