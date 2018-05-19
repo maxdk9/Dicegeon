@@ -528,7 +528,7 @@ public class TargetingManager {
                         }
                         break;
                     case RedirectIncoming:
-                        good = de.getProfile().getIncomingDamage() > 0;
+                        good = de.getProfile().getIncomingDamage()-de.getProfile().getBlockedDamage() > 0 && de != source;
                         break;
                     case Healing:
                         good = de.getProfile().getTopHealth() < de.getMaxHp();
