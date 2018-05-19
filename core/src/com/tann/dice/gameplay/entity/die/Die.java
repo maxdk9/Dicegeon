@@ -26,6 +26,8 @@ import com.tann.dice.util.Colours;
 import com.tann.dice.util.Maths;
 import com.tann.dice.util.Sounds;
 
+import java.util.Arrays;
+
 import static com.tann.dice.gameplay.entity.die.Die.DieState.*;
 
 public class Die implements Targetable{
@@ -170,7 +172,7 @@ public class Die implements Targetable{
     }
 
 
-    public void roll() {
+    public void roll(boolean firstRoll) {
         if (getState()!=DieState.Stopped) return;
         flatDraw = false;
         this.lockedSide=-1;
@@ -178,13 +180,28 @@ public class Die implements Targetable{
         undamp();
         timeInAir=0;
         resetSpeeed();
-        randomise(15, 3, 0, 0, 1.3f, 0, 1, 2);
+
+
+        float up=0, upRand=0, side=0, sideRand=0, rot=0, rotRand=0, center=0, centerRand=0;
+
+        up = 16;
+        sideRand = .8f;
+        rot = 12;
+        rotRand = 6;
+        center = 1.2f;
+        centerRand = .4f;
+
+        if(firstRoll){
+            center = -.04f;
+        }
+
+        randomise(up, upRand, side, sideRand, rot, rotRand, center, centerRand);
     }
 
     public void jiggle(){
         BulletStuff.addRollEffects(1, false, true);
-        timeInAir=0;
-        randomise(4, 0, 3.5f, 0, 1, 0, 0, 0);
+        timeInAir = 0;
+        randomise(.4f, 0, .6f, 0, .06f, 0, 0, 0);
     }
 
     public int getSide(){
@@ -266,26 +283,39 @@ public class Die implements Targetable{
         return num/255f+0.002f;
     }
 
+
+    private static float[] rotFactors = new float[3];
+    private static float[] rotActuals = new float[3];
     private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand, float centeringMult, float centeringRand){
         float x = (side + Maths.factor(sideRand))*Maths.mult();
         float y = (up + Maths.factor(upRand));
         float z = (side + Maths.factor(sideRand))*Maths.mult();
-        float r1 = (rot + Maths.factor(rotRand))*Maths.mult();
-        float r2 = (rot + Maths.factor(rotRand))*Maths.mult();
-        float r3 = (rot + Maths.factor(rotRand))*Maths.mult();
-        float mult = getForceMultiplier();
-        float rotMult = 1+(float) (Math.pow(entity.getSize().pixels/12f, 5)/80f);
+        float totalRot = (float) (rot + Math.random()*rotRand);
+        float totalRotFactor= 0;
+        for(int i=0;i<rotFactors.length;i++){
+            rotFactors[i] = (float) Math.random() + .3f;
+            if(i==1){
+                rotFactors[i] *=.01f;
+                // spinning rotation is no fun
+            }
+            totalRotFactor += rotFactors[i];
+        }
+        for(int i=0;i<rotFactors.length;i++){
+            rotFactors[i] /= totalRotFactor;
+        }
+        for(int i=0;i<rotFactors.length;i++){
+            rotActuals[i] = rotFactors[i]*totalRot*(Math.random()>.5?1:-1);
+        }
         float totalCentering =Maths.factor(centeringRand) + centeringMult;
-        Vector3 pos = new Vector3();
-        getPosition(pos);
-        x += -pos.x*totalCentering;
-        z += -pos.z*totalCentering;
-        applyForces(x*mult, y*mult, z*mult, r1*mult*rotMult, r2*mult*rotMult, r3*mult*rotMult);
+        getPosition(temp);
+        x += -temp.x*totalCentering;
+        z += -temp.z*totalCentering;
+        applyForces(x, y, z, rotActuals[0], rotActuals[1], rotActuals[2]);
     }
 
     private void applyForces(float x, float y, float z, float r1, float r2, float r3){
-        physical.body.applyCentralImpulse(new Vector3(x, y, z));
-        physical.body.applyTorqueImpulse(new Vector3(r1, r2, r3));
+        physical.body.setLinearVelocity(new Vector3(x, y, z));
+        physical.body.setAngularVelocity(new Vector3(r1, r2, r3));
     }
 
     public void getPosition(Vector3 out){
@@ -426,7 +456,7 @@ public class Die implements Targetable{
                 float xDiff = temp.x-temp2.x;
                 float zDiff = temp.z-temp2.z;
                 float dieDist = (float) Math.sqrt(xDiff*xDiff+zDiff*zDiff);
-                if(dieDist < 1.28*(DIE_SIZE+d.DIE_SIZE)){
+                if(dieDist < 1.3*(DIE_SIZE+d.DIE_SIZE)){
                     good=false;
                     break;
                 }

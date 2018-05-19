@@ -101,7 +101,7 @@ public class BulletStuff {
         broadphase = new btDbvtBroadphase();
         constraintSolver = new btSequentialImpulseConstraintSolver();
         dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-        dynamicsWorld.setGravity(new Vector3(0, -42f, 0));
+        dynamicsWorld.setGravity(new Vector3(0, -40f, 0));
 //		contactListener = new MyContactListener();
         modelBatch = new ModelBatch();
 
@@ -364,9 +364,11 @@ public class BulletStuff {
             Sounds.playSound(Sounds.clacks, 1, (float) (.8f + Math.random() * .2f));
             Sounds.playSoundDelayed(Sounds.clocks, 1, (float) (.8f + Math.random() * .2f), .4f);
         }
+
         int maximumDelay = 5;
-        float clackStart = firstRoll ? 0 : .13f;
+        float clackStart = firstRoll ? .1f : .18f;
         float clackRand = .1f;
+
         for (int i = 1; i < numDice; i++) {
             Sounds.playSoundDelayed(Sounds.clacks, 1, (float) (.8f + Math.random() * .2f), (float) (clackStart + Math.min(maximumDelay, i) * clackRand * Math.random()));
         }

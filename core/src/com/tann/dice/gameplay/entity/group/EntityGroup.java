@@ -74,7 +74,7 @@ public class EntityGroup <T extends DiceEntity>{
         BulletStuff.addRollEffects(amount, firstRoll, false);
 
         for(T entity:getActiveEntities()){
-            entity.getDie().roll();
+            entity.getDie().roll(firstRoll);
         }
     }
 
