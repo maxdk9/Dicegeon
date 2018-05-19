@@ -21,7 +21,7 @@ public class TriggerEffTypeBonus extends Trigger {
             if(e.type == type){
                 found = true;
             }
-            if(e.type == EffType.Buff){
+            if(e.type == EffType.Buff && !(e.getBuff().trigger instanceof TriggerAllSidesBonus)){
                 return; // don't affect buffs hack for now
             }
         }
