@@ -112,9 +112,9 @@ public class Eff {
             case Healing:
                 result = getBaseString();
                 switch(targetingType){
-                    case FriendlySingleOther: result += " to another damaged character"; break;
-                    case FriendlySingle: result += " to any damaged character"; break;
-                    case FriendlyGroup: result += " to ALL damaged characters"; break;
+                    case FriendlySingleOther: result += " to another damaged hero"; break;
+                    case FriendlySingle: result += " to any damaged hero"; break;
+                    case FriendlyGroup: result += " to ALL damaged heroes"; break;
                     case FriendlyMostDamaged: result += " to the most-damaged friendly character"; break;
                     case Self: result += " to yourself"; break;
                     default: result += " Need description: " +targetingType;
