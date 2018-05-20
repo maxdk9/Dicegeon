@@ -55,7 +55,6 @@ public class BulletStuff {
     static btBroadphaseInterface broadphase;
     static btCollisionConfiguration collisionConfig;
     static btDispatcher dispatcher;
-    static MyContactListener contactListener;
     public static btDynamicsWorld dynamicsWorld;
     static btConstraintSolver constraintSolver;
     static Shader shader;
@@ -84,7 +83,6 @@ public class BulletStuff {
         broadphase = null;
         collisionConfig = null;
         dispatcher = null;
-        contactListener = null;
         dynamicsWorld = null;
         constraintSolver = null;
         shader = null;
@@ -102,7 +100,6 @@ public class BulletStuff {
         constraintSolver = new btSequentialImpulseConstraintSolver();
         dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
         dynamicsWorld.setGravity(new Vector3(0, -40f, 0));
-//		contactListener = new MyContactListener();
         modelBatch = new ModelBatch();
 
         ModelBuilder mb = new ModelBuilder();
