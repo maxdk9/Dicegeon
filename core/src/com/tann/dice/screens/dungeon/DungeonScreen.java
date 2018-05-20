@@ -396,6 +396,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
     @Override
     public void act(float delta) {
         super.act(delta);
+        if(Main.debug) System.gc();
         PhaseManager.get().checkPhaseIsDone();
     }
 

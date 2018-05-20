@@ -12,8 +12,10 @@ import com.badlogic.gdx.utils.Disposable;
 public class CollisionObject extends ModelInstance implements Disposable{
 	public final btRigidBody body;
 	private Vector3 localInertia = new Vector3();
+	private btCollisionShape disposeMe;
 	public CollisionObject(Model model, String node, btCollisionShape shape, float mass) {
 		super(model, node);
+		this.disposeMe = shape;
 		if (mass > 0f){
 			shape.calculateLocalInertia(mass, localInertia );
 		}
@@ -32,6 +34,7 @@ public class CollisionObject extends ModelInstance implements Disposable{
 	@Override
 	public void dispose() {
 		body.dispose();
+		disposeMe.dispose();
 	}
 	public Vector3 center = new Vector3();
 	public final Vector3 dimensions = new Vector3();

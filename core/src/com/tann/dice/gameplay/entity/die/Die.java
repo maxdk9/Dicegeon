@@ -43,7 +43,7 @@ public class Die implements Targetable{
 
     // gameplay stuff
 
-	  public DiceEntity entity;
+    public DiceEntity entity;
     private DieState state = DieState.Stopped;
     private int lockedSide=-1;
     private float dist = 0;
@@ -95,6 +95,7 @@ public class Die implements Targetable{
     private float timeInAir;
     private Runnable moveRunnable;
     public boolean flatDraw = true;
+    private btBoxShape disposeMe;
     public void update(float delta){
         switch(state){
             case Stopped:
@@ -587,9 +588,8 @@ public class Die implements Targetable{
             }
         }
         Model model = mb.end();
-
-        CollisionObject co = new CollisionObject(model, "dieIndex", new btBoxShape(new Vector3(DIE_SIZE, DIE_SIZE, DIE_SIZE)),
-                getMass());
+        disposeMe = new btBoxShape(new Vector3(DIE_SIZE, DIE_SIZE, DIE_SIZE));
+        CollisionObject co = new CollisionObject(model, "dieIndex", disposeMe, getMass());
         physical = co;
         randomiseStart();
         co.body.setCollisionFlags(
@@ -615,9 +615,13 @@ public class Die implements Targetable{
        return getMass();
     }
 
-    public void dispose() {
-        // I don't think this method works
+    public void dispose(){
+        System.out.println("disposing of die "+entity.getName());
+        BulletStuff.dice.remove(this);
+        BulletStuff.instances.remove(physical);
         removeFromScreen();
+        disposeMe.dispose();
+        physical.dispose();
     }
 
     @Override

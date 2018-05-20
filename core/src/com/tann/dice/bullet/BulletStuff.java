@@ -10,20 +10,17 @@ import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.Bullet;
-import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.physics.bullet.dynamics.btConstraintSolver;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
-import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.tann.dice.Main;
@@ -43,7 +40,6 @@ public class BulletStuff {
     public final static short GROUND_FLAG = 1 << 8;
     public final static short OBJECT_FLAG = 1 << 9;
     public final static short ALL_FLAG = -1;
-    public static ShaderProgram shaderProgram;
     public static PerspectiveCamera cam;
     static CameraInputController camController;
     public static PerspectiveCamera spinCam;
@@ -52,53 +48,58 @@ public class BulletStuff {
     public static List<CollisionObject> walls = new ArrayList<>();
     public static List<Die> dice = new ArrayList<>();
     static Model model;
-    static btBroadphaseInterface broadphase;
-    static btCollisionConfiguration collisionConfig;
-    static btDispatcher dispatcher;
     public static btDynamicsWorld dynamicsWorld;
     static btConstraintSolver constraintSolver;
     static Shader shader;
     private static Vector3 dieClickPosition = new Vector3();
     static float camX = 0, camY = 0, camZ = 0;
-    static DebugDrawer debugDrawer;
     public static float height = 18;
     public static float heightFactor;
     static float fov = 35;
-    static boolean debugDraw = false;
     public static float srcWidth;
-
     public static Rectangle playerArea;
-
     public static float sides = .30f;
     public static boolean stopRender;
+    private static List<Die> diceToDispose = new ArrayList<>();
+
+    // random references to stop autodispose
+    private static btDefaultCollisionConfiguration defaultCollisionConfiguration;
+    private static btCollisionDispatcher collisionDispatcher;
+    private static btDbvtBroadphase dbvtBroadphase;
 
     public static void clearAllStatics() {
-        shaderProgram = null;
         cam = null;
         camController = null;
         modelBatch = null;
         instances = new ObjectSet<>();
         walls = new ArrayList<>();
         dice = new ArrayList<>();
-        broadphase = null;
-        collisionConfig = null;
-        dispatcher = null;
         dynamicsWorld = null;
         constraintSolver = null;
         shader = null;
-        debugDrawer = null;
         playerArea = null;
+    }
+
+    public static void disposeDieLater(Die d){
+        diceToDispose.add(d);
+    }
+
+    public static void disposeOldDice(){
+        for(Die d:diceToDispose){
+            d.dispose();
+        }
+        diceToDispose.clear();
     }
 
     public static void init() {
 
         Bullet.init();
         spinCam = new PerspectiveCamera(fov, Main.width, Main.height);
-        collisionConfig = new btDefaultCollisionConfiguration();
-        dispatcher = new btCollisionDispatcher(collisionConfig);
-        broadphase = new btDbvtBroadphase();
         constraintSolver = new btSequentialImpulseConstraintSolver();
-        dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+        defaultCollisionConfiguration = new btDefaultCollisionConfiguration();
+        collisionDispatcher = new btCollisionDispatcher(defaultCollisionConfiguration);
+        dbvtBroadphase = new btDbvtBroadphase();
+        dynamicsWorld = new btDiscreteDynamicsWorld(collisionDispatcher, dbvtBroadphase, constraintSolver, defaultCollisionConfiguration);
         dynamicsWorld.setGravity(new Vector3(0, -40f, 0));
         modelBatch = new ModelBatch();
 
@@ -130,11 +131,6 @@ public class BulletStuff {
 
         shader = new DieShader();
         shader.init();
-        if (debugDraw) {
-            debugDrawer = new DebugDrawer();
-            dynamicsWorld.setDebugDrawer(debugDrawer);
-            debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_DrawAabb);
-        }
         updateCamera();
     }
 
@@ -146,9 +142,6 @@ public class BulletStuff {
         cam.lookAt(0, -1, 0);
         cam.update();
         camController = new CameraInputController(cam);
-        if (debugDraw && false) {
-            Gdx.input.setInputProcessor(camController);
-        }
     }
 
     private static List<CollisionObject> makeWalls(ModelBuilder mb, float x, float y, float z, float width, float length, float height, float thickness) {
@@ -217,11 +210,6 @@ public class BulletStuff {
         modelBatch.begin(cam);
         modelBatch.render(instances, shader);
         modelBatch.end();
-        if (debugDraw) {
-            debugDrawer.begin(cam);
-            dynamicsWorld.debugDrawWorld();
-            debugDrawer.end();
-        }
     }
 
     public static void drawSpinnyDie3(Die die, float x, float y, float size) {
@@ -317,10 +305,11 @@ public class BulletStuff {
 
     public static void reset() {
         for (Die d : dice) {
-            d.dispose();
+            d.removeFromScreen();
         }
         dice.clear();
         instances.clear();
+        disposeOldDice();
     }
 
     public static void clearDice() {
@@ -384,6 +373,22 @@ public class BulletStuff {
     }
 
     public static void dispose() {
+        System.out.println("starting full bullet dispose");
+        disposeOldDice();
+        modelBatch.dispose();
+        model.dispose();
+        constraintSolver.dispose();
+        shader.dispose();
+        for(Die d:new ArrayList<Die>(dice)){
+            d.dispose();
+        }
+        for(ModelInstance mi:instances){
+            mi.model.dispose();
+        }
+        for(CollisionObject co:walls){
+            co.dispose();
+        }
         dynamicsWorld.dispose();
+        System.out.println("finished full bullet dispose");
     }
 }
