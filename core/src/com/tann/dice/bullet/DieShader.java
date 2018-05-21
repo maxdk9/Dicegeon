@@ -40,11 +40,9 @@ public class DieShader implements Shader{
 
 	@Override
 	public void init() {
-        if(program==null) {
-            String vert = Gdx.files.internal("shader/vertex.glsl").readString();
-            String frag = Gdx.files.internal("shader/fragment.glsl").readString();
-            program = new ShaderProgram(vert, frag);
-        }
+		String vert = Gdx.files.internal("shader/vertex.glsl").readString();
+		String frag = Gdx.files.internal("shader/fragment.glsl").readString();
+		program = new ShaderProgram(vert, frag);
         if (!program.isCompiled()) throw new GdxRuntimeException(program.getLog());
         u_projTrans = program.getUniformLocation("u_projViewTrans");
         u_worldTrans = program.getUniformLocation("u_worldTrans");

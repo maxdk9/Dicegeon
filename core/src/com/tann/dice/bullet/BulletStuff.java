@@ -309,7 +309,6 @@ public class BulletStuff {
         }
         dice.clear();
         instances.clear();
-        disposeOldDice();
     }
 
     public static void clearDice() {

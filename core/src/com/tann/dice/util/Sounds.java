@@ -42,6 +42,9 @@ public class Sounds {
 		for(Sound s:soundMap.values()){
 			s.dispose();
 		}
+	}
+
+	public static void clearStatics(){
 		soundMap = new HashMap<>();
 	}
 
@@ -171,7 +174,7 @@ public class Sounds {
 		}
 	}
 
-	static HashMap<String, Sound> soundMap = new HashMap<String, Sound>();
+	static HashMap<String, Sound> soundMap = new HashMap<>();
 	public static void playSound(String string, float volume, float pitch) {
 		Sound s = soundMap.get(string);
 		if(s==null){

@@ -143,4 +143,10 @@ public class EntityGroup <T extends DiceEntity>{
             }, Die.INTERP_SPEED_SLOW);
         }
     }
+
+    public void dispose() {
+        for(DiceEntity de:entities){
+            de.getDie().dispose();
+        }
+    }
 }

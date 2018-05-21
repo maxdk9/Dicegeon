@@ -1,6 +1,7 @@
 package com.tann.dice.gameplay.entity.group;
 
 import com.tann.dice.Main;
+import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Spell;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
@@ -104,6 +105,10 @@ public class Party extends EntityGroup<Hero>{
     }
 
     public void fullyReset(){
+        //TODO dispose of old dice hmm....
+        for(DiceEntity de:entities){
+            BulletStuff.disposeDieLater(de.getDie());
+        }
         reset();
         clearEntities();
         addHeroes();

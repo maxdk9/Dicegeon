@@ -42,7 +42,7 @@ public class Main extends ApplicationAdapter {
   public static int scale;
   public static int SCREEN_WIDTH, SCREEN_HEIGHT;
   public static int width, height;
-  public static String version = "0.3.2";
+  public static String version = "0.3.3";
   public static String versionName = "v" + version;
   SpriteBatch batch;
   SpriteBatch bufferDrawer;
@@ -78,7 +78,7 @@ public class Main extends ApplicationAdapter {
 
   @Override
   public void create() {
-
+    clearAllStatics();
     if (printCalls) {
       System.out.println("create");
     }
@@ -155,8 +155,6 @@ public class Main extends ApplicationAdapter {
       currentScreen.showExceptionPopup(ex);
       Prefs.setString("lastException", "");
     }
-
-    Gdx.input.setCatchBackKey(true);
   }
 
   @Override
@@ -247,6 +245,7 @@ public class Main extends ApplicationAdapter {
     BulletStuff.update(delta);
     stage.act(delta);
     Sounds.tickFaders(delta);
+
     ticks += delta;
     TannFont.bonusSin=0;
   }
@@ -271,15 +270,17 @@ public class Main extends ApplicationAdapter {
 
   @Override
   public void dispose() {
+    System.out.println("Magpie starting dispose");
     if(getCurrentScreen() instanceof DungeonScreen && !(PhaseManager.get().getPhase() instanceof VictoryPhase)){
       Prefs.setInt(Prefs.STREAK, 0);
     }
     super.dispose();
-    BulletStuff.dispose();
+    disposeAll();
     clearAllStatics();
     if (printCalls) {
       System.out.println("dispose");
     }
+    System.out.println("Magpie finished dispose");
   }
 
   @Override
@@ -410,6 +411,13 @@ public class Main extends ApplicationAdapter {
     previousTime = System.currentTimeMillis();
   }
 
+  private void disposeAll(){
+    Sounds.disposeAll();
+    Party.get().dispose();
+    Room.get().dispose();
+    BulletStuff.dispose();
+  }
+
   private void clearAllStatics() {
     BulletStuff.clearAllStatics();
     DieShader.clearAllStatics();
@@ -423,7 +431,7 @@ public class Main extends ApplicationAdapter {
     InventoryPanel.resetAllStatics();
     PartyManagementPanel.resetAllStatics();
     Actor3d.resetAllStatics();
-    Sounds.disposeAll();
+    Sounds.clearStatics();
   }
 
 }

@@ -615,13 +615,16 @@ public class Die implements Targetable{
        return getMass();
     }
 
+    boolean disposed;
     public void dispose(){
+        if(disposed) return;
         System.out.println("disposing of die "+entity.getName());
         BulletStuff.dice.remove(this);
         BulletStuff.instances.remove(physical);
         removeFromScreen();
         disposeMe.dispose();
         physical.dispose();
+        disposed=true;
     }
 
     @Override
