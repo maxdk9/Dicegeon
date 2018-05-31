@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
+import com.tann.dice.gameplay.fightLog.FightLog;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.group.Party;
 import com.tann.dice.gameplay.entity.group.Room;
@@ -432,6 +433,7 @@ public class Main extends ApplicationAdapter {
     PartyManagementPanel.resetAllStatics();
     Actor3d.resetAllStatics();
     Sounds.clearStatics();
+    FightLog.clearStatic();
   }
 
 }

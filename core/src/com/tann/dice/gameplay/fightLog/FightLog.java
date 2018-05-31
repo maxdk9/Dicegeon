@@ -1,0 +1,32 @@
+package com.tann.dice.gameplay.fightLog;
+
+import com.tann.dice.gameplay.fightLog.action.Command;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class FightLog {
+
+    private static FightLog self;
+    public static FightLog get(){
+        if(self == null){
+            self = new FightLog();
+        }
+        return self;
+    }
+    public static void clearStatic() {
+        self = null;
+    }
+
+    Snapshot base;
+    Snapshot current;
+    Snapshot future;
+    List<Command> actionQueue = new ArrayList<>();
+
+    private FightLog(){
+
+    }
+
+
+
+}
