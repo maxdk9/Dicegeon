@@ -40,11 +40,7 @@ public abstract class DiceEntity {
   // gameplay vars
   protected Side[] sides;
   protected int baseMaxHp;
-  protected boolean dead;
-  public boolean diedLastRound;
-  protected int hp;
   protected List<DiceEntity> targets;
-  List<Buff> buffs = new ArrayList<>();
   public DiceEntity targeted;
   // rendering vars
   protected Color col = Colours.purple;
@@ -59,6 +55,8 @@ public abstract class DiceEntity {
   public ArrayList<Equipment> equipment = new ArrayList<>();
   public int equipmentMaxSize = 1;
   public Trait[] traits;
+
+  EntityState entityState;
 
   public DiceEntity(EntityType type) {
     this.entityType = type;
@@ -76,18 +74,10 @@ public abstract class DiceEntity {
     }
     setMaxHp(type.hp);
 
-    fullHeal();
+    entityState.fullHeal();
     setSides(entityType.sides);
-  }
 
-  public void startOfFight() {
-    diedLastRound = false;
-  }
-
-  public void init() {
-    for (int i = 0; i < 10; i++) {
-//         addBuff(new Buff(5, Images.regen, new TriggerEndOfTurnSelf(new Eff().damage(1))));
-    }
+    entityState = new EntityState(this);
   }
 
   protected void setSides(Side[] sides) {
@@ -111,17 +101,6 @@ public abstract class DiceEntity {
         this.baseMaxHp=30; // shitty haaack
       }
     }
-  }
-
-  public void fullHeal() {
-    calculatedMaxHp = null;
-    boolean half = diedLastRound;
-    for (Trigger t : getActiveTriggers()) {
-      if (t.avoidDeathPenalty()) {
-        half = false;
-      }
-    }
-    hp = half ? getMaxHp() / 2 : getMaxHp();
   }
 
   protected void resetPanels() {
@@ -169,27 +148,7 @@ public abstract class DiceEntity {
     return describableTriggers;
   }
 
-  private ArrayList<Trigger> activeTriggers;
 
-  public List<Trigger> getActiveTriggers() {
-    if (activeTriggers == null) {
-      activeTriggers = new ArrayList<>();
-      for (Trait t : traits) {
-        activeTriggers.addAll(t.triggers);
-      }
-      for (Equipment e : equipment) {
-        activeTriggers.addAll(e.getTriggers());
-      }
-      for (Buff b : getBuffs()) {
-        activeTriggers.add(b.trigger);
-        b.trigger.buff = b;
-      }
-      for (Trigger t : activeTriggers) {
-        t.setEntity(this);
-      }
-    }
-    return activeTriggers;
-  }
 
   public int getHp() {
     return hp;
