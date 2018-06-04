@@ -222,12 +222,6 @@ public class Party extends EntityGroup<Hero>{
         super.roll(firstRoll);
     }
 
-    public void actionEffects(){
-        for(DiceEntity de:getActiveEntities()){
-            de.getProfile().action();
-        }
-    }
-
     public void activateRollEffect(Eff e) {
         if(e.targetingType != Eff.TargetingType.OnRoll){
             System.err.println("uhoh not onroll "+e);
@@ -302,10 +296,7 @@ public class Party extends EntityGroup<Hero>{
     }
 
     public void startOfFight(){
-        for(DiceEntity de: getEntities()){
-            de.startOfFight();
-        }
-        somethingChanged();
+        //TODO some code here probs prebs
     }
 
     public boolean allDiceLockedOrLocking() {

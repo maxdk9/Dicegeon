@@ -15,7 +15,8 @@ public class TriggerDamageAttackers extends Trigger {
 
     @Override
     public void attackedBy(DiceEntity entity) {
-        entity.damage(amount);
+//        entity.damage(amount);
+        //TODO gameplay stuff
     }
 
     @Override

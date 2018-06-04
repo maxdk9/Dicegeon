@@ -174,7 +174,6 @@ public class HeroType extends EntityType<HeroType> implements Cloneable {
             System.err.println("Uhoh, bad entity type: "+name+". It will probably throw an error soon.");
         }
         Hero h = new Hero(this);
-        h.init();
         return h;
     }
 

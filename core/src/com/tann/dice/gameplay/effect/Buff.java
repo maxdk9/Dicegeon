@@ -22,7 +22,8 @@ public class Buff {
     }
 
     private void remove() {
-        target.removeBuff(this);
+        //TODO removing buffs
+//        target.removeBuff(this);
     }
 
     public Buff copy(){

@@ -643,9 +643,11 @@ public class Die implements Targetable{
         used= true;
         return true;
     }
+
     @Override
     public void afterUse() {
-        entity.afterUse(getActualSide());
+//        entity.afterUse(getActualSide());
+        //TODO after use
     }
 
     public void reset() {

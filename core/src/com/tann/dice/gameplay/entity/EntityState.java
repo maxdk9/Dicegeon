@@ -6,25 +6,41 @@ import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Trait;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
+import com.tann.dice.gameplay.entity.die.Side;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntityState {
 
-  int hp;
-  int maxHp;
-  int shield;
-  boolean dead;
-  List<Buff> buffs;
-  boolean forwards;
-  DiceEntity entity;
-  public boolean diedLastRound;
+  private int hp;
+  private int maxHp;
+  private int shield;
+  private boolean dead;
+  private List<Buff> buffs;
+  private boolean forwards;
+  private DiceEntity entity;
+  private boolean diedLastRound;
+  private int fleePip;
+  List<Trigger> describableTriggers;
 
   public EntityState(DiceEntity entity) {
     this.entity = entity;
-    maxHp = entity.getMaxHp();
+    maxHp = entity.getBaseMaxHp();
     hp = maxHp;
     forwards = true;
+  }
+
+  public List<Trigger> getDescribableTriggers() {
+    if (describableTriggers == null) {
+      describableTriggers = new ArrayList<>();
+      for (Trigger t : getActiveTriggers()) {
+        if (t.showInPanel()) {
+          describableTriggers.add(t);
+        }
+      }
+    }
+    return describableTriggers;
   }
 
   public void hit(Eff eff) {
@@ -92,10 +108,20 @@ public class EntityState {
     if (hp <= 0) {
       die();
     }
+
+    boolean aboveFlee = hp > fleePip;
+    hp -= value;
+    if (aboveFlee && hp <= fleePip) {
+      forwards = false;
+    }
+
   }
 
   private void die() {
     dead = true;
+    for (Trigger t : getActiveTriggers()) {
+      t.onDeath();
+    }
   }
 
   private void heal(int value) {
@@ -134,5 +160,137 @@ public class EntityState {
   public void startOfFight() {
     diedLastRound = false;
   }
+
+  public void attackedBy(DiceEntity entity) {
+    for (Trigger t : getActiveTriggers()) {
+      t.attackedBy(entity);
+    }
+  }
+
+  public boolean hasNegativeBuffs() {
+    for (Buff b : buffs) {
+      if (b.isNegative()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  public void afterUse(Side actualSide) {
+    for (Trigger t : getActiveTriggers()) {
+      t.afterUse(actualSide);
+    }
+  }
+
+  public boolean isDead() {
+    return dead;
+  }
+
+  public int getMaxHp() {
+    return maxHp;
+  }
+
+  public int getHp() {
+    return hp;
+  }
+
+
+  /*
+
+    public void removeEffectsIfDead() {
+    if (!isPlayer() && die.getActualSide() != null && isDead()) {
+      TargetingManager.get().cancelEffects(this);
+    }
+  }
+   */
+
+  //calculatedMaxHp = t.affectMaxHp(calculatedMaxHp);
+
+  /*
+  bunch of crap here
+    public void hit(Eff e, boolean instant) {
+    boolean tempDead = dead;
+    if(instant || e.source == null || e.source.isPlayer()) e.playSound();
+    switch (e.type) {
+      case Damage:
+        if (e.targetingType == Eff.TargetingType.Self && e.source == this) {
+          //ugh hacky I need to redo the system so it works better for this case
+//                    e.source.damage(e.getValue());
+//                    e.source.somethingChanged();
+          // commented out because it breaks multihits with self damage todo be better
+          return;
+        }
+        break;
+      case Decurse:
+        decurse();
+        break;
+      case RedirectIncoming:
+        List<Eff> incomingEffs = getProfile().effs;
+        for (int i = incomingEffs.size() - 1; i >= 0; i--) {
+          Eff potential = incomingEffs.get(i);
+          if (potential.source != null && !potential.source.isPlayer()) {
+            incomingEffs.remove(potential);
+            e.source.hit(potential, false);
+          }
+        }
+        somethingChanged();
+        e.source.somethingChanged();
+        break;
+      case CopyAbility:
+        e.source.setCurrentSide(getDie().getActualSide().withValue(getDie().getActualSide().getEffects()[0].getValue()));
+        return;
+      case Hook:
+        slide(true);
+        return;
+      case Shield:
+        getEntityPanel().addHearticleShield(e.getValue());
+        break;
+      case Healing:
+        getEntityPanel().addHearticleHeart(e.getValue());
+        break;
+
+    }
+    getProfile().addEffect(e);
+    if (instant || !isPlayer()) {
+      getProfile().action();
+    }
+    if (!isPlayer() && profile.isGoingToDie(false)) {
+      getDie().removeFromScreen();
+    }
+    if (!tempDead && dead) {
+      if (e.source != null) {
+        e.source.killedEnemy();
+      }
+    }
+    somethingChanged();
+  }
+   */
+
+  /*
+    private void setCurrentSide(Side copy) {
+    getDie().setSide(copy);
+    for (Eff e : copy.getEffects()) {
+      e.source = this;
+    }
+    copy.useTriggers(getActiveTriggers(), this);
+    somethingChanged();
+  }
+   */
+
+
+  /*
+    public void upkeep() {
+    List<Trigger> activeTriggers = getActiveTriggers();
+    getProfile().endOfTurn();
+    getProfile().action();
+    for (int i = buffs.size() - 1; i >= 0; i--) {
+      buffs.get(i).turn();
+    }
+    somethingChanged();
+    getDie().clearOverride();
+  }
+
+   */
 
 }

@@ -48,8 +48,9 @@ public class LevelUpPanel extends Group implements ExplanelReposition, PopAction
         for (int i = 0; i < options.size(); i++) {
             final HeroType et = options.get(i);
             Hero choice = et.buildHero();
-            choice.diedLastRound = hero.diedLastRound;
-            choice.fullHeal();
+//            choice.diedLastRound = hero.diedLastRound;
+//            choice.fullHeal();
+            //TODO levelup options and hp
             choice.setColour(hero.getColour());
             DiePanel dp = choice.getDiePanel();
             addActor(dp);

@@ -7,11 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tann.dice.Main;
 import com.tann.dice.bullet.BulletStuff;
 import com.tann.dice.bullet.DieShader;
-import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.effect.Eff;
-import com.tann.dice.gameplay.effect.Buff;
 import com.tann.dice.gameplay.effect.Trait;
-import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -48,15 +45,13 @@ public abstract class DiceEntity {
   protected TextureRegion lapel2d;
   private EntityPanel ep;
   public String name;
-  EntitySize size;
   public EntityType entityType;
   public AtlasRegion portrait;
   public int portraitOffset;
   public ArrayList<Equipment> equipment = new ArrayList<>();
   public int equipmentMaxSize = 1;
   public Trait[] traits;
-
-  EntityState entityState;
+  EntitySize size;
 
   public DiceEntity(EntityType type) {
     this.entityType = type;
@@ -74,10 +69,12 @@ public abstract class DiceEntity {
     }
     setMaxHp(type.hp);
 
-    entityState.fullHeal();
     setSides(entityType.sides);
 
-    entityState = new EntityState(this);
+  }
+
+  public EntityState getState(boolean future){
+    return null;
   }
 
   protected void setSides(Side[] sides) {
@@ -112,212 +109,58 @@ public abstract class DiceEntity {
   private Integer calculatedMaxHp;
 
   public void somethingChanged() {
-    calculatedMaxHp = null;
-    activeTriggers = null;
-    describableTriggers = null;
-    for (Side s : sides) {
-      s.useTriggers(getActiveTriggers(), this);
-    }
-    getProfile().somethingChanged();
     getDiePanel().somethingChanged();
     getDie().refresh();
     TargetingManager.get().anythingChanged();
   }
 
-  public int getMaxHp() {
-    if (calculatedMaxHp == null) {
-      calculatedMaxHp = baseMaxHp;
-      for (Trigger t : getActiveTriggers()) {
-        calculatedMaxHp = t.affectMaxHp(calculatedMaxHp);
-      }
-    }
-    return calculatedMaxHp;
-  }
-
-  private ArrayList<Trigger> describableTriggers;
-
-  public List<Trigger> getDescribableTriggers() {
-    if (describableTriggers == null) {
-      describableTriggers = new ArrayList<>();
-      for (Trigger t : getActiveTriggers()) {
-        if (t.showInPanel()) {
-          describableTriggers.add(t);
-        }
-      }
-    }
-    return describableTriggers;
-  }
-
-
-
-  public int getHp() {
-    return hp;
-  }
-
-  public void heal(int amount) {
-    this.hp = Math.min(getMaxHp(), hp+amount);
-  }
 
   public void reset() {
-    dead = false;
-    fullHeal();
     targeted = null;
     getDie().flatDraw = true;
-    buffs.clear();
     if (targets != null) {
       targets.clear();
     }
-    profile.reset();
     getDie().clearOverride();
     resetPanels();
-    for(Trigger t:getActiveTriggers()){
-      t.reset();
-    }
     somethingChanged();
   }
 
   public abstract void stopped();
 
-  public void hit(Eff[] effects, boolean instant) {
-    for (Eff e : effects) {
-      hit(e, instant);
-    }
-  }
+  /*
+  visual effects
+  taking damage ->
+   getEntityPanel().addDamageFlib(value);
 
-  public void hit(Eff e, boolean instant) {
-    boolean tempDead = dead;
-    if(instant || e.source == null || e.source.isPlayer()) e.playSound();
-    switch (e.type) {
-      case Damage:
-        if (e.targetingType == Eff.TargetingType.Self && e.source == this) {
-          //ugh hacky I need to redo the system so it works better for this case
-//                    e.source.damage(e.getValue());
-//                    e.source.somethingChanged();
-          // commented out because it breaks multihits with self damage todo be better
-          return;
-        }
-        break;
-      case Decurse:
-        decurse();
-        break;
-      case RedirectIncoming:
-        List<Eff> incomingEffs = getProfile().effs;
-        for (int i = incomingEffs.size() - 1; i >= 0; i--) {
-          Eff potential = incomingEffs.get(i);
-          if (potential.source != null && !potential.source.isPlayer()) {
-            incomingEffs.remove(potential);
-            e.source.hit(potential, false);
-          }
-        }
-        somethingChanged();
-        e.source.somethingChanged();
-        break;
-      case CopyAbility:
-        e.source.setCurrentSide(getDie().getActualSide().withValue(getDie().getActualSide().getEffects()[0].getValue()));
-        return;
-      case Hook:
-        slide(true);
-        return;
-      case Shield:
-        getEntityPanel().addHearticleShield(e.getValue());
-        break;
-      case Healing:
-        getEntityPanel().addHearticleHeart(e.getValue());
-        break;
+new Eff().damage(value).playSound();
 
-    }
-    getProfile().addEffect(e);
-    if (instant || !isPlayer()) {
-      getProfile().action();
-    }
-    if (!isPlayer() && profile.isGoingToDie(false)) {
-      getDie().removeFromScreen();
-    }
-    if (!tempDead && dead) {
-      if (e.source != null) {
-        e.source.killedEnemy();
-      }
-    }
-    somethingChanged();
-  }
 
-  private void decurse() {
-    getProfile().decurse();
-    for (Buff b : getBuffs()) {
-      if (b.isNegative()) {
-        removeBuff(b);
-      }
-    }
-    somethingChanged();
-  }
-
-  private void setCurrentSide(Side copy) {
-    getDie().setSide(copy);
-    for (Eff e : copy.getEffects()) {
-      e.source = this;
-    }
-    copy.useTriggers(getActiveTriggers(), this);
-    somethingChanged();
-  }
-
-  private DamageProfile profile;
-
-  public DamageProfile getProfile() {
-    if (profile == null) {
-      this.profile = new DamageProfile(this);
-    }
-    return profile;
-  }
-
-  public void damage(int value) {
-    if(hp<=0) return;
-    new Eff().damage(value).playSound();
-    if (value > 0) {
-      getEntityPanel().addDamageFlib(value);
-    }
-
-    for(Trigger t:getActiveTriggers()){
+  I think this never worked
+      for(Trigger t:getActiveTriggers()){
       boolean triggered = t.activateOnDamage(hp, hp-value);
       if(triggered){
         getEntityPanel().pokeForwards();
       }
     }
 
-    boolean aboveFlee = hp > fleePip;
-    hp -= value;
-    if (aboveFlee && hp <= fleePip) {
-      slide(false);
-    }
 
-
-    somethingChanged();
-    if (getProfile().getTopHealth() <= 0) {
-      die();
-    }
-  }
-
-  public boolean aboveHalfHealth() {
-    return getProfile().getTopHealth() > getMaxHp() / 2;
-  }
+   */
 
   public void kill() {
     die();
   }
 
   protected void die() {
-    hp = 0;
     die.removeFromScreen();
     getEntityPanel().setPossibleTarget(false);
     slide(false);
-//        getEntityPanel().remove();
     if (targets != null) {
       for (DiceEntity de : targets) {
         de.untarget(this);
       }
     }
     BulletStuff.dice.remove(getDie());
-    dead = true;
-    diedLastRound = true;
     if (this instanceof Monster) {
       Room.get().getActiveEntities().remove(this);
     } else {
@@ -328,26 +171,8 @@ public abstract class DiceEntity {
     }
     getDie().flatDraw = false;
     DungeonScreen.get().layoutSidePanels();
-    removeEffectsIfDead();
     TargetingManager.get().showTargetingHighlights();
-
-    for (Trigger t : getActiveTriggers()) {
-      t.onDeath();
-    }
-
     Sounds.playSound(Sounds.death, 1, 1);
-  }
-
-  public void removeEffectsIfDead() {
-    if (!isPlayer() && die.getActualSide() != null && isDead()) {
-      TargetingManager.get().cancelEffects(this);
-    }
-  }
-
-  public void killedEnemy() {
-    for (Trigger t : getActiveTriggers()) {
-      t.onKill();
-    }
   }
 
   public void untarget(DiceEntity diceEntity) {
@@ -356,41 +181,12 @@ public abstract class DiceEntity {
     }
   }
 
-  public void addBuff(Buff buff) {
-    buffs.add(buff);
-    somethingChanged();
-  }
-
-  public void hit(Side side, boolean instant) {
-    for (Eff e : side.getEffects()) {
-      hit(e, instant);
-    }
-  }
-
-  public void removeBuff(Buff buff) {
-    buffs.remove(buff);
-  }
-
-  List<Buff> tempBuffs = new ArrayList<>();
-
-  public List<Buff> getBuffs() {
-    tempBuffs.clear();
-    tempBuffs.addAll(buffs);
-    tempBuffs.addAll(getProfile().getIncomingBuffs());
-    return tempBuffs;
-  }
-
   public List<DiceEntity> getTarget() {
     return targets;
   }
 
   public Side[] getSides() {
     return sides;
-  }
-
-  public boolean isDead() {
-    return dead;
-
   }
 
   public abstract boolean isPlayer();
@@ -478,41 +274,17 @@ public abstract class DiceEntity {
     return tmp;
   }
 
-  public void removeEffects(DiceEntity entity) {
-    getProfile().removeEffsFromSource(entity);
-  }
-
-  public int getEffectiveHp() {
-    return getProfile().getEffectiveHp();
-  }
-
-  public void upkeep() {
-    List<Trigger> activeTriggers = getActiveTriggers();
-    getProfile().endOfTurn();
-    getProfile().action();
-    for (int i = buffs.size() - 1; i >= 0; i--) {
-      buffs.get(i).turn();
-    }
-    somethingChanged();
-    getDie().clearOverride();
-  }
-
-  public void attackedBy(DiceEntity entity) {
-    for (Trigger t : getActiveTriggers()) {
-      t.attackedBy(entity);
-    }
-  }
-
   public abstract int getPixelSize();
 
   public List<DiceEntity> getAllTargeters() {
     List<DiceEntity> results = new ArrayList<>();
-    for (Eff e : getProfile().effs) {
-      DiceEntity source = e.source;
-      if (source != null && source.isPlayer() != isPlayer()) {
-        results.add(source);
-      }
-    }
+//    for (Eff e : getProfile().effs) {
+//      DiceEntity source = e.source;
+//      if (source != null && source.isPlayer() != isPlayer()) {
+//        results.add(source);
+//      }
+//    }
+    //TODO fix this with snapshots
     return results;
   }
 
@@ -536,21 +308,15 @@ public abstract class DiceEntity {
     }
     equipment.add(e);
     somethingChanged();
-    fullHeal();
-    somethingChanged();
   }
 
   public void removeEquipment(Equipment e) {
     equipment.remove(e);
     somethingChanged();
-    fullHeal();
-    somethingChanged();
   }
 
   public void resetEquipment() {
     equipment.clear();
-    somethingChanged();
-    fullHeal();
     somethingChanged();
   }
 
@@ -560,29 +326,14 @@ public abstract class DiceEntity {
     return TextWriter.getColourTagForColour(getColour());
   }
 
-  public void imposeMaximumHealth() {
-    hp = Math.min(hp, getMaxHp());
-  }
-
-  public boolean hasNegativeBuffs() {
-    for (Buff b : getBuffs()) {
-      if (b.isNegative()) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   public boolean canBeTargeted() {
     return true;
   }
 
-  public void afterUse(Side actualSide) {
-    boolean changed = false;
-    for (Trigger t : getActiveTriggers()) {
-      if (t.afterUse(actualSide)) changed = true;
-    }
-    if (changed) somethingChanged();
+
+  public int getBaseMaxHp() {
+    return entityType.hp;
   }
 
   public enum EntitySize {

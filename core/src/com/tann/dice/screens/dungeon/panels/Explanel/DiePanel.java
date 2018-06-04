@@ -12,6 +12,7 @@ import com.tann.dice.Main;
 import com.tann.dice.gameplay.effect.trigger.Trigger;
 import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.EntityState;
 import com.tann.dice.gameplay.entity.group.EntityGroup;
 import com.tann.dice.gameplay.entity.type.EntityType;
 import com.tann.dice.gameplay.phase.LevelEndPhase;
@@ -55,7 +56,8 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
     public void layout(){
         clearChildren();
         Pixl p = new Pixl(this, gap);
-        p.actor(new TextWriter(entity.name+"  "+entity.getHp()+"/"+entity.getMaxHp()+"[h][red][heart][h][light]"));
+        EntityState currentState = entity.getState(false);
+        p.actor(new TextWriter(entity.name+"  "+currentState.getHp()+"/"+currentState.getMaxHp()+"[h][red][heart][h][light]"));
         p.row(gap+2);
         if(entity.getSize()== DiceEntity.EntitySize.smol || entity.getSize() == DiceEntity.EntitySize.reg) {
             p.actor(new DieSpinner(entity.getDie(), entity.getSize().pixels * 1.5f));
@@ -66,7 +68,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
         int y = 0;
         if(!(PhaseManager.get().getPhase() instanceof LevelEndPhase) || !entity.isPlayer()) {
             ArrayList<Actor> actors = new ArrayList<>();
-            for (Trigger t : entity.getDescribableTriggers()) {
+            for (Trigger t : currentState.getDescribableTriggers()) {
                 Explanel e= new Explanel();
                 e.setup(t, getWidth(), entity);
                 actors.add(e);
@@ -88,7 +90,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
     }
 
     public void onDisplay(){
-        for (Trigger t : entity.getDescribableTriggers()) {
+        for (Trigger t : entity.getState(false).getDescribableTriggers()) {
             if(t.highlightForNewPlayers()) {
                 Prefs.setBoolean(t.getClass().getSimpleName(), true);
             }
@@ -115,7 +117,7 @@ public class DiePanel extends InfoPanel implements OnPop, ExplanelReposition, Po
 
     private void drawReminder(Batch batch) {
         if(Prefs.getBoolean(Prefs.LEARNT_EXPLANEL, false)) return;
-        if(entity.getDescribableTriggers().size()>0) return;
+        if(entity.getState(false).getDescribableTriggers().size()>0) return;
         Phase phase = PhaseManager.get().getPhase();
         if(phase == null) return;
         if(!phase.showDiePanelReminder()) return;

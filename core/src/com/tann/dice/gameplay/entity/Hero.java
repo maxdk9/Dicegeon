@@ -43,7 +43,6 @@ public class Hero extends DiceEntity {
         setMaxHp(type.hp);
         setSides(type.sides);
         somethingChanged();
-        fullHeal();
         resetPanels();
 
         this.spells = Arrays.asList(type.spells);

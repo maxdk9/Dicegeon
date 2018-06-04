@@ -32,7 +32,7 @@ public class TriggerPanel extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.setColor(Colours.z_white);
-        List<Trigger> triggerList = entity.getActiveTriggers();
+        List<Trigger> triggerList = entity.getState(false).getActiveTriggers();
         int drawIndex = 0;
         for(int i=0;i<triggerList.size();i++){
             Trigger t = triggerList.get(i);

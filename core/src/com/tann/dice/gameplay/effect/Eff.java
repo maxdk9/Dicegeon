@@ -242,22 +242,24 @@ public class Eff {
     public int getValue() {
         int actualValue = value;
         if(source != null) {
-            List<Trigger> triggers = source.getActiveTriggers();
-            for(int i=0;i<triggers.size();i++){
-                Trigger t = triggers.get(i);
-                actualValue = t.alterOutgoingEffect(type, actualValue);
-            }
+            //TODO eff value trigger stuff
+//            List<Trigger> triggers = source.getActiveTriggers();
+//            for(int i=0;i<triggers.size();i++){
+//                Trigger t = triggers.get(i);
+//                actualValue = t.alterOutgoingEffect(type, actualValue);
+//            }
         }
         return actualValue;
     }
 
     public int getValue(DiceEntity target) {
         int actualValue = getValue();
-        List<Trigger> triggers = target.getActiveTriggers();
-        for(int i=0;i<triggers.size();i++){
-            Trigger t = triggers.get(i);
-            actualValue = t.alterIncomingEffect(type, actualValue);
-        }
+//        List<Trigger> triggers = target.getActiveTriggers();
+        //TODO eff value trigger stuff
+//        for(int i=0;i<triggers.size();i++){
+//            Trigger t = triggers.get(i);
+//            actualValue = t.alterIncomingEffect(type, actualValue);
+//        }
         return actualValue;
     }
 

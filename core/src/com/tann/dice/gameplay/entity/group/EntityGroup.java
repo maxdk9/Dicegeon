@@ -86,18 +86,6 @@ public class EntityGroup <T extends DiceEntity>{
         return tmpALl;
     }
 
-    public static void activateDamage() {
-        List<DiceEntity> all = new ArrayList<>(EntityGroup.getEveryEntity());
-        for(int i=all.size()-1;i>=0;i--){
-            DiceEntity de = all.get(i);
-            de.getProfile().action();
-        }
-        for(int i=all.size()-1;i>=0;i--){
-            DiceEntity de = all.get(i);
-            de.upkeep();
-        }
-    }
-
     public static void clearTargetedHighlights() {
         for(DiceEntity de : getEveryEntity()){
             de.getEntityPanel().setTargeted(false);

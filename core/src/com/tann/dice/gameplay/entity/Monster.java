@@ -74,9 +74,10 @@ public class Monster extends DiceEntity {
     @Override
     public void locked() {
         targets = TargetingManager.get().getRandomTargetForEnemy(die);
-        for(DiceEntity de:targets){
-            de.hit(die.getActualSide().getEffects(), false);
-        }
+        //TODO enemy targeting
+//        for(DiceEntity de:targets){
+//            de.hit(die.getActualSide().getEffects(), false);
+//        }
         EntityPanel ep = getDie().entity.getEntityPanel();
         ep.setArrowIntenity(1, .75f);
     }
@@ -95,7 +96,7 @@ public class Monster extends DiceEntity {
     }
 
     public boolean startsAtTheBack() {
-        for(Trigger t:getActiveTriggers()){
+        for(Trigger t:getState(false).getActiveTriggers()){
             if(t.startsAtTheBack()) return true;
         }
         return false;

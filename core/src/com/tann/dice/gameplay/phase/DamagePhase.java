@@ -13,7 +13,8 @@ public class DamagePhase extends Phase {
         Tann.delay(new Runnable(){
             @Override
             public void run() {
-                EntityGroup.activateDamage();
+                //TODO actual phase code for moving the snapshot
+//                EntityGroup.activateDamage();
                 boolean activated = Room.get().activateDelayedRolls();
 
                 Tann.delay(new Runnable() {

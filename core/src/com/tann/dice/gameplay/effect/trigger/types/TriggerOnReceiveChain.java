@@ -16,9 +16,10 @@ public class TriggerOnReceiveChain extends Trigger {
 
     @Override
     public void onHitWithEff(Eff e) {
-        if(e.type==receiveType){
-            entity.hit(triggerEffect, false);
-        }
+//        if(e.type==receiveType){
+//            entity.hit(triggerEffect, false);
+//        }
+        //TODO gameplay stuff
     }
 
     @Override

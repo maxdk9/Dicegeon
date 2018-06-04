@@ -343,11 +343,7 @@ public class DungeonScreen extends Screen implements ExplanelReposition{
 
     private boolean checkDead(List<? extends DiceEntity> entities, boolean testGoingToDie) {
         for (DiceEntity de : entities) {
-            if (testGoingToDie) {
-                if (!de.getProfile().isGoingToDie(false)) {
-                    return false;
-                }
-            } else if (!de.isDead()) {
+            if(de.getState(testGoingToDie).isDead()){
                 return false;
             }
         }

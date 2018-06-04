@@ -43,14 +43,15 @@ public class TriggerRetaliate extends Trigger{
     @Override
     public boolean activateOnDamage(int old, int now){
         boolean activated = false;
-        for(int threshold:hps){
-            if(old>threshold && now <= threshold){
-                for(DiceEntity de: new ArrayList<>(Party.get().getActiveEntities())){
-                    de.damage(1);
-                    activated = true;
-                }
-            }
-        }
+        //TODO gameplay stuff
+//        for(int threshold:hps){
+//            if(old>threshold && now <= threshold){
+//                for(DiceEntity de: new ArrayList<>(Party.get().getActiveEntities())){
+//                    de.damage(1);
+//                    activated = true;
+//                }
+//            }
+//        }
         return activated;
     }
 }

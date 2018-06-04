@@ -77,7 +77,6 @@ public class MonsterType extends EntityType<MonsterType>{
 
     public Monster buildMonster(){
         Monster m = new Monster(this);
-        m.init();
         return m;
     }
 

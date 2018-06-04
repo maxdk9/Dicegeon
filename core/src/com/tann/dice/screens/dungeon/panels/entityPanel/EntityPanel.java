@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Images;
 import com.tann.dice.Main;
-import com.tann.dice.gameplay.effect.DamageProfile;
 import com.tann.dice.gameplay.entity.DiceEntity;
 import com.tann.dice.gameplay.entity.Hero;
 import com.tann.dice.gameplay.entity.Monster;
@@ -30,7 +29,6 @@ import java.util.List;
 public class EntityPanel extends Group {
     public DiceEntity entity;
     public boolean holdsDie = false;
-    DamageProfile profile;
     HeartsHolder heartsHolder;
     float startX;
     static final int n = 5;
@@ -57,7 +55,6 @@ public class EntityPanel extends Group {
         else gap=2;
         huge = entity.getSize() == DiceEntity.EntitySize.huge;// || entity.getSize() == DiceEntity.EntitySize.big;
         big = entity.getSize() == DiceEntity.EntitySize.big;
-        profile = entity.getProfile();
         layout();
 
         addListener(new InputListener() {
@@ -66,7 +63,7 @@ public class EntityPanel extends Group {
                 if(button == 1 && Main.debug){
                     entity.kill();
                 }
-                if (entity.isDead()) return false;
+                if (entity.getState(false).isDead()) return false;
                 boolean dieSide = isClickOnDie(x, y);
                 if(PhaseManager.get().getPhase().canRoll() && dieSide && entity.isPlayer()){
                     entity.getDie().toggleLock();
@@ -201,7 +198,7 @@ public class EntityPanel extends Group {
 
     public float getPreferredX() {
         int deadAmount = (int) (getWidth() + 8);
-        if(entity.isDead()){
+        if(entity.getState(false).isDead()){
             return entity.isPlayer()?-deadAmount:deadAmount;
         }
         if(entity.isPlayer()) return startX;
@@ -219,7 +216,7 @@ public class EntityPanel extends Group {
 
         batch.setColor(Colours.dark);
         drawCutout(batch);
-        if(entity.isDead()){
+        if(entity.getState(false).isDead()){
             Draw.fillActor(batch, this);
         }
 
@@ -236,7 +233,7 @@ public class EntityPanel extends Group {
             panelBorderLeft.draw(batch, getX()-npWiggle, getY()-npWiggle, borderX+npWiggle*2, getHeight()+npWiggle*2);
         }
 
-        if(entity.getProfile().isGoingToDie(true)){
+        if(entity.getState(true).isDead()){
             batch.setColor(Colours.withAlpha(Colours.red, (float) (.3f+Math.sin(Main.ticks*5f)*.25f)));
             drawCutout(batch);
         }
@@ -348,7 +345,7 @@ public class EntityPanel extends Group {
         Draw.fillRectangle(batch, loc.x+middle, loc.y+middle, (dieHolder.getWidth()-middle*2), (dieHolder.getHeight()-middle*2));
 
         Vector2 local = Tann.getLocalCoordinates(dieHolder);
-        if(entity.isDead()){
+        if(entity.getState(false).isDead()){
             batch.setColor(Colours.dark);
             Draw.fillRectangle(batch, local.x, local.y, entity.getPixelSize(), entity.getPixelSize());
             batch.setColor(Colours.purple);

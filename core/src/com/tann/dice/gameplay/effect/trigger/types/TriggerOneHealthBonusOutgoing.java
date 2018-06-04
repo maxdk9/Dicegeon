@@ -15,9 +15,10 @@ public class TriggerOneHealthBonusOutgoing extends Trigger {
 
     @Override
     public int alterOutgoingEffect(Eff.EffType type, int value) {
-        if(entity.getProfile().getTopHealth()==1 && value!=0){
-            return value + bonus;
-        }
+//        if(entity.getProfile().getTopHealth()==1 && value!=0){
+//            return value + bonus;
+//        }
+        //TODO gameplay stuff
         return value;
     }
 

@@ -11,6 +11,7 @@ import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerAllSidesBonus;
 import com.tann.dice.gameplay.effect.trigger.types.TriggerEndOfTurnSelf;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.EntityState;
 import com.tann.dice.gameplay.entity.Monster;
 import com.tann.dice.gameplay.entity.die.Die;
 import com.tann.dice.gameplay.entity.die.Side;
@@ -61,18 +62,7 @@ public class TargetingManager {
             return;
         }
         Eff first = d.getEffects()[0];
-        for(Eff e:d.getEffects()){
-            switch(e.targetingType){
-                case Self:
-                    if(e.type==EffType.Damage){
-                        e.source.damage(e.getValue());
-                    }
-//                    else {
-//                        e.source.hit(e, false);
-//                    }
-                    break;
-            }
-        }
+
         switch (first.targetingType) {
             case EnemyGroup:
             case FriendlyGroup:
@@ -102,24 +92,6 @@ public class TargetingManager {
                 break;
         }
         DungeonScreen.get().checkDoneTargeting();
-    }
-
-    public void cancelEffects(DiceEntity entity) {
-        for (DiceEntity de : EntityGroup.getEveryEntity()) {
-            de.removeEffects(entity);
-        }
-    }
-
-    private void hitMultiple(List<DiceEntity> entities, Eff[] effects, boolean instant) {
-        for (int i = entities.size() - 1; i >= 0; i--) {
-            entities.get(i).hit(effects, instant);
-        }
-    }
-
-    private void hitMultiple(List<DiceEntity> entities, Eff e, boolean instant) {
-        for (int i = entities.size() - 1; i >= 0; i--) {
-            entities.get(i).hit(e, instant);
-        }
     }
 
     public void click(Spell spell, boolean targetable) {
@@ -226,6 +198,8 @@ public class TargetingManager {
             invalidReason = "No target required, tap spell again to cast";
         }
 
+        EntityState targetState = entity.getState(false);
+
         if (first.isTargeted() && !valids.contains(entity)) {
             switch(targetingType){
                 case EnemySingle:
@@ -234,7 +208,7 @@ public class TargetingManager {
                 case EnemyAndAdjacents:
                     if(entity.isPlayer()) invalidReason = "Target an enemy";
                     if(!entity.isPlayer() && !entity.slidOut) invalidReason = "Target an enemy in the front row";
-                    if(targetingType == TargetingType.enemyHalfHealthOrLess && entity.getProfile().getTopHealth()>entity.getMaxHp()/2) invalidReason = "Target an enemy on half health or less";
+                    if(targetingType == TargetingType.enemyHalfHealthOrLess && targetState.getHp()>targetState.getMaxHp()/2) invalidReason = "Target an enemy on half health or less";
                     break;
                 case FriendlySingle:
                 case FriendlySingleOther:

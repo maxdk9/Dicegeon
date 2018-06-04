@@ -18,7 +18,8 @@ public class TriggerHalfHealthEffTypeBonus extends Trigger {
 
     @Override
     public int alterOutgoingEffect(Eff.EffType type, int value) {
-        if(entity.aboveHalfHealth()) return value;
+        //TODO gameplay stuff
+//        if(entity.aboveHalfHealth()) return value;
         if(this.type != type) return value;
         return value + bonus;
     }

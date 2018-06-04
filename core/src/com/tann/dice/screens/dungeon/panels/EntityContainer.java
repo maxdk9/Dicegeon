@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.tann.dice.Main;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.EntityState;
 import com.tann.dice.screens.dungeon.DungeonScreen;
 import com.tann.dice.screens.dungeon.panels.entityPanel.EntityPanel;
 import com.tann.dice.util.Chrono;
@@ -25,10 +26,11 @@ public class EntityContainer extends Group {
   }
 
   public void layout(boolean slide){
+
       List<EntityPanel> alive = new ArrayList<>();
       List<EntityPanel> dead = new ArrayList<>();
       for(DiceEntity de:entities){
-          if(de.isDead()) dead.add(de.getEntityPanel());
+          if(de.getState(false).isDead()) dead.add(de.getEntityPanel());
           else alive.add(de.getEntityPanel());
       }
       float duration = slide?.5f:0;

@@ -17,7 +17,8 @@ public class TriggerOnKill extends Trigger {
 
     @Override
     public void onKill() {
-        entity.hit(eff, false);
+//        entity.hit(eff, false);
+        //TODO gameplay stuff
     }
 
     @Override
