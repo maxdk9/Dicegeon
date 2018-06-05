@@ -3,6 +3,8 @@ package com.tann.dice.gameplay.fightLog;
 import com.tann.dice.gameplay.effect.Eff;
 import com.tann.dice.gameplay.effect.Targetable;
 import com.tann.dice.gameplay.entity.DiceEntity;
+import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.fightLog.action.Command;
 import com.tann.dice.gameplay.entity.EntityState;
 
@@ -18,7 +20,8 @@ public class Snapshot {
     List<EntityState> aliveMonsters = new ArrayList<>();
     Command recentestCommand;
 
-
+    public Snapshot(Party party, Room room) {
+    }
 
 
     public void action(Command command){
@@ -26,11 +29,15 @@ public class Snapshot {
 
     }
 
-    public void target(DiceEntity target, Targetable effect) {
-
+    public void target(DiceEntity target, Targetable targetable) {
+        for(Eff eff:targetable.getEffects()){
+            for(EntityState es:getActualTargets(target, eff)){
+                es.hit(eff);
+            }
+        }
     }
 
-    private List<EntityState> getActualTargets(Eff eff, DiceEntity targetEntity){
+    private List<EntityState> getActualTargets(DiceEntity targetEntity, Eff eff){
         boolean player = false;
         if(eff.source == null || eff.source.isPlayer()){
             player = true;
@@ -90,18 +97,18 @@ public class Snapshot {
                 result.add(enemies.get(enemies.size()-1));
                 break;
             case AllFront:
-                for(DiceEntity de:enemies){
-                    if(de.slidOut) result.add(de);
+                for(EntityState enemy:enemies){
+                    if(!enemy.getForwards()) result.add(enemy);
                 }
                 break;
             case FriendlyMostDamaged:
                 int mostDamage = -1;
-                DiceEntity record = null;
-                for(DiceEntity de:friends){
-                    int damage = getState(de).getMaxHp()-getState(de).getHp();
+                EntityState record = null;
+                for(EntityState friend:friends){
+                    int damage = friend.getMaxHp()-friend.getHp();
                     if(damage>mostDamage){
                         mostDamage = damage;
-                        record = de;
+                        record = friend;
                     }
                 }
                 result.add(record);
@@ -121,7 +128,7 @@ public class Snapshot {
         return null;
     }
 
-    private List<EntityState> getState(List<DiceEntity> entities){
+    private List<EntityState> getStates(List<DiceEntity> entities){
         List<EntityState> results = new ArrayList<>();
         for(EntityState es:entityStateList){
             for(DiceEntity de:entities){

@@ -1,5 +1,7 @@
 package com.tann.dice.gameplay.fightLog;
 
+import com.tann.dice.gameplay.entity.group.Party;
+import com.tann.dice.gameplay.entity.group.Room;
 import com.tann.dice.gameplay.fightLog.action.Command;
 
 import java.util.ArrayList;
@@ -23,8 +25,12 @@ public class FightLog {
     Snapshot future;
     List<Command> actionQueue = new ArrayList<>();
 
-    private FightLog(){
+    private FightLog(){ }
 
+    public void setup(){
+        base = new Snapshot(Party.get(), Room.get());
+        current = base.copy();
+        future = base;
     }
 
     public void addAction(Command command, boolean future) {

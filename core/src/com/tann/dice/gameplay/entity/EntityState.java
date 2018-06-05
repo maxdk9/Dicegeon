@@ -204,6 +204,10 @@ public class EntityState {
     return null;
   }
 
+  public boolean getForwards() {
+    return forwards;
+  }
+
   /*
 
     public void removeEffectsIfDead() {
