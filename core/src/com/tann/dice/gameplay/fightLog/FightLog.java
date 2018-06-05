@@ -27,6 +27,24 @@ public class FightLog {
 
     }
 
+    public void addAction(Command command, boolean future) {
+        if(future){
+            actionQueue.add(command);
+        }
+        else{
+            actionQueue.add(getCurrentIndex(), command);
+            next();
+        }
+    }
+
+    private void next() {
+        current.action(actionQueue.get(getCurrentIndex()));
+    }
+
+    private int getCurrentIndex(){
+        return actionQueue.indexOf(current.recentestCommand);
+    }
+
 
 
 }

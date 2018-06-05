@@ -9,6 +9,7 @@ import com.tann.dice.gameplay.effect.trigger.sources.Equipment;
 import com.tann.dice.gameplay.entity.die.Side;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class EntityState {
@@ -195,6 +196,13 @@ public class EntityState {
     return hp;
   }
 
+  public DiceEntity getEntity() {
+    return entity;
+  }
+
+  public List<EntityState> getAdjacents(boolean includeSelf) {
+    return null;
+  }
 
   /*
 
